@@ -59,18 +59,18 @@ public class Personne {
 
     // Colonne non nulle - Non-zero column
     // Taille de la colonne en base 90 - Column size in base 90
-    @Column(nullable = false, length = 90)
+    @Column(name="NOM", nullable = false, length = 90)
     private String nom;
 
     // Colonne non nulle - Non-zero column
     // Taille de la colonne en base 150 - Column size in base 150
-    @Column(nullable = false, length = 150)
+    @Column(name="PRENOM", nullable = false, length = 150)
     private String prenom;
 
     // Colonne non nulle - Non-zero column
     // Taille de la colonne en base 255 - Column size in base 255
     // La valeur de l'email est unique - The value of email is unique
-    @Column(nullable = false, unique = true, length = 255)
+    @Column(name="EMAIL", nullable = false, unique = true, length = 255)
     private String email;
 
 }

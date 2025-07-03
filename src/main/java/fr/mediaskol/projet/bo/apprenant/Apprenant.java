@@ -33,23 +33,23 @@ public class Apprenant extends Personne {
     // Attributs - Attributes
 
     // Numéro de portable de l'apprenant
-    @Column(nullable = false, length = 10)
+    @Column(name="NUM_PORTABLE", nullable = true, length = 10)
     private String numPortable;
 
     // Colonne non nulle - Non-zero column
-    @Column(nullable = false)
+    @Column(name="DATE_NAISSANCE", nullable = false)
     private LocalDate dateNaissance;
 
     // Si l'apprenant est actif ou non
-    @Column(nullable = false)
+    @Column(name="STATUT_APPRENANT", nullable = false)
     private boolean statutApprenant;
 
     // Numéro de passeport unique et propre à chaque apprenant
-    @Column(nullable = true, length = 50, unique = true)
+    @Column(name="NUM_PASSEPORT", nullable = true, length = 50, unique = true)
     private String noPasseport;
 
     // Commentaire qui indique diverses informations sur l'apprenant
-    @Column(nullable = true, length = 2000)
+    @Column(name="COMMENTAIRE_APPRENANT", nullable = true, length = 2000)
     private String commentaireApprenant;
 
 
