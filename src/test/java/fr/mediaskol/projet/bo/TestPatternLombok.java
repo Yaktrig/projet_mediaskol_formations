@@ -17,7 +17,7 @@ public class TestPatternLombok {
 
         Personne krokmou = Personne
                 .builder()
-                .idPersonne(1)
+                .idPersonne(1L)
                 .nom("DRAGON")
                 .prenom("Krokmou")
                 .email("krokmouDragon@gmail.fr")
