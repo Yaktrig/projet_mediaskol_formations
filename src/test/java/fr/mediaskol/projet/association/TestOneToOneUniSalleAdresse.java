@@ -2,11 +2,7 @@ package fr.mediaskol.projet.association;
 
 
 import fr.mediaskol.projet.bo.adresse.Adresse;
-import fr.mediaskol.projet.bo.apprenant.Apprenant;
-import fr.mediaskol.projet.bo.formateur.Formateur;
 import fr.mediaskol.projet.bo.salle.Salle;
-import fr.mediaskol.projet.dal.ApprenantRepository;
-import fr.mediaskol.projet.dal.FormateurRepository;
 import fr.mediaskol.projet.dal.SalleRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -14,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
-import java.time.LocalDate;
-
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**

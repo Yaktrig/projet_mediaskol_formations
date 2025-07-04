@@ -15,14 +15,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.context.annotation.Bean;
 
-import java.text.Format;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 
 /**
@@ -96,8 +95,8 @@ public class TestHeritageDePersonne {
                 .build());
 
         // Persistence de la liste dans la BDD
-        personnes.forEach(e ->{
-            entityManager.persist(e);
+        personnes.forEach(p ->{
+            entityManager.persist(p);
         });
     }
 

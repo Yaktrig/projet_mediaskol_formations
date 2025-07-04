@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.io.Serializable;
+
 
 // Ajout du @Data de Lombok pour avoir les getter et les setter, toString, equals, hashCode
 // Add Lombok's @Data to have getter and setter, toString, equals, hashCode for all fields.

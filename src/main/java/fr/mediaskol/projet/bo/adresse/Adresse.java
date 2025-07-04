@@ -7,7 +7,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 // POJO Lombok
+// Génère un constructeur sans argument - Generates a constructor with no arguments.
 @NoArgsConstructor
+// Génère un constructeur avec un argument pour chaque champ - Generates a constructor with an argument for each field.
 @AllArgsConstructor
 @Data
 @Builder

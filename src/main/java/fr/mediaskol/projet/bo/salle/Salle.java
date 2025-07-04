@@ -6,18 +6,15 @@ package fr.mediaskol.projet.bo.salle;
 import fr.mediaskol.projet.bo.adresse.Adresse;
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
+
 
 // Génère un constructeur sans argument - Generates a constructor with no arguments.
 @NoArgsConstructor
 // Génère un constructeur avec un argument pour chaque champ - Generates a constructor with an argument for each field.
 @AllArgsConstructor
-@Getter
-@Setter
-// Pour avoir les données de l'Employé au ajoute le callsuper
-@ToString(callSuper = true)
+@Data
 // Héritage Joined - Makes it easy to implement the Builder design pattern
-@SuperBuilder
+@Builder
 
 // Cette classe est une entité JPA persistée en base de données
 // Nom de la table associée à cette entité dans la base de données

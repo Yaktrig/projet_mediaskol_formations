@@ -17,7 +17,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Getter
 @Setter
-// Pour avoir les données de l'Employé au ajoute le callsuper
+// Pour avoir les données de la Personne au ajoute le callsuper
 @ToString(callSuper = true)
 // Héritage Joined - Makes it easy to implement the Builder design pattern
 @SuperBuilder

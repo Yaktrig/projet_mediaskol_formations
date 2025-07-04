@@ -5,9 +5,13 @@ package fr.mediaskol.projet.bo.formateur;
 
 import fr.mediaskol.projet.bo.Personne;
 import fr.mediaskol.projet.bo.adresse.Adresse;
+import fr.mediaskol.projet.bo.formation.Formation;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 // Génère un constructeur sans argument - Generates a constructor with no arguments.
 @NoArgsConstructor
@@ -15,7 +19,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @Getter
 @Setter
-// Pour avoir les données de l'Employé au ajoute le callsuper
+// Pour avoir les données de la Personne au ajoute le callsuper
 @ToString(callSuper = true)
 // Héritage Joined - Makes it easy to implement the Builder design pattern
 @SuperBuilder
@@ -51,7 +55,19 @@ public class Formateur extends Personne {
     // Il faut que l'adresse devienne orpheline (orphanRemoval) et donc soit supprimée
     // Par défaut les 2 entités sont chargées
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    @JoinColumn(name = "ADDRESSE_ID")
+    @JoinColumn(name = "ADRESSE_ID")
     private Adresse adresse;
 
+    // ManyToMany entre Formateur et Formation
+    // pas de cascade, car quand on supprime un formateur, on ne supprime pas le cours
+    @ManyToMany(fetch = FetchType.LAZY)
+    // Création de la table de jointure
+    @JoinTable(name = "FORMATIONS_DISPENSEES",
+            // Clé étrangère qui pointe vers l'entité Formateur
+            joinColumns = {@JoinColumn(name = "FORMATEUR_ID")},
+            // Seconde clé étrangère qui pointe vers l'entité Formation
+            inverseJoinColumns = {@JoinColumn(name = "FORMATION_ID")})
+    @ToString.Exclude // quand j'affiche un formateur, je n'affiche pas les formations qui y sont associées
+    // Création d'une liste vide de formations (@Builder.Default)
+    private @Builder.Default List<Formation> formationsDispensees = new ArrayList<>();
 }
