@@ -16,23 +16,30 @@ import lombok.NoArgsConstructor;
 @Table(name="ADRESSE")
 public class Adresse {
 
+    // Identifiant de l'adresse
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="ADDRESSE_ID")
+    @Column(name = "ADDRESSE_ID")
     private long idAdresse;
 
-    @Column(name="NOM_RUE", nullable=true, length = 250)
-    private String nomRue;
+    // Numéroe et Nom de la rue - peut être nul si on n'a pas le numéro et nom de la rue
+    @Column(name = "RUE", nullable = true, length = 250)
+    private String rue;
 
-    @Column(name="CODE_POSTAL", nullable=true, length = 5)
+    // Code postal - peut être nulle si on n'a pas le code postal
+    @Column(name = "CODE_POSTAL", nullable = true, length = 5)
     private String codePostal;
 
-    @Column(name="VILLE", nullable = true, length = 200)
+    // Nom de la ville - peut être nulle si on n'a pas le nom de la ville
+    @Column(name = "VILLE", nullable = true, length = 200)
     private String ville;
 
-    @Column(name="NUM_DEPARTEMENT", nullable = true, length = 3)
+    // Le numéro du département est connu si le code postal est connu
+    @Column(name = "NUM_DEPARTEMENT", nullable = true, length = 3)
     private String noDepartement;
 
-    @Column(name="REGION", nullable = true, length = 120)
+    // Le nom de la région peut être nul - mais serait intéressant pour une visibilité commerciale
+    @Column(name = "REGION", nullable = true, length = 120)
     private String region;
+
 }

@@ -34,11 +34,11 @@ public class TestApprenant {
     public void test_save_apprenant() {
 
         // Création d'un nouvel apprenant avec le builder Lombok
-        final Apprenant astrid = Apprenant
+        final Apprenant winnie = Apprenant
                 .builder()
-                .nom("Hofferson")
-                .prenom("Astrid")
-                .email("astrid.hofferson@gmail.fr")
+                .nom("L'Ourson")
+                .prenom("Winnie")
+                .email("winnie.lourson@gmail.fr")
                 .numPortable("0600000000")
                 .dateNaissance(LocalDate.parse("2000-01-01"))
                 .statutApprenant(true)
@@ -47,28 +47,27 @@ public class TestApprenant {
                 .build();
 
         // Sauvegarde de l'apprenant en base via le repository
-        final Apprenant astridDB = apprenantRepository.save(astrid);
+        final Apprenant winnieDB = apprenantRepository.save(winnie);
 
         // Log pour visualiser l'objet persisté
-        log.info(astridDB.toString());
+        log.info(winnieDB.toString());
 
-        // Vérification de la cascade de l'association
         // Vérifie que l'objet retourné n'est pas null
-        assertThat(astridDB).isNotNull();
+        assertThat(winnieDB).isNotNull();
 
         // Vérifie que l'objet retourné correspond à l'objet initial (égalité sur les champs)
-        assertThat(astridDB).isEqualTo(astrid);
+        assertThat(winnieDB).isEqualTo(winnie);
     }
 
     @Test
     public void test_delete_apprenant() {
 
         // Création d'un nouvel apprenant avec le builder Lombok
-        final Apprenant astrid = Apprenant
+        final Apprenant winnie = Apprenant
                 .builder()
-                .nom("Hofferson")
-                .prenom("Astrid")
-                .email("astrid.hofferson@gmail.fr")
+                .nom("L'Ourson")
+                .prenom("Winnie")
+                .email("winnie.lourson@gmail.fr")
                 .numPortable("0600000000")
                 .dateNaissance(LocalDate.parse("2000-01-01"))
                 .statutApprenant(true)
@@ -77,18 +76,18 @@ public class TestApprenant {
                 .build();
 
         // Persistance de l'apprenant dans la base de test
-        entityManager.persist(astrid);
+        entityManager.persist(winnie);
         entityManager.flush();
 
         // Log pour visualiser l'objet persisté
-        log.info(astrid.toString());
+        log.info(winnie.toString());
 
         // Suppression de l'apprenant via le repository
-        apprenantRepository.delete(astrid);
+        apprenantRepository.delete(winnie);
 
         // Vérifie que l'apprenant n'est plus présent en base (doit être null)
-        Apprenant astridDB = entityManager.find(Apprenant.class, astrid.getIdPersonne());
-        assertNull(astridDB);
+        Apprenant winnieDB = entityManager.find(Apprenant.class, winnie.getIdPersonne());
+        assertNull(winnieDB);
     }
 
 }

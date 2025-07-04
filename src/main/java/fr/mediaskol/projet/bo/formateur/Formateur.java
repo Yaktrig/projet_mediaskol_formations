@@ -1,15 +1,13 @@
-package fr.mediaskol.projet.bo.apprenant;
+package fr.mediaskol.projet.bo.formateur;
+
+// Ajout du @Data de Lombok pour avoir les getter et les setter, toString, equals, hashCode
+// Add Lombok's @Data to have getter and setter, toString, equals, hashCode for all fields.
 
 import fr.mediaskol.projet.bo.Personne;
 import fr.mediaskol.projet.bo.adresse.Adresse;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-
-import java.time.LocalDate;
-
-// Ajout du @Data de Lombok pour avoir les getter et les setter, toString, equals, hashCode
-// Add Lombok's @Data to have getter and setter, toString, equals, hashCode for all fields.
 
 // Génère un constructeur sans argument - Generates a constructor with no arguments.
 @NoArgsConstructor
@@ -25,30 +23,27 @@ import java.time.LocalDate;
 // Cette classe est une entité JPA persistée en base de données
 // Nom de la table associée à cette entité dans la base de données
 @Entity
-@Table(name="APPRENANT")
-public class Apprenant extends Personne {
+@Table(name="FORMATEUR")
+public class Formateur extends Personne {
 
     // Attributs - Attributes
 
-    // Numéro de portable de l'apprenant
-    @Column(name="NUM_PORTABLE_APPRENANT", nullable = true, length = 10)
+    // Numéro de portable du formateur
+    @Column(name="NUM_PORTABLE_FORMATEUR", nullable = true, length = 10)
     private String numPortable;
 
-    // Colonne non nulle - Non-zero column
-    @Column(name="DATE_NAISSANCE", nullable = false)
-    private LocalDate dateNaissance;
+    // Si le formateur salarié (S) ou auto-entrepreneur (AE)
+    @Column(name="STATUT_FORMATEUR", nullable = false)
+    private String statutFormateur;
 
-    // Si l'apprenant est actif ou non
-    @Column(name="STATUT_APPRENANT", nullable = false)
-    private boolean statutApprenant;
+    // Zone d'intervention pour le formateur
+    // peut être nulle si les formateurs ne font que du distanciel
+    @Column(name="ZONE_INTERVENTION", nullable = true, length = 1000)
+    private String zoneIntervention;
 
-    // Numéro de passeport unique et propre à chaque apprenant
-    @Column(name="NUM_PASSEPORT", nullable = true, length = 50, unique = true)
-    private String noPasseport;
-
-    // Commentaire qui indique diverses informations sur l'apprenant
-    @Column(name="COMMENTAIRE_APPRENANT", nullable = true, length = 2000)
-    private String commentaireApprenant;
+    // Commentaire qui indique diverses informations sur le formateur
+    @Column(name="COMMENTAIRE_FORMATEUR", nullable = true, length = 2000)
+    private String commentaireFormateur;
 
     // Ajout de l'attribut adresse pour gérer l'association OneToOne
     // Association unidirectionnelle
@@ -56,8 +51,7 @@ public class Apprenant extends Personne {
     // Il faut que l'adresse devienne orpheline (orphanRemoval) et donc soit supprimée
     // Par défaut les 2 entités sont chargées
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    @JoinColumn(name="ADDRESSE_ID")
+    @JoinColumn(name = "ADDRESSE_ID")
     private Adresse adresse;
-
 
 }
