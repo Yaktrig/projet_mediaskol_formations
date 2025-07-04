@@ -34,60 +34,60 @@ public class TestApprenant {
     public void test_save_apprenant() {
 
         // Création d'un nouvel apprenant avec le builder Lombok
-        final Apprenant winnie = Apprenant
+        final Apprenant tigrou = Apprenant
                 .builder()
-                .nom("L'Ourson")
-                .prenom("Winnie")
-                .email("winnie.lourson@gmail.fr")
+                .nom("Le tigre")
+                .prenom("Tigrou")
+                .email("tigrou.letigre@gmail.fr")
                 .numPortable("0600000000")
-                .dateNaissance(LocalDate.parse("2000-01-01"))
+                .dateNaissance(LocalDate.parse("2000-12-12"))
                 .statutApprenant(true)
-                .noPasseport("")
-                .commentaireApprenant("")
+                .noPasseport("A123456")
+                .commentaireApprenant("Fais des bonds partout")
                 .build();
 
         // Sauvegarde de l'apprenant en base via le repository
-        final Apprenant winnieDB = apprenantRepository.save(winnie);
+        final Apprenant tigrouDB = apprenantRepository.save(tigrou);
 
         // Log pour visualiser l'objet persisté
-        log.info(winnieDB.toString());
+        log.info(tigrouDB.toString());
 
         // Vérifie que l'objet retourné n'est pas null
-        assertThat(winnieDB).isNotNull();
+        assertThat(tigrouDB).isNotNull();
 
         // Vérifie que l'objet retourné correspond à l'objet initial (égalité sur les champs)
-        assertThat(winnieDB).isEqualTo(winnie);
+        assertThat(tigrouDB).isEqualTo(tigrou);
     }
 
     @Test
     public void test_delete_apprenant() {
 
         // Création d'un nouvel apprenant avec le builder Lombok
-        final Apprenant winnie = Apprenant
+        final Apprenant tigrou = Apprenant
                 .builder()
-                .nom("L'Ourson")
-                .prenom("Winnie")
-                .email("winnie.lourson@gmail.fr")
+                .nom("Le tigre")
+                .prenom("Tigrou")
+                .email("tigrou.letigre@gmail.fr")
                 .numPortable("0600000000")
-                .dateNaissance(LocalDate.parse("2000-01-01"))
+                .dateNaissance(LocalDate.parse("2000-12-12"))
                 .statutApprenant(true)
-                .noPasseport("")
-                .commentaireApprenant("")
+                .noPasseport("A123456")
+                .commentaireApprenant("Fais des bonds partout")
                 .build();
 
         // Persistance de l'apprenant dans la base de test
-        entityManager.persist(winnie);
+        entityManager.persist(tigrou);
         entityManager.flush();
 
         // Log pour visualiser l'objet persisté
-        log.info(winnie.toString());
+        log.info(tigrou.toString());
 
         // Suppression de l'apprenant via le repository
-        apprenantRepository.delete(winnie);
+        apprenantRepository.delete(tigrou);
 
         // Vérifie que l'apprenant n'est plus présent en base (doit être null)
-        Apprenant winnieDB = entityManager.find(Apprenant.class, winnie.getIdPersonne());
-        assertNull(winnieDB);
+        Apprenant tigrouDB = entityManager.find(Apprenant.class, tigrou.getIdPersonne());
+        assertNull(tigrouDB);
     }
 
 }
