@@ -3,10 +3,7 @@ package fr.mediaskol.projet.association;
 
 import fr.mediaskol.projet.bo.adresse.Adresse;
 import fr.mediaskol.projet.bo.apprenant.Apprenant;
-import fr.mediaskol.projet.bo.formateur.Formateur;
 import fr.mediaskol.projet.dal.ApprenantRepository;
-import fr.mediaskol.projet.dal.FormateurRepository;
-import fr.mediaskol.projet.dal.SalarieRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +18,11 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 /**
  * Création de Test qui permet de valider l'association OneToOne
  * Entre Apprenant et Adresse
- * Entre Formateur et Adresse
  */
 @Slf4j
 // Permet de configurer un contexte Spring Boot limité à la couche JPA
 @DataJpaTest
-public class TestOneToOneUni {
+public class TestOneToOneUniApprenantAdresse {
 
     // Permet des opérations avancées sur l'EntityManager pour les tests
     @Autowired
@@ -36,15 +32,13 @@ public class TestOneToOneUni {
     @Autowired
     private ApprenantRepository apprenantRepository;
 
-    // Repository Spring Data JPA pour Formateur
-    @Autowired
-    private FormateurRepository formateurRepository;
 
 
     // Sauvegarde d'un apprenant et de son adresse
     @Test
     public void test_save_apprenant_OneToOneUni() {
 
+        // Création d'une nouvelle adresse avec le builder Lombok
         final Adresse adresseTigrou = Adresse
                 .builder()
                 .rue("10 rue des Acacias")
@@ -53,6 +47,7 @@ public class TestOneToOneUni {
                 .region("Bretagne")
                 .build();
 
+        // Création d'un nouvel apprenant tigrou avec le builder Lombok
         final Apprenant tigrou = Apprenant
                 .builder()
                 .nom("Le tigre")
@@ -86,6 +81,7 @@ public class TestOneToOneUni {
     @Test
     public void test_delete_apprenant_OneToOneUni() {
 
+        // Création d'une adresse avec le builder Lombok
         final Adresse adresseTigrou = Adresse
                 .builder()
                 .rue("10 rue des Acacias")
@@ -94,6 +90,7 @@ public class TestOneToOneUni {
                 .region("Bretagne")
                 .build();
 
+        // Création de l'apprenant tigrou avec le builder Lombok
         final Apprenant tigrou = Apprenant
                 .builder()
                 .nom("Le tigre")
@@ -129,11 +126,12 @@ public class TestOneToOneUni {
         assertNull(adresseTigrouDB);
     }
 
-    // Test qui permet de s'assurer que si l'on supprime l'apprenant, l'adresse qui y était associé
+    // Test qui permet de s'assurer que si l'on supprime l'apprenant, l'adresse qui y était associée
     // soit également supprimée
     @Test
     public void test_orphanRemoval_apprenant_OneToOneUni() {
 
+        // Création d'une adresse avec le builder Lombok
         final Adresse adresseTigrou = Adresse
                 .builder()
                 .rue("10 rue des Acacias")
@@ -142,6 +140,7 @@ public class TestOneToOneUni {
                 .region("Bretagne")
                 .build();
 
+        // Création d'un apprenant tigrou avec le builder Lombok
         final Apprenant tigrou = Apprenant
                 .builder()
                 .nom("Le tigre")
@@ -179,139 +178,6 @@ public class TestOneToOneUni {
     }
 
 
-    // Sauvegarde d'un formateur et de son adresse
-    @Test
-    public void test_save_formateur_OneToOneUni() {
-
-        final Adresse adresseCoco = Adresse
-                .builder()
-                .rue("20 rue des Lilas")
-                .codePostal("22100")
-                .ville("Quévert")
-                .region("Bretagne")
-                .build();
-
-        final Formateur coco = Formateur
-                .builder()
-                .nom("Lapin")
-                .prenom("Coco")
-                .email("coco.lapin@gmail.fr")
-                .numPortable("0600000000")
-                .statutFormateur("AE")
-                .zoneIntervention("Intervient sur la commune de Quévert dans un rayon de 30km")
-                .commentaireFormateur("")
-                .build();
-
-        // Association entre l'adresse et le formateur
-        coco.setAdresse(adresseCoco);
-
-        // Sauvegarde du formateur en base via le repository
-        final Formateur cocoDB = formateurRepository.save(coco);
-
-        // Log pour visualiser l'objet persisté
-        log.info(cocoDB.toString());
-
-        // Vérification de la cascade de l'association
-        // Vérifie que l'objet retourné n'est pas null
-        assertThat(cocoDB.getAdresse()).isNotNull();
-
-        // Vérification s'il y a au moins un identifiant dans Adresse
-        assertThat(adresseCoco.getIdAdresse()).isGreaterThan(0);
-    }
-
-    // Suppression d'un formateur et de son adresse
-    @Test
-    public void test_delete_formateur_OneToOneUni() {
-
-        final Adresse adresseCoco = Adresse
-                .builder()
-                .rue("20 rue des Lilas")
-                .codePostal("22100")
-                .ville("Quévert")
-                .region("Bretagne")
-                .build();
-
-        final Formateur coco = Formateur
-                .builder()
-                .nom("Lapin")
-                .prenom("Coco")
-                .email("coco.lapin@gmail.fr")
-                .numPortable("0600000000")
-                .statutFormateur("AE")
-                .zoneIntervention("Intervient sur la commune de Quévert dans un rayon de 30km")
-                .commentaireFormateur("")
-                .build();
-
-        // Association entre l'adresse et le formateur
-        coco.setAdresse(adresseCoco);
-
-        // Persistance de le formateur dans la base de test
-        entityManager.persist(coco);
-        entityManager.flush();
-
-        // Vérification s'il y a au moins un identifiant dans Adresse
-        assertThat(adresseCoco.getIdAdresse()).isGreaterThan(0);
-
-        // Log pour visualiser l'objet persisté
-        //log.info(coco.toString());
-
-        // Suppression de le formateur via le repository
-        formateurRepository.delete(coco);
-
-        // Vérifie que le formateur n'est plus présent en base (doit être null)
-        Formateur cocoDB = entityManager.find(Formateur.class, coco.getIdPersonne());
-        assertNull(cocoDB);
-        Adresse adresseCocoDB = entityManager.find(Adresse.class, adresseCoco.getIdAdresse());
-        assertNull(adresseCocoDB);
-    }
-
-    // Test qui permet de s'assurer que si l'on supprime le formateur, l'adresse qui y était associé
-    // soit également supprimée
-    @Test
-    public void test_orphanRemoval_formateur_OneToOneUni() {
-
-        final Adresse adresseCoco = Adresse
-                .builder()
-                .rue("20 rue des Lilas")
-                .codePostal("22100")
-                .ville("Quévert")
-                .region("Bretagne")
-                .build();
-
-        final Formateur coco = Formateur
-                .builder()
-                .nom("Lapin")
-                .prenom("Coco")
-                .email("coco.lapin@gmail.fr")
-                .numPortable("0600000000")
-                .statutFormateur("AE")
-                .zoneIntervention("Intervient sur la commune de Quévert dans un rayon de 30km")
-                .commentaireFormateur("")
-                .build();
-
-        // Association entre l'adresse et le formateur
-        coco.setAdresse(adresseCoco);
-
-        // Persistance de le formateur dans la base de test
-        entityManager.persist(coco);
-        entityManager.flush();
-
-        // Vérification s'il y a au moins un identifiant dans Adresse
-        assertThat(adresseCoco.getIdAdresse()).isGreaterThan(0);
-
-        // Suppression du lien entre l'entité Formateur et l'entité Adresse
-        coco.setAdresse(null);
-
-        // Suppression de le formateur via le repository
-       formateurRepository.delete(coco);
-
-        // Vérifie que le formateur n'est plus présent en base (doit être null)
-        Formateur cocoDB = entityManager.find(Formateur.class, coco.getIdPersonne());
-        assertNull(cocoDB);
-        Adresse adresseCocoDB = entityManager.find(Adresse.class, adresseCoco.getIdAdresse());
-        assertNull(adresseCocoDB);
-
-    }
 }
 
 

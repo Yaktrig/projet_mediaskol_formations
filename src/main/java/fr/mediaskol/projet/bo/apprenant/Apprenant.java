@@ -43,7 +43,7 @@ public class Apprenant extends Personne {
     private boolean statutApprenant;
 
     // Numéro de passeport unique et propre à chaque apprenant
-    @Column(name="NUM_PASSEPORT", nullable = true, length = 50, unique = true)
+    @Column(name="NUM_PASSEPORT", nullable = true, length = 120, unique = true)
     private String noPasseport;
 
     // Commentaire qui indique diverses informations sur l'apprenant

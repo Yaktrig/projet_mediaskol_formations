@@ -19,7 +19,7 @@ public class Adresse {
     // Identifiant de l'adresse
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ADDRESSE_ID")
+    @Column(name = "ADRESSE_ID")
     private long idAdresse;
 
     // Numéroe et Nom de la rue - peut être nul si on n'a pas le numéro et nom de la rue
