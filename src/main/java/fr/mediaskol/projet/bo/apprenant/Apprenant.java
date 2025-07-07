@@ -2,11 +2,14 @@ package fr.mediaskol.projet.bo.apprenant;
 
 import fr.mediaskol.projet.bo.Personne;
 import fr.mediaskol.projet.bo.adresse.Adresse;
+import fr.mediaskol.projet.bo.formation.TypeFormation;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 // Ajout du @Data de Lombok pour avoir les getter et les setter, toString, equals, hashCode
 // Add Lombok's @Data to have getter and setter, toString, equals, hashCode for all fields.
@@ -59,5 +62,18 @@ public class Apprenant extends Personne {
     @JoinColumn(name="ADDRESSE_ID")
     private Adresse adresse;
 
+    // ManyToMany entre Apprenant et TypeFormation
+    // pas de cascade, car quand on supprime un apprenant, on ne supprime pas le type de formation
+    @ManyToMany(fetch = FetchType.LAZY)
+    // Création de la table de jointure
+    @JoinTable(name = "TYPE_FORMATION_SUIVIE",
+            // Clé étrangère qui pointe vers l'entité Apprenant
+            joinColumns = {@JoinColumn(name = "APPRENANT_ID")},
+            // Seconde clé étrangère qui pointe vers l'entité TypeFormation
+            inverseJoinColumns = {@JoinColumn(name = "TYPE_FORMATION_ID")})
+    // quand j'affiche un apprenant, je n'affiche pas le ou les type(s) de formations qui y sont associé(s)
+    @ToString.Exclude
+    // Création d'une liste vide de type de formation (@Builder.Default)
+    private @Builder.Default List<TypeFormation> typeFormationSuivie = new ArrayList<>();
 
 }
