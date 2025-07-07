@@ -54,9 +54,8 @@ public class TestHeritageDePersonne {
     private SalarieRepository salarieRepository;
 
 
-
     @BeforeEach
-    public void initDB(){
+    public void initDB() {
 
         List<Personne> personnes = new ArrayList<>();
         personnes.add(Personne
@@ -91,11 +90,12 @@ public class TestHeritageDePersonne {
                 .prenom("Bourriquet")
                 .email("bourriquet.lane@gmail.fr")
                 .roleSalarie("Admin")
+                .couleurSalarie("#33daff")
                 .statutInscription(true)
                 .build());
 
         // Persistence de la liste dans la BDD
-        personnes.forEach(p ->{
+        personnes.forEach(p -> {
             entityManager.persist(p);
         });
     }
@@ -103,7 +103,7 @@ public class TestHeritageDePersonne {
 
     // Tests qui retourne 4 personnes créées
     @Test
-    public void test_findAll_Personne(){
+    public void test_findAll_Personne() {
 
         // Récupération de l'ensemble des Personnes - en initialisant la BDD
         final List<Personne> personnes = personneRepository.findAll();

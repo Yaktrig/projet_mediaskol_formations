@@ -34,6 +34,10 @@ public class Salarie extends Personne {
     @Column(name="MOT_DE_PASSE", nullable = true, length = 68)
     private String mdp;
 
+    // Permet au salarié de visualiser/distinguer qui traîte les dossiers et ses dossiers
+    @Column(name="COULEUR_SALARIE", nullable = false, length = 20)
+    private String couleurSalarie;
+
     // Permet de définir les droits sur l'application
     @Column(name="ROLE_SALARIE", nullable = false, length = 50)
     private String roleSalarie;
