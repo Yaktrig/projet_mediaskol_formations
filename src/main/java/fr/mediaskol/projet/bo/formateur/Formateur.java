@@ -6,6 +6,7 @@ package fr.mediaskol.projet.bo.formateur;
 import fr.mediaskol.projet.bo.Personne;
 import fr.mediaskol.projet.bo.adresse.Adresse;
 import fr.mediaskol.projet.bo.formation.Formation;
+import fr.mediaskol.projet.bo.formation.TypeFormation;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -70,4 +71,18 @@ public class Formateur extends Personne {
     @ToString.Exclude // quand j'affiche un formateur, je n'affiche pas les formations qui y sont associées
     // Création d'une liste vide de formations (@Builder.Default)
     private @Builder.Default List<Formation> formationsDispensees = new ArrayList<>();
+
+    // ManyToMany entre Formateur et TypeFormation
+    // pas de cascade, car quand on supprime un formateur, on ne supprime pas le type de formation
+    @ManyToMany(fetch = FetchType.LAZY)
+    // Création de la table de jointure
+    @JoinTable(name = "TYPE_FORMATION_DISPENSEE",
+            // Clé étrangère qui pointe vers l'entité Formateur
+            joinColumns = {@JoinColumn(name = "FORMATEUR_ID")},
+            // Seconde clé étrangère qui pointe vers l'entité TypeFormation
+            inverseJoinColumns = {@JoinColumn(name = "TYPE_FORMATION_ID")})
+    // quand j'affiche un formateur, je n'affiche pas le ou les type(s) de formations qui y sont associé(s)
+    @ToString.Exclude
+    // Création d'une liste vide de type de formation (@Builder.Default)
+    private @Builder.Default List<TypeFormation> typeFormationDispensee = new ArrayList<>();
 }

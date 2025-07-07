@@ -29,6 +29,6 @@ public class TypeFormation {
     private Long idTypeFormation;
 
     // Thème de la formation
-    @Column(name = "LIBELLE_TYPE_FORMATION", nullable = false, length = 300)
+    @Column(name = "LIBELLE_TYPE_FORMATION", nullable = true, length = 300)
     private String libelleTypeFormation;
 }
