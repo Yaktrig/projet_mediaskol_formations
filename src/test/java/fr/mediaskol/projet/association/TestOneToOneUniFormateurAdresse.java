@@ -44,7 +44,6 @@ public class TestOneToOneUniFormateurAdresse {
                 .rue("20 rue des Lilas")
                 .codePostal("22100")
                 .ville("Quévert")
-                .region("Bretagne")
                 .build();
 
         // Création d'un formateur avec le builder Lombok
@@ -86,7 +85,6 @@ public class TestOneToOneUniFormateurAdresse {
                 .rue("20 rue des Lilas")
                 .codePostal("22100")
                 .ville("Quévert")
-                .region("Bretagne")
                 .build();
 
         // Création d'un formateur avec le builder Lombok
@@ -135,7 +133,6 @@ public class TestOneToOneUniFormateurAdresse {
                 .rue("20 rue des Lilas")
                 .codePostal("22100")
                 .ville("Quévert")
-                .region("Bretagne")
                 .build();
 
         // Création d'un formateur avec le builder Lombok

@@ -107,4 +107,7 @@ public class SessionFormationPresentiel {
      */
     @Enumerated(EnumType.STRING)
     private StatutSessionFormationPresentiel statutSessionFormationPresentiel;
+
+    // TODO créer l'association entre SessionFormationPresentiel et Formation - OneToMany
+    // TODO créer l'association entre SessionFormationPresentiel et Departement - OneToMany
 }

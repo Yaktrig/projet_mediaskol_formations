@@ -43,7 +43,6 @@ public class TestOneToOneUniSalleAdresse {
                 .rue("30 rue des Tulipes")
                 .codePostal("29720")
                 .ville("Plovan")
-                .region("Bretagne")
                 .build();
 
         // Création d'une salle avec le builder Lombok
@@ -80,7 +79,6 @@ public class TestOneToOneUniSalleAdresse {
                 .rue("30 rue des Tulipes")
                 .codePostal("29720")
                 .ville("Plovan")
-                .region("Bretagne")
                 .build();
 
         // Création d'une salle avec le builder Lombok
@@ -124,7 +122,6 @@ public class TestOneToOneUniSalleAdresse {
                 .rue("30 rue des Tulipes")
                 .codePostal("29720")
                 .ville("Plovan")
-                .region("Bretagne")
                 .build();
 
         // Création d'une salle avec le builder Lombok

@@ -7,16 +7,19 @@ import lombok.Getter;
  * Enumération représentant les différents statuts possibles pour le traitement de la session de formation
  * <p>
  * Chaque statut indique l’étape d'une session de formation (session de formation non commencée,
- * dossier en cours de traitement, traitement du dossier terminé, session terminée
+ * dossier en cours de traitement, traitement du dossier terminé, session terminée.
  * </p>
  * <p>
  * Permet à chaque salarié de voir si un.e collègue traite ou a traité le dossier de la session, ainsi que
- * de vérifier si la session de formation a débuté, est en cours, est terminée
+ * de vérifier si la session de formation a débuté, est en cours, est terminée.
+ * </p>
+ * <p>
+ * Utilisation de Lombok (@Getter) pour générer automatiquement les méthodes getters
  * </p>
  * todo Les couleurs associées sont à définir ultérieurement.
  */
 
-@Getter // Génère les getters pour les champs
+@Getter
 public enum StatutSessionFormationPresentiel {
 
     // Statut indiquant que la session de formation n'a pas encore commencée (Date du 1er jour)

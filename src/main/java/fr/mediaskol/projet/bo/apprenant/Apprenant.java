@@ -38,6 +38,9 @@ public class Apprenant extends Personne {
 
     /**
      * Numéro de téléphone portable de l'apprenant
+     * <p>
+     * Ce champ n'est pas obligatoire et limité à 10 caractères
+     * </p>
      */
     @Column(name = "NUM_PORTABLE_APPRENANT", nullable = true, length = 10)
     private String numPortable;
@@ -91,16 +94,21 @@ public class Apprenant extends Personne {
     /**
      * Liste des types de formations suivies par l'apprenant (Présentiel ou Distanciel actuellement)
      * <p>
-     * Association ManyToMany avec {@link TypeFormation}
-     * La suppression d'un apprenant ne supprime pas les types de formation
+     *  Association Many-to-Many avec l'entité {@link TypeFormation} via la table de jointure <b>TYPE_FORMATION_SUIVIE</b>.
+     *  <ul>
+     *      <li>Aucune cascade : la suppression d'un apprenant ne supprime pas les types de formation existants.</li>
+     *      <li>Le chargement est paresseux (LAZY) pour optimiser les performances.</li>
+     *      <li>La liste est initialisée vide par défaut.</li>
+     *      <li>Exclue du toString pour éviter les affichages volumineux.</li>
+     *  </ul>
      * </p>
      */
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "TYPE_FORMATION_SUIVIE",    // Création de la table de jointure
-            joinColumns = {@JoinColumn(name = "APPRENANT_ID")},// Clé étrangère qui pointe vers l'entité Apprenant
-            inverseJoinColumns = {@JoinColumn(name = "TYPE_FORMATION_ID")}) // Seconde clé étrangère qui pointe vers l'entité TypeFormation
-    @ToString.Exclude // quand j'affiche un apprenant, je n'affiche pas le ou les type(s) de formations qui y sont associé(s)
-    private @Builder.Default List<TypeFormation> typeFormationSuivie = new ArrayList<>(); // Création d'une liste vide de type de formation (@Builder.Default)
+    @JoinTable(name = "TYPE_FORMATION_SUIVIE",
+            joinColumns = {@JoinColumn(name = "APPRENANT_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "TYPE_FORMATION_ID")})
+    @ToString.Exclude
+    private @Builder.Default List<TypeFormation> typeFormationSuivie = new ArrayList<>();
 
 
     /**

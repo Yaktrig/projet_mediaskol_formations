@@ -5,12 +5,15 @@ import lombok.Getter;
 /**
  * Enumération représentant les différents statuts possibles pour le numéro de passeport d’un apprenant.
  * <p>
- * Chaque statut indique l’étape de gestion du passeport : créé, à créer, ou à envoyer.
- * todo Les couleurs associées sont à définir ultérieurement.
+ * Permet à chaque salarié de voir le statut qui indique l’étape de gestion du passeport : créé, à créer, ou à envoyer.
  * </p>
+ * <p>
+ * Utilisation de Lombok (@Getter) pour générer automatiquement les méthodes getters
+ * </p>
+ *  * todo Les couleurs associées sont à définir ultérieurement.
  */
 
-@Getter // Génère les getters pour les champs
+@Getter
 public enum StatutNumPasseport {
 
     // Statut indiquant que le numéro de passeport a été créé

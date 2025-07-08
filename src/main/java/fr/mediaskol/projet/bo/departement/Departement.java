@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
  * sa couleur hexadécimale.
  * * </p>
  * <p>
- * Pour le moment, nous avons besoin de colorer que les départements de la Bretagne, mais dans le futur, cette application
- * pourrait être amenée à être utilisée dans toute la France (ou besoin pour le distanciel).
+ * Pour le moment, nous avons besoin de colorer que les départements de la Bretagne, mais dans le futur,
+ * cette application pourrait être amenée à être utilisée dans toute la France (ou besoin pour le distanciel).
  * </p>
  * <p>
  * Ajout du @Data de Lombok pour avoir les getter et les setter, toString, equals, hashCode

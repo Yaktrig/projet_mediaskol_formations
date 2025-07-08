@@ -1,15 +1,26 @@
 package fr.mediaskol.projet.bo.adresse;
 
+import fr.mediaskol.projet.bo.departement.Departement;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-// POJO Lombok
-// Génère un constructeur sans argument - Generates a constructor with no arguments.
+/**
+ * Représente une adresse dans le système de gestion.
+ * <p>
+ * Cette entité contient les informations spécifiques à une adresse pour les formateurs, les salles et les apprenants.
+ * Telles que l'identifiant, le numéro et le nom de la rue, le code postal, la ville.
+ * </p>
+ * <p>
+ * Utilisation de Lombok (@Data, @Builder, @NoArgsConstructor, @AllArgsConstructor) pour générer
+ * automatiquement les méthodes usuelles (getters, setters, constructeurs, toString, equals, hashCode).
+ * </p>
+ *
+ * @author Mélissa
+ */
 @NoArgsConstructor
-// Génère un constructeur avec un argument pour chaque champ - Generates a constructor with an argument for each field.
 @AllArgsConstructor
 @Data
 @Builder
@@ -18,30 +29,59 @@ import lombok.NoArgsConstructor;
 @Table(name="ADRESSE")
 public class Adresse {
 
-    // Identifiant de l'adresse
+    /**
+     * Identifiant unique de l'adresse.
+     * <p>
+     * Clé primaire générée automatiquement par la base de données (IDENTITY).
+     * </p>
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ADRESSE_ID")
     private long idAdresse;
 
-    // Numéroe et Nom de la rue - peut être nul si on n'a pas le numéro et nom de la rue
+    /**
+     * Numéro et nom de la rue.
+     * <p>
+     * Ce champ est optionnel et limité à 50 caractères.
+     * </p>
+     */
     @Column(name = "RUE", nullable = true, length = 250)
     private String rue;
 
-    // Code postal - peut être nulle si on n'a pas le code postal
+    /**
+     * Numéro du code postal.
+     * <p>
+     * Ce champ est optionnel et limité à 5 caractères.
+     * </p>
+     */
     @Column(name = "CODE_POSTAL", nullable = true, length = 5)
     private String codePostal;
 
-    // Nom de la ville - peut être nulle si on n'a pas le nom de la ville
+    /**
+     * Nom de la ville.
+     * <p>
+     * Ce champ est optionnel et limité à 200 caractères.
+     * </p>
+     */
     @Column(name = "VILLE", nullable = true, length = 200)
     private String ville;
 
-    // Le numéro du département est connu si le code postal est connu
-    @Column(name = "NUM_DEPARTEMENT", nullable = true, length = 3)
-    private String noDepartement;
 
-    // Le nom de la région peut être nul - mais serait intéressant pour une visibilité commerciale
-    @Column(name = "REGION", nullable = true, length = 120)
-    private String region;
+    /**
+     * Département auquel est rattachée l'adresse.
+     * <p>
+     * Association Many-to-One vers l'entité {@link Departement}.
+     * Permet de centraliser les informations liées au département (numéro, nom, région, couleur, etc.)
+     * et d'assurer l'intégrité des données. Plusieurs adresses peuvent être associées au même département.
+     * </p>
+     * <p>
+     * Cette relation est facultative : une adresse peut ne pas avoir de département renseigné.
+     * La récupération du département est effectuée en mode paresseux (lazy loading).
+     * </p>
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "NUM_DEPARTEMENT")
+    private Departement departement;
 
 }

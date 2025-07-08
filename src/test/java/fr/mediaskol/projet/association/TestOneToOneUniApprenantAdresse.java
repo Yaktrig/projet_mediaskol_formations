@@ -44,7 +44,6 @@ public class TestOneToOneUniApprenantAdresse {
                 .rue("10 rue des Acacias")
                 .codePostal("56140")
                 .ville("Saint-Laurent-sur-Oust")
-                .region("Bretagne")
                 .build();
 
         // Création d'un nouvel apprenant tigrou avec le builder Lombok
@@ -87,7 +86,6 @@ public class TestOneToOneUniApprenantAdresse {
                 .rue("10 rue des Acacias")
                 .codePostal("56140")
                 .ville("Saint-Laurent-sur-Oust")
-                .region("Bretagne")
                 .build();
 
         // Création de l'apprenant tigrou avec le builder Lombok
@@ -137,7 +135,6 @@ public class TestOneToOneUniApprenantAdresse {
                 .rue("10 rue des Acacias")
                 .codePostal("56140")
                 .ville("Saint-Laurent-sur-Oust")
-                .region("Bretagne")
                 .build();
 
         // Création d'un apprenant tigrou avec le builder Lombok

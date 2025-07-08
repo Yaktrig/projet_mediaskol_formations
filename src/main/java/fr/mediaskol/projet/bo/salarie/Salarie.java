@@ -5,44 +5,69 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDate;
-
-// Ajout du @Data de Lombok pour avoir les getter et les setter, toString, equals, hashCode
-// Add Lombok's @Data to have getter and setter, toString, equals, hashCode for all fields.
-
-// Génère un constructeur sans argument - Generates a constructor with no arguments.
+/**
+ * Représente un salarié dans le système de gestion.
+ * <p>
+ * Cette entité hérite de {@link Personne} et contient les informations spécifiques à un salarié,
+ * telles que ses coordonnées, son mot de passe, la couleur associée, son rôle et le statut de son inscription.
+ * </p>
+ * <p>
+ * Ajout du @Data de Lombok pour avoir les getter et les setter, toString, equals, hashCode
+ * </p>
+ *
+ * @author Mélissa
+ */
 @NoArgsConstructor
-// Génère un constructeur avec un argument pour chaque champ - Generates a constructor with an argument for each field.
 @AllArgsConstructor
 @Getter
 @Setter
-// Pour avoir les données de la Personne au ajoute le callsuper
 @ToString(callSuper = true)
-// Héritage Joined - Makes it easy to implement the Builder design pattern
 @SuperBuilder
 
-// Cette classe est une entité JPA persistée en base de données
-// Nom de la table associée à cette entité dans la base de données
 @Entity
 @Table(name="SALARIE")
 public class Salarie extends Personne {
 
-    // Attributs - Attributes
-
-    // Mot de passe du salarié
-    // Peut être nul si son compte n'a pas encore été activé
+    /**
+     * Mot du passe pour que le salarié puisse se connecter.
+     * <ul>
+     *    <li>Le mot de passe n'est pas obligatoire si le statut de l'inscription est non actif.</li>
+     *    <li>Il est limité à 68 caractères.</li>
+     * </ul>
+     */
     @Column(name="MOT_DE_PASSE", nullable = true, length = 68)
     private String mdp;
 
-    // Permet au salarié de visualiser/distinguer qui traîte les dossiers et ses dossiers
-    @Column(name="COULEUR_SALARIE", nullable = false, length = 20)
+    /**
+     * Couleur hexadécimale associée au salarié.
+     * <p>
+     * Permet aux utilisateurs de visualiser qui traite les dossiers liés aux sessions de formations.
+     * Ce champ est obligatoire et limité à 7 caractères.
+     * </p>
+     */
+    @Column(name="COULEUR_SALARIE", nullable = false, length = 7)
     private String couleurSalarie;
 
-    // Permet de définir les droits sur l'application
+    /**
+     * Rôle associé au salarié.
+     * <p>
+     * Permet de donner des droits d'accès à certaines fonctionnalités et pages, en fonction du rôle attribué.
+     * Ce champ est obligatoire et limité à 50 caractères.
+     * </p>
+     */
     @Column(name="ROLE_SALARIE", nullable = false, length = 50)
     private String roleSalarie;
 
-    // Si l'inscription du salarié est active ou non
+    /**
+     * Statut de l'inscription à l'espace de connexion du salarié.
+     * <ul>
+     *  <li>L'administrateur peut créer un compte pour un salarié et le mettre en statut inactif.</li>
+     *  <li>Ensuite le salarié pourra, en ajoutant son mot de passe, rendre actif son compte utilisateur.</li>
+     *  <li> 0 : Compte inactif — pas de mot de passe</li>
+     *  <li> 1 : Compte actif — mot de passe présent</li>
+     * </ul>
+     * Ce champ est un booléen.
+     */
     @Column(name="STATUT_INSCRIPTION", nullable = false)
     private boolean statutInscription;
 
