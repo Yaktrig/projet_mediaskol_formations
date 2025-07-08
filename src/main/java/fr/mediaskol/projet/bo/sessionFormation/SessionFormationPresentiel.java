@@ -1,5 +1,6 @@
 package fr.mediaskol.projet.bo.sessionFormation;
 
+import fr.mediaskol.projet.bo.departement.Departement;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -79,27 +80,6 @@ public class SessionFormationPresentiel {
 
 
     /**
-     * Numéro du département où se déroule la session de formation.
-     * <p>
-     * Actuellement utilisé pour la Bretagne. Ce champ est optionnel à la création de la session.
-     * </p>
-     */
-    @Column(name = "NO_DEPARTEMENT", nullable = true, length = 3)
-    private Integer noDepartementSession;
-
-
-    /**
-     * Couleur associée au numéro du département.
-     * <p>
-     * Utilisé pour l'affichage ou la catégorisation des sessions par département.
-     * Ce champ est optionnel et limité à 20 caractères.
-     * </p>
-     */
-    @Column(name = "COULEUR_DEPARTEMENT", nullable = true, length = 20)
-    private String couleurDepartementSession;
-
-
-    /**
      * Statut métier de la session de formation.
      * <p>
      * Ce champ indique l'état d'avancement de la session de formation ou de son dossier
@@ -110,5 +90,20 @@ public class SessionFormationPresentiel {
     private StatutSessionFormationPresentiel statutSessionFormationPresentiel;
 
     // TODO créer l'association entre SessionFormationPresentiel et Formation - OneToMany
-    // TODO créer l'association entre SessionFormationPresentiel et Departement - OneToMany
+
+    /**
+     * Département auquel est rattachée la session de formation en présentiel.
+     * <p>
+     * Association Many-to-One vers l'entité {@link Departement}.
+     * Permet de centraliser les informations liées au département (numéro, nom, région, couleur, etc.)
+     * et d'assurer l'intégrité des données. Plusieurs adresses peuvent être associées au même département.
+     * </p>
+     * <p>
+     * Cette relation est obligatoire : une session de formation en présentiel doit avoir un numéro de département renseigné.
+     * La récupération du département est effectuée en mode paresseux (lazy loading).
+     * </p>
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "NUM_DEPARTEMENT", nullable = false)
+    private Departement departement;
 }

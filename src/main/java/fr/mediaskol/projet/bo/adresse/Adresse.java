@@ -76,12 +76,12 @@ public class Adresse {
      * et d'assurer l'intégrité des données. Plusieurs adresses peuvent être associées au même département.
      * </p>
      * <p>
-     * Cette relation est facultative : une adresse peut ne pas avoir de département renseigné.
+     * Cette relation est obligatoire : une adresse doit avoir un numéro de département renseigné.
      * La récupération du département est effectuée en mode paresseux (lazy loading).
      * </p>
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "NUM_DEPARTEMENT")
+    @JoinColumn(name = "NUM_DEPARTEMENT", nullable = false)
     private Departement departement;
 
 }
