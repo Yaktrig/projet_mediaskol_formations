@@ -73,6 +73,7 @@ public class SessionFormationPresentiel {
      * La valeur par défaut est "DO".
      * </p>
      */
+    @Builder.Default
     @Column(name = "STATUT_YODA", nullable = false, length = 5)
     private String statutYoda = "DO";
 

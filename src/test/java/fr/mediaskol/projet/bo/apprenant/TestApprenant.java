@@ -44,6 +44,7 @@ public class TestApprenant {
                 .statutApprenant(true)
                 .noPasseport("A123456")
                 .commentaireApprenant("Fais des bonds partout")
+                .statutNumPasseport(StatutNumPasseport.NUM_PASSEPORT_A_CREER)
                 .build();
 
         // Sauvegarde de l'apprenant en base via le repository
@@ -73,6 +74,7 @@ public class TestApprenant {
                 .statutApprenant(true)
                 .noPasseport("A123456")
                 .commentaireApprenant("Fais des bonds partout")
+                .statutNumPasseport(StatutNumPasseport.NUM_PASSEPORT_A_CREER)
                 .build();
 
         // Persistance de l'apprenant dans la base de test

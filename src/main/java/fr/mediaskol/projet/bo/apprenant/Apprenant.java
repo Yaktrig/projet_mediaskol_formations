@@ -62,16 +62,17 @@ public class Apprenant extends Personne {
 
     /**
      * Numéro du passeport unique de l'apprenant
-     * <p>
-     * Il n'est pas créé de suite, à la création de l'apprenant. Quand il sera créé, un livret avec le numéro sera
-     * envoyé à l'apprenant.
-     * </p>
-     * <p>
-     * Pour chaque session de formation suivie, l'apprenant pourra y accoler l'étiquette qui correspond à
-     * l'intitulé de la formation. Ce livret sert à justifier auprès de son(ses) employeur(s) qu'il s'est formé.
-     * </p>
+     * <ul>
+     *      <li>Il n'est pas créé de suite, à la création de l'apprenant. Quand il sera créé, un livret avec le numéro sera
+     *          envoyé à l'apprenant.
+     *      </li>
+     *      <li>Pour chaque session de formation suivie, l'apprenant pourra y accoler l'étiquette qui correspond à
+     *          l'intitulé de la formation. Ce livret sert à justifier auprès de son(ses) employeur(s) qu'il s'est
+     *          formé.
+     *      </li>
+     * </ul>
      */
-    @Column(name = "NUM_PASSEPORT", nullable = true, length = 120, unique = true)
+    @Column(name = "NUM_PASSEPORT", nullable = false, length = 120, unique = true)
     private String noPasseport;
 
     /**
@@ -88,7 +89,7 @@ public class Apprenant extends Personne {
      * </p>
      */
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    @JoinColumn(name = "ADDRESSE_ID")
+    @JoinColumn(name = "ADRESSE_ID")
     private Adresse adresse;
 
     /**
@@ -117,7 +118,11 @@ public class Apprenant extends Personne {
      * Ce champ indique l'état d'avancement de la gestion du numéro de passeport (créé, à créer, à envoyer).
      * La valeur est stockée en base sous forme de chaîne de caractères grâce à {@link EnumType#STRING}.
      * </p>
+     * <p>
+     * Le statut toujours obligatoire
+     * </p>
      */
     @Enumerated(EnumType.STRING)
+    @Column(name="STATUT_NUM_PASSEPORT", nullable = false)
     private StatutNumPasseport statutNumPasseport;
 }
