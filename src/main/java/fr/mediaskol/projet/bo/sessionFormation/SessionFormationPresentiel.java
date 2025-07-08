@@ -1,6 +1,5 @@
 package fr.mediaskol.projet.bo.sessionFormation;
 
-import fr.mediaskol.projet.bo.Personne;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,7 +27,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "SESSION_FORMATION")
-public class SessionFormation {
+public class SessionFormationPresentiel {
 
     /**
      * Identifiant unique de la session de formation.
@@ -45,6 +44,7 @@ public class SessionFormation {
      * Numéro AF (Yoda) unique de la session de formation.
      * <p>
      * Ce numéro est obligatoire et doit être unique pour chaque session.
+     * Il est limité à 30 caractères
      * </p>
      */
     @Column(name = "NO_AF_YODA", unique = true, nullable = false, length = 30)
@@ -54,10 +54,10 @@ public class SessionFormation {
      * Libellé de la session de formation.
      * <p>
      * Généralement composé du thème et de la date du premier jour de la session.
-     * Ce champ est optionnel à la création de la session de formation
+     * Ce champ est optionnel à la création de la session de formation et limité à 50 caractères.
      * </p>
      */
-    @Column(name = "LIBELLE_SESSION_FORMATION", nullable = true, length = 30)
+    @Column(name = "LIBELLE_SESSION_FORMATION", nullable = true, length = 50)
     private String libelleSessionFormation;
 
 
@@ -91,7 +91,7 @@ public class SessionFormation {
      * Couleur associée au numéro du département.
      * <p>
      * Utilisé pour l'affichage ou la catégorisation des sessions par département.
-     * Ce champ est optionnel.
+     * Ce champ est optionnel et limité à 20 caractères.
      * </p>
      */
     @Column(name = "COULEUR_DEPARTEMENT", nullable = true, length = 20)
@@ -102,9 +102,9 @@ public class SessionFormation {
      * Statut métier de la session de formation.
      * <p>
      * Ce champ indique l'état d'avancement de la session de formation ou de son dossier
-     * La valeur est stockée en base sous forme de chaîne de caractères grâce à {@link StatutSessionFormation}
+     * La valeur est stockée en base sous forme de chaîne de caractères grâce à {@link StatutSessionFormationPresentiel}
      * </p>
      */
     @Enumerated(EnumType.STRING)
-    private StatutSessionFormation statutSessionFormation;
+    private StatutSessionFormationPresentiel statutSessionFormationPresentiel;
 }
