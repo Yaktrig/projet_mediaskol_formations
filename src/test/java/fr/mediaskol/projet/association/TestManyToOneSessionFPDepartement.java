@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 // Configure un contexte Spring Boot limité à la couche JPA
 @Slf4j
 @DataJpaTest
-public class TestManyToOneSessionFormationPresentielDepartement {
+public class TestManyToOneSessionFPDepartement {
 
     // Permet des opérations avancées sur l'EntityManager pour les tests
     @Autowired

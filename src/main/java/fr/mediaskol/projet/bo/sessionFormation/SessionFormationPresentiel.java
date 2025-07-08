@@ -1,6 +1,7 @@
 package fr.mediaskol.projet.bo.sessionFormation;
 
 import fr.mediaskol.projet.bo.departement.Departement;
+import fr.mediaskol.projet.bo.formation.Formation;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -86,24 +87,40 @@ public class SessionFormationPresentiel {
      * La valeur est stockée en base sous forme de chaîne de caractères grâce à {@link StatutSessionFormationPresentiel}
      * </p>
      */
+    // Todo mettre automatiquement au statut "SESSION_FORMATION_NON_COMMENCEE" à la création et rendre obligatoire ?
     @Enumerated(EnumType.STRING)
     private StatutSessionFormationPresentiel statutSessionFormationPresentiel;
 
-    // TODO créer l'association entre SessionFormationPresentiel et Formation - OneToMany
+    /**
+     * Formation à laquelle est rattachée la session de formation en présentiel.
+     * <p>
+     * Association Many-to-One vers l'entité {@link Formation}.
+     * Permet de centraliser les informations liées à la formation (thème et libellé)
+     * et d'assurer l'intégrité des données. Plusieurs Sessions peuvent être associées à la même formation.
+     * </p>
+     * <p>
+     * Cette relation est facultative : une session de formation en présentiel n'est pas obligé d'avoir une formation de renseignée.
+     * La récupération de la formation est effectuée en mode paresseux (lazy loading).
+     * </p>
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "FORMATION_ID", nullable = true)
+    private Formation formation;
+
 
     /**
      * Département auquel est rattachée la session de formation en présentiel.
      * <p>
      * Association Many-to-One vers l'entité {@link Departement}.
      * Permet de centraliser les informations liées au département (numéro, nom, région, couleur, etc.)
-     * et d'assurer l'intégrité des données. Plusieurs adresses peuvent être associées au même département.
+     * et d'assurer l'intégrité des données. Plusieurs Sessions peuvent être associées au même département.
      * </p>
      * <p>
-     * Cette relation est obligatoire : une session de formation en présentiel doit avoir un numéro de département renseigné.
+     * Cette relation est facultative : une session de formation en présentiel n'est pas obligée d'avoir un numéro de département renseigné.
      * La récupération du département est effectuée en mode paresseux (lazy loading).
      * </p>
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "NUM_DEPARTEMENT", nullable = false)
+    @JoinColumn(name = "NUM_DEPARTEMENT", nullable = true)
     private Departement departement;
 }
