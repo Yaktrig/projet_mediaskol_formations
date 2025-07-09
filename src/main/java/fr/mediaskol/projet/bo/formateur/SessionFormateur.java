@@ -11,7 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Représente un formateur et une session de formation dans le système de gestion.
+ * Représente un formateur d'une session de formation dans le système de gestion.
  * <p>
  * Cette entité contient les informations spécifiques à un formateur durant une session, telles que son identifiant,
  * le commentaire durant la session et le statut (si présence confirmée ou en attente).
