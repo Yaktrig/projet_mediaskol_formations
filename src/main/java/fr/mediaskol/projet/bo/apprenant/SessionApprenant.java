@@ -73,7 +73,8 @@ public class SessionApprenant {
     /**
      * Statut métier de l'inscription de l'apprenant.
      * <p>
-     * Ce champ indique l'état d'avancement de la session apprenant (inscrite sur Yoda, présence, absence)
+     * Ce champ indique l'état d'avancement de l'inscription d'un apprenant à une session (inscrite sur Yoda, présence,
+     * absence).
      * La valeur est stockée en base sous forme de chaîne de caractères grâce à {@link StatutSessionApprenant}
      * </p>
      */
