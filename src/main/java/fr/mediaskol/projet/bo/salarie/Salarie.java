@@ -2,6 +2,9 @@ package fr.mediaskol.projet.bo.salarie;
 
 import fr.mediaskol.projet.bo.Personne;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -35,7 +38,8 @@ public class Salarie extends Personne {
      *    <li>Il est limité à 68 caractères.</li>
      * </ul>
      */
-    @Column(name="MOT_DE_PASSE", nullable = true, length = 68)
+    @Column(name="MOT_DE_PASSE",  length = 68)
+    @Size(max=68)
     private String mdp;
 
     /**
@@ -46,6 +50,9 @@ public class Salarie extends Personne {
      * </p>
      */
     @Column(name="COULEUR_SALARIE", nullable = false, length = 7)
+    @Size(min=3, max=7)
+    @NotBlank
+    @NotNull
     private String couleurSalarie;
 
     /**
@@ -56,6 +63,9 @@ public class Salarie extends Personne {
      * </p>
      */
     @Column(name="ROLE_SALARIE", nullable = false, length = 50)
+    @Size(min=3, max=50)
+    @NotBlank
+    @NotNull
     private String roleSalarie;
 
     /**
@@ -69,6 +79,7 @@ public class Salarie extends Personne {
      * Ce champ est un booléen.
      */
     @Column(name="STATUT_INSCRIPTION", nullable = false)
+    @NotNull
     private boolean statutInscription;
 
 

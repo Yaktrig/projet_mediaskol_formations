@@ -1,6 +1,9 @@
 package fr.mediaskol.projet.bo;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -50,6 +53,9 @@ public class Personne {
      * </p>
      */
     @Column(name = "NOM", nullable = false, length = 90)
+    @Size(min=3, max = 90)
+    @NotNull
+    @NotBlank
     private String nom;
 
     /**
@@ -59,6 +65,9 @@ public class Personne {
      * </p>
      */
     @Column(name = "PRENOM", nullable = false, length = 150)
+    @Size(min=3, max = 150)
+    @NotNull
+    @NotBlank
     private String prenom;
 
     /**
@@ -69,6 +78,9 @@ public class Personne {
      * </p>
      */
     @Column(name = "EMAIL", nullable = false, unique = true, length = 255)
+    @Size(min=10, max = 255)
+    @NotNull
+    @NotBlank
     private String email;
 
 }

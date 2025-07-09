@@ -3,6 +3,9 @@ package fr.mediaskol.projet.bo.salle;
 
 import fr.mediaskol.projet.bo.adresse.Adresse;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 
@@ -47,6 +50,9 @@ public class Salle {
      * </p>
      */
     @Column(name = "NOM_SALLE", nullable = false, length = 255)
+    @Size(min=5, max = 255)
+    @NotBlank
+    @NotNull
     private String nomSalle;
 
     /**
@@ -55,7 +61,8 @@ public class Salle {
      * Ce champ n'est pas obligatoire et il est limité à 200 caractères.
      * </p>
      */
-    @Column(name = "NOM_CONTACT", nullable = true, length = 200)
+    @Column(name = "NOM_CONTACT", length = 200)
+    @Size(max = 200)
     private String nomContact;
 
     /**
@@ -64,7 +71,8 @@ public class Salle {
      * Ce champ n'est pas obligatoire et il est limité à 10 caractères.
      * </p>
      */
-    @Column(name = "PORTABLE_CONTACT", nullable = true, length = 10)
+    @Column(name = "PORTABLE_CONTACT", length = 10)
+    @Size(max = 10)
     private String portableContact;
 
     /**
@@ -73,7 +81,8 @@ public class Salle {
      * Ce champ n'est pas obligatoire et il est limité à 255 caractères.
      * </p>
      */
-    @Column(name = "MAIL_CONTACT", nullable = true, length = 255)
+    @Column(name = "MAIL_CONTACT", length = 255)
+    @Size(max = 255)
     private String mailContact;
 
     /**
@@ -84,6 +93,7 @@ public class Salle {
      * </ul>
      */
     @Column(name = "CLE_SALLE", nullable = false)
+    @NotNull
     private boolean cleSalle;
 
     /**
@@ -92,7 +102,8 @@ public class Salle {
      * Ce champ n'est pas obligatoire et limité à 10 caractères
      * </p>
      */
-    @Column(name = "DIGICODE_SALLE", nullable = true, length = 10)
+    @Column(name = "DIGICODE_SALLE",  length = 10)
+    @Size(max = 10)
     private String digiCodeSalle;
 
     /**
@@ -101,7 +112,8 @@ public class Salle {
      * Ce champ n'est pas obligatoire et est limité à 2000 caractères.
      * </p>
      */
-    @Column(name = "COMMENTAIRE_SALLE", nullable = true, length = 2000)
+    @Column(name = "COMMENTAIRE_SALLE",  length = 2000)
+    @Size(max = 2000)
     private String commentaireSalle;
 
 

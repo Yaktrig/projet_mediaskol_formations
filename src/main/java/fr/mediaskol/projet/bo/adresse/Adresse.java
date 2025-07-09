@@ -2,6 +2,9 @@ package fr.mediaskol.projet.bo.adresse;
 
 import fr.mediaskol.projet.bo.departement.Departement;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -46,7 +49,8 @@ public class Adresse {
      * Ce champ est optionnel et limité à 50 caractères.
      * </p>
      */
-    @Column(name = "RUE", nullable = true, length = 250)
+    @Column(name = "RUE", length = 250)
+    @Size(max = 250)
     private String rue;
 
     /**
@@ -55,7 +59,8 @@ public class Adresse {
      * Ce champ est optionnel et limité à 5 caractères.
      * </p>
      */
-    @Column(name = "CODE_POSTAL", nullable = true, length = 5)
+    @Column(name = "CODE_POSTAL", length = 5)
+    @Size(max = 5)
     private String codePostal;
 
     /**
@@ -64,7 +69,8 @@ public class Adresse {
      * Ce champ est optionnel et limité à 200 caractères.
      * </p>
      */
-    @Column(name = "VILLE", nullable = true, length = 200)
+    @Column(name = "VILLE", length = 200)
+    @Size(max = 200)
     private String ville;
 
 
@@ -82,6 +88,8 @@ public class Adresse {
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "NUM_DEPARTEMENT", nullable = false)
+    @NotNull
+    @NotBlank
     private Departement departement;
 
 }

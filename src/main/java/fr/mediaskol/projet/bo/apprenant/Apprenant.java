@@ -4,6 +4,9 @@ import fr.mediaskol.projet.bo.Personne;
 import fr.mediaskol.projet.bo.adresse.Adresse;
 import fr.mediaskol.projet.bo.formation.TypeFormation;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -42,7 +45,8 @@ public class Apprenant extends Personne {
      * Ce champ n'est pas obligatoire et limité à 10 caractères
      * </p>
      */
-    @Column(name = "NUM_PORTABLE_APPRENANT", nullable = true, length = 10)
+    @Column(name = "NUM_PORTABLE_APPRENANT", length = 10)
+    @Size(max = 10)
     private String numPortable;
 
     /**
@@ -52,12 +56,16 @@ public class Apprenant extends Personne {
      * </p>
      */
     @Column(name = "DATE_NAISSANCE", nullable = false)
+    @NotNull(message="")
+    @NotBlank(message="")
     private LocalDate dateNaissance;
 
     /**
      * Indique si l'apprenant est actuellement actif ou non
      */
     @Column(name = "STATUT_APPRENANT", nullable = false)
+    @NotNull
+    @NotBlank
     private boolean statutApprenant;
 
     /**
@@ -73,12 +81,18 @@ public class Apprenant extends Personne {
      * </ul>
      */
     @Column(name = "NUM_PASSEPORT", nullable = false, length = 120, unique = true)
+    @Size(min=3, max = 120)
+    @NotNull
+    @NotBlank
     private String noPasseport;
 
     /**
      * Commentaire qui permet d'ajouter des informations sur l'apprenant en général
      */
     @Column(name = "COMMENTAIRE_APPRENANT", nullable = true, length = 2000)
+    @Size(min=3, max = 2000)
+    @NotNull
+    @NotBlank
     private String commentaireApprenant;
 
     /**
@@ -90,6 +104,7 @@ public class Apprenant extends Personne {
      */
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "ADRESSE_ID")
+    @NotNull
     private Adresse adresse;
 
     /**
@@ -124,5 +139,6 @@ public class Apprenant extends Personne {
      */
     @Enumerated(EnumType.STRING)
     @Column(name="STATUT_NUM_PASSEPORT", nullable = false)
+    @NotNull
     private StatutNumPasseport statutNumPasseport;
 }

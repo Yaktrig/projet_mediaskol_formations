@@ -1,6 +1,9 @@
 package fr.mediaskol.projet.bo.formation;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -48,6 +51,9 @@ public class Formation {
      * </p>
      */
     @Column(name = "THEME_FORMATION", nullable = false, unique=true, length = 20)
+    @Size(min=3, max = 20)
+    @NotNull
+    @NotBlank
     private String themeFormation;
 
 
@@ -58,6 +64,9 @@ public class Formation {
      * </p>
      */
     @Column(name = "LIBELLE_FORMATION", nullable = false, length = 300)
+    @Size(min=3, max = 300)
+    @NotNull
+    @NotBlank
     private String libelleFormation;
 
 

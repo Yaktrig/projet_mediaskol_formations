@@ -5,6 +5,9 @@ import fr.mediaskol.projet.bo.adresse.Adresse;
 import fr.mediaskol.projet.bo.formation.Formation;
 import fr.mediaskol.projet.bo.formation.TypeFormation;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -42,7 +45,8 @@ public class Formateur extends Personne {
      * Ce champ n'est pas obligatoire et limité à 10 caractères.
      * </p>
      */
-    @Column(name = "NUM_PORTABLE_FORMATEUR", nullable = true, length = 10)
+    @Column(name = "NUM_PORTABLE_FORMATEUR", length = 10)
+    @Size(max = 10)
     private String numPortable;
 
     /**
@@ -56,7 +60,10 @@ public class Formateur extends Personne {
      *    <li>AE : Auto-entrepreneur</li>
      * </ul>
      */
-    @Column(name = "STATUT_FORMATEUR", nullable = false)
+    @Column(name = "STATUT_FORMATEUR", nullable = false, length = 10)
+    @Size(min=1, max = 10)
+    @NotNull
+    @NotBlank
     private String statutFormateur;
 
 
@@ -67,7 +74,8 @@ public class Formateur extends Personne {
      * Ce champ est limité à 1000 caractères.
      * </p>
      */
-    @Column(name = "ZONE_INTERVENTION", nullable = true, length = 1000)
+    @Column(name = "ZONE_INTERVENTION",length = 1000)
+    @Size(max = 1000)
     private String zoneIntervention;
 
     /**
@@ -76,7 +84,8 @@ public class Formateur extends Personne {
      * Ce champ n'est pas obligatoire et est limité à 2000 caractères.
      * </p>
      */
-    @Column(name = "COMMENTAIRE_FORMATEUR", nullable = true, length = 2000)
+    @Column(name = "COMMENTAIRE_FORMATEUR",  length = 2000)
+    @Size(max = 2000)
     private String commentaireFormateur;
 
     /**
@@ -92,6 +101,7 @@ public class Formateur extends Personne {
      */
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "ADRESSE_ID")
+    @NotNull
     private Adresse adresse;
 
     /**

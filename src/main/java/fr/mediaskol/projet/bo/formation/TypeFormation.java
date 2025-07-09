@@ -2,6 +2,9 @@ package fr.mediaskol.projet.bo.formation;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -53,6 +56,9 @@ public class TypeFormation {
      * Ce champ est obligatoire, il est unique et limité à 100 caractères.
      * </p>
      */
-    @Column(name = "LIBELLE_TYPE_FORMATION", nullable = true, unique = true, length = 100)
+    @Column(name = "LIBELLE_TYPE_FORMATION", nullable = false, unique = true, length = 100)
+    @Size(min=5, max=100)
+    @NotNull
+    @NotBlank
     private String libelleTypeFormation;
 }

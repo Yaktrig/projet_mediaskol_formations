@@ -1,4 +1,4 @@
-package fr.mediaskol.projet.bo.sessionFormation;
+package fr.mediaskol.projet.bo.formation;
 
 
 import lombok.Getter;

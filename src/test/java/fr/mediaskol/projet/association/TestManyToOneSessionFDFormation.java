@@ -2,7 +2,7 @@ package fr.mediaskol.projet.association;
 
 
 import fr.mediaskol.projet.bo.formation.Formation;
-import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
+import fr.mediaskol.projet.bo.formation.SessionFormation;
 import fr.mediaskol.projet.dal.FormationRepository;
 import fr.mediaskol.projet.dal.SessionFormationRepository;
 import lombok.extern.slf4j.Slf4j;

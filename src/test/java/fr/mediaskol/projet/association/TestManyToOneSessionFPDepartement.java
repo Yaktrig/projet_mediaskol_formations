@@ -3,7 +3,7 @@ package fr.mediaskol.projet.association;
 
 
 import fr.mediaskol.projet.bo.departement.Departement;
-import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
+import fr.mediaskol.projet.bo.formation.SessionFormation;
 import fr.mediaskol.projet.dal.DepartementRepository;
 import fr.mediaskol.projet.dal.SessionFormationRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +22,8 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 /**
  * Test unitaire qui permet de valider l'association ManyToOne
  * Entre les entités SessionFormation et Departement
- * Ici, nous sommes dans le cadre d'une formation présentielle. On n'oblige pas à associer une formation à la session.
+ * Ici, nous sommes dans le cadre d'une formation présentielle.
+ * On n'oblige pas à associer une formation à la session.
  */
 
 // Configure un contexte Spring Boot limité à la couche JPA

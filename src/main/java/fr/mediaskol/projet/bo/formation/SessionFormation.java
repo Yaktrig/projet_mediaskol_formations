@@ -1,8 +1,10 @@
-package fr.mediaskol.projet.bo.sessionFormation;
+package fr.mediaskol.projet.bo.formation;
 
 import fr.mediaskol.projet.bo.departement.Departement;
-import fr.mediaskol.projet.bo.formation.Formation;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -50,6 +52,9 @@ public class SessionFormation {
      * </p>
      */
     @Column(name = "NO_AF_YODA", unique = true, nullable = false, length = 30)
+    @Size(min=3, max = 30)
+    @NotNull
+    @NotBlank
     private Long noYoda;
 
     /**
@@ -59,7 +64,8 @@ public class SessionFormation {
      * Ce champ est optionnel à la création de la session de formation et limité à 50 caractères.
      * </p>
      */
-    @Column(name = "LIBELLE_SESSION_FORMATION", nullable = true, length = 50)
+    @Column(name = "LIBELLE_SESSION_FORMATION", length = 50)
+    @Size(max = 50)
     private String libelleSessionFormation;
 
 
@@ -77,6 +83,9 @@ public class SessionFormation {
      */
     @Builder.Default
     @Column(name = "STATUT_YODA", nullable = false, length = 5)
+    @Size(min=1, max = 5)
+    @NotNull
+    @NotBlank
     private String statutYoda = "DO";
 
 
@@ -89,6 +98,7 @@ public class SessionFormation {
      */
     // Todo mettre automatiquement au statut "SESSION_FORMATION_NON_COMMENCEE" à la création et rendre obligatoire ?
     @Enumerated(EnumType.STRING)
+    @Column(name="STATUT_SESSION_FORMATION")
     private StatutSessionFormation statutSessionFormation;
 
     /**
@@ -104,7 +114,7 @@ public class SessionFormation {
      * </p>
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "FORMATION_ID", nullable = true)
+    @JoinColumn(name = "FORMATION_ID")
     private Formation formation;
 
 
@@ -121,6 +131,6 @@ public class SessionFormation {
      * </p>
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "NUM_DEPARTEMENT", nullable = true)
+    @JoinColumn(name = "NUM_DEPARTEMENT")
     private Departement departement;
 }

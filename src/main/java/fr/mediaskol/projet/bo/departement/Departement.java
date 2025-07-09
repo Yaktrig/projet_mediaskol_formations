@@ -1,6 +1,9 @@
 package fr.mediaskol.projet.bo.departement;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -46,6 +49,9 @@ public class Departement {
      * </p>
      */
     @Column(name = "NOM_DEPARTEMENT", unique = true, nullable = false, length = 100)
+    @Size(min=3, max = 100)
+    @NotNull
+    @NotBlank
     private String nomDepartement;
 
     /**
@@ -55,6 +61,9 @@ public class Departement {
      * </p>
      */
     @Column(name = "REGION", nullable = false, length = 100)
+    @Size(min=3, max = 100)
+    @NotNull
+    @NotBlank
     private String region;
 
     /**
@@ -64,5 +73,8 @@ public class Departement {
      * </p>
      */
     @Column(name = "COULEUR_DEPARTEMENT", nullable = false, length = 7)
+    @Size(min=3, max = 7)
+    @NotNull
+    @NotBlank
     private String couleurDepartement;
 }
