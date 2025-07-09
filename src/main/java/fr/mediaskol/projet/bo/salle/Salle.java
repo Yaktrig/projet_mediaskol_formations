@@ -117,6 +117,8 @@ public class Salle {
     private String commentaireSalle;
 
 
+
+
     /**
      * Adresse associée à la salle.
      * <p>

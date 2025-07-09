@@ -88,7 +88,7 @@ public class SessionFormateur {
      * Session de formation qui est rattachée à la sessionFormateur.
      * <p>
      * Association Many-to-One vers l'entité {@link SessionFormation}.
-     * Permet de centraliser les informations liées au formateur et d'assurer l'intégrité des données.
+     * Permet de centraliser les informations liées à la session de formation et d'assurer l'intégrité des données.
      * Plusieurs SessionFormateur peuvent être associées à la même Session de formation.
      * </p>
      * <p>

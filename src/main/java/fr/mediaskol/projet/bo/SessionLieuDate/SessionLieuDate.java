@@ -3,6 +3,7 @@ package fr.mediaskol.projet.bo.SessionLieuDate;
 import fr.mediaskol.projet.bo.SessionFormation.SessionFormation;
 import fr.mediaskol.projet.bo.SessionFormation.StatutSessionFormation;
 import fr.mediaskol.projet.bo.formateur.SessionFormateur;
+import fr.mediaskol.projet.bo.salle.SessionSalle;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -132,5 +133,24 @@ public class SessionLieuDate {
     @JoinColumn(name = "SESSION_FORMATION_ID", nullable = false)
     @NotNull(message="") // Todo message de validation
     private SessionFormation sessionFormation;
+
+
+
+    /**
+     * SessionSalle qui est rattachée la sessionLieuDate.
+     * <p>
+     * Association Many-to-One vers l'entité {@link SessionSalle}.
+     * Permet de centraliser les informations liées à la SessionSalle et d'assurer l'intégrité des données.
+     * Plusieurs SessionLieuDate peuvent être associées à la même SessionSalle.
+     * </p>
+     * <p>
+     * Cette relation est optionnelle : une sessionSalle n'est pas toujours affectée une SessionLieuDate (formation
+     * en distanciel par exemple).
+     * La récupération de la SessionSalle est effectuée en mode paresseux (lazy loading).
+     * </p>
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "SESSION_SALLE_ID")
+    private SessionSalle sessionSalle;
 
 }
