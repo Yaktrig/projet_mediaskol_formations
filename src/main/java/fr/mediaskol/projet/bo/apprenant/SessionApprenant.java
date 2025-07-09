@@ -12,10 +12,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Représente un apprenant d'une session de formation dans le système de gestion.
+ * Représente une inscription d'un apprenant à une session de formation dans le système de gestion.
  * <p>
  * Cette entité contient les informations spécifiques à un apprenant durant une session, telles que son identifiant
- * d'inscription, le commentaire durant la session, le statut (inscrite sur Yoda, présence ou absence à la session),
+ * d'inscription, le commentaire durant la session, le statut (inscrit sur Yoda, présence ou absence à la session),
  * le moyen utilisé pour s'inscrire (mail, courrier), l'association à l'apprenant, l'association à la session
  * de formation.
  * </p>
@@ -34,7 +34,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "SESSION_APPRENANT")
 public class SessionApprenant {
 
-    // Todo message validation
+    // Todo message validation + Test associations
     /**
      * Identifiant unique de la session apprenant.
      * <p>
@@ -71,7 +71,7 @@ public class SessionApprenant {
 
 
     /**
-     * Statut métier de la session apprenant.
+     * Statut métier de l'inscription de l'apprenant.
      * <p>
      * Ce champ indique l'état d'avancement de la session apprenant (inscrite sur Yoda, présence, absence)
      * La valeur est stockée en base sous forme de chaîne de caractères grâce à {@link StatutSessionApprenant}

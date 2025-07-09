@@ -70,4 +70,5 @@ public class Formation {
     private String libelleFormation;
 
 
+
 }
