@@ -32,6 +32,8 @@ import lombok.NoArgsConstructor;
 @Table(name="ADRESSE")
 public class Adresse {
 
+    // Todo message validation
+
     /**
      * Identifiant unique de l'adresse.
      * <p>

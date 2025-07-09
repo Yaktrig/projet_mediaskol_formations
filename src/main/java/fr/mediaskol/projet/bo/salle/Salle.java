@@ -32,6 +32,8 @@ import lombok.*;
 @Table(name = "SALLE")
 public class Salle {
 
+    // Todo message validations + vérifier si toutes les associations ok + test association ?
+
     /**
      * Identifiant unique de la salle.
      * <p>

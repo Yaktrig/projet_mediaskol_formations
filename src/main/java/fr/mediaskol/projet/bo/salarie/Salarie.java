@@ -31,6 +31,8 @@ import lombok.experimental.SuperBuilder;
 @Table(name="SALARIE")
 public class Salarie extends Personne {
 
+    // Todo message validation
+
     /**
      * Mot du passe pour que le salarié puisse se connecter.
      * <ul>

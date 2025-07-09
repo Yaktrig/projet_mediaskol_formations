@@ -31,6 +31,7 @@ import lombok.NoArgsConstructor;
 @Table(name="FORMATION")
 public class Formation {
 
+    // Todo message validations + vérifier si toutes les associations ok + test association ?
 
     /**
      * Identifiant unique de la formation.

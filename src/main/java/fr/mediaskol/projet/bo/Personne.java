@@ -35,6 +35,8 @@ import lombok.experimental.SuperBuilder;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Personne {
 
+    // Todo message validations
+
     /**
      * Identifiant unique de la personne.
      * <p>
