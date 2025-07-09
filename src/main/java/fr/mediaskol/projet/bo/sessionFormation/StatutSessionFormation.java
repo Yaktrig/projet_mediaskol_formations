@@ -20,7 +20,7 @@ import lombok.Getter;
  */
 
 @Getter
-public enum StatutSessionFormationPresentiel {
+public enum StatutSessionFormation {
 
     // Statut indiquant que la session de formation n'a pas encore commencée (Date du 1er jour)
     SESSION_FORMATION_NON_COMMENCEE("Session non commencée", "#FFFFFF"),
@@ -46,7 +46,7 @@ public enum StatutSessionFormationPresentiel {
      * @param libelleSessionFormation Libellé du statut
      * @param couleurSessionFormation Couleur du statut
      */
-    StatutSessionFormationPresentiel(String libelleSessionFormation, String couleurSessionFormation) {
+    StatutSessionFormation(String libelleSessionFormation, String couleurSessionFormation) {
         this.libelleSessionFormation = libelleSessionFormation;
         this.couleurSessionFormation = couleurSessionFormation;
     }

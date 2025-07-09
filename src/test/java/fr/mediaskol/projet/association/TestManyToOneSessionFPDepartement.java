@@ -3,9 +3,9 @@ package fr.mediaskol.projet.association;
 
 
 import fr.mediaskol.projet.bo.departement.Departement;
-import fr.mediaskol.projet.bo.sessionFormation.SessionFormationPresentiel;
+import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
 import fr.mediaskol.projet.dal.DepartementRepository;
-import fr.mediaskol.projet.dal.SessionFormationPresentielRepository;
+import fr.mediaskol.projet.dal.SessionFormationRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,7 +21,8 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  * Test unitaire qui permet de valider l'association ManyToOne
- * Entre les entités SessionFormationPresentiel et Departement
+ * Entre les entités SessionFormation et Departement
+ * Ici, nous sommes dans le cadre d'une formation présentielle. On n'oblige pas à associer une formation à la session.
  */
 
 // Configure un contexte Spring Boot limité à la couche JPA
@@ -33,13 +34,13 @@ public class TestManyToOneSessionFPDepartement {
     @Autowired
     private TestEntityManager entityManager;
 
-    // Comme il n'y a pas de cascade dans notre @ManyToOne de SessionFormationPresentiel vers Departement
+    // Comme il n'y a pas de cascade dans notre @ManyToOne de SessionFormation vers Departement
     // on doit appeler le repository pour créer ici nos départements
     @Autowired
     DepartementRepository departementRepository;
 
     @Autowired
-    SessionFormationPresentielRepository sessionFormationPresentielRepository;
+    SessionFormationRepository sessionFormationRepository;
 
     private Departement cotesdarmor;
     private Departement finistere;
@@ -89,10 +90,10 @@ public class TestManyToOneSessionFPDepartement {
 
     // Sauvegarde d'une session de formation et de son département
     @Test
-    public void test_save_session_presentiel(){
+    public void test_save_session_formation(){
 
         // Création d'une nouvelle session de formation avec le builder Lombok
-        final SessionFormationPresentiel sessionMICE = SessionFormationPresentiel
+        final SessionFormation sessionMICE = SessionFormation
                 .builder()
                 .noYoda(123456L)
                 .libelleSessionFormation("MICE24052025")
@@ -102,7 +103,7 @@ public class TestManyToOneSessionFPDepartement {
         sessionMICE.setDepartement(illeetvilaine);
 
         // Sauvegarde de la session en base via le repository
-        final SessionFormationPresentiel sessionMICEDB = sessionFormationPresentielRepository.save(sessionMICE);
+        final SessionFormation sessionMICEDB = sessionFormationRepository.save(sessionMICE);
 
         // Log pour visualiser l'objet persisté
         log.info(sessionMICEDB.toString());
@@ -120,17 +121,17 @@ public class TestManyToOneSessionFPDepartement {
     public void test_find_all(){
 
         // Récupération des données de la méthode jeuDeDonnees()
-        List<SessionFormationPresentiel> sessionFormationPresentiels = jeuDeDonnees();
+        List<SessionFormation> sessionFormations = jeuDeDonnees();
 
         // Sauvegarde du jeu de données dans la base
-        sessionFormationPresentiels.forEach(session -> {
+        sessionFormations.forEach(session -> {
             entityManager.persist(session);
             assertThat(session.getIdSessionFormation()).isGreaterThan(0);
         });
 
         // Vérifie l'identifiant des sessions
-        final List<SessionFormationPresentiel> sessionFormationPresentielsDB = sessionFormationPresentielRepository.findAll();
-        sessionFormationPresentielsDB.forEach(session -> {
+        final List<SessionFormation> sessionFormationDB = sessionFormationRepository.findAll();
+        sessionFormationDB.forEach(session -> {
             assertThat(session.getIdSessionFormation()).isGreaterThan(0);
 
             // Vérification du département
@@ -139,10 +140,10 @@ public class TestManyToOneSessionFPDepartement {
     }
 
     @Test
-    public void test_delete_session_presentiel(){
+    public void test_delete_session_formation(){
 
         // Création d'une nouvelle session avec le builder Lombok
-        final SessionFormationPresentiel sessionMICE = SessionFormationPresentiel
+        final SessionFormation sessionMICE = SessionFormation
                 .builder()
                 .noYoda(123456L)
                 .libelleSessionFormation("MICE24052025")
@@ -152,20 +153,20 @@ public class TestManyToOneSessionFPDepartement {
         sessionMICE.setDepartement(illeetvilaine);
 
         // Persistance de la session dans la base de test
-        final SessionFormationPresentiel sessionMICEDB = sessionFormationPresentielRepository.save(sessionMICE);
+        final SessionFormation sessionMICEDB = sessionFormationRepository.save(sessionMICE);
         entityManager.flush();
 
-        // Vérification s'il y a au moins un identifiant dans SessionFormationPresentiel, s'il n'est pas null,
+        // Vérification s'il y a au moins un identifiant dans SessionFormation, s'il n'est pas null,
         // et si son département est égal au département illeetvilaine
         assertThat(sessionMICEDB.getIdSessionFormation()).isGreaterThan(0);
         assertThat(sessionMICEDB.getDepartement()).isNotNull();
         assertThat(sessionMICEDB.getDepartement()).isEqualTo(illeetvilaine);
 
         // Suppression de la session de formation MICE
-        sessionFormationPresentielRepository.delete(sessionMICEDB);
+        sessionFormationRepository.delete(sessionMICEDB);
 
-        // Vérifie que l'entité SessionFormationPresentiel n'est plus présente en base (doit être null)
-        SessionFormationPresentiel sessionMICEDB2 = entityManager.find(SessionFormationPresentiel.class, sessionMICEDB.getIdSessionFormation());
+        // Vérifie que l'entité SessionFormation n'est plus présente en base (doit être null)
+        SessionFormation sessionMICEDB2 = entityManager.find(SessionFormation.class, sessionMICEDB.getIdSessionFormation());
         assertNull(sessionMICEDB2);
 
 
@@ -179,25 +180,25 @@ public class TestManyToOneSessionFPDepartement {
     }
 
 
-    // Création d'un jeu de données de sessions de formations en présentiel
-    private List<SessionFormationPresentiel> jeuDeDonnees() {
-        List<SessionFormationPresentiel> sessionsFormationPresentiel = new ArrayList<>();
-        sessionsFormationPresentiel.add(SessionFormationPresentiel.builder()
+    // Création d'un jeu de données de sessions de formations
+    private List<SessionFormation> jeuDeDonnees() {
+        List<SessionFormation> sessionsFormation = new ArrayList<>();
+        sessionsFormation.add(SessionFormation.builder()
                 .departement(illeetvilaine)
                 .noYoda(123456L)
                 .libelleSessionFormation("MICE24052025")
                 .build());
-        sessionsFormationPresentiel.add(SessionFormationPresentiel.builder()
+        sessionsFormation.add(SessionFormation.builder()
                 .departement(morbihan)
                 .noYoda(234567L)
                 .libelleSessionFormation("MICE20092025")
                 .build());
-        sessionsFormationPresentiel.add(SessionFormationPresentiel.builder()
+        sessionsFormation.add(SessionFormation.builder()
                 .departement(cotesdarmor)
                 .noYoda(345678L)
                 .libelleSessionFormation("MISST24052025")
                 .build());
-        return sessionsFormationPresentiel;
+        return sessionsFormation;
     }
 
 }

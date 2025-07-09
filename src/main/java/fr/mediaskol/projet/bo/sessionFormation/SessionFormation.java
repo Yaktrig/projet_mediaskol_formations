@@ -9,11 +9,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Représente une session de formation dans le système de gestion.
+ * Représente une session de formation (en présentiel, en distanciel) dans le système de gestion.
  * <p>
- * Cette entité contient les informations spécifiques à une session de formation en présentiel,
- * telles que l'identifiant, le numéro AF (Yoda) unique, le libellé, le statut, le numéro du département concerné,
- * la couleur associée au numéro du département et le statut métier de la session
+ * Cette entité contient les informations spécifiques à une session de formation,
+ * telles que l'identifiant, le numéro AF (Yoda) unique, le libellé, le statut Yoda, le numéro du département concerné
+ * pour le présentiel, la couleur associée au numéro du département et le statut métier de la session.
  * </p>
  * <p>
  * Utilisation de Lombok (@Data, @Builder, @NoArgsConstructor, @AllArgsConstructor) pour générer
@@ -29,7 +29,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "SESSION_FORMATION")
-public class SessionFormationPresentiel {
+public class SessionFormation {
 
     /**
      * Identifiant unique de la session de formation.
@@ -84,22 +84,22 @@ public class SessionFormationPresentiel {
      * Statut métier de la session de formation.
      * <p>
      * Ce champ indique l'état d'avancement de la session de formation ou de son dossier
-     * La valeur est stockée en base sous forme de chaîne de caractères grâce à {@link StatutSessionFormationPresentiel}
+     * La valeur est stockée en base sous forme de chaîne de caractères grâce à {@link StatutSessionFormation}
      * </p>
      */
     // Todo mettre automatiquement au statut "SESSION_FORMATION_NON_COMMENCEE" à la création et rendre obligatoire ?
     @Enumerated(EnumType.STRING)
-    private StatutSessionFormationPresentiel statutSessionFormationPresentiel;
+    private StatutSessionFormation statutSessionFormation;
 
     /**
-     * Formation à laquelle est rattachée la session de formation en présentiel.
+     * Formation à laquelle est rattachée la session de formation.
      * <p>
      * Association Many-to-One vers l'entité {@link Formation}.
      * Permet de centraliser les informations liées à la formation (thème et libellé)
      * et d'assurer l'intégrité des données. Plusieurs Sessions peuvent être associées à la même formation.
      * </p>
      * <p>
-     * Cette relation est facultative : une session de formation en présentiel n'est pas obligé d'avoir une formation de renseignée.
+     * Cette relation est facultative : une session de formation n'est pas obligé d'avoir une formation de renseignée.
      * La récupération de la formation est effectuée en mode paresseux (lazy loading).
      * </p>
      */
@@ -109,14 +109,14 @@ public class SessionFormationPresentiel {
 
 
     /**
-     * Département auquel est rattachée la session de formation en présentiel.
+     * Département auquel est rattachée la session de formation (en présentiel).
      * <p>
      * Association Many-to-One vers l'entité {@link Departement}.
      * Permet de centraliser les informations liées au département (numéro, nom, région, couleur, etc.)
      * et d'assurer l'intégrité des données. Plusieurs Sessions peuvent être associées au même département.
      * </p>
      * <p>
-     * Cette relation est facultative : une session de formation en présentiel n'est pas obligée d'avoir un numéro de département renseigné.
+     * Cette relation est facultative : une session de formation en distanciel n'a pas de numéro de département renseigné.
      * La récupération du département est effectuée en mode paresseux (lazy loading).
      * </p>
      */
