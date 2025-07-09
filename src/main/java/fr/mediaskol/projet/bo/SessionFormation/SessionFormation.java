@@ -11,6 +11,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 /**
  * Représente une session de formation (en présentiel, en distanciel) dans le système de gestion.
  * <p>
@@ -88,6 +90,27 @@ public class SessionFormation {
     @NotNull
     @NotBlank
     private String statutYoda = "DO";
+
+    /**
+     * Date du début de la session de formation
+     * <p>
+     *     Permet de savoir quand commence la formation et permet pour le distanciel d'afficher
+     *     le début et la fin de formation (01/mm/yyyy au 30(31)/mm/yyyy
+     * </p>
+     */
+    @Column(name="DATE_DEBUT_SESSION", nullable = false)
+    @NotNull
+    private LocalDate dateDebutSession;
+
+    /**
+     * Nombre total d'heures pour la session de formation
+     * <p>
+     *     Ce champ est obligatoire pour les formations en présentiel et en distanciel.
+     * </p>
+     */
+    @Column(name="NB_HEURE_SESSION", nullable = false)
+    @NotNull
+    private Integer nbHeureSession;
 
 
     /**

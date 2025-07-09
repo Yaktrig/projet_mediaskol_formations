@@ -15,7 +15,7 @@ import lombok.Getter;
  * <p>
  * Utilisation de Lombok (@Getter) pour générer automatiquement les méthodes getters
  * </p>
- * todo Les couleurs associées sont à définir ultérieurement.
+ * todo Les couleurs sont à définir ultérieurement.
  */
 
 @Getter
@@ -28,8 +28,10 @@ public enum StatutSessionFormateur {
     SESSION_FORMATEUR_PRESENCE_CONFIRMEE("Présence du formateur confirmée", "13FF06"),
 
     // Statut indiquant que le formateur a annulé sa présence
-    SESSION_FORMATEUR_PRESENCE_ANNULEE("Annulation par le formateur", "#FF2F05");
+    SESSION_FORMATEUR_PRESENCE_ANNULEE("Annulation par le formateur", "#FF2F05"),
 
+    // Statut indiquant que le formateur a été rémunéré
+    SESSION_FORMATEUR_REMUNERE("Formateur rémunéré", "#000000");
 
 
     // Libelle du statut de la session formateur
