@@ -30,8 +30,14 @@ public enum StatutSessionFormateur {
     // Statut indiquant que le formateur a annulé sa présence
     SESSION_FORMATEUR_PRESENCE_ANNULEE("Annulation par le formateur", "#FF2F05"),
 
-    // Statut indiquant que le formateur a été rémunéré
-    SESSION_FORMATEUR_REMUNERE("Formateur rémunéré", "#000000");
+    // Statut indiquant que le formateur est en attente de paiement - Quand la session de formation est terminée
+    SESSION_FORMATEUR_EN_ATTENTE_PAIEMENT("Formateur en attente de paiement", "#blanc"),
+
+    // Statut indiquant que le formateur est en attente de paiement - Quand la session de formation est terminée
+    SESSION_FORMATEUR_SALARIE("Formateur salarié", "#rose clair"),
+
+    // Statut indiquant que la facture envoyée par le formateur auto-entrepreneur a été réglée - Quand la session de formation est terminée
+    SESSION_FORMATEUR_AE_FACTURE_REGLEE("Formateur auto-entrepreneur qui a envoyé sa facture et qui a été réglée.", "#gris");
 
 
     // Libelle du statut de la session formateur

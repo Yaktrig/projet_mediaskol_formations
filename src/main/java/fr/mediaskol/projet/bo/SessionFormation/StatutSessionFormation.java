@@ -32,7 +32,10 @@ public enum StatutSessionFormation {
     DOSSIER_TERMINE("Dossier terminé", "Rose2"),
 
     // Statut indiquant que la session de formation est terminée (Date du dernier jour passé)
-    SESSION_FORMATION_TERMINEE("Formation terminée", "Bleu");
+    SESSION_FORMATION_TERMINEE("Formation terminée", "Bleu"),
+
+    // Statut indiquant que la session de formation a été annulée.
+    SESSION_FORMATION_ANNULEE("Formation annulée", "Rouge");
 
     // Libelle du statut de la session de formation
     private final String libelleSessionFormation;
