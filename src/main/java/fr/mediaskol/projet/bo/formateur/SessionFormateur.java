@@ -1,6 +1,7 @@
 package fr.mediaskol.projet.bo.formateur;
 
 
+import fr.mediaskol.projet.bo.SessionFormation.SessionFormation;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -66,20 +67,38 @@ public class SessionFormateur {
 
 
     /**
-     * Formateur qui est rattaché la session formateur.
+     * Formateur qui est rattaché la sessionFormateur.
      * <p>
      * Association Many-to-One vers l'entité {@link Formateur}.
-     * Permet de centraliser les informations liées au formateur
-     * et d'assurer l'intégrité des données. Plusieurs SessionFormateur peuvent être associées au même formateur.
+     * Permet de centraliser les informations liées au formateur et d'assurer l'intégrité des données.
+     * Plusieurs SessionFormateur peuvent être associées au même formateur.
      * </p>
      * <p>
-     * Cette relation est obligatoire : une session formateur doit avoir un formateur de renseigné.
-     * La récupération de la formation est effectuée en mode paresseux (lazy loading).
+     * Cette relation est obligatoire : une sessionFormateur doit avoir un formateur de renseigné.
+     * La récupération du formateur est effectuée en mode paresseux (lazy loading).
      * </p>
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "FORMATEUR_ID", nullable = false)
-    @NotNull(message = "...")
+    @NotNull(message = "") // Todo message de validation
     private Formateur formateur;
+
+
+    /**
+     * Session de formation qui est rattachée à la sessionFormateur.
+     * <p>
+     * Association Many-to-One vers l'entité {@link SessionFormation}.
+     * Permet de centraliser les informations liées au formateur et d'assurer l'intégrité des données.
+     * Plusieurs SessionFormateur peuvent être associées à la même Session de formation.
+     * </p>
+     * <p>
+     * Cette relation est obligatoire : une sessionFormateur doit avoir une session de formation de renseignée.
+     * La récupération de la session de formation est effectuée en mode paresseux (lazy loading).
+     * </p>
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "SESSION_FORMATION_ID", nullable = false)
+    @NotNull(message = "") // Todo message de validation
+    private SessionFormation sessionFormation;
 
 }

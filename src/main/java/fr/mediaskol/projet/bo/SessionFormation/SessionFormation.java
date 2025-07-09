@@ -1,6 +1,7 @@
-package fr.mediaskol.projet.bo.formation;
+package fr.mediaskol.projet.bo.SessionFormation;
 
 import fr.mediaskol.projet.bo.departement.Departement;
+import fr.mediaskol.projet.bo.formation.Formation;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

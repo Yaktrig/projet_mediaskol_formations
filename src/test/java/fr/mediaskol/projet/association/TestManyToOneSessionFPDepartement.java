@@ -3,7 +3,7 @@ package fr.mediaskol.projet.association;
 
 
 import fr.mediaskol.projet.bo.departement.Departement;
-import fr.mediaskol.projet.bo.formation.SessionFormation;
+import fr.mediaskol.projet.bo.SessionFormation.SessionFormation;
 import fr.mediaskol.projet.dal.DepartementRepository;
 import fr.mediaskol.projet.dal.SessionFormationRepository;
 import lombok.extern.slf4j.Slf4j;
