@@ -41,7 +41,7 @@ import java.util.List;
 @Table(name = "SESSION_FORMATION")
 public class SessionFormation {
 
-    // Todo message validations + vérifier si toutes les associations ok + test association ?
+    // Todo  test association
 
     /**
      * Identifiant unique de la session de formation.
@@ -63,7 +63,7 @@ public class SessionFormation {
      * </p>
      */
     @Column(name = "NO_AF_YODA", unique = true, length = 30)
-    @Size(max = 30)
+    @Size(max = 30, message = "{formation.numAfYoda.size}")
     private Long noYoda;
 
     /**
@@ -76,7 +76,7 @@ public class SessionFormation {
      * </p>
      */
     @Column(name = "LIBELLE_SESSION_FORMATION", length = 50)
-    @Size(max = 50)
+    @Size(max = 50, message="{sessionFormation.libelle.size}")
     private String libelleSessionFormation;
 
 
@@ -94,9 +94,9 @@ public class SessionFormation {
      */
     @Builder.Default
     @Column(name = "STATUT_YODA", nullable = false, length = 5)
-    @Size(min=1, max = 5)
-    @NotNull
-    @NotBlank
+    @Size(min=1, max = 5, message = "{sessionFormation.statutYoda.size}")
+    @NotNull(message = "{sessionFormation.statutYoda.notnull}")
+    @NotBlank(message = "{sessionFormation.statutYoda.notblank}")
     private String statutYoda = "DO";
 
     /**
@@ -107,7 +107,7 @@ public class SessionFormation {
      * </p>
      */
     @Column(name="DATE_DEBUT_SESSION", nullable = false)
-    @NotNull
+    @NotNull(message = "{sessionFormation.dateDebutSession.notnull}")
     private LocalDate dateDebutSession;
 
     /**
@@ -117,7 +117,7 @@ public class SessionFormation {
      * </p>
      */
     @Column(name="NB_HEURE_SESSION", nullable = false)
-    @NotNull
+    @NotNull(message = "{sessionFormation.nbHeureSession.notnull}")
     private Integer nbHeureSession;
 
 
@@ -176,7 +176,6 @@ public class SessionFormation {
      */
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "FIN_SESSION_FORMATION_ID")
-    @NotNull
     private SessionFinFormation sessionFinFormation;
 
     /**
@@ -189,7 +188,6 @@ public class SessionFormation {
      */
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "SESSION_FOAD_ID")
-    @NotNull
     private SessionFormationDistanciel sessionFormationDistanciel;
 
     /**
@@ -201,7 +199,6 @@ public class SessionFormation {
      * </p>
      */
     @OneToMany(mappedBy = "sessionFormation", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @Column(name="APPRENANT_ID")
     private @Builder.Default List<SessionApprenant> apprenants = new ArrayList<>();
 
     /**

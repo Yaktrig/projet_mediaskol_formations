@@ -31,7 +31,7 @@ import lombok.experimental.SuperBuilder;
 @Table(name="CATEGORIE_DOCUMENT")
 public class CategorieDocument {
 
-    // Todo message validation
+
     /**
      * Identifiant unique de la catégorie de document.
      * <p>
@@ -51,9 +51,9 @@ public class CategorieDocument {
      * </p>
      */
     @Column(name = "LIBELLE_CATEGORIE_DOCUMENT", length = 120)
-    @Size(min = 2, max = 120)
-    @NotNull
-    @NotBlank
+    @Size(min = 2, max = 120, message = "{categorieDocument.libelle.size}")
+    @NotNull(message = "{categorieDocument.libelle.notnull}")
+    @NotBlank(message = "{categorieDocument.libelle.notblank}")
     private String libelleCategorieDocument;
 
     // Todo diminutif en back ou en front ?

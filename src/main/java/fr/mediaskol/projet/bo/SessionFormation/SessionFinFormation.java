@@ -2,6 +2,7 @@ package fr.mediaskol.projet.bo.SessionFormation;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -34,7 +35,7 @@ import java.time.LocalDate;
 @Table(name = "SESSION_FIN_FORMATION")
 public class SessionFinFormation {
 
-    // Todo message validations  test association ?
+    // Todo  test association
 
     /**
      * Identifiant unique de la fin de session de formation.
@@ -57,7 +58,8 @@ public class SessionFinFormation {
      * Ce champ n'est pas obligatoire.
      * </p>
      */
-    @Column(name = "STATUT_YODA_FIN_FORMATION")
+    @Column(name = "STATUT_YODA_FIN_FORMATION", length = 5)
+    @Size(max = 5, message="{sessionFinFormation.statutYoda.size}")
     private String statutYodaFinFormation;
 
 
@@ -78,7 +80,8 @@ public class SessionFinFormation {
      * Ce champ n'est pas obligatoire.
      * </p>
      */
-    @Column(name = "COMMENTAIRE_FIN_FORMATION")
+    @Column(name = "COMMENTAIRE_FIN_FORMATION", length = 2000)
+    @Size(max=2000, message="{sessionFinFormation.commentaire.size}")
     private String commentaireFinFormation;
 
 
@@ -94,7 +97,7 @@ public class SessionFinFormation {
      * </p>
      */
     @Enumerated(EnumType.STRING)
-    @Column(name = "STATUT_SESSION_FIN_FOMRATION")
+    @Column(name = "STATUT_SESSION_FIN_FORMATION")
     private StatutSessionFinFormation statutSessionFinFormation;
 
 

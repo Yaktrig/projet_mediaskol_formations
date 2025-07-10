@@ -31,7 +31,7 @@ import lombok.experimental.SuperBuilder;
 @Table(name="SALARIE")
 public class Salarie extends Personne {
 
-    // Todo message validation
+
 
     /**
      * Mot du passe pour que le salarié puisse se connecter.
@@ -41,7 +41,7 @@ public class Salarie extends Personne {
      * </ul>
      */
     @Column(name="MOT_DE_PASSE",  length = 68)
-    @Size(max=68)
+    @Size(max=68, message = "{salarie.mdp.size}")
     private String mdp;
 
     /**
@@ -52,9 +52,9 @@ public class Salarie extends Personne {
      * </p>
      */
     @Column(name="COULEUR_SALARIE", nullable = false, length = 7)
-    @Size(min=3, max=7)
-    @NotBlank
-    @NotNull
+    @Size(min=3, max=7, message = "{salarie.couleurSalarie.size}")
+    @NotNull(message = "{salarie.couleurSalarie.notnull}")
+    @NotBlank(message = "{salarie.couleurSalarie.notblank}")
     private String couleurSalarie;
 
     /**
@@ -65,9 +65,9 @@ public class Salarie extends Personne {
      * </p>
      */
     @Column(name="ROLE_SALARIE", nullable = false, length = 50)
-    @Size(min=3, max=50)
-    @NotBlank
-    @NotNull
+    @Size(min=3, max=50, message = "{salarie.roleSalarie.size}")
+    @NotNull(message = "{salarie.roleSalarie.notnull}")
+    @NotBlank(message = "{salarie.roleSalarie.notblank}")
     private String roleSalarie;
 
     /**
@@ -81,7 +81,7 @@ public class Salarie extends Personne {
      * Ce champ est un booléen.
      */
     @Column(name="STATUT_INSCRIPTION", nullable = false)
-    @NotNull
+    @NotNull(message = "{salarie.statutInscription.notnull}")
     private boolean statutInscription;
 
 

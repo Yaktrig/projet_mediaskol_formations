@@ -85,8 +85,8 @@ public class TestManyToManyApprenantTypeformation {
                 .email("tigrou.letigre@gmail.fr")
                 .numPortable("0600000000")
                 .dateNaissance(LocalDate.parse("2000-12-12"))
-                .statutApprenant(true)
-                .noPasseport("A123456")
+                .apprenantActif(true)
+                .numPasseport("A123456")
                 .commentaireApprenant("Fais des bonds partout")
                 .build();
 
@@ -135,8 +135,8 @@ public class TestManyToManyApprenantTypeformation {
                 .email("tigrou.letigre@gmail.fr")
                 .numPortable("0600000000")
                 .dateNaissance(LocalDate.parse("2000-12-12"))
-                .statutApprenant(true)
-                .noPasseport("A123456")
+                .apprenantActif(true)
+                .numPasseport("A123456")
                 .commentaireApprenant("Fais des bonds partout")
                 .build();
 

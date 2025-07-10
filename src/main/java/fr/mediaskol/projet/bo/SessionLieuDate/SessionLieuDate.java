@@ -37,7 +37,7 @@ import java.time.LocalDateTime;
 @Table(name = "SESSION_LIEU_DATE")
 public class SessionLieuDate {
 
-    // Todo message validations +  test association
+    // Todo  test association
 
     /**
      * Identifiant unique de la session lieu date.
@@ -59,7 +59,7 @@ public class SessionLieuDate {
      * </p>
      */
     @Column(name = "DATE_SESSION", nullable = false)
-    @NotNull
+    @NotNull(message = "{sessionLieuDate.dateSession.notnull}")
     private LocalDate dateSession;
 
     /**
@@ -69,7 +69,7 @@ public class SessionLieuDate {
      * </p>
      */
     @Column(name = "LIEU_SESSION", length = 100)
-    @Size(max = 100)
+    @Size(max = 100, message = "{sessionLieuDate.lieuSession.size}")
     private Long lieuSession;
 
     /**
@@ -133,7 +133,7 @@ public class SessionLieuDate {
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SESSION_FORMATION_ID", nullable = false)
-    @NotNull(message="") // Todo message de validation
+    @NotNull(message="{sessionLieuDate.sessionFormation.notnull")
     private SessionFormation sessionFormation;
 
 

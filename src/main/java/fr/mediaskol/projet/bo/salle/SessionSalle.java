@@ -34,7 +34,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "SESSION_SALLE")
 public class SessionSalle {
 
-    // Todo message validations  + test association ?
+    // Todo  test association
 
     /**
      * Identifiant unique de la session salle.
@@ -54,7 +54,7 @@ public class SessionSalle {
      * </p>
      */
     @Column(name = "COMMENTAIRE_SESSION_SALLE", length = 2000)
-    @Size(max = 2000)
+    @Size(max = 2000, message = "{sessionSalle.commentaire.size}")
     private String commentaireSessionSalle;
 
 
@@ -93,7 +93,7 @@ public class SessionSalle {
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SALLE_ID", nullable = false)
-    @NotNull(message = "") // Todo message de validation
+    @NotNull(message = "{sessionSalle.salleId.notnull}")
     private Salle salle;
 
 
@@ -111,6 +111,6 @@ public class SessionSalle {
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SESSION_FORMATION_ID", nullable = false)
-    @NotNull(message = "") // Todo message de validation
+    @NotNull(message = "{sessionSalle.sessionFormation.notnull}")
     private SessionFormation sessionFormation;
 }

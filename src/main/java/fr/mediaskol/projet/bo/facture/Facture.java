@@ -58,9 +58,9 @@ public class Facture {
      * </p>
      */
     @Column(name = "NUM_FACTURE", nullable = false, length = 50)
-    @Size(min=3, max = 50)
-    @NotNull
-    @NotBlank
+    @Size(min=3, max = 50, message = "{facture.numFacture.size}")
+    @NotNull(message = "{facture.numFacture.notnull}")
+    @NotBlank(message = "{facture.numFacture.notblank}")
     private String numFacture;
 
     /**
@@ -70,9 +70,9 @@ public class Facture {
      * </p>
      */
     @Column(name = "TYPE_FACTURE", nullable = false, length = 50)
-    @Size(min=3, max = 50)
-    @NotNull
-    @NotBlank
+    @Size(min=3, max = 50, message = "{facture.typeFacture.size}")
+    @NotNull(message = "{facture.typeFacture.notnull}")
+    @NotBlank(message = "{facture.typeFacture.notblank}")
     private String typeFacture;
 
     /**
@@ -82,9 +82,9 @@ public class Facture {
      * </p>
      */
     @Column(name = "LIBELLE_FACTURE", nullable = false, length = 120)
-    @Size(min=3, max = 120)
-    @NotNull
-    @NotBlank
+    @Size(min=3, max = 120, message="{facture.libelleFacture.size}")
+    @NotNull(message = "{facture.libelleFacture.notnull}")
+    @NotBlank(message = "{facture.libelleFacture.notblank}")
     private String libelleFacture;
 
 
@@ -95,27 +95,25 @@ public class Facture {
      * </p>
      */
     @Column(name = "MONTANT_FACTURE", nullable = false)
-    @NotNull
+    @NotNull(message = "{facture.montantFacture.notnull}")
     private Float montantFacture;
 
     /**
      * Date de la facture envoyée à Ipéria
      * <p>
-     * Ce champ est optionnel car la facture n'est pas forcément dédiée à Ipéria
+     * Ce champ est optionnel, car la facture n'est pas forcément dédiée à Ipéria
      * </p>
      */
-    @Column(name = "DATE_ENVOI_FACTURE", nullable = false)
-    @NotNull
+    @Column(name = "DATE_ENVOI_FACTURE")
     private LocalDate dateFacture;
 
     /**
      * Date du règlement de la facture (formateur, salle, autre...)
      * <p>
-     * Ce champ est optionnel car la facture ne concerne pas forcément un règlement.
+     * Ce champ est optionnel, car la facture ne concerne pas forcément un règlement.
      * </p>
      */
     @Column(name = "DATE_REGLEMENT_FACTURE")
-    @NotNull
     private LocalDate dateReglementFacture;
 
     /**
@@ -125,7 +123,6 @@ public class Facture {
      * </p>
      */
     @Column(name = "FICHIER_FACTURE")
-    @NotNull
     private LocalDate fichierFacture;
 
 

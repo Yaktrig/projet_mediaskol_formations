@@ -51,9 +51,9 @@ public class Departement {
      * </p>
      */
     @Column(name = "NOM_DEPARTEMENT", unique = true, nullable = false, length = 100)
-    @Size(min=3, max = 100)
-    @NotNull
-    @NotBlank
+    @Size(min=3, max = 100, message = "{departement.nomDepartement.size}")
+    @NotNull(message = "{departement.nomDepartement.notnull}")
+    @NotBlank(message="{departement.nomDepartement.notblank}")
     private String nomDepartement;
 
     /**
@@ -63,9 +63,9 @@ public class Departement {
      * </p>
      */
     @Column(name = "REGION", nullable = false, length = 100)
-    @Size(min=3, max = 100)
-    @NotNull
-    @NotBlank
+    @Size(min=3, max = 100,message = "{departement.region.size}")
+    @NotNull(message = "{departement.region.notnull}")
+    @NotBlank(message = "{departement.region.notblank}")
     private String region;
 
     /**
@@ -75,8 +75,8 @@ public class Departement {
      * </p>
      */
     @Column(name = "COULEUR_DEPARTEMENT", nullable = false, length = 7)
-    @Size(min=3, max = 7)
-    @NotNull
-    @NotBlank
+    @Size(min=3, max = 7, message = "{departement.couleurDepartement.size}")
+    @NotNull(message = "{departement.couleurDepartement.notnull}")
+    @NotBlank(message = "{departement.couleurDepartement.notblank}")
     private String couleurDepartement;
 }

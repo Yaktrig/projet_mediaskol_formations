@@ -34,7 +34,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "SESSION_APPRENANT")
 public class SessionApprenant {
 
-    // Todo message validation + Test associations
+    // Todo Test associations
     /**
      * Identifiant unique de la session apprenant.
      * <p>
@@ -53,7 +53,7 @@ public class SessionApprenant {
      * </p>
      */
     @Column(name = "COMMENTAIRE_SESSION_APPRENANT", length = 2000)
-    @Size(max = 2000)
+    @Size(max = 2000, message = "{sessionApprenant.commentaireSessionApprenant.size}")
     private String commentaireSessionApprenant;
 
     /**
@@ -64,9 +64,9 @@ public class SessionApprenant {
      * </p>
      */
     @Column(name = "MODE_RECEPTION_INSCRIPTION", length = 20, nullable = false)
-    @Size(min=3, max = 20)
-    @NotNull
-    @NotBlank
+    @Size(min=3, max = 20, message = "{sessionApprenant.modeReceptionInscription.size}")
+    @NotNull(message = "{sessionApprenant.modeReceptionInscription.notnull}")
+    @NotBlank(message = "{sessionApprenant.modeReceptionInscription.notblank}")
     private String modeReceptionInscription;
 
 
@@ -97,7 +97,7 @@ public class SessionApprenant {
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "APPRENANT_ID", nullable = false)
-    @NotNull(message = "") // Todo message de validation
+    @NotNull(message = "{sessionApprenant.apprenant.notnull}")
     private Apprenant apprenant;
 
     /**
@@ -114,7 +114,7 @@ public class SessionApprenant {
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SESSION_FORMATION_ID", nullable = false)
-    @NotNull(message = "") // Todo message de validation
+    @NotNull(message = "{sessionApprenant.sessionFormation.notnull}")
     private SessionFormation sessionFormation;
 
 

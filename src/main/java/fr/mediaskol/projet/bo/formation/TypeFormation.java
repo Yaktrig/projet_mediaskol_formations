@@ -32,7 +32,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "TYPE_FORMATION")
 public class TypeFormation {
 
-    // Todo message validation + test association
+    // Todo  test association
 
     /**
      * Identifiant unique du type de formation.
@@ -59,8 +59,8 @@ public class TypeFormation {
      * </p>
      */
     @Column(name = "LIBELLE_TYPE_FORMATION", nullable = false, unique = true, length = 100)
-    @Size(min=5, max=100)
-    @NotNull
-    @NotBlank
+    @Size(min=5, max=100, message = "{typeFormation.libelle.size}")
+    @NotNull(message = "{typeFormation.libelle.notnull}")
+    @NotBlank(message = "{typeFormation.libelle.notblank}")
     private String libelleTypeFormation;
 }

@@ -32,7 +32,7 @@ import lombok.NoArgsConstructor;
 @Table(name="FORMATION")
 public class Formation {
 
-    // Todo message validations + test association avec TypeFormation (ManyToOne)
+    // Todo test association avec TypeFormation (ManyToOne)
 
     /**
      * Identifiant unique de la formation.
@@ -53,9 +53,9 @@ public class Formation {
      * </p>
      */
     @Column(name = "THEME_FORMATION", nullable = false, length = 20)
-    @Size(min=3, max = 20)
-    @NotNull
-    @NotBlank
+    @Size(min=3, max = 20, message = "{formation.themeFormation.size}")
+    @NotNull(message = "{formation.themeFormation.notnull}")
+    @NotBlank(message = "{formation.themeFormation.notblank}")
     private String themeFormation;
 
 
@@ -66,9 +66,9 @@ public class Formation {
      * </p>
      */
     @Column(name = "LIBELLE_FORMATION", nullable = false, length = 300)
-    @Size(min=3, max = 300)
-    @NotNull
-    @NotBlank
+    @Size(min=3, max = 300, message = "{formation.libelleFormation.size}")
+    @NotNull(message = "{formation.libelleFormation.notnull}")
+    @NotBlank(message = "{formation.libelleFormation.notblank}")
     private String libelleFormation;
 
 
@@ -86,8 +86,7 @@ public class Formation {
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TYPE_FORMATION_ID", nullable = false)
-    @NotNull
-    @NotBlank
+    @NotNull(message = "{formation.typeFormation.notnull}")
     private TypeFormation typeFormation;
 
 

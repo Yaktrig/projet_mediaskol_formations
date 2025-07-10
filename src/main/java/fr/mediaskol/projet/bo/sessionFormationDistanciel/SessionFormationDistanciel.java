@@ -34,7 +34,7 @@ import java.time.LocalDate;
 @Table(name="SESSION_FOAD")
 public class SessionFormationDistanciel {
 
-    // Todo message validations + test association
+    // Todo  test association
     /**
      * Identifiant unique de la session de formation en distanciel.
      * <p>
@@ -53,7 +53,7 @@ public class SessionFormationDistanciel {
      * </p>
      */
     @Column(name = "CONTRAT_SESSION_FOAD", length = 300)
-    @Size(max = 300)
+    @Size(max = 300, message = "{sessionFormation.contratSessionFoad.size}")
     private String contratSessionFormationDistanciel;
 
     /**
@@ -101,8 +101,8 @@ public class SessionFormationDistanciel {
      * Ce champ est optionnel et limité à 300 caractères.
      * </p>
      */
-    @Column(name = "COMMENTAIRE_SESSION_FOAD", length = 300)
-    @Size(max = 300)
+    @Column(name = "COMMENTAIRE_SESSION_FOAD", length = 2000)
+    @Size(max = 2000, message = "{sessionFormation.commentaireSessionFoad.size}")
     private String commentaireSessionFormationDistanciel;
 
 

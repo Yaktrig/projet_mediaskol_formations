@@ -41,8 +41,8 @@ public class TestApprenant {
                 .email("tigrou.letigre@gmail.fr")
                 .numPortable("0600000000")
                 .dateNaissance(LocalDate.parse("2000-12-12"))
-                .statutApprenant(true)
-                .noPasseport("A123456")
+                .apprenantActif(true)
+                .numPasseport("A123456")
                 .commentaireApprenant("Fais des bonds partout")
                 .statutNumPasseport(StatutNumPasseport.NUM_PASSEPORT_A_CREER)
                 .build();
@@ -71,8 +71,8 @@ public class TestApprenant {
                 .email("tigrou.letigre@gmail.fr")
                 .numPortable("0600000000")
                 .dateNaissance(LocalDate.parse("2000-12-12"))
-                .statutApprenant(true)
-                .noPasseport("A123456")
+                .apprenantActif(true)
+                .numPasseport("A123456")
                 .commentaireApprenant("Fais des bonds partout")
                 .statutNumPasseport(StatutNumPasseport.NUM_PASSEPORT_A_CREER)
                 .build();

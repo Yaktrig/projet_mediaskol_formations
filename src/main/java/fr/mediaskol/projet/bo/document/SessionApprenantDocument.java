@@ -56,9 +56,9 @@ public class SessionApprenantDocument {
      * </p>
      */
     @Column(name = "NOM_SESSION_APPRENANT_DOCUMENT", length = 200)
-    @Size(min=2, max = 200)
-    @NotNull
-    @NotBlank
+    @Size(min=2, max = 200, message="{sessionApprenantDocument.nom.size}")
+    @NotNull(message = "{sessionApprenantDocument.nom.notnull}")
+    @NotBlank(message = "{sessionApprenantDocument.nom.notblank}")
     private String nomSessionApprenantDocument;
 
     /**
@@ -77,7 +77,7 @@ public class SessionApprenantDocument {
      * </p>
      */
     @Column(name = "FICHIER_SESSION_APPRENANT_DOCUMENT", length = 2000)
-    @Size(max = 2000)
+    @Size(max = 2000, message = "{sessionApprenantDocument.fichier.size}")
 //    @NotNull
 //    @NotBlank
     private String fichierSessionApprenantDocument;
@@ -114,7 +114,7 @@ public class SessionApprenantDocument {
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SESSION_APPRENANT_ID", nullable = false)
-    @NotNull
+    @NotNull(message = "{sessionApprenantDocument.sessionApprenant.notnull}")
     private SessionApprenant sessionApprenant;
 
 
@@ -134,6 +134,6 @@ public class SessionApprenantDocument {
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CATEGORIE_DOCUMENT_ID", nullable = false)
-    @NotNull
+    @NotNull(message = "{sessionApprenantDocument.categorieDocument.notnull}")
     private CategorieDocument categorieDocument;
 }

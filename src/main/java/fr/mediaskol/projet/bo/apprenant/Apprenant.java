@@ -48,7 +48,7 @@ public class Apprenant extends Personne {
      * </p>
      */
     @Column(name = "NUM_PORTABLE_APPRENANT", length = 10)
-    @Size(max = 10)
+    @Size(max = 10, message="{apprenant.numPortable.size}")
     private String numPortable;
 
     /**
@@ -58,17 +58,18 @@ public class Apprenant extends Personne {
      * </p>
      */
     @Column(name = "DATE_NAISSANCE", nullable = false)
-    @NotNull(message = "")
-    @NotBlank(message = "")
+    @NotNull(message = "{apprenant.dateNaissance.notnull}")
+    @NotBlank(message = "{apprenant.dateNaissance.notblank}")
     private LocalDate dateNaissance;
 
     /**
-     * Indique si l'apprenant est actuellement actif ou non
+     * Indique si l'apprenant est actif.
+     * <p>
+     * Ce champ est toujours renseigné : true (actif) ou false (inactif).
+     * </p>
      */
-    @Column(name = "STATUT_APPRENANT", nullable = false)
-    @NotNull
-    @NotBlank
-    private boolean statutApprenant;
+    @Column(name = "APPRENANT_ACTIF", nullable = false)
+    private boolean apprenantActif;
 
     /**
      * Numéro du passeport unique de l'apprenant
@@ -82,11 +83,9 @@ public class Apprenant extends Personne {
      *      </li>
      * </ul>
      */
-    @Column(name = "NUM_PASSEPORT", nullable = false, length = 120, unique = true)
-    @Size(min = 3, max = 120)
-    @NotNull
-    @NotBlank
-    private String noPasseport;
+    @Column(name = "NUM_PASSEPORT", length = 120, unique = true)
+    @Size(max = 120, message = "{apprenant.numPasseport.size}")
+    private String numPasseport;
 
     /**
      * Statut actuel du numéro de passeport de l'apprenant.
@@ -100,16 +99,14 @@ public class Apprenant extends Personne {
      */
     @Enumerated(EnumType.STRING)
     @Column(name = "STATUT_NUM_PASSEPORT", nullable = false)
-    @NotNull
+    @NotNull(message = "{apprenant.statutNumPasseport.notnull}")
     private StatutNumPasseport statutNumPasseport;
 
     /**
      * Commentaire qui permet d'ajouter des informations sur l'apprenant en général
      */
-    @Column(name = "COMMENTAIRE_APPRENANT", nullable = true, length = 2000)
-    @Size(min = 3, max = 2000)
-    @NotNull
-    @NotBlank
+    @Column(name = "COMMENTAIRE_APPRENANT", length = 2000)
+    @Size(max = 2000, message = "{apprenant.commentaireApprenant.size}")
     private String commentaireApprenant;
 
     /**
@@ -121,7 +118,7 @@ public class Apprenant extends Personne {
      */
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "ADRESSE_ID")
-    @NotNull
+    @NotNull(message = "{apprenant.adresse.notnull}")
     private Adresse adresse;
 
     /**
@@ -152,7 +149,6 @@ public class Apprenant extends Personne {
      * </p>
      */
     @OneToMany(mappedBy = "apprenant", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @Column(name="APPRENANT_ID")
     private @Builder.Default List<SessionApprenant> sessions = new ArrayList<>();
 
 

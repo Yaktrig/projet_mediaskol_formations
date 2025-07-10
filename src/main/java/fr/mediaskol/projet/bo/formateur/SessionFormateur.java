@@ -31,7 +31,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "SESSION_FORMATEUR")
 public class SessionFormateur {
 
-    // Todo message validations + vérifier si toutes les associations ok + test association ?
+    // Todo  test association
 
     /**
      * Identifiant unique de la session formateur.
@@ -51,7 +51,7 @@ public class SessionFormateur {
      * </p>
      */
     @Column(name = "COMMENTAIRE_SESSION_FORMATEUR", length = 2000)
-    @Size(max = 2000)
+    @Size(max = 2000, message = "{sessionFormateur.commentaireFormateur.size}")
     private String commentaireSessionFormateur;
 
 
@@ -81,7 +81,7 @@ public class SessionFormateur {
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "FORMATEUR_ID", nullable = false)
-    @NotNull(message = "") // Todo message de validation
+    @NotNull(message = "{sessionFormateur.formateur.notnull}")
     private Formateur formateur;
 
 
@@ -99,7 +99,7 @@ public class SessionFormateur {
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SESSION_FORMATION_ID", nullable = false)
-    @NotNull(message = "") // Todo message de validation
+    @NotNull(message = "{sessionFormateur.sessionFormation.notnull}")
     private SessionFormation sessionFormation;
 
 }

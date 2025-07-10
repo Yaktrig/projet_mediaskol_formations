@@ -38,7 +38,7 @@ import java.time.LocalDate;
 public class NoteDeFrais {
 
 
-    // Todo tester association à Formateur + message validation
+    // Todo tester association à Formateur
 
 
     /**
@@ -61,9 +61,9 @@ public class NoteDeFrais {
      * </p>
      */
     @Column(name = "LIBELLE_SESSION_FORMATION", nullable = false, length = 120)
-    @Size(min=3, max = 120)
-    @NotNull
-    @NotBlank
+    @Size(min=3, max = 120, message = "{noteDeFrais.libelle.size}")
+    @NotNull(message = "{noteDeFrais.libelle.notnull}")
+    @NotBlank(message = "{noteDeFrais.libelle.notblank}")
     private String libelleSessionFormation  ;
 
     // Todo dates pertinentes ? Date session - date création - date règlement
@@ -74,7 +74,7 @@ public class NoteDeFrais {
      * </p>
      */
     @Column(name = "DATE_SESSION_FORMATION", nullable = false)
-    @NotNull
+    @NotNull(message = "{noteDeFrais.dateSessionFormation.notnull}")
     private LocalDate dateSessionFormation;
 
     /**
@@ -84,7 +84,7 @@ public class NoteDeFrais {
      * </p>
      */
     @Column(name = "DATE_NOTE_DE_FRAIS", nullable = false)
-    @NotNull
+    @NotNull(message = "{noteDeFrais.dateNoteDeFrais.notnull}")
     private LocalDate dateNoteDeFrais;
 
     /**
@@ -94,7 +94,7 @@ public class NoteDeFrais {
      * </p>
      */
     @Column(name = "DATE_REGLEMENT_NOTE_DE_FRAIS", nullable = false)
-    @NotNull
+    @NotNull(message = "{noteDeFrais.dateReglementNoteDeFrais.notnull}")
     private LocalDate dateReglementNoteDeFrais;
 
 
@@ -115,7 +115,7 @@ public class NoteDeFrais {
      * </p>
      */
     @Column(name = "MONTANT_REPAS")
-    @Max(12L)
+    @Max(value = 15L, message = "{noteDeFrais.montantRepas.max}")
     private Float montantRepas;
 
     /**
@@ -125,6 +125,7 @@ public class NoteDeFrais {
      * </p>
      */
     @Column(name = "MONTANT_PAUSE_CAFE")
+    @Max(value = 7L, message = "{noteDeFrais.montantPauseCafe.max}")
     private Float montantPauseCafe;
 
 
@@ -163,7 +164,7 @@ public class NoteDeFrais {
      * </p>
      */
     @Column(name = "MONTANT_TOTAL_NOTE_DE_FRAIS")
-    @NotNull
+    @NotNull(message = "{noteDeFrais.montantTotal.notnull}")
     private Float montantTotalNoteDeFrais;
 
     /**
