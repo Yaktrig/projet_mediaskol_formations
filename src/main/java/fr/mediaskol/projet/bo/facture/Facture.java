@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 /**
- * Représente une facture émise par un formateur, une salle dans le système de gestion.
+ * Représente une facture émise par un formateur auto-entrepreneur, une salle dans le système de gestion.
  * <p>
  * Cette entité contient les informations spécifiques à une facture, elle contient un identifiant, un numéro de facture,
  * un libellé, le montant, la date de la facture, la date du règlement, le chemin dans lequel est stocké le fichier.
