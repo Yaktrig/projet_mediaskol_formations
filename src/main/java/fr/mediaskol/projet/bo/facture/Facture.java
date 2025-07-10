@@ -15,7 +15,8 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 /**
- * Représente une facture émise par un formateur auto-entrepreneur, une salle dans le système de gestion.
+ * Représente une facture émise par un formateur auto-entrepreneur, une salle, ou une facture envoyée à Iperia,
+ * dans le système de gestion.
  * <p>
  * Cette entité contient les informations spécifiques à une facture, elle contient un identifiant, un numéro de facture,
  * un libellé, le montant, la date de la facture, la date du règlement, le chemin dans lequel est stocké le fichier.
@@ -63,6 +64,18 @@ public class Facture {
     private String numFacture;
 
     /**
+     * Choix à faire pour la facturation (Salle, formateur, Ipéria, autre...)
+     * <p>
+     *     Ce champ est obligatoire pour permettre de catégoriser la facture et avoir un visuel sur le type de facture.
+     * </p>
+     */
+    @Column(name = "TYPE_FACTURE", nullable = false, length = 50)
+    @Size(min=3, max = 50)
+    @NotNull
+    @NotBlank
+    private String typeFacture;
+
+    /**
      * Libellé de la facture
      * <p>
      * Ce champ est obligatoire à la création de la facture et limité à 120 caractères.
@@ -86,19 +99,19 @@ public class Facture {
     private Float montantFacture;
 
     /**
-     * Date de la facture
+     * Date de la facture envoyée à Ipéria
      * <p>
-     * Ce champ est obligatoire à la création de la facture.
+     * Ce champ est optionnel car la facture n'est pas forcément dédiée à Ipéria
      * </p>
      */
-    @Column(name = "DATE_FACTURE", nullable = false)
+    @Column(name = "DATE_ENVOI_FACTURE", nullable = false)
     @NotNull
     private LocalDate dateFacture;
 
     /**
-     * Date du règlement de la facture
+     * Date du règlement de la facture (formateur, salle, autre...)
      * <p>
-     * Ce champ est optionnel à la création de la facture.
+     * Ce champ est optionnel car la facture ne concerne pas forcément un règlement.
      * </p>
      */
     @Column(name = "DATE_REGLEMENT_FACTURE")

@@ -54,20 +54,21 @@ public class SessionFormation {
     /**
      * Numéro AF (Yoda) unique de la session de formation.
      * <p>
-     * Ce numéro est obligatoire et doit être unique pour chaque session.
+     * Ce numéro n'est pas obligatoire, car à la création d'une session de formation pour l'année suivante, il
+     * n'existe pas encore de numéro attribué par Ipéria. Ce sera
      * Il est limité à 30 caractères
      * </p>
      */
-    @Column(name = "NO_AF_YODA", unique = true, nullable = false, length = 30)
-    @Size(min=3, max = 30)
-    @NotNull
-    @NotBlank
+    @Column(name = "NO_AF_YODA", unique = true, length = 30)
+    @Size(max = 30)
     private Long noYoda;
 
     /**
      * Libellé de la session de formation.
      * <p>
-     * Généralement composé du thème et de la date du premier jour de la session.
+     * Formation en présentiel : composé du thème, des premières lettres du lieu de formation et de la date du premier
+     * jour de la session.
+     * Formation en distanciel : composé du
      * Ce champ est optionnel à la création de la session de formation et limité à 50 caractères.
      * </p>
      */
@@ -178,13 +179,13 @@ public class SessionFormation {
     /**
      * SessionFormationDistanciel associée à SessionFormation
      * <p>
-     * Association unidirectionnelle OneToOne avec {@link fr.mediaskol.projet.bo.sessionFormationDistanciel.SessionFormationDistanciel}
+     * Association unidirectionnelle OneToOne avec {@link SessionFormationDistanciel}
      * La suppression de la session de formation entraîne la suppression de la session de formation en distanciel
      * (cascade et orphanRemoval).
      * </p>
      */
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    @JoinColumn(name = "FIN_SESSION_FORMATION_ID")
+    @JoinColumn(name = "SESSION_FOAD_ID")
     @NotNull
     private SessionFormationDistanciel sessionFormationDistanciel;
 }

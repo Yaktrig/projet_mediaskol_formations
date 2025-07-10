@@ -34,8 +34,7 @@ import java.time.LocalDate;
 @Table(name = "SESSION_FIN_FORMATION")
 public class SessionFinFormation {
 
-    // Todo message validations + vérifier si toutes les associations ok + test association ?
-    // Todo créer la bo
+    // Todo message validations  test association ?
 
     /**
      * Identifiant unique de la fin de session de formation.
