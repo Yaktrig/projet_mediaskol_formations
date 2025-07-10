@@ -1,6 +1,7 @@
 package fr.mediaskol.projet.bo.SessionFormation;
 
 
+import fr.mediaskol.projet.bo.apprenant.SessionApprenant;
 import fr.mediaskol.projet.bo.departement.Departement;
 import fr.mediaskol.projet.bo.formation.Formation;
 import fr.mediaskol.projet.bo.sessionFormationDistanciel.SessionFormationDistanciel;
@@ -14,6 +15,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Représente une session de formation (en présentiel, en distanciel) dans le système de gestion.
@@ -68,7 +71,7 @@ public class SessionFormation {
      * <p>
      * Formation en présentiel : composé du thème, des premières lettres du lieu de formation et de la date du premier
      * jour de la session.
-     * Formation en distanciel : composé du
+     * Formation en distanciel : composé du thème, FOAD et date du premier jour de la session
      * Ce champ est optionnel à la création de la session de formation et limité à 50 caractères.
      * </p>
      */
@@ -188,4 +191,43 @@ public class SessionFormation {
     @JoinColumn(name = "SESSION_FOAD_ID")
     @NotNull
     private SessionFormationDistanciel sessionFormationDistanciel;
+
+    /**
+     * Liste des inscriptions des apprenants à cette session de formation.
+     * <p>
+     * Association bidirectionnelle One-to-Many avec l'entité {@link SessionApprenant}.
+     * Permet d'accéder à tous les apprenants inscrits à cette session de formation.
+     * La suppression d'une inscription retire le lien entre la session et l'apprenant concerné.
+     * </p>
+     */
+    @OneToMany(mappedBy = "sessionFormation", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @Column(name="APPRENANT_ID")
+    private @Builder.Default List<SessionApprenant> apprenants = new ArrayList<>();
+
+    /**
+     * Ajoute une inscription d'apprenant à cette session de formation.
+     * <p>
+     * Met à jour la relation bidirectionnelle entre la session et l'inscription.
+     * </p>
+     *
+     * @param sessionApprenant l'inscription à ajouter
+     */
+    public void addSessionApprenant(SessionApprenant sessionApprenant) {
+        apprenants.add(sessionApprenant);
+        sessionApprenant.setSessionFormation(this);
+    }
+
+    /**
+     * Retire une inscription d'apprenant de cette session de formation.
+     * <p>
+     * Met à jour la relation bidirectionnelle en supprimant le lien avec la session.
+     * </p>
+     *
+     * @param sessionApprenant l'inscription à retirer
+     */
+    public void removeSessionApprenant(SessionApprenant sessionApprenant) {
+        apprenants.remove(sessionApprenant);
+        sessionApprenant.setSessionFormation(null);
+    }
+
 }

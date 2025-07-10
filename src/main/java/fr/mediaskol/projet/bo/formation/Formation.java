@@ -1,5 +1,6 @@
 package fr.mediaskol.projet.bo.formation;
 
+import fr.mediaskol.projet.bo.departement.Departement;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -31,7 +32,7 @@ import lombok.NoArgsConstructor;
 @Table(name="FORMATION")
 public class Formation {
 
-    // Todo message validations + test association ?
+    // Todo message validations + test association avec TypeFormation (ManyToOne)
 
     /**
      * Identifiant unique de la formation.
@@ -48,10 +49,10 @@ public class Formation {
     /**
      * Thème de la formation.
      * <p>
-     * Ce champ est obligatoire à la création de la formation, il est unique et limité à 20 caractères.
+     * Ce champ est obligatoire à la création de la formation, il est limité à 20 caractères.
      * </p>
      */
-    @Column(name = "THEME_FORMATION", nullable = false, unique=true, length = 20)
+    @Column(name = "THEME_FORMATION", nullable = false, length = 20)
     @Size(min=3, max = 20)
     @NotNull
     @NotBlank
@@ -70,6 +71,24 @@ public class Formation {
     @NotBlank
     private String libelleFormation;
 
+
+    /**
+     * Type de formation qui est rattaché à la formation.
+     * <p>
+     * Association Many-to-One vers l'entité {@link TypeFormation}.
+     * Permet de centraliser les informations liées au type de formation (présentiel ou distanciel)
+     * et d'assurer l'intégrité des données. Plusieurs formations peuvent être associées au même type de formation.
+     * </p>
+     * <p>
+     * Cette relation est obligatoire : une formation doit avoir un type de formation renseigné.
+     * La récupération du type de formation est effectuée en mode paresseux (lazy loading).
+     * </p>
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "TYPE_FORMATION_ID", nullable = false)
+    @NotNull
+    @NotBlank
+    private TypeFormation typeFormation;
 
 
 }

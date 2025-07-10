@@ -116,4 +116,8 @@ public class SessionApprenant {
     @JoinColumn(name = "SESSION_FORMATION_ID", nullable = false)
     @NotNull(message = "") // Todo message de validation
     private SessionFormation sessionFormation;
+
+
+
+
 }

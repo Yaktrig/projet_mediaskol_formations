@@ -98,14 +98,14 @@ public class NoteDeFrais {
     private LocalDate dateReglementNoteDeFrais;
 
 
-    /**
-     * Date de l'enregistrement de la note de frais
-     * <p>
-     * Ce champ est optionnel à la création de la note de frais.
-     * </p>
-     */
-    @Column(name = "NB_KM")
-    private Float nbKm;
+//    /**
+//     * Date de l'enregistrement de la note de frais
+//     * <p>
+//     * Ce champ est optionnel à la création de la note de frais.
+//     * </p>
+//     */
+//    @Column(name = "NB_KM")
+//    private Float nbKm;
 
 
     /**

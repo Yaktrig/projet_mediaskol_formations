@@ -58,8 +58,8 @@ public class Apprenant extends Personne {
      * </p>
      */
     @Column(name = "DATE_NAISSANCE", nullable = false)
-    @NotNull(message="")
-    @NotBlank(message="")
+    @NotNull(message = "")
+    @NotBlank(message = "")
     private LocalDate dateNaissance;
 
     /**
@@ -83,16 +83,31 @@ public class Apprenant extends Personne {
      * </ul>
      */
     @Column(name = "NUM_PASSEPORT", nullable = false, length = 120, unique = true)
-    @Size(min=3, max = 120)
+    @Size(min = 3, max = 120)
     @NotNull
     @NotBlank
     private String noPasseport;
 
     /**
+     * Statut actuel du numéro de passeport de l'apprenant.
+     * <p>
+     * Ce champ indique l'état d'avancement de la gestion du numéro de passeport (créé, à créer, à envoyer).
+     * La valeur est stockée en base sous forme de chaîne de caractères grâce à {@link EnumType#STRING}.
+     * </p>
+     * <p>
+     * Le statut toujours obligatoire
+     * </p>
+     */
+    @Enumerated(EnumType.STRING)
+    @Column(name = "STATUT_NUM_PASSEPORT", nullable = false)
+    @NotNull
+    private StatutNumPasseport statutNumPasseport;
+
+    /**
      * Commentaire qui permet d'ajouter des informations sur l'apprenant en général
      */
     @Column(name = "COMMENTAIRE_APPRENANT", nullable = true, length = 2000)
-    @Size(min=3, max = 2000)
+    @Size(min = 3, max = 2000)
     @NotNull
     @NotBlank
     private String commentaireApprenant;
@@ -112,7 +127,7 @@ public class Apprenant extends Personne {
     /**
      * Liste des types de formations suivies par l'apprenant (Présentiel ou Distanciel actuellement)
      * <p>
-     *  Association Many-to-Many avec l'entité {@link TypeFormation} via la table de jointure <b>TYPE_FORMATION_SUIVIE</b>.
+     * Association Many-to-Many avec l'entité {@link TypeFormation} via la table de jointure <b>TYPE_FORMATION_SUIVIE</b>.
      *  <ul>
      *      <li>Aucune cascade : la suppression d'un apprenant ne supprime pas les types de formation existants.</li>
      *      <li>Le chargement est paresseux (LAZY) pour optimiser les performances.</li>
@@ -128,19 +143,44 @@ public class Apprenant extends Personne {
     @ToString.Exclude
     private @Builder.Default List<TypeFormation> typeFormationSuivie = new ArrayList<>();
 
-
     /**
-     * Statut actuel du numéro de passeport de l'apprenant.
+     * Liste des inscriptions de l'apprenant aux différentes sessions de formation.
      * <p>
-     * Ce champ indique l'état d'avancement de la gestion du numéro de passeport (créé, à créer, à envoyer).
-     * La valeur est stockée en base sous forme de chaîne de caractères grâce à {@link EnumType#STRING}.
-     * </p>
-     * <p>
-     * Le statut toujours obligatoire
+     * Association bidirectionnelle One-to-Many avec l'entité {@link SessionApprenant}.
+     * Permet d'accéder à toutes les participations de l'apprenant à des sessions de formation.
+     * La suppression d'une inscription retire le lien entre l'apprenant et la session correspondante.
      * </p>
      */
-    @Enumerated(EnumType.STRING)
-    @Column(name="STATUT_NUM_PASSEPORT", nullable = false)
-    @NotNull
-    private StatutNumPasseport statutNumPasseport;
+    @OneToMany(mappedBy = "apprenant", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @Column(name="APPRENANT_ID")
+    private @Builder.Default List<SessionApprenant> sessions = new ArrayList<>();
+
+
+    /**
+     * Ajoute une inscription à la liste des sessions de l'apprenant.
+     * <p>
+     * Met à jour la relation bidirectionnelle entre l'apprenant et la session.
+     * </p>
+     *
+     * @param session l'inscription à ajouter
+     */
+    public void addSession(SessionApprenant session) {
+        sessions.add(session);
+        session.setApprenant(this);
+    }
+
+    /**
+     * Retire une inscription de la liste des sessions de l'apprenant.
+     * <p>
+     * Met à jour la relation bidirectionnelle en supprimant le lien avec l'apprenant.
+     * </p>
+     *
+     * @param session l'inscription à retirer
+     */
+    public void removeSession(SessionApprenant session) {
+        sessions.remove(session);
+        session.setApprenant(null);
+    }
+
+
 }
