@@ -1,7 +1,9 @@
 package fr.mediaskol.projet.bo.SessionFormation;
 
+
 import fr.mediaskol.projet.bo.departement.Departement;
 import fr.mediaskol.projet.bo.formation.Formation;
+import fr.mediaskol.projet.bo.sessionFormationDistanciel.SessionFormationDistanciel;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -159,4 +161,30 @@ public class SessionFormation {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "NUM_DEPARTEMENT")
     private Departement departement;
+
+    /**
+     * SessionFinFormation associée à SessionFormation
+     * <p>
+     * Association unidirectionnelle OneToOne avec {@link SessionFinFormation}
+     * La suppression de la session de formation entraîne la suppression de la fin de session de formation
+     * (cascade et orphanRemoval).
+     * </p>
+     */
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JoinColumn(name = "FIN_SESSION_FORMATION_ID")
+    @NotNull
+    private SessionFinFormation sessionFinFormation;
+
+    /**
+     * SessionFormationDistanciel associée à SessionFormation
+     * <p>
+     * Association unidirectionnelle OneToOne avec {@link fr.mediaskol.projet.bo.sessionFormationDistanciel.SessionFormationDistanciel}
+     * La suppression de la session de formation entraîne la suppression de la session de formation en distanciel
+     * (cascade et orphanRemoval).
+     * </p>
+     */
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JoinColumn(name = "FIN_SESSION_FORMATION_ID")
+    @NotNull
+    private SessionFormationDistanciel sessionFormationDistanciel;
 }

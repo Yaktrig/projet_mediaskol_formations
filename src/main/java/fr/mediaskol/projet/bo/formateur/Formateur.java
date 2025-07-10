@@ -39,7 +39,7 @@ import java.util.List;
 @Table(name = "FORMATEUR")
 public class Formateur extends Personne {
 
-    // Todo message validations + vérifier si toutes les associations ok + test association ?
+    // Todo message validation + test association
     /**
      * Numéro de téléphone portable du formateur.
      * <p>

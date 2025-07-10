@@ -32,7 +32,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "TYPE_FORMATION")
 public class TypeFormation {
 
-    // Todo message validations + vérifier si toutes les associations ok + test association ?
+    // Todo message validation + test association
 
     /**
      * Identifiant unique du type de formation.
