@@ -38,7 +38,7 @@ import java.util.List;
 @Table(name = "APPRENANT")
 public class Apprenant extends Personne {
 
-    // Todo message validations + vérifier si toutes les associations ok + test association ?
+    // Todo test association
 
 
     /**

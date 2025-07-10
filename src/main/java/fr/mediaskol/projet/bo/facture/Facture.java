@@ -37,8 +37,7 @@ import java.time.LocalDate;
 @Table(name="FACTURE")
 public class Facture {
 
-    // Todo tester association à Formateur, Salle + message validation
-
+    // Todo tester association à Formateur, Salle
 
     /**
      * Identifiant unique de la facture

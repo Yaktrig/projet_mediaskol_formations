@@ -35,7 +35,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "DEPARTEMENT")
 public class Departement {
 
-    // Todo message validation
+
 
     /**
      * Identifiant unique du département.
