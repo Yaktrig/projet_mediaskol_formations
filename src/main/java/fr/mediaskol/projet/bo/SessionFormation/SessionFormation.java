@@ -9,10 +9,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -190,41 +187,7 @@ public class SessionFormation {
     @JoinColumn(name = "SESSION_FOAD_ID")
     private SessionFormationDistanciel sessionFormationDistanciel;
 
-    /**
-     * Liste des inscriptions des apprenants à cette session de formation.
-     * <p>
-     * Association bidirectionnelle One-to-Many avec l'entité {@link SessionApprenant}.
-     * Permet d'accéder à tous les apprenants inscrits à cette session de formation.
-     * La suppression d'une inscription retire le lien entre la session et l'apprenant concerné.
-     * </p>
-     */
-    @OneToMany(mappedBy = "sessionFormation", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private @Builder.Default List<SessionApprenant> apprenants = new ArrayList<>();
 
-    /**
-     * Ajoute une inscription d'apprenant à cette session de formation.
-     * <p>
-     * Met à jour la relation bidirectionnelle entre la session et l'inscription.
-     * </p>
-     *
-     * @param sessionApprenant l'inscription à ajouter
-     */
-    public void addSessionApprenant(SessionApprenant sessionApprenant) {
-        apprenants.add(sessionApprenant);
-        sessionApprenant.setSessionFormation(this);
-    }
 
-    /**
-     * Retire une inscription d'apprenant de cette session de formation.
-     * <p>
-     * Met à jour la relation bidirectionnelle en supprimant le lien avec la session.
-     * </p>
-     *
-     * @param sessionApprenant l'inscription à retirer
-     */
-    public void removeSessionApprenant(SessionApprenant sessionApprenant) {
-        apprenants.remove(sessionApprenant);
-        sessionApprenant.setSessionFormation(null);
-    }
 
 }

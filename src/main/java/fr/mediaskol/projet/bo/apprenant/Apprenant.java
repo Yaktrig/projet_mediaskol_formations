@@ -138,43 +138,8 @@ public class Apprenant extends Personne {
     @ToString.Exclude
     private @Builder.Default List<TypeFormation> typeFormationSuivie = new ArrayList<>();
 
-    /**
-     * Liste des inscriptions de l'apprenant aux différentes sessions de formation.
-     * <p>
-     * Association bidirectionnelle One-to-Many avec l'entité {@link SessionApprenant}.
-     * Permet d'accéder à toutes les participations de l'apprenant à des sessions de formation.
-     * La suppression d'une inscription retire le lien entre l'apprenant et la session correspondante.
-     * </p>
-     */
-    @OneToMany(mappedBy = "apprenant", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private @Builder.Default List<SessionApprenant> sessionsApprenant = new ArrayList<>();
 
 
-    /**
-     * Ajoute une inscription à la liste des sessions de l'apprenant.
-     * <p>
-     * Met à jour la relation bidirectionnelle entre l'apprenant et la session.
-     * </p>
-     *
-     * @param inscriptionSession l'inscription à ajouter
-     */
-    public void addSession(SessionApprenant inscriptionSession) {
-        sessionsApprenant.add(inscriptionSession);
-        inscriptionSession.setApprenant(this);
-    }
-
-    /**
-     * Retire une inscription de la liste des sessions de l'apprenant.
-     * <p>
-     * Met à jour la relation bidirectionnelle en supprimant le lien avec l'apprenant.
-     * </p>
-     *
-     * @param inscriptionSession l'inscription à retirer
-     */
-    public void removeSession(SessionApprenant inscriptionSession) {
-        sessionsApprenant.remove(inscriptionSession);
-        inscriptionSession.setApprenant(null);
-    }
 
 
 }

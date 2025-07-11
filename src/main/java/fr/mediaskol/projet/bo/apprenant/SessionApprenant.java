@@ -83,6 +83,7 @@ public class SessionApprenant {
     private StatutSessionApprenant statutSessionApprenant;
 
 
+
     /**
      * Apprenant qui est rattaché la sessionApprenant.
      * <p>
@@ -116,8 +117,6 @@ public class SessionApprenant {
     @JoinColumn(name = "SESSION_FORMATION_ID", nullable = false)
     @NotNull(message = "{sessionApprenant.sessionFormation.notnull}")
     private SessionFormation sessionFormation;
-
-
 
 
 }
