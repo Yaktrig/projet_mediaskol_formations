@@ -48,7 +48,7 @@ public class Apprenant extends Personne {
      * </p>
      */
     @Column(name = "NUM_PORTABLE_APPRENANT", length = 10)
-    @Size(max = 10, message="{apprenant.numPortable.size}")
+    @Size(max = 10, message = "{apprenant.numPortable.size}")
     private String numPortable;
 
     /**
@@ -59,7 +59,6 @@ public class Apprenant extends Personne {
      */
     @Column(name = "DATE_NAISSANCE", nullable = false)
     @NotNull(message = "{apprenant.dateNaissance.notnull}")
-    @NotBlank(message = "{apprenant.dateNaissance.notblank}")
     private LocalDate dateNaissance;
 
     /**
@@ -111,14 +110,14 @@ public class Apprenant extends Personne {
 
     /**
      * Adresse associée à l'apprenant
-     * <p>
-     * Association unidirectionnelle OneToOne avec {@link Adresse}
-     * La suppression de l'apprenant entraîne la suppression de son adresse (cascade et orphanRemoval)
-     * </p>
+     * <ul>
+     *  <li>Association unidirectionnelle OneToOne avec {@link Adresse}</li>
+     *  <li>La suppression de l'apprenant entraîne la suppression de son adresse (cascade et orphanRemoval)</li>
+     *  <li>Optionnel, on n'oblige pas à créer l'adresse du formateur, lors de sa création, peut être fait par la suite</li>
+     * </ul>
      */
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "ADRESSE_ID")
-    @NotNull(message = "{apprenant.adresse.notnull}")
     private Adresse adresse;
 
     /**

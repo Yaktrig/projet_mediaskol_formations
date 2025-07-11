@@ -53,7 +53,7 @@ public class Formateur extends Personne {
     /**
      * Statut du formateur.
      * <p>
-     * Ce champ est obligatoire et limité à 2 caractères.
+     * Ce champ est obligatoire et est compris entre 1 et 10 caractères.
      * </p>
      * Indique si le formateur est salarié ou auto-entrepreneur.
      *  <ul>
@@ -97,12 +97,12 @@ public class Formateur extends Personne {
      *   <li>La composition est assurée : le formateur et son adresse partagent le même cycle de vie.</li>
      *   <li>La suppression d'un formateur entraîne automatiquement la suppression de son adresse (cascade et orphanRemoval).</li>
      *   <li>Le chargement de l'adresse est immédiat (EAGER).</li>
+     *   <li>Optionnel, on n'oblige pas à créer l'adresse du formateur, lors de sa création, peut être fait par la suite</li>
      * </ul>
      * </p>
      */
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "ADRESSE_ID")
-    @NotNull(message = "{formateur.adresse.notnull}")
     private Adresse adresse;
 
     /**

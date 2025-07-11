@@ -2,6 +2,7 @@ package fr.mediaskol.projet.association;
 
 
 import fr.mediaskol.projet.bo.adresse.Adresse;
+import fr.mediaskol.projet.bo.departement.Departement;
 import fr.mediaskol.projet.bo.formateur.Formateur;
 import fr.mediaskol.projet.dal.FormateurRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +39,18 @@ public class TestOneToOneUniFormateurAdresse {
     @Test
     public void test_save_formateur_OneToOneUni() {
 
+        // Création d'un nouveau département avec le builder Lombok
+        final Departement cotesdarmor = Departement
+                .builder()
+                .idDepartement(22L)
+                .nomDepartement("Côtes d'Armor")
+                .couleurDepartement("#9AC8EB")
+                .region("Bretagne")
+                .build();
+
+        // Persistence du département
+        entityManager.persist(cotesdarmor);
+
         // Création d'une nouvelle adresse avec le builder Lombok
         final Adresse adresseCoco = Adresse
                 .builder()
@@ -45,6 +58,12 @@ public class TestOneToOneUniFormateurAdresse {
                 .codePostal("22100")
                 .ville("Quévert")
                 .build();
+
+        // Association du département à l'adresse
+        adresseCoco.setDepartement(cotesdarmor);
+
+        // Persistence de l'adresse
+        entityManager.persist(adresseCoco);
 
         // Création d'un formateur avec le builder Lombok
         final Formateur coco = Formateur
@@ -79,13 +98,31 @@ public class TestOneToOneUniFormateurAdresse {
     @Test
     public void test_delete_formateur_OneToOneUni() {
 
-        // Création d'une adresse avec le builder Lombok
+        // Création d'un nouveau département avec le builder Lombok
+        final Departement cotesdarmor = Departement
+                .builder()
+                .idDepartement(22L)
+                .nomDepartement("Côtes d'Armor")
+                .couleurDepartement("#9AC8EB")
+                .region("Bretagne")
+                .build();
+
+        // Persistence du département
+        entityManager.persist(cotesdarmor);
+
+        // Création d'une nouvelle adresse avec le builder Lombok
         final Adresse adresseCoco = Adresse
                 .builder()
                 .rue("20 rue des Lilas")
                 .codePostal("22100")
                 .ville("Quévert")
                 .build();
+
+        // Association du département à l'adresse
+        adresseCoco.setDepartement(cotesdarmor);
+
+        // Persistence de l'adresse
+        entityManager.persist(adresseCoco);
 
         // Création d'un formateur avec le builder Lombok
         final Formateur coco = Formateur
@@ -127,13 +164,31 @@ public class TestOneToOneUniFormateurAdresse {
     @Test
     public void test_orphanRemoval_formateur_OneToOneUni() {
 
-        // Création d'une adresse avec le builder Lombok
+        // Création d'un nouveau département avec le builder Lombok
+        final Departement cotesdarmor = Departement
+                .builder()
+                .idDepartement(22L)
+                .nomDepartement("Côtes d'Armor")
+                .couleurDepartement("#9AC8EB")
+                .region("Bretagne")
+                .build();
+
+        // Persistence du département
+        entityManager.persist(cotesdarmor);
+
+        // Création d'une nouvelle adresse avec le builder Lombok
         final Adresse adresseCoco = Adresse
                 .builder()
                 .rue("20 rue des Lilas")
                 .codePostal("22100")
                 .ville("Quévert")
                 .build();
+
+        // Association du département à l'adresse
+        adresseCoco.setDepartement(cotesdarmor);
+
+        // Persistence de l'adresse
+        entityManager.persist(adresseCoco);
 
         // Création d'un formateur avec le builder Lombok
         final Formateur coco = Formateur

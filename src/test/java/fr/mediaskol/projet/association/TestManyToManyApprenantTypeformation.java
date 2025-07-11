@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static fr.mediaskol.projet.bo.apprenant.StatutNumPasseport.NUM_PASSEPORT_CREE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -87,6 +88,7 @@ public class TestManyToManyApprenantTypeformation {
                 .dateNaissance(LocalDate.parse("2000-12-12"))
                 .apprenantActif(true)
                 .numPasseport("A123456")
+                .statutNumPasseport(NUM_PASSEPORT_CREE)
                 .commentaireApprenant("Fais des bonds partout")
                 .build();
 
@@ -137,6 +139,7 @@ public class TestManyToManyApprenantTypeformation {
                 .dateNaissance(LocalDate.parse("2000-12-12"))
                 .apprenantActif(true)
                 .numPasseport("A123456")
+                .statutNumPasseport(NUM_PASSEPORT_CREE)
                 .commentaireApprenant("Fais des bonds partout")
                 .build();
 

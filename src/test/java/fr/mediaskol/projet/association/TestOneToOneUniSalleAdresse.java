@@ -2,6 +2,7 @@ package fr.mediaskol.projet.association;
 
 
 import fr.mediaskol.projet.bo.adresse.Adresse;
+import fr.mediaskol.projet.bo.departement.Departement;
 import fr.mediaskol.projet.bo.salle.Salle;
 import fr.mediaskol.projet.dal.SalleRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -37,6 +38,18 @@ public class TestOneToOneUniSalleAdresse {
     @Test
     public void test_save_salle_OneToOneUni() {
 
+        // Création d'un département avec le builder Lombok
+        final Departement finistere = Departement
+                .builder()
+                .idDepartement(29L)
+                .nomDepartement("Finistère")
+                .couleurDepartement("#CE6A6B")
+                .region("Bretagne")
+                .build();
+
+        // Persistence du département
+        entityManager.persist(finistere);
+
         // Création d'une adresse avec le builder Lombok
         final Adresse adressePlovan = Adresse
                 .builder()
@@ -44,6 +57,12 @@ public class TestOneToOneUniSalleAdresse {
                 .codePostal("29720")
                 .ville("Plovan")
                 .build();
+
+        // Association entre le département et l'adresse
+        adressePlovan.setDepartement(finistere);
+
+        // Persistence de l'adresse
+        entityManager.persist(adressePlovan);
 
         // Création d'une salle avec le builder Lombok
         final Salle sallePlovan = Salle
@@ -73,6 +92,18 @@ public class TestOneToOneUniSalleAdresse {
     @Test
     public void test_delete_salle_OneToOneUni() {
 
+        // Création d'un département avec le builder Lombok
+        final Departement finistere = Departement
+                .builder()
+                .idDepartement(29L)
+                .nomDepartement("Finistère")
+                .couleurDepartement("#CE6A6B")
+                .region("Bretagne")
+                .build();
+
+        // Persistence du département
+        entityManager.persist(finistere);
+
         // Création d'une adresse avec le builder Lombok
         final Adresse adressePlovan = Adresse
                 .builder()
@@ -80,6 +111,12 @@ public class TestOneToOneUniSalleAdresse {
                 .codePostal("29720")
                 .ville("Plovan")
                 .build();
+
+        // Association entre le département et l'adresse
+        adressePlovan.setDepartement(finistere);
+
+        // Persistence de l'adresse
+        entityManager.persist(adressePlovan);
 
         // Création d'une salle avec le builder Lombok
         final Salle sallePlovan = Salle
@@ -116,6 +153,18 @@ public class TestOneToOneUniSalleAdresse {
     @Test
     public void test_orphanRemoval_salle_OneToOneUni() {
 
+        // Création d'un département avec le builder Lombok
+        final Departement finistere = Departement
+                .builder()
+                .idDepartement(29L)
+                .nomDepartement("Finistère")
+                .couleurDepartement("#CE6A6B")
+                .region("Bretagne")
+                .build();
+
+        // Persistence du département
+        entityManager.persist(finistere);
+
         // Création d'une adresse avec le builder Lombok
         final Adresse adressePlovan = Adresse
                 .builder()
@@ -123,6 +172,12 @@ public class TestOneToOneUniSalleAdresse {
                 .codePostal("29720")
                 .ville("Plovan")
                 .build();
+
+        // Association entre le département et l'adresse
+        adressePlovan.setDepartement(finistere);
+
+        // Persistence de l'adresse
+        entityManager.persist(adressePlovan);
 
         // Création d'une salle avec le builder Lombok
         final Salle sallePlovan = Salle

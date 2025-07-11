@@ -91,7 +91,6 @@ public class Adresse {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "NUM_DEPARTEMENT", nullable = false)
     @NotNull(message = "{adresse.departement.notnull}")
-    @NotBlank(message = "{adresse.departement.notblank}")
     private Departement departement;
 
 }

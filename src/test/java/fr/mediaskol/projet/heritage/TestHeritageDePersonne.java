@@ -20,8 +20,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static fr.mediaskol.projet.bo.apprenant.StatutNumPasseport.NUM_PASSEPORT_A_CREER;
 import static org.assertj.core.api.Assertions.assertThat;
-
 
 
 /**
@@ -71,8 +71,9 @@ public class TestHeritageDePersonne {
                 .nom("Le tigre")
                 .prenom("Tigrou")
                 .email("tigrou.letigre@gmail.fr")
-                .statutApprenant(true)
+                .apprenantActif(true)
                 .dateNaissance(LocalDate.parse("2000-12-12"))
+                .statutNumPasseport(NUM_PASSEPORT_A_CREER)
                 .build());
 
 
@@ -81,7 +82,8 @@ public class TestHeritageDePersonne {
                 .nom("Lapin")
                 .prenom("Coco")
                 .email("coco.lapin@gmail.fr")
-                .statutFormateur("AE")
+                .statutFormateur("AE") // accès via la méthode, pas le champ
+               // .adresse(adresseCoco)
                 .build());
 
         personnes.add(Salarie
