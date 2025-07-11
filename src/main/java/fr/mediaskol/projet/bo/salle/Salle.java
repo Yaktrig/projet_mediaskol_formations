@@ -32,7 +32,6 @@ import lombok.*;
 @Table(name = "SALLE")
 public class Salle {
 
-    // Todo test association ?
 
     /**
      * Identifiant unique de la salle.

@@ -3,8 +3,10 @@ package fr.mediaskol.projet.association;
 
 import fr.mediaskol.projet.bo.formation.Formation;
 import fr.mediaskol.projet.bo.SessionFormation.SessionFormation;
+import fr.mediaskol.projet.bo.formation.TypeFormation;
 import fr.mediaskol.projet.dal.FormationRepository;
 import fr.mediaskol.projet.dal.SessionFormationRepository;
+import fr.mediaskol.projet.dal.TypeFormationRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 // Configure un contexte Spring Boot limité à la couche JPA
 @Slf4j
 @DataJpaTest
-public class TestManyToOneSessionFDFormation {
+public class TestManyToOneSessionFOADFormation {
 
     // Permet des opérations avancées sur l'EntityManager pour les tests
     @Autowired
@@ -45,26 +48,53 @@ public class TestManyToOneSessionFDFormation {
     private Formation sauveteurSecouristeRecyclage;
     private Formation comprendreLesEmotions;
 
+    // Liste utilisée pour stocker les objets Formation pré-chargés en base pour les tests
+    private List<Formation> listeFormationDB = new ArrayList<>();
+
+    private TypeFormation distanciel;
+
+    private TypeFormation presentiel;
+    @Autowired
+    private TypeFormationRepository typeFormationRepository;
+
     @BeforeEach
     public void initFormations() {
+
+        distanciel = TypeFormation
+                .builder()
+                .libelleTypeFormation("Distanciel")
+                .build();
+
+
+        presentiel = TypeFormation
+                .builder()
+                .libelleTypeFormation("Présentiel")
+                .build();
+
+        typeFormationRepository.save(distanciel);
+        typeFormationRepository.save(presentiel);
+
+
         sauveteurSecouristeInitial = Formation
                 .builder()
                 .themeFormation("MISST")
                 .libelleFormation("Sauveteur secouriste du travail (SST initial)")
+                .typeFormation(presentiel)
                 .build();
 
         sauveteurSecouristeRecyclage = Formation
                 .builder()
                 .themeFormation("MIMACSST")
                 .libelleFormation("Recyclage sauveteur secouriste du travail")
+                .typeFormation(presentiel)
                 .build();
 
         comprendreLesEmotions = Formation
                 .builder()
                 .themeFormation("MICE")
                 .libelleFormation("Comprendre les émotions de l'enfant pour mieux l'accompagner au quotidien")
+                .typeFormation(distanciel)
                 .build();
-
 
 
         formationRepository.save(sauveteurSecouristeInitial);
@@ -74,13 +104,15 @@ public class TestManyToOneSessionFDFormation {
 
     // Sauvegarde d'une session de formation et de sa formation
     @Test
-    public void test_save_session_distanciel(){
+    public void test_save_session_distanciel() {
 
         // Création d'une nouvelle session de formation avec le builder Lombok
         final SessionFormation sessionMICE = SessionFormation
                 .builder()
                 .noYoda("123456")
                 .libelleSessionFormation("MICE24052025")
+                .dateDebutSession(LocalDate.parse("2025-01-01"))
+                .nbHeureSession(21)
                 .build();
 
         // Association ManyToOne entre la session et la formation
@@ -102,14 +134,14 @@ public class TestManyToOneSessionFDFormation {
 
     //
     @Test
-    public void test_find_all(){
+    public void test_find_all() {
 
         // Récupération des données de la méthode jeuDeDonnees()
         List<SessionFormation> sessionFormations = jeuDeDonnees();
 
         // Sauvegarde du jeu de données dans la base
         sessionFormations.forEach(session -> {
-            entityManager.persist(session);
+            sessionFormationRepository.save(session);
             assertThat(session.getIdSessionFormation()).isGreaterThan(0);
         });
 
@@ -125,13 +157,15 @@ public class TestManyToOneSessionFDFormation {
 
 
     @Test
-    public void test_delete_session_distanciel(){
+    public void test_delete_session_distanciel() {
 
         // Création d'une nouvelle session avec le builder Lombok
         final SessionFormation sessionMICE = SessionFormation
                 .builder()
                 .noYoda("123456")
                 .libelleSessionFormation("MICE24052025")
+                .dateDebutSession(LocalDate.parse("2025-01-01"))
+                .nbHeureSession(21)
                 .build();
 
         // Association ManyToOne entre la session et la formation
@@ -139,7 +173,7 @@ public class TestManyToOneSessionFDFormation {
 
         // Persistance de la session dans la base de test
         final SessionFormation sessionMICEDB = sessionFormationRepository.save(sessionMICE);
-        entityManager.flush();
+
 
         // Vérification s'il y a au moins un identifiant dans SessionFormation, s'il n'est pas null,
         // et si sa formation est égale à la formation sauveteurSecouristeRecyclage
@@ -172,16 +206,22 @@ public class TestManyToOneSessionFDFormation {
                 .formation(sauveteurSecouristeInitial)
                 .noYoda("123456")
                 .libelleSessionFormation("MICE24052025")
+                .dateDebutSession(LocalDate.parse("2025-01-01"))
+                .nbHeureSession(21)
                 .build());
         sessionsFormation.add(SessionFormation.builder()
                 .formation(sauveteurSecouristeRecyclage)
                 .noYoda("234567")
                 .libelleSessionFormation("MICE20092025")
+                .dateDebutSession(LocalDate.parse("2025-01-01"))
+                .nbHeureSession(14)
                 .build());
         sessionsFormation.add(SessionFormation.builder()
                 .formation(comprendreLesEmotions)
                 .noYoda("345678")
                 .libelleSessionFormation("MISST24052025")
+                .dateDebutSession(LocalDate.parse("2025-01-01"))
+                .nbHeureSession(21)
                 .build());
 
         return sessionsFormation;

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 // Configure un contexte Spring Boot limité à la couche JPA
 @Slf4j
 @DataJpaTest
-public class TestManyToOneSessionFPDepartement {
+public class TestManyToOneSessionFOPDepartement {
 
     // Permet des opérations avancées sur l'EntityManager pour les tests
     @Autowired
@@ -98,6 +99,8 @@ public class TestManyToOneSessionFPDepartement {
                 .builder()
                 .noYoda("123456")
                 .libelleSessionFormation("MICE24052025")
+                .dateDebutSession(LocalDate.parse("2025-01-01"))
+                .nbHeureSession(21)
                 .build();
 
         // Association ManyToOne entre la session et le département
@@ -126,7 +129,7 @@ public class TestManyToOneSessionFPDepartement {
 
         // Sauvegarde du jeu de données dans la base
         sessionFormations.forEach(session -> {
-            entityManager.persist(session);
+           sessionFormationRepository.save(session);
             assertThat(session.getIdSessionFormation()).isGreaterThan(0);
         });
 
@@ -148,6 +151,8 @@ public class TestManyToOneSessionFPDepartement {
                 .builder()
                 .noYoda("123456")
                 .libelleSessionFormation("MICE24052025")
+                .dateDebutSession(LocalDate.parse("2025-01-01"))
+                .nbHeureSession(21)
                 .build();
 
         // Association ManyToOne entre la session et le département
@@ -188,16 +193,22 @@ public class TestManyToOneSessionFPDepartement {
                 .departement(illeetvilaine)
                 .noYoda("123456")
                 .libelleSessionFormation("MICE24052025")
+                .dateDebutSession(LocalDate.parse("2025-01-01"))
+                .nbHeureSession(14)
                 .build());
         sessionsFormation.add(SessionFormation.builder()
                 .departement(morbihan)
                 .noYoda("234567")
                 .libelleSessionFormation("MICE20092025")
+                .dateDebutSession(LocalDate.parse("2025-02-01"))
+                .nbHeureSession(14)
                 .build());
         sessionsFormation.add(SessionFormation.builder()
                 .departement(cotesdarmor)
                 .noYoda("345678")
                 .libelleSessionFormation("MISST24052025")
+                .dateDebutSession(LocalDate.parse("2025-03-01"))
+                .nbHeureSession(21)
                 .build());
         return sessionsFormation;
     }

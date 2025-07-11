@@ -37,8 +37,6 @@ import java.util.List;
 @Table(name = "APPRENANT")
 public class Apprenant extends Personne {
 
-    // Todo test association
-
 
     /**
      * Numéro de téléphone portable de l'apprenant

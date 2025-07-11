@@ -1,6 +1,5 @@
 package fr.mediaskol.projet.bo.sessionFormationDistanciel;
 
-import fr.mediaskol.projet.bo.SessionFormation.StatutSessionFinFormation;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -34,7 +33,7 @@ import java.time.LocalDate;
 @Table(name="SESSION_FOAD")
 public class SessionFormationDistanciel {
 
-    // Todo  test association
+
     /**
      * Identifiant unique de la session de formation en distanciel.
      * <p>

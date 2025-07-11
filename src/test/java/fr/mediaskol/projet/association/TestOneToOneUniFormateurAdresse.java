@@ -4,6 +4,8 @@ package fr.mediaskol.projet.association;
 import fr.mediaskol.projet.bo.adresse.Adresse;
 import fr.mediaskol.projet.bo.departement.Departement;
 import fr.mediaskol.projet.bo.formateur.Formateur;
+import fr.mediaskol.projet.dal.AdresseRepository;
+import fr.mediaskol.projet.dal.DepartementRepository;
 import fr.mediaskol.projet.dal.FormateurRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -30,9 +32,10 @@ public class TestOneToOneUniFormateurAdresse {
     // Repository Spring Data JPA pour Formateur
     @Autowired
     private FormateurRepository formateurRepository;
-
-
-
+    @Autowired
+    private DepartementRepository departementRepository;
+    @Autowired
+    private AdresseRepository adresseRepository;
 
 
     // Sauvegarde d'un formateur et de son adresse
@@ -49,7 +52,7 @@ public class TestOneToOneUniFormateurAdresse {
                 .build();
 
         // Persistence du département
-        entityManager.persist(cotesdarmor);
+        departementRepository.save(cotesdarmor);
 
         // Création d'une nouvelle adresse avec le builder Lombok
         final Adresse adresseCoco = Adresse
@@ -63,7 +66,7 @@ public class TestOneToOneUniFormateurAdresse {
         adresseCoco.setDepartement(cotesdarmor);
 
         // Persistence de l'adresse
-        entityManager.persist(adresseCoco);
+        adresseRepository.save(adresseCoco);
 
         // Création d'un formateur avec le builder Lombok
         final Formateur coco = Formateur
@@ -108,7 +111,7 @@ public class TestOneToOneUniFormateurAdresse {
                 .build();
 
         // Persistence du département
-        entityManager.persist(cotesdarmor);
+        departementRepository.save(cotesdarmor);
 
         // Création d'une nouvelle adresse avec le builder Lombok
         final Adresse adresseCoco = Adresse
@@ -122,7 +125,8 @@ public class TestOneToOneUniFormateurAdresse {
         adresseCoco.setDepartement(cotesdarmor);
 
         // Persistence de l'adresse
-        entityManager.persist(adresseCoco);
+        adresseRepository.save(adresseCoco);
+
 
         // Création d'un formateur avec le builder Lombok
         final Formateur coco = Formateur
@@ -140,8 +144,7 @@ public class TestOneToOneUniFormateurAdresse {
         coco.setAdresse(adresseCoco);
 
         // Persistance du formateur dans la base de test
-        entityManager.persist(coco);
-        entityManager.flush();
+        formateurRepository.save(coco);
 
         // Vérification s'il y a au moins un identifiant dans Adresse
         assertThat(adresseCoco.getIdAdresse()).isGreaterThan(0);
@@ -174,7 +177,7 @@ public class TestOneToOneUniFormateurAdresse {
                 .build();
 
         // Persistence du département
-        entityManager.persist(cotesdarmor);
+        departementRepository.save(cotesdarmor);
 
         // Création d'une nouvelle adresse avec le builder Lombok
         final Adresse adresseCoco = Adresse
@@ -188,7 +191,7 @@ public class TestOneToOneUniFormateurAdresse {
         adresseCoco.setDepartement(cotesdarmor);
 
         // Persistence de l'adresse
-        entityManager.persist(adresseCoco);
+        adresseRepository.save(adresseCoco);
 
         // Création d'un formateur avec le builder Lombok
         final Formateur coco = Formateur
@@ -206,8 +209,8 @@ public class TestOneToOneUniFormateurAdresse {
         coco.setAdresse(adresseCoco);
 
         // Persistance du formateur dans la base de test
-        entityManager.persist(coco);
-        entityManager.flush();
+        formateurRepository.save(coco);
+
 
         // Vérification s'il y a au moins un identifiant dans Adresse
         assertThat(adresseCoco.getIdAdresse()).isGreaterThan(0);

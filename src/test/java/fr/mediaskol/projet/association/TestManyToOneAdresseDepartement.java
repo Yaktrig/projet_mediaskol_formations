@@ -123,7 +123,7 @@ public class TestManyToOneAdresseDepartement {
 
         // Sauvegarde du jeu de données dans la base
         adresses.forEach(adresse -> {
-            entityManager.persist(adresse);
+            adresseRepository.save(adresse);
             assertThat(adresse.getIdAdresse()).isGreaterThan(0);
         });
 

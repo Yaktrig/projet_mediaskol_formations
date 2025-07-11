@@ -4,6 +4,8 @@ package fr.mediaskol.projet.association;
 import fr.mediaskol.projet.bo.adresse.Adresse;
 import fr.mediaskol.projet.bo.departement.Departement;
 import fr.mediaskol.projet.bo.salle.Salle;
+import fr.mediaskol.projet.dal.AdresseRepository;
+import fr.mediaskol.projet.dal.DepartementRepository;
 import fr.mediaskol.projet.dal.SalleRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -32,6 +34,12 @@ public class TestOneToOneUniSalleAdresse {
     @Autowired
     private SalleRepository salleRepository;
 
+    @Autowired
+    private DepartementRepository departementRepository;
+
+    @Autowired
+    private AdresseRepository adresseRepository;
+
 
 
     // Sauvegarde d'une salle et de son adresse
@@ -48,7 +56,7 @@ public class TestOneToOneUniSalleAdresse {
                 .build();
 
         // Persistence du département
-        entityManager.persist(finistere);
+        departementRepository.save(finistere);
 
         // Création d'une adresse avec le builder Lombok
         final Adresse adressePlovan = Adresse
@@ -62,7 +70,7 @@ public class TestOneToOneUniSalleAdresse {
         adressePlovan.setDepartement(finistere);
 
         // Persistence de l'adresse
-        entityManager.persist(adressePlovan);
+        adresseRepository.save(adressePlovan);
 
         // Création d'une salle avec le builder Lombok
         final Salle sallePlovan = Salle
@@ -102,7 +110,7 @@ public class TestOneToOneUniSalleAdresse {
                 .build();
 
         // Persistence du département
-        entityManager.persist(finistere);
+        departementRepository.save(finistere);
 
         // Création d'une adresse avec le builder Lombok
         final Adresse adressePlovan = Adresse
@@ -116,7 +124,7 @@ public class TestOneToOneUniSalleAdresse {
         adressePlovan.setDepartement(finistere);
 
         // Persistence de l'adresse
-        entityManager.persist(adressePlovan);
+        adresseRepository.save(adressePlovan);
 
         // Création d'une salle avec le builder Lombok
         final Salle sallePlovan = Salle
@@ -129,8 +137,8 @@ public class TestOneToOneUniSalleAdresse {
         sallePlovan.setAdresse(adressePlovan);
 
         // Persistance de la salle dans la base de test
-        entityManager.persist(sallePlovan);
-        entityManager.flush();
+        salleRepository.save(sallePlovan);
+
 
         // Vérification s'il y a au moins un identifiant dans Adresse
         assertThat(adressePlovan.getIdAdresse()).isGreaterThan(0);
@@ -163,7 +171,7 @@ public class TestOneToOneUniSalleAdresse {
                 .build();
 
         // Persistence du département
-        entityManager.persist(finistere);
+        departementRepository.save(finistere);
 
         // Création d'une adresse avec le builder Lombok
         final Adresse adressePlovan = Adresse
@@ -177,7 +185,7 @@ public class TestOneToOneUniSalleAdresse {
         adressePlovan.setDepartement(finistere);
 
         // Persistence de l'adresse
-        entityManager.persist(adressePlovan);
+        adresseRepository.save(adressePlovan);
 
         // Création d'une salle avec le builder Lombok
         final Salle sallePlovan = Salle
@@ -190,8 +198,8 @@ public class TestOneToOneUniSalleAdresse {
         sallePlovan.setAdresse(adressePlovan);
 
         // Persistance de la salle dans la base de test
-        entityManager.persist(sallePlovan);
-        entityManager.flush();
+        salleRepository.save(sallePlovan);
+
 
         // Vérification s'il y a au moins un identifiant dans Adresse
         assertThat(adressePlovan.getIdAdresse()).isGreaterThan(0);

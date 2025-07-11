@@ -161,8 +161,8 @@ public class TestManyToManyApprenantTypeformation {
         log.info(tigrou.getTypeFormationSuivie().toString());
 
         // Persistance de l'apprenant dans la base de test
-        final Apprenant tigrouDB = entityManager.persist(tigrou);
-        entityManager.flush();
+        final Apprenant tigrouDB = apprenantRepository.save(tigrou);
+
 
         // Vérifie que l'apprenant a bien un identifiant et les types de formation sont associés
         assertThat(tigrouDB.getIdPersonne()).isGreaterThan(0);

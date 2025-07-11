@@ -4,7 +4,9 @@ package fr.mediaskol.projet.association;
 import fr.mediaskol.projet.bo.adresse.Adresse;
 import fr.mediaskol.projet.bo.apprenant.Apprenant;
 import fr.mediaskol.projet.bo.departement.Departement;
+import fr.mediaskol.projet.dal.AdresseRepository;
 import fr.mediaskol.projet.dal.ApprenantRepository;
+import fr.mediaskol.projet.dal.DepartementRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +35,10 @@ public class TestOneToOneUniApprenantAdresse {
     // Repository Spring Data JPA pour Apprenant
     @Autowired
     private ApprenantRepository apprenantRepository;
-
+    @Autowired
+    private AdresseRepository adresseRepository;
+    @Autowired
+    private DepartementRepository departementRepository;
 
 
     // Sauvegarde d'un apprenant et de son adresse
@@ -50,7 +55,7 @@ public class TestOneToOneUniApprenantAdresse {
                 .build();
 
         // Persistence du département
-        entityManager.persist(morbihan);
+       departementRepository.save(morbihan);
 
 
         // Création d'une nouvelle adresse avec le builder Lombok
@@ -65,7 +70,7 @@ public class TestOneToOneUniApprenantAdresse {
         adresseTigrou.setDepartement(morbihan);
 
         // Persistence de l'adresse
-        entityManager.persist(adresseTigrou);
+        adresseRepository.save(adresseTigrou);
 
         // Création d'un nouvel apprenant tigrou avec le builder Lombok
         final Apprenant tigrou = Apprenant
@@ -112,7 +117,7 @@ public class TestOneToOneUniApprenantAdresse {
                 .build();
 
         // Persistence du département
-        entityManager.persist(morbihan);
+       departementRepository.save(morbihan);
 
         // Création d'une adresse avec le builder Lombok
         final Adresse adresseTigrou = Adresse
@@ -126,7 +131,7 @@ public class TestOneToOneUniApprenantAdresse {
         adresseTigrou.setDepartement(morbihan);
 
         // Persistence de l'adresse
-        entityManager.persist(adresseTigrou);
+        adresseRepository.save(adresseTigrou);
 
 
         // Création de l'apprenant tigrou avec le builder Lombok
@@ -147,8 +152,7 @@ public class TestOneToOneUniApprenantAdresse {
         tigrou.setAdresse(adresseTigrou);
 
         // Persistance de l'apprenant dans la base de test
-        entityManager.persist(tigrou);
-        entityManager.flush();
+        apprenantRepository.save(tigrou);
 
         // Vérification s'il y a au moins un identifiant dans Adresse
         assertThat(adresseTigrou.getIdAdresse()).isGreaterThan(0);
@@ -181,7 +185,7 @@ public class TestOneToOneUniApprenantAdresse {
                 .build();
 
         // Persistence du département
-        entityManager.persist(morbihan);
+        departementRepository.save(morbihan);
 
 
         // Création d'une adresse avec le builder Lombok
@@ -196,7 +200,8 @@ public class TestOneToOneUniApprenantAdresse {
         adresseTigrou.setDepartement(morbihan);
 
         // Persistence de l'adresse
-        entityManager.persist(adresseTigrou);
+        adresseRepository.save(adresseTigrou);
+
 
         // Création d'un apprenant tigrou avec le builder Lombok
         final Apprenant tigrou = Apprenant
@@ -216,8 +221,8 @@ public class TestOneToOneUniApprenantAdresse {
         tigrou.setAdresse(adresseTigrou);
 
         // Persistance de l'apprenant dans la base de test
-        entityManager.persist(tigrou);
-        entityManager.flush();
+        apprenantRepository.save(tigrou);
+
 
         // Vérification s'il y a au moins un identifiant dans Adresse
         assertThat(adresseTigrou.getIdAdresse()).isGreaterThan(0);

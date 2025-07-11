@@ -154,8 +154,8 @@ public class TestManyToManyFormateurTypeformation {
         log.info(formateurCoco.getTypeFormationDispensee().toString());
 
         // Persistance du formateur dans la base de test
-        final Formateur formateurCocoDB = entityManager.persist(formateurCoco);
-        entityManager.flush();
+        final Formateur formateurCocoDB = formateurRepository.save(formateurCoco);
+
 
         // Vérifie que le formateur a bien un identifiant et les types de formation sont associés
         assertThat(formateurCocoDB.getIdPersonne()).isGreaterThan(0);

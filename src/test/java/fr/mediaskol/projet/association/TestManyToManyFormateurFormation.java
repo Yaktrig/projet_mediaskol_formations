@@ -3,8 +3,10 @@ package fr.mediaskol.projet.association;
 
 import fr.mediaskol.projet.bo.formateur.Formateur;
 import fr.mediaskol.projet.bo.formation.Formation;
+import fr.mediaskol.projet.bo.formation.TypeFormation;
 import fr.mediaskol.projet.dal.FormateurRepository;
 import fr.mediaskol.projet.dal.FormationRepository;
+import fr.mediaskol.projet.dal.TypeFormationRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,8 +41,16 @@ public class TestManyToManyFormateurFormation {
     @Autowired
     private FormationRepository formationRepository;
 
+    // Repository pour effectuer des opération CRUD sur l'entité TypeFormation
+
     // Liste utilisée pour stocker les objets Formation pré-chargés en base pour les tests
     private List<Formation> listeFormationDB = new ArrayList<>();
+
+    private TypeFormation distanciel;
+
+    private TypeFormation presentiel;
+    @Autowired
+    private TypeFormationRepository typeFormationRepository;
 
     /**
      * Méthode exécutée avant chaque test pour initialiser la base de données
@@ -48,22 +58,42 @@ public class TestManyToManyFormateurFormation {
      */
     @BeforeEach
     public void initFormations() {
+
+        distanciel = TypeFormation
+                .builder()
+                .libelleTypeFormation("Distanciel")
+                .build();
+
+
+
+        presentiel = TypeFormation
+                .builder()
+                .libelleTypeFormation("Présentiel")
+                .build();
+
+        typeFormationRepository.save(distanciel);
+        typeFormationRepository.save(presentiel);
+
+
         listeFormationDB.add(Formation
                 .builder()
                 .themeFormation("MISST")
                 .libelleFormation("Sauveteur secouriste du travail (SST initial)")
+                .typeFormation(presentiel)
                 .build());
 
         listeFormationDB.add(Formation
                 .builder()
                 .themeFormation("MICE")
                 .libelleFormation("Comprendre les émotions de l'enfant pour mieux l'accompagner au quotidien")
+                .typeFormation(distanciel)
                 .build());
 
         listeFormationDB.add(Formation
                 .builder()
                 .themeFormation("MIMACSST")
                 .libelleFormation("Recyclage sauveteur secouriste du travail")
+                .typeFormation(presentiel)
                 .build());
 
         // Persiste chaque formation et vérifie que l'identifiant a bien été généré
@@ -156,8 +186,7 @@ public class TestManyToManyFormateurFormation {
 
 
         // Persistance du formateur dans la base de test
-        final Formateur formateurCocoDB = entityManager.persist(formateurCoco);
-        entityManager.flush();
+        final Formateur formateurCocoDB = formateurRepository.save(formateurCoco);
 
         // Vérifie que le formateur a bien un identifiant et que les formations sont associées
         assertThat(formateurCocoDB.getIdPersonne()).isGreaterThan(0);
