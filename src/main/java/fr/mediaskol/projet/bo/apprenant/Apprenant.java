@@ -4,7 +4,6 @@ import fr.mediaskol.projet.bo.Personne;
 import fr.mediaskol.projet.bo.adresse.Adresse;
 import fr.mediaskol.projet.bo.formation.TypeFormation;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -148,7 +147,7 @@ public class Apprenant extends Personne {
      * </p>
      */
     @OneToMany(mappedBy = "apprenant", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private @Builder.Default List<SessionApprenant> sessions = new ArrayList<>();
+    private @Builder.Default List<SessionApprenant> sessionsApprenant = new ArrayList<>();
 
 
     /**
@@ -157,11 +156,11 @@ public class Apprenant extends Personne {
      * Met à jour la relation bidirectionnelle entre l'apprenant et la session.
      * </p>
      *
-     * @param session l'inscription à ajouter
+     * @param inscriptionSession l'inscription à ajouter
      */
-    public void addSession(SessionApprenant session) {
-        sessions.add(session);
-        session.setApprenant(this);
+    public void addSession(SessionApprenant inscriptionSession) {
+        sessionsApprenant.add(inscriptionSession);
+        inscriptionSession.setApprenant(this);
     }
 
     /**
@@ -170,11 +169,11 @@ public class Apprenant extends Personne {
      * Met à jour la relation bidirectionnelle en supprimant le lien avec l'apprenant.
      * </p>
      *
-     * @param session l'inscription à retirer
+     * @param inscriptionSession l'inscription à retirer
      */
-    public void removeSession(SessionApprenant session) {
-        sessions.remove(session);
-        session.setApprenant(null);
+    public void removeSession(SessionApprenant inscriptionSession) {
+        sessionsApprenant.remove(inscriptionSession);
+        inscriptionSession.setApprenant(null);
     }
 
 

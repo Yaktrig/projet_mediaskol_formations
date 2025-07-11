@@ -58,8 +58,8 @@ public class SessionFormation {
      * Numéro AF (Yoda) unique de la session de formation.
      * <p>
      * Ce numéro n'est pas obligatoire, car à la création d'une session de formation pour l'année suivante, il
-     * n'existe pas encore de numéro attribué par Ipéria. Ce sera
-     * Il est limité à 30 caractères
+     * n'existe pas encore de numéro attribué par Ipéria.
+     * Il est limité à 30 caractères.
      * </p>
      */
     @Column(name = "NO_AF_YODA", unique = true, length = 30)
