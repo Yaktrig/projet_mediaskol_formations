@@ -61,7 +61,7 @@ public class SessionFormation {
      */
     @Column(name = "NO_AF_YODA", unique = true, length = 30)
     @Size(max = 30, message = "{formation.numAfYoda.size}")
-    private Long noYoda;
+    private String noYoda;
 
     /**
      * Libellé de la session de formation.

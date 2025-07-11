@@ -79,7 +79,7 @@ public class TestManyToOneSessionFDFormation {
         // Création d'une nouvelle session de formation avec le builder Lombok
         final SessionFormation sessionMICE = SessionFormation
                 .builder()
-                .noYoda(123456L)
+                .noYoda("123456")
                 .libelleSessionFormation("MICE24052025")
                 .build();
 
@@ -130,7 +130,7 @@ public class TestManyToOneSessionFDFormation {
         // Création d'une nouvelle session avec le builder Lombok
         final SessionFormation sessionMICE = SessionFormation
                 .builder()
-                .noYoda(123456L)
+                .noYoda("123456")
                 .libelleSessionFormation("MICE24052025")
                 .build();
 
@@ -170,17 +170,17 @@ public class TestManyToOneSessionFDFormation {
         List<SessionFormation> sessionsFormation = new ArrayList<>();
         sessionsFormation.add(SessionFormation.builder()
                 .formation(sauveteurSecouristeInitial)
-                .noYoda(123456L)
+                .noYoda("123456")
                 .libelleSessionFormation("MICE24052025")
                 .build());
         sessionsFormation.add(SessionFormation.builder()
                 .formation(sauveteurSecouristeRecyclage)
-                .noYoda(234567L)
+                .noYoda("234567")
                 .libelleSessionFormation("MICE20092025")
                 .build());
         sessionsFormation.add(SessionFormation.builder()
                 .formation(comprendreLesEmotions)
-                .noYoda(345678L)
+                .noYoda("345678")
                 .libelleSessionFormation("MISST24052025")
                 .build());
 

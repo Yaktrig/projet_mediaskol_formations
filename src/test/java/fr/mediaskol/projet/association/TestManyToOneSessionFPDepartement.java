@@ -96,7 +96,7 @@ public class TestManyToOneSessionFPDepartement {
         // Création d'une nouvelle session de formation avec le builder Lombok
         final SessionFormation sessionMICE = SessionFormation
                 .builder()
-                .noYoda(123456L)
+                .noYoda("123456")
                 .libelleSessionFormation("MICE24052025")
                 .build();
 
@@ -146,7 +146,7 @@ public class TestManyToOneSessionFPDepartement {
         // Création d'une nouvelle session avec le builder Lombok
         final SessionFormation sessionMICE = SessionFormation
                 .builder()
-                .noYoda(123456L)
+                .noYoda("123456")
                 .libelleSessionFormation("MICE24052025")
                 .build();
 
@@ -186,17 +186,17 @@ public class TestManyToOneSessionFPDepartement {
         List<SessionFormation> sessionsFormation = new ArrayList<>();
         sessionsFormation.add(SessionFormation.builder()
                 .departement(illeetvilaine)
-                .noYoda(123456L)
+                .noYoda("123456")
                 .libelleSessionFormation("MICE24052025")
                 .build());
         sessionsFormation.add(SessionFormation.builder()
                 .departement(morbihan)
-                .noYoda(234567L)
+                .noYoda("234567")
                 .libelleSessionFormation("MICE20092025")
                 .build());
         sessionsFormation.add(SessionFormation.builder()
                 .departement(cotesdarmor)
-                .noYoda(345678L)
+                .noYoda("345678")
                 .libelleSessionFormation("MISST24052025")
                 .build());
         return sessionsFormation;
