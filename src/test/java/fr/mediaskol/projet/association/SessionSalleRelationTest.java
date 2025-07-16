@@ -1,11 +1,11 @@
 package fr.mediaskol.projet.association;
 
 import fr.mediaskol.projet.bo.SessionFormation.SessionFormation;
-import fr.mediaskol.projet.bo.formateur.Formateur;
-import fr.mediaskol.projet.bo.formateur.SessionFormateur;
-import fr.mediaskol.projet.bo.formateur.StatutSessionFormateur;
 import fr.mediaskol.projet.bo.formation.Formation;
 import fr.mediaskol.projet.bo.formation.TypeFormation;
+import fr.mediaskol.projet.bo.salle.Salle;
+import fr.mediaskol.projet.bo.salle.SessionSalle;
+import fr.mediaskol.projet.bo.salle.StatutSessionSalle;
 import fr.mediaskol.projet.dal.*;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,8 +23,8 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  * Test unitaire qui permet de valider l'association ManyToOne
- * Entre SessionFormateur et Formateur
- * Entre SessionFormateur et SessionFormation
+ * Entre SessionSalle et Salle
+ * Entre SessionSalle et SessionFormation
  */
 
 
@@ -37,17 +37,14 @@ public class SessionSalleRelationTest {
     private TestEntityManager entityManager;
 
     @Autowired
-    private SessionFormateurRepository sessionFormateurRepository;
-
-    @Autowired
-    private FormateurRepository formateurRepository;
-
-    @Autowired
     private SessionFormationRepository sessionFormationRepository;
 
-    private Formateur coco;
+    @Autowired
+    private SalleRepository salleRepository;
 
-    private Formateur mamanGourou;
+    @Autowired
+    private SessionSalleRepository sessionSalleRepository;
+
 
     private SessionFormation sessionMISST;
 
@@ -61,6 +58,10 @@ public class SessionSalleRelationTest {
 
     @Autowired
     private TypeFormationRepository typeFormationRepository;
+
+    private Salle sallePlovan1;
+
+    private Salle sallePlovan2;
 
     @BeforeEach
     public void init() {
@@ -95,122 +96,110 @@ public class SessionSalleRelationTest {
                 .formation(formationMISST)
                 .build();
 
-        // Persitence de la session de formation dans la base
+        // Persistence de la session de formation dans la base
         sessionFormationRepository.save(sessionMISST);
 
-        // Création d'un formateur avec le builder Lombok
-        coco = Formateur
+        // Création d'une salle avec le builder Lombok
+        sallePlovan1 = Salle
                 .builder()
-                .nom("Lapin")
-                .prenom("Coco")
-                .email("coco.lapin@gmail.fr")
-                .numPortable("0600000000")
-                .statutFormateur("AE")
-                .zoneIntervention("Intervient sur la commune de Quévert dans un rayon de 30km")
-                .commentaireFormateur("")
+                .nomSalle("Salle polyvalente")
+                .cleSalle(true)
                 .build();
 
+        // Sauvegarde de la salle dans la base test
+        salleRepository.save(sallePlovan1);
 
-        // Sauvegarde dans la base de test du formateur
-        formateurRepository.save(coco);
-
-        // Création d'un second formateur avec le builder Lombok
-        mamanGourou = Formateur
+        // Création d'une 2ème salle avec le builder Lombok
+        sallePlovan2 = Salle
                 .builder()
-                .nom("Gourou")
-                .prenom("Maman")
-                .email("Mamam.gourou@gmail.fr")
-                .numPortable("0600000000")
-                .statutFormateur("S")
-                .zoneIntervention("Intervient sur la commune de Quévert dans un rayon de 30km")
-                .commentaireFormateur("")
+                .nomSalle("Auberge Bigoudène")
+                .cleSalle(false)
                 .build();
 
-
-        // Sauvegarde dans la base de test du formateur
-        formateurRepository.save(mamanGourou);
+        // Sauvegarde de la seconde salle dans la base test
+        salleRepository.save(sallePlovan2);
     }
 
 
     @Test
-    public void test_save_session_formateur() {
+    public void test_save_session_salle() {
 
-        // Création d'une session formateur avec le builder Lombock
-        final SessionFormateur sessionCoco = SessionFormateur
+        // Création d'une session salle avec le builder Lombock
+        final SessionSalle sessionSallePlovan1 = SessionSalle
                 .builder()
-                .statutSessionFormateur(StatutSessionFormateur.SESSION_FORMATEUR_PRESENCE_CONFIRMEE)
+                .statutSessionSalle(StatutSessionSalle.SESSION_SALLE_VALIDEE)
                 .build();
 
         // Associations ManyToOne
-        sessionCoco.setFormateur(coco);
-        sessionCoco.setSessionFormation(sessionMISST);
+        sessionSallePlovan1.setSalle(sallePlovan1);
+        sessionSallePlovan1.setSessionFormation(sessionMISST);
 
-        // Sauvegarde de la session formateur en base test via le repository
-        final SessionFormateur sessionCocoDB = sessionFormateurRepository.save(sessionCoco);
+        // Sauvegarde de la session salle en base test via le repository
+        final SessionSalle sessionSallePlovanDB = sessionSalleRepository.save(sessionSallePlovan1);
 
         // Vérifie que l'objet retourné n'est pas null
-        assertThat(sessionCocoDB.getIdSessionFormateur()).isGreaterThan(0);
-        // Vérification si le formateur existe
-        assertThat(sessionCocoDB.getFormateur()).isNotNull();
-        assertThat(sessionCocoDB.getFormateur()).isEqualTo(coco);
+        assertThat(sessionSallePlovanDB.getIdSessionSalle()).isGreaterThan(0);
+        // Vérification si la salle existe
+        assertThat(sessionSallePlovanDB.getSalle()).isNotNull();
+        assertThat(sessionSallePlovanDB.getSalle()).isEqualTo(sallePlovan1);
         // Vérification si la session de formation existe
-        assertThat(sessionCocoDB.getSessionFormation()).isNotNull();
-        assertThat(sessionCocoDB.getSessionFormation()).isEqualTo(sessionMISST);
+        assertThat(sessionSallePlovanDB.getSessionFormation()).isNotNull();
+        assertThat(sessionSallePlovanDB.getSessionFormation()).isEqualTo(sessionMISST);
 
         // Log pour visualiser l'objet persité
-        log.info(sessionCocoDB.toString());
+        log.info(sessionSallePlovanDB.toString());
 
 
-        // Création d'une seconde session formateur avec le builder Lombock
-        final SessionFormateur sessionMamanGourou = SessionFormateur
+        // Création d'une seconde session salle avec le builder Lombock
+        final SessionSalle sessionSallePlovan2 = SessionSalle
                 .builder()
-                .statutSessionFormateur(StatutSessionFormateur.SESSION_FORMATEUR_ATTENTE_PRESENCE)
+                .statutSessionSalle(StatutSessionSalle.SESSION_SALLE_VALIDEE)
                 .build();
 
         // Associations ManyToOne
-        sessionMamanGourou.setFormateur(mamanGourou);
-        sessionMamanGourou.setSessionFormation(sessionMISST);
+        sessionSallePlovan2.setSalle(sallePlovan2);
+        sessionSallePlovan2.setSessionFormation(sessionMISST);
 
-        // Sauvegarde de la session formateur en base test via le repository
-        final SessionFormateur sessionMamanGourouDB = sessionFormateurRepository.save(sessionMamanGourou);
+        // Sauvegarde de la session salle en base test via le repository
+        final SessionSalle sessionSallePlovanDB2 = sessionSalleRepository.save(sessionSallePlovan2);
 
         // Vérifie que l'objet retourné n'est pas null
-        assertThat(sessionMamanGourouDB.getIdSessionFormateur()).isGreaterThan(0);
+        assertThat(sessionSallePlovanDB2.getIdSessionSalle()).isGreaterThan(0);
         // Vérification si la formatrice existe
-        assertThat(sessionMamanGourouDB.getFormateur()).isNotNull();
-        assertThat(sessionMamanGourouDB.getFormateur()).isEqualTo(mamanGourou);
+        assertThat(sessionSallePlovanDB2.getSalle()).isNotNull();
+        assertThat(sessionSallePlovanDB2.getSalle()).isEqualTo(sallePlovan2);
         // Vérification si la session de formation existe
-        assertThat(sessionMamanGourouDB.getSessionFormation()).isNotNull();
-        assertThat(sessionMamanGourouDB.getSessionFormation()).isEqualTo(sessionMISST);
+        assertThat(sessionSallePlovanDB2.getSessionFormation()).isNotNull();
+        assertThat(sessionSallePlovanDB2.getSessionFormation()).isEqualTo(sessionMISST);
 
         // Log pour visualiser l'objet persité
-        log.info(sessionMamanGourouDB.toString());
+        log.info(sessionSallePlovanDB2.toString());
     }
 
 
-    // Retrouver toutes les sessions formateurs d'une session de formation
+    // Retrouver toutes les sessions salles d'une session de formation
     @Test
     public void test_find_all() {
 
         // Liste des sessions apprenants
-        List<SessionFormateur> listeSessionFormateur = jeuDeDonnees();
+        List<SessionSalle> listeSessionSalle = jeuDeDonnees();
 
         // Sauvegarder le jeu de données dans la base test
-        listeSessionFormateur.forEach(sessionFormateur -> {
-            sessionFormateurRepository.save(sessionFormateur);
-            assertThat(sessionFormateur.getIdSessionFormateur()).isGreaterThan(0);
+        listeSessionSalle.forEach(sessionSalle -> {
+            sessionSalleRepository.save(sessionSalle);
+            assertThat(sessionSalle.getIdSessionSalle()).isGreaterThan(0);
         });
 
-        // Vérification de l'identifiant des sessions formateurs
-        final List<SessionFormateur> listeSessionFormateurDB = sessionFormateurRepository.findAll();
-        listeSessionFormateurDB.forEach(sessionFormateur -> {
-            assertThat(sessionFormateur.getIdSessionFormateur()).isGreaterThan(0);
+        // Vérification de l'identifiant des sessions salles
+        final List<SessionSalle> listeSessionSalleDB = sessionSalleRepository.findAll();
+        listeSessionSalleDB.forEach(sessionSalle -> {
+            assertThat(sessionSalle.getIdSessionSalle()).isGreaterThan(0);
 
-            // vérification du formateur
-            assertThat(sessionFormateur.getFormateur()).isNotNull();
+            // vérification du salle
+            assertThat(sessionSalle.getSalle()).isNotNull();
 
             // vérification de la session de formation
-            assertThat(sessionFormateur.getSessionFormation()).isNotNull();
+            assertThat(sessionSalle.getSessionFormation()).isNotNull();
 
         });
 
@@ -219,43 +208,43 @@ public class SessionSalleRelationTest {
 
 
     @Test
-    public void test_delete_session_formateur() {
+    public void test_delete_session_salle() {
 
-        // Création d'une 1ère session formateur de formation avec le builder Lombok
-        final SessionFormateur sessionCoco = SessionFormateur
+        // Création d'une session salle avec le builder Lombock
+        final SessionSalle sessionSallePlovan1 = SessionSalle
                 .builder()
-                .statutSessionFormateur(StatutSessionFormateur.SESSION_FORMATEUR_PRESENCE_CONFIRMEE)
+                .statutSessionSalle(StatutSessionSalle.SESSION_SALLE_VALIDEE)
                 .build();
 
-        // Associaton ManyToOne
-        sessionCoco.setFormateur(coco);
-        sessionCoco.setSessionFormation(sessionMISST);
+        // Associations ManyToOne
+        sessionSallePlovan1.setSalle(sallePlovan1);
+        sessionSallePlovan1.setSessionFormation(sessionMISST);
 
-        // Persistance de la session formateur dans la base de test
-        final SessionFormateur sessionCocoDB = sessionFormateurRepository.save(sessionCoco);
-
-
-        // Vérification s'il y a au moins un identifiant dans SessionFormateur, s'il n'est pas null,
-        // et si son formateur est égal à coco et sa session de formation est égale à sessionMISST
-        assertThat(sessionCocoDB.getIdSessionFormateur()).isGreaterThan(0);
-        assertThat(sessionCocoDB.getFormateur()).isNotNull();
-        assertThat(sessionCocoDB.getFormateur()).isEqualTo(coco);
-        assertThat(sessionCocoDB.getSessionFormation()).isNotNull();
-        assertThat(sessionCocoDB.getSessionFormation()).isEqualTo(sessionMISST);
-
-        // Suppression de la session formateur
-        sessionFormateurRepository.delete(sessionCocoDB);
-
-        // Vérifie que l'entité SessionFormateur n'est plus présente en base (doit être null)
-        SessionFormateur sessionCocoDB2 = entityManager.find(SessionFormateur.class, sessionCocoDB.getIdSessionFormateur());
-        assertNull(sessionCocoDB2);
+        // Sauvegarde de la session salle en base test via le repository
+        final SessionSalle sessionSallePlovanDB = sessionSalleRepository.save(sessionSallePlovan1);
 
 
-        // Vérifie que les formateurs (dont celui qui y était associé à la sessionFormateur) existent toujours en base (pas de suppression en cascade)
-        List<Formateur> listFormateur = formateurRepository.findAll();
-        assertThat(listFormateur).isNotNull();
-        assertThat(listFormateur).isNotEmpty();
-        assertThat(listFormateur.size()).isEqualTo(2);
+        // Vérification s'il y a au moins un identifiant dans SessionSalle, s'il n'est pas null,
+        // et si son salle est égal à coco et sa session de formation est égale à sessionMISST
+        assertThat(sessionSallePlovanDB.getIdSessionSalle()).isGreaterThan(0);
+        assertThat(sessionSallePlovanDB.getSalle()).isNotNull();
+        assertThat(sessionSallePlovanDB.getSalle()).isEqualTo(sallePlovan1);
+        assertThat(sessionSallePlovanDB.getSessionFormation()).isNotNull();
+        assertThat(sessionSallePlovanDB.getSessionFormation()).isEqualTo(sessionMISST);
+
+        // Suppression de la session salle
+        sessionSalleRepository.delete(sessionSallePlovanDB);
+
+        // Vérifie que l'entité SessionSalle n'est plus présente en base (doit être null)
+        SessionSalle sessionSallePlovanDB2 = entityManager.find(SessionSalle.class, sessionSallePlovanDB.getIdSessionSalle());
+        assertNull(sessionSallePlovanDB2);
+
+
+        // Vérifie que les salles (dont celui qui y était associé à la sessionSalle) existent toujours en base (pas de suppression en cascade)
+        List<Salle> listSalle = salleRepository.findAll();
+        assertThat(listSalle).isNotNull();
+        assertThat(listSalle).isNotEmpty();
+        assertThat(listSalle.size()).isEqualTo(2);
 
         // Vérifie que la sessionFormation associée existent toujours en base (pas de suppression en cascade)
         List<SessionFormation> sessionFormation = sessionFormationRepository.findAll();
@@ -265,26 +254,27 @@ public class SessionSalleRelationTest {
 
     }
 
-    private List<SessionFormateur> jeuDeDonnees() {
+    private List<SessionSalle> jeuDeDonnees() {
 
-        List<SessionFormateur> sessionsFormateur = new ArrayList<>();
+        List<SessionSalle> sessionsSalle = new ArrayList<>();
 
-        sessionsFormateur.add(SessionFormateur
+        sessionsSalle.add(SessionSalle
                 .builder()
-                .statutSessionFormateur(StatutSessionFormateur.SESSION_FORMATEUR_PRESENCE_CONFIRMEE)
-                .formateur(coco)
+                .statutSessionSalle(StatutSessionSalle.SESSION_SALLE_VALIDEE)
+                .coutSessionSalle(0.00F)
                 .sessionFormation(sessionMISST)
+                .salle(sallePlovan1)
                 .build());
 
-        sessionsFormateur.add(SessionFormateur
+        sessionsSalle.add(SessionSalle
                 .builder()
-                .statutSessionFormateur(StatutSessionFormateur.SESSION_FORMATEUR_ATTENTE_PRESENCE)
-                .formateur(mamanGourou)
+                .statutSessionSalle(StatutSessionSalle.SESSION_SALLE_VALIDEE)
+                .coutSessionSalle(0.00F)
                 .sessionFormation(sessionMISST)
+                .salle(sallePlovan2)
                 .build());
 
-
-        return sessionsFormateur;
+        return sessionsSalle;
     }
 
 }
