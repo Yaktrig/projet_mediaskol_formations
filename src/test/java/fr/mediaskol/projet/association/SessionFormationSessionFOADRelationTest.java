@@ -2,13 +2,12 @@ package fr.mediaskol.projet.association;
 
 
 import fr.mediaskol.projet.bo.SessionFormation.FinSessionFormation;
-import fr.mediaskol.projet.bo.formation.Formation;
 import fr.mediaskol.projet.bo.SessionFormation.SessionFormation;
+import fr.mediaskol.projet.bo.departement.Departement;
+import fr.mediaskol.projet.bo.formation.Formation;
 import fr.mediaskol.projet.bo.formation.TypeFormation;
-import fr.mediaskol.projet.dal.FormationRepository;
-import fr.mediaskol.projet.dal.FinSessionFormationRepository;
-import fr.mediaskol.projet.dal.SessionFormationRepository;
-import fr.mediaskol.projet.dal.TypeFormationRepository;
+import fr.mediaskol.projet.bo.sessionFormationDistanciel.SessionFormationDistanciel;
+import fr.mediaskol.projet.dal.*;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,14 +24,14 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  * Test unitaire qui permet de valider l'association OneToOne
- * Entre les entités SessionFormation et FinSessionFormation
+ * Entre les entités SessionFormation et SessionFOAD (Formation à DIstance)
  * Dans le cadre d'une formation en distanciel, le département n'est pas nécessaire.
  */
 
 // Configure un contexte Spring Boot limité à la couche JPA
 @Slf4j
 @DataJpaTest
-public class SessionFormationFinFormationRelationTest {
+public class SessionFormationSessionFOADRelationTest {
 
     // Permet des opérations avancées sur l'EntityManager pour les tests
     @Autowired
@@ -45,9 +44,7 @@ public class SessionFormationFinFormationRelationTest {
 
     @Autowired
     SessionFormationRepository sessionFormationRepository;
-
     private Formation comprendreLesEmotions;
-
     private TypeFormation distanciel;
 
 
@@ -55,10 +52,10 @@ public class SessionFormationFinFormationRelationTest {
     @Autowired
     private TypeFormationRepository typeFormationRepository;
 
-    private FinSessionFormation finSessionFormation;
+    private SessionFormationDistanciel sessionFormationDistanciel;
 
     @Autowired
-    private FinSessionFormationRepository finSessionFormationRepository;
+    private SessionFormationDistancielRepository sessionFormationDistancielRepository;
 
     @BeforeEach
     public void initFormations() {
@@ -80,19 +77,19 @@ public class SessionFormationFinFormationRelationTest {
         formationRepository.save(comprendreLesEmotions);
 
 
-        // Création d'une fin de formation avec le builder Lombok
-        finSessionFormation = FinSessionFormation
+        // Création d'une session de formation en distanciel avec le builder Lombok
+        sessionFormationDistanciel = SessionFormationDistanciel
                 .builder()
-                .statutYodaFinSessionFormation("FF")
-                .dateLimiteYodaFinSessionFormation(LocalDate.parse("2025-10-01"))
+                .dateDebutSessionFormationDistanciel(LocalDate.parse("2025-10-01"))
+                .dateFinSessionFormationDistanciel(LocalDate.parse("2025-10-31"))
                 .build();
 
-        // Persistence de la session de fin de formation
-        finSessionFormationRepository.save(finSessionFormation);
+        // Persistence de la session de formation en distanciel
+        sessionFormationDistancielRepository.save(sessionFormationDistanciel);
 
     }
 
-    // Sauvegarde d'une session de formation et de sa formation
+    // Sauvegarde d'une session de formation et de sa session de formation en distanciel
     @Test
     public void test_save_session() {
 
@@ -107,7 +104,7 @@ public class SessionFormationFinFormationRelationTest {
                 .build();
 
         // Association OneToOne entre la session de formation et la fin de session de formation
-        sessionMICE.setFinSessionFormation(finSessionFormation);
+        sessionMICE.setSessionFormationDistanciel(sessionFormationDistanciel);
 
         // Sauvegarde de la session en base via le repository
         final SessionFormation sessionMICEDB = sessionFormationRepository.save(sessionMICE);
@@ -116,9 +113,10 @@ public class SessionFormationFinFormationRelationTest {
         log.info(sessionMICEDB.toString());
 
         // Vérification de la cascade de l'association
-        // Vérifie que l'objet retourné n'est pas nul
-        assertThat(sessionMICE.getIdSessionFormation()).isGreaterThan(0);
-        assertThat(finSessionFormation.getIdFinSessionFormation()).isGreaterThan(0);
+        // Vérifie que l'objet retourné n'est pas null
+        assertThat(sessionMICEDB.getIdSessionFormation()).isGreaterThan(0);
+        assertThat(sessionFormationDistanciel.getIdSessionFormationDistanciel()).isGreaterThan(0);
+
 
     }
 
@@ -136,15 +134,15 @@ public class SessionFormationFinFormationRelationTest {
                 .formation(comprendreLesEmotions)
                 .build();
 
-        // Association ManyToOne entre la session de formation et la fin de session de formation
-        sessionMICE.setFinSessionFormation(finSessionFormation);
+        // Association ManyToOne entre la session de formation et la session de formation en distanciel
+        sessionMICE.setSessionFormationDistanciel(sessionFormationDistanciel);
 
         // Persistance de la session dans la base de test
         final SessionFormation sessionMICEDB = sessionFormationRepository.save(sessionMICE);
 
         // Vérification s'il y a au moins un identifiant dans SessionFormation, s'il n'est pas nul,
-        assertThat(sessionMICE.getIdSessionFormation()).isGreaterThan(0);
-        assertThat(finSessionFormation.getIdFinSessionFormation()).isGreaterThan(0);
+        assertThat(sessionMICEDB.getIdSessionFormation()).isGreaterThan(0);
+        assertThat(sessionFormationDistanciel.getIdSessionFormationDistanciel()).isGreaterThan(0);
 
         // Suppression de la session de formation MICE
         sessionFormationRepository.delete(sessionMICEDB);
@@ -155,9 +153,8 @@ public class SessionFormationFinFormationRelationTest {
 
 
         // Vérifie que la fin de session de formation n'existe plus également en base
-        FinSessionFormation finSessionFormationDB = entityManager.find(FinSessionFormation.class, finSessionFormation.getIdFinSessionFormation());
-        assertNull(finSessionFormationDB);
-
+        SessionFormationDistanciel sessionFormationDistancielDB = entityManager.find(SessionFormationDistanciel.class, sessionFormationDistanciel.getIdSessionFormationDistanciel());
+        assertNull(sessionFormationDistancielDB);
 
     }
 
@@ -177,19 +174,19 @@ public class SessionFormationFinFormationRelationTest {
                 .formation(comprendreLesEmotions)
                 .build();
 
-        // Association ManyToOne entre la session de formation et la fin de session de formation
-        sessionMICE.setFinSessionFormation(finSessionFormation);
+        // Association ManyToOne entre la session de formation et la session de formation en distanciel
+        sessionMICE.setSessionFormationDistanciel(sessionFormationDistanciel);
 
         // Persistance de la session dans la base de test
         final SessionFormation sessionMICEDB = sessionFormationRepository.save(sessionMICE);
 
         // Vérification s'il y a au moins un identifiant dans SessionFormation, s'il n'est pas nul,
         assertThat(sessionMICEDB.getIdSessionFormation()).isGreaterThan(0);
-        assertThat(finSessionFormation.getIdFinSessionFormation()).isGreaterThan(0);
+        assertThat(sessionFormationDistanciel.getIdSessionFormationDistanciel()).isGreaterThan(0);
 
 
-        // Supprimer le lien entre l'entité SessionFormation et l'entité FinSessionFormation
-        sessionMICE.setFinSessionFormation(null);
+        // Supprimer le lien entre l'entité SessionFormation et l'entité SessionFormationDistanciel
+        sessionMICE.setSessionFormationDistanciel(null);
 
         // Suppression de la session de formation MICE
         sessionFormationRepository.delete(sessionMICE);
@@ -198,11 +195,11 @@ public class SessionFormationFinFormationRelationTest {
         SessionFormation sessionMICEDB2 = entityManager.find(SessionFormation.class, sessionMICE.getIdSessionFormation());
         assertNull(sessionMICEDB2);
 
-        FinSessionFormation finSessionFormationDB2 = entityManager.find(FinSessionFormation.class, finSessionFormation.getIdFinSessionFormation());
-        assertNull(finSessionFormationDB2);
+        SessionFormationDistanciel sessionFormationDistancielDB = entityManager.find(SessionFormationDistanciel.class, sessionFormationDistanciel.getIdSessionFormationDistanciel());
+        assertNull(sessionFormationDistancielDB);
 
     }
 
-}
 
+}
 

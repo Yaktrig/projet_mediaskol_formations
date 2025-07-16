@@ -1,6 +1,8 @@
 package fr.mediaskol.projet.bo.sessionFormationDistanciel;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -52,7 +54,7 @@ public class SessionFormationDistanciel {
      * </p>
      */
     @Column(name = "CONTRAT_SESSION_FOAD", length = 300)
-    @Size(max = 300, message = "{sessionFormation.contratSessionFoad.size}")
+    @Size(max = 300, message = "{sessionFormationDistanciel.contratSessionFoad.size}")
     private String contratSessionFormationDistanciel;
 
     /**
@@ -72,6 +74,7 @@ public class SessionFormationDistanciel {
      * </p>
      */
     @Column(name = "DATE_DEBUT_SESSION_FOAD", nullable = false)
+    @NotNull(message="{sessionFormationDistanciel.dateDebutSessionFoad.notnull}")
     private LocalDate dateDebutSessionFormationDistanciel;
 
     /**
@@ -81,6 +84,7 @@ public class SessionFormationDistanciel {
      * </p>
      */
     @Column(name = "DATE_FIN_SESSION_FOAD", nullable = false)
+    @NotNull(message="{sessionFormationDistanciel.dateFinSessionFoad.notnull}")
     private LocalDate dateFinSessionFormationDistanciel;
 
 
@@ -101,7 +105,7 @@ public class SessionFormationDistanciel {
      * </p>
      */
     @Column(name = "COMMENTAIRE_SESSION_FOAD", length = 2000)
-    @Size(max = 2000, message = "{sessionFormation.commentaireSessionFoad.size}")
+    @Size(max = 2000, message = "{sessionFormationDistanciel.commentaireSessionFoad.size}")
     private String commentaireSessionFormationDistanciel;
 
 
