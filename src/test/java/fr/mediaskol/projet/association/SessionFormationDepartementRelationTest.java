@@ -51,7 +51,6 @@ public class SessionFormationDepartementRelationTest {
     @Autowired
     private FormationRepository formationRepository;
 
-    // Liste utilisée pour stocker les objets Formation pré-chargés en base pour les tests
     private Formation formationMISST;
 
     private TypeFormation presentiel;

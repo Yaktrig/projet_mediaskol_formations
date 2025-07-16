@@ -35,7 +35,6 @@ import java.time.LocalDate;
 @Table(name = "SESSION_FORMATION")
 public class SessionFormation {
 
-    // Todo  test association
 
     /**
      * Identifiant unique de la session de formation.
