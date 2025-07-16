@@ -70,7 +70,7 @@ public class SessionLieuDate {
      */
     @Column(name = "LIEU_SESSION", length = 100)
     @Size(max = 100, message = "{sessionLieuDate.lieuSession.size}")
-    private Long lieuSession;
+    private String lieuSession;
 
     /**
      * Nombre d'heures sur une journée en présentiel ou pour la visio.
@@ -100,7 +100,7 @@ public class SessionLieuDate {
      */
     @Enumerated(EnumType.STRING)
     @Column(name="STATUT_SESSION_LIEU_DATE")
-    private StatutSessionFormation statutSessionLieuDate;
+    private StatutSessionLieuDate statutSessionLieuDate;
 
     /**
      * SessionFormateur qui est rattachée la sessionLieuDate.

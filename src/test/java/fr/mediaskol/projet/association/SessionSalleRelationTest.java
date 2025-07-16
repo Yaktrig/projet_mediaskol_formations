@@ -195,7 +195,7 @@ public class SessionSalleRelationTest {
         listeSessionSalleDB.forEach(sessionSalle -> {
             assertThat(sessionSalle.getIdSessionSalle()).isGreaterThan(0);
 
-            // vérification du salle
+            // vérification de la  salle
             assertThat(sessionSalle.getSalle()).isNotNull();
 
             // vérification de la session de formation
@@ -224,8 +224,8 @@ public class SessionSalleRelationTest {
         final SessionSalle sessionSallePlovanDB = sessionSalleRepository.save(sessionSallePlovan1);
 
 
-        // Vérification s'il y a au moins un identifiant dans SessionSalle, s'il n'est pas null,
-        // et si son salle est égal à coco et sa session de formation est égale à sessionMISST
+        // Vérification s'il y a au moins un identifiant dans SessionSalle, s'il n'est pas nul,
+        // et si la salle est égal à sallePlovan1 et sa session de formation est égale à sessionMISST
         assertThat(sessionSallePlovanDB.getIdSessionSalle()).isGreaterThan(0);
         assertThat(sessionSallePlovanDB.getSalle()).isNotNull();
         assertThat(sessionSallePlovanDB.getSalle()).isEqualTo(sallePlovan1);
