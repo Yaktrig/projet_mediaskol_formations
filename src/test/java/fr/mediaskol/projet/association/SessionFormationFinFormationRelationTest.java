@@ -1,10 +1,12 @@
 package fr.mediaskol.projet.association;
 
 
+import fr.mediaskol.projet.bo.SessionFormation.FinSessionFormation;
 import fr.mediaskol.projet.bo.formation.Formation;
 import fr.mediaskol.projet.bo.SessionFormation.SessionFormation;
 import fr.mediaskol.projet.bo.formation.TypeFormation;
 import fr.mediaskol.projet.dal.FormationRepository;
+import fr.mediaskol.projet.dal.FinSessionFormationRepository;
 import fr.mediaskol.projet.dal.SessionFormationRepository;
 import fr.mediaskol.projet.dal.TypeFormationRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -58,6 +60,11 @@ public class SessionFormationFinFormationRelationTest {
     @Autowired
     private TypeFormationRepository typeFormationRepository;
 
+    private FinSessionFormation finSessionFormation;
+
+    @Autowired
+    private FinSessionFormationRepository finSessionFormationRepository;
+
     @BeforeEach
     public void initFormations() {
 
@@ -66,29 +73,7 @@ public class SessionFormationFinFormationRelationTest {
                 .libelleTypeFormation("Distanciel")
                 .build();
 
-
-        presentiel = TypeFormation
-                .builder()
-                .libelleTypeFormation("Présentiel")
-                .build();
-
         typeFormationRepository.save(distanciel);
-        typeFormationRepository.save(presentiel);
-
-
-        sauveteurSecouristeInitial = Formation
-                .builder()
-                .themeFormation("MISST")
-                .libelleFormation("Sauveteur secouriste du travail (SST initial)")
-                .typeFormation(presentiel)
-                .build();
-
-        sauveteurSecouristeRecyclage = Formation
-                .builder()
-                .themeFormation("MIMACSST")
-                .libelleFormation("Recyclage sauveteur secouriste du travail")
-                .typeFormation(presentiel)
-                .build();
 
         comprendreLesEmotions = Formation
                 .builder()
@@ -97,15 +82,24 @@ public class SessionFormationFinFormationRelationTest {
                 .typeFormation(distanciel)
                 .build();
 
-
-        formationRepository.save(sauveteurSecouristeInitial);
-        formationRepository.save(sauveteurSecouristeRecyclage);
         formationRepository.save(comprendreLesEmotions);
+
+
+        // Création d'une fin de formation avec le builder Lombok
+        finSessionFormation = FinSessionFormation
+                .builder()
+                .statutYodaFinSessionFormation("FF")
+                .dateLimiteYodaFinSessionFormation(LocalDate.parse("2025-10-01"))
+                .build();
+
+        // Persistence de la session de fin de formation
+        finSessionFormationRepository.save(finSessionFormation);
+
     }
 
     // Sauvegarde d'une session de formation et de sa formation
     @Test
-    public void test_save_session_distanciel() {
+    public void test_save_session() {
 
         // Création d'une nouvelle session de formation avec le builder Lombok
         final SessionFormation sessionMICE = SessionFormation
@@ -114,10 +108,11 @@ public class SessionFormationFinFormationRelationTest {
                 .libelleSessionFormation("MICE24052025")
                 .dateDebutSession(LocalDate.parse("2025-01-01"))
                 .nbHeureSession(21)
+                .formation(comprendreLesEmotions)
                 .build();
 
-        // Association ManyToOne entre la session et la formation
-        sessionMICE.setFormation(comprendreLesEmotions);
+        // Association ManyToOne entre la session de formation et la fin de session de formation
+        sessionMICE.setFinSessionFormation(finSessionFormation);
 
         // Sauvegarde de la session en base via le repository
         final SessionFormation sessionMICEDB = sessionFormationRepository.save(sessionMICE);
@@ -158,7 +153,7 @@ public class SessionFormationFinFormationRelationTest {
 
 
     @Test
-    public void test_delete_session_distanciel() {
+    public void test_delete_session() {
 
         // Création d'une nouvelle session avec le builder Lombok
         final SessionFormation sessionMICE = SessionFormation
@@ -167,34 +162,30 @@ public class SessionFormationFinFormationRelationTest {
                 .libelleSessionFormation("MICE24052025")
                 .dateDebutSession(LocalDate.parse("2025-01-01"))
                 .nbHeureSession(21)
+                .formation(comprendreLesEmotions)
                 .build();
 
-        // Association ManyToOne entre la session et la formation
-        sessionMICE.setFormation(sauveteurSecouristeRecyclage);
+        // Association ManyToOne entre la session de formation et la fin de session de formation
+        sessionMICE.setFinSessionFormation(finSessionFormation);
 
         // Persistance de la session dans la base de test
         final SessionFormation sessionMICEDB = sessionFormationRepository.save(sessionMICE);
 
-
-        // Vérification s'il y a au moins un identifiant dans SessionFormation, s'il n'est pas null,
-        // et si sa formation est égale à la formation sauveteurSecouristeRecyclage
+        // Vérification s'il y a au moins un identifiant dans SessionFormation, s'il n'est pas nul,
         assertThat(sessionMICEDB.getIdSessionFormation()).isGreaterThan(0);
-        assertThat(sessionMICEDB.getFormation()).isNotNull();
-        assertThat(sessionMICEDB.getFormation()).isEqualTo(sauveteurSecouristeRecyclage);
+        assertThat(sessionMICEDB.getFinSessionFormation()).isNotNull();
 
         // Suppression de la session de formation MICE
         sessionFormationRepository.delete(sessionMICEDB);
 
-        // Vérifie que l'entité SessionFormation n'est plus présente en base (doit être null)
+        // Vérifie que l'entité SessionFormation n'est plus présente en base (doit être nul)
         SessionFormation sessionMICEDB2 = entityManager.find(SessionFormation.class, sessionMICEDB.getIdSessionFormation());
         assertNull(sessionMICEDB2);
 
 
-        // Vérifie que les départements associés existent toujours en base (pas de suppression en cascade)
-        List<Formation> formations = formationRepository.findAll();
-        assertThat(formations).isNotNull();
-        assertThat(formations).isNotEmpty();
-        assertThat(formations.size()).isEqualTo(3);
+        // Vérifie que la fin de session de formation n'existe plus également en base
+        FinSessionFormation finSessionFormationDB = entityManager.find(FinSessionFormation.class, finSessionFormation.getIdFinSessionFormation());
+        assertNull(finSessionFormationDB);
 
 
     }
@@ -202,27 +193,31 @@ public class SessionFormationFinFormationRelationTest {
 
     // Création d'un jeu de données de sessions de formations
     private List<SessionFormation> jeuDeDonnees() {
+
         List<SessionFormation> sessionsFormation = new ArrayList<>();
+
         sessionsFormation.add(SessionFormation.builder()
-                .formation(sauveteurSecouristeInitial)
                 .noYoda("123456")
-                .libelleSessionFormation("MICE24052025")
+                .libelleSessionFormation("MICE01012025")
                 .dateDebutSession(LocalDate.parse("2025-01-01"))
                 .nbHeureSession(21)
-                .build());
-        sessionsFormation.add(SessionFormation.builder()
-                .formation(sauveteurSecouristeRecyclage)
-                .noYoda("234567")
-                .libelleSessionFormation("MICE20092025")
-                .dateDebutSession(LocalDate.parse("2025-01-01"))
-                .nbHeureSession(14)
-                .build());
-        sessionsFormation.add(SessionFormation.builder()
                 .formation(comprendreLesEmotions)
-                .noYoda("345678")
-                .libelleSessionFormation("MISST24052025")
-                .dateDebutSession(LocalDate.parse("2025-01-01"))
+                .build());
+
+        sessionsFormation.add(SessionFormation.builder()
+                .noYoda("234567")
+                .libelleSessionFormation("MICE01022025")
+                .dateDebutSession(LocalDate.parse("2025-02-01"))
                 .nbHeureSession(21)
+                .formation(comprendreLesEmotions)
+                .build());
+
+        sessionsFormation.add(SessionFormation.builder()
+                .noYoda("345678")
+                .libelleSessionFormation("MICE01032025")
+                .dateDebutSession(LocalDate.parse("2025-03-01"))
+                .nbHeureSession(21)
+                .formation(comprendreLesEmotions)
                 .build());
 
         return sessionsFormation;

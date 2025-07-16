@@ -1,7 +1,6 @@
 package fr.mediaskol.projet.bo.SessionFormation;
 
 
-import fr.mediaskol.projet.bo.apprenant.SessionApprenant;
 import fr.mediaskol.projet.bo.departement.Departement;
 import fr.mediaskol.projet.bo.formation.Formation;
 import fr.mediaskol.projet.bo.sessionFormationDistanciel.SessionFormationDistanciel;
@@ -12,8 +11,6 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Représente une session de formation (en présentiel, en distanciel) dans le système de gestion.
@@ -126,8 +123,9 @@ public class SessionFormation {
      * </p>
      */
     @Enumerated(EnumType.STRING)
-    @Column(name="STATUT_SESSION_FORMATION")
+    @Column(name="STATUT_SESSION_FORMATION", nullable = false)
     @NotNull(message="{sessionFormation.statutSessionFormation.notnull}")
+    @Builder.Default
     private StatutSessionFormation statutSessionFormation = StatutSessionFormation.SESSION_FORMATION_NON_COMMENCEE;
 
     /**
@@ -145,7 +143,6 @@ public class SessionFormation {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "FORMATION_ID")
     @NotNull(message = "{sessionFormation.formation.notnull }")
-    @NotBlank(message = "{sessionFormation.formation.notblank}")
     private Formation formation;
 
 
@@ -168,14 +165,14 @@ public class SessionFormation {
     /**
      * SessionFinFormation associée à SessionFormation
      * <p>
-     * Association unidirectionnelle OneToOne avec {@link SessionFinFormation}
+     * Association unidirectionnelle OneToOne avec {@link FinSessionFormation}
      * La suppression de la session de formation entraîne la suppression de la fin de session de formation
      * (cascade et orphanRemoval).
      * </p>
      */
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "FIN_SESSION_FORMATION_ID")
-    private SessionFinFormation sessionFinFormation;
+    private FinSessionFormation finSessionFormation;
 
     /**
      * SessionFormationDistanciel associée à SessionFormation

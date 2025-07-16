@@ -1,11 +1,14 @@
 package fr.mediaskol.projet.association;
 
 
-
 import fr.mediaskol.projet.bo.departement.Departement;
 import fr.mediaskol.projet.bo.SessionFormation.SessionFormation;
+import fr.mediaskol.projet.bo.formation.Formation;
+import fr.mediaskol.projet.bo.formation.TypeFormation;
 import fr.mediaskol.projet.dal.DepartementRepository;
+import fr.mediaskol.projet.dal.FormationRepository;
 import fr.mediaskol.projet.dal.SessionFormationRepository;
+import fr.mediaskol.projet.dal.TypeFormationRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -44,13 +47,49 @@ public class SessionFormationDepartementRelationTest {
     @Autowired
     SessionFormationRepository sessionFormationRepository;
 
+    // Repository pour effectuer des opérations CRUD sur l'entité Formation
+    @Autowired
+    private FormationRepository formationRepository;
+
+    // Liste utilisée pour stocker les objets Formation pré-chargés en base pour les tests
+    private Formation formationMISST;
+
+    private TypeFormation presentiel;
+
+    @Autowired
+    private TypeFormationRepository typeFormationRepository;
+
     private Departement cotesdarmor;
     private Departement finistere;
     private Departement illeetvilaine;
     private Departement morbihan;
 
     @BeforeEach
-    public void initDepartement() {
+    public void initDepartementFormation() {
+
+
+        // Création d'un type de formation avec le builder Lombok
+        presentiel = TypeFormation
+                .builder()
+                .libelleTypeFormation("Présentiel")
+                .build();
+
+        // Persiste le type de formation dans la base de test
+        typeFormationRepository.save(presentiel);
+
+        // Création d'une formation avec le builder Lombok
+        formationMISST = Formation
+                .builder()
+                .themeFormation("MISST")
+                .libelleFormation("Sauveteur secouriste du travail (SST initial)")
+                .typeFormation(presentiel)
+                .build();
+
+        // Persiste la formation dans la base de test
+        formationRepository.save(formationMISST);
+
+
+        // Création des 4 départements avec le builder Lombok
         cotesdarmor = Departement
                 .builder()
                 .idDepartement(22L)
@@ -83,6 +122,7 @@ public class SessionFormationDepartementRelationTest {
                 .region("Bretagne")
                 .build();
 
+        // Persistence dans la base de test des départements
         departementRepository.save(cotesdarmor);
         departementRepository.save(finistere);
         departementRepository.save(illeetvilaine);
@@ -92,7 +132,7 @@ public class SessionFormationDepartementRelationTest {
 
     // Sauvegarde d'une session de formation et de son département
     @Test
-    public void test_save_session_formation(){
+    public void test_save_session_formation() {
 
         // Création d'une nouvelle session de formation avec le builder Lombok
         final SessionFormation sessionMICE = SessionFormation
@@ -101,6 +141,7 @@ public class SessionFormationDepartementRelationTest {
                 .libelleSessionFormation("MICE24052025")
                 .dateDebutSession(LocalDate.parse("2025-01-01"))
                 .nbHeureSession(21)
+                .formation(formationMISST)
                 .build();
 
         // Association ManyToOne entre la session et le département
@@ -122,14 +163,14 @@ public class SessionFormationDepartementRelationTest {
 
     //
     @Test
-    public void test_find_all(){
+    public void test_find_all() {
 
         // Récupération des données de la méthode jeuDeDonnees()
         List<SessionFormation> sessionFormations = jeuDeDonnees();
 
         // Sauvegarde du jeu de données dans la base
         sessionFormations.forEach(session -> {
-           sessionFormationRepository.save(session);
+            sessionFormationRepository.save(session);
             assertThat(session.getIdSessionFormation()).isGreaterThan(0);
         });
 
@@ -144,7 +185,7 @@ public class SessionFormationDepartementRelationTest {
     }
 
     @Test
-    public void test_delete_session_formation(){
+    public void test_delete_session_formation() {
 
         // Création d'une nouvelle session avec le builder Lombok
         final SessionFormation sessionMICE = SessionFormation
@@ -153,6 +194,7 @@ public class SessionFormationDepartementRelationTest {
                 .libelleSessionFormation("MICE24052025")
                 .dateDebutSession(LocalDate.parse("2025-01-01"))
                 .nbHeureSession(21)
+                .formation(formationMISST)
                 .build();
 
         // Association ManyToOne entre la session et le département
@@ -160,7 +202,7 @@ public class SessionFormationDepartementRelationTest {
 
         // Persistance de la session dans la base de test
         final SessionFormation sessionMICEDB = sessionFormationRepository.save(sessionMICE);
-        entityManager.flush();
+
 
         // Vérification s'il y a au moins un identifiant dans SessionFormation, s'il n'est pas null,
         // et si son département est égal au département illeetvilaine
@@ -188,28 +230,36 @@ public class SessionFormationDepartementRelationTest {
 
     // Création d'un jeu de données de sessions de formations
     private List<SessionFormation> jeuDeDonnees() {
+
         List<SessionFormation> sessionsFormation = new ArrayList<>();
+
         sessionsFormation.add(SessionFormation.builder()
                 .departement(illeetvilaine)
                 .noYoda("123456")
                 .libelleSessionFormation("MICE24052025")
                 .dateDebutSession(LocalDate.parse("2025-01-01"))
                 .nbHeureSession(14)
+                .formation(formationMISST)
                 .build());
+
         sessionsFormation.add(SessionFormation.builder()
                 .departement(morbihan)
                 .noYoda("234567")
                 .libelleSessionFormation("MICE20092025")
                 .dateDebutSession(LocalDate.parse("2025-02-01"))
                 .nbHeureSession(14)
+                .formation(formationMISST)
                 .build());
+
         sessionsFormation.add(SessionFormation.builder()
                 .departement(cotesdarmor)
                 .noYoda("345678")
                 .libelleSessionFormation("MISST24052025")
                 .dateDebutSession(LocalDate.parse("2025-03-01"))
-                .nbHeureSession(21)
+                .nbHeureSession(14)
+                .formation(formationMISST)
                 .build());
+
         return sessionsFormation;
     }
 

@@ -17,7 +17,7 @@ import lombok.Getter;
  * todo Les couleurs associées sont à définir ultérieurement.
  */
 @Getter
-public enum StatutSessionFinFormation {
+public enum StatutFinSessionFormation {
 
 
     // Statut indiquant que la session de formation n'est pas encore terminée.
@@ -50,7 +50,7 @@ public enum StatutSessionFinFormation {
      * @param libelleSessionFinFormation Libellé du statut
      * @param couleurSessionFinFormation Couleur du statut
      */
-    StatutSessionFinFormation(String libelleSessionFinFormation, String couleurSessionFinFormation) {
+    StatutFinSessionFormation(String libelleSessionFinFormation, String couleurSessionFinFormation) {
         this.libelleSessionFinFormation = libelleSessionFinFormation;
         this.couleurSessionFinFormation = couleurSessionFinFormation;
     }

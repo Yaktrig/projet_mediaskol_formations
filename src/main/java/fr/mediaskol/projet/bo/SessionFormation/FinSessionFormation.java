@@ -32,10 +32,10 @@ import java.time.LocalDate;
 @Builder
 
 @Entity
-@Table(name = "SESSION_FIN_FORMATION")
-public class SessionFinFormation {
+@Table(name = "FIN_SESSION_FORMATION")
+public class FinSessionFormation {
 
-    // Todo  test association
+    // Todo  voir les champs obligatoires
 
     /**
      * Identifiant unique de la fin de session de formation.
@@ -58,9 +58,9 @@ public class SessionFinFormation {
      * Ce champ n'est pas obligatoire.
      * </p>
      */
-    @Column(name = "STATUT_YODA_FIN_FORMATION", length = 5)
+    @Column(name = "STATUT_YODA_FIN_SESSION_FORMATION", length = 5)
     @Size(max = 5, message="{sessionFinFormation.statutYoda.size}")
-    private String statutYodaFinFormation;
+    private String statutYodaFinSessionFormation;
 
 
     /**
@@ -69,8 +69,8 @@ public class SessionFinFormation {
      * Ce champ n'est pas obligatoire.
      * </p>
      */
-    @Column(name = "DATE_LIMIE_YODA_FIN_FORMATION")
-    private LocalDate dateLimiteYodaFinFormation;
+    @Column(name = "DATE_LIMITE_YODA_FIN_SESSION_FORMATION")
+    private LocalDate dateLimiteYodaFinSessionFormation;
 
     /**
      * Commentaire en lien avec le traitement de la fin de la session de formation.
@@ -80,9 +80,9 @@ public class SessionFinFormation {
      * Ce champ n'est pas obligatoire.
      * </p>
      */
-    @Column(name = "COMMENTAIRE_FIN_FORMATION", length = 2000)
+    @Column(name = "COMMENTAIRE_FIN_SESSION_FORMATION", length = 2000)
     @Size(max=2000, message="{sessionFinFormation.commentaire.size}")
-    private String commentaireFinFormation;
+    private String commentaireFinSessionFormation;
 
 
     /**
@@ -93,12 +93,12 @@ public class SessionFinFormation {
      * <ul>
      *     <li></li>
      * </ul>
-     * La valeur est stockée en base sous forme de chaîne de caractères grâce à {@link StatutSessionFinFormation}
+     * La valeur est stockée en base sous forme de chaîne de caractères grâce à {@link StatutFinSessionFormation}
      * </p>
      */
     @Enumerated(EnumType.STRING)
-    @Column(name = "STATUT_SESSION_FIN_FORMATION")
-    private StatutSessionFinFormation statutSessionFinFormation;
+    @Column(name = "STATUT_FIN_SESSION_FORMATION")
+    private StatutFinSessionFormation statutFinSessionFormation;
 
 
 
