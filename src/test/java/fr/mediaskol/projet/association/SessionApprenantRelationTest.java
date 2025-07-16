@@ -1,16 +1,13 @@
 package fr.mediaskol.projet.association;
 
 import fr.mediaskol.projet.bo.SessionFormation.SessionFormation;
-import fr.mediaskol.projet.bo.adresse.Adresse;
 import fr.mediaskol.projet.bo.apprenant.Apprenant;
 import fr.mediaskol.projet.bo.apprenant.SessionApprenant;
 import fr.mediaskol.projet.bo.apprenant.StatutNumPasseport;
-import fr.mediaskol.projet.bo.departement.Departement;
 import fr.mediaskol.projet.dal.ApprenantRepository;
 import fr.mediaskol.projet.dal.SessionApprenantRepository;
 import fr.mediaskol.projet.dal.SessionFormationRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.Session;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.InstanceOfAssertFactories.list;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
@@ -34,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 // Configure un contexte Spring Boot limité à la couche JPA
 @Slf4j
 @DataJpaTest
-public class TestManyToOneSessionApprenant {
+public class SessionApprenantRelationTest {
 
     @Autowired
     private TestEntityManager entityManager;
@@ -208,7 +204,7 @@ public class TestManyToOneSessionApprenant {
 
         // Persistance de la session apprenant dans la base de test
         final SessionApprenant sessionTigrouDB = sessionApprenantRepository.save(sessionTigrou);
-        entityManager.flush();
+
 
         // Vérification s'il y a au moins un identifiant dans SessionApprenant, s'il n'est pas null,
         // et si son apprenant est égal à tigrou et sa session de formation est égale à sessionMICE

@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 @Slf4j
 // Configure un contexte Spring Boot limité à la couche JPA
 @DataJpaTest
-public class TestManyToManyFormateurTypeformation {
+public class FormateurTypeFormationRelationTest {
 
     // Permet des opérations avancées sur l'EntityManager pour les tests - Injecte TestEntityManager
     @Autowired

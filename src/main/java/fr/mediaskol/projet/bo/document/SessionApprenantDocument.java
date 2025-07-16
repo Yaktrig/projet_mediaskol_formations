@@ -37,7 +37,6 @@ import java.time.LocalDate;
 public class SessionApprenantDocument {
 
 
-    // Todo Test associations
     /**
      * Identifiant unique du document de l'apprenant pendant la session.
      * <p>

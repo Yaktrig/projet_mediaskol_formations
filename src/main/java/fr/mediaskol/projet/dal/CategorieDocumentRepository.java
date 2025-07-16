@@ -1,4 +1,7 @@
 package fr.mediaskol.projet.dal;
 
-public interface CategorieDocumentRepository {
+import fr.mediaskol.projet.bo.document.CategorieDocument;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CategorieDocumentRepository extends JpaRepository<CategorieDocument, Long> {
 }

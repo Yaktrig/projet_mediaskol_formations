@@ -1,11 +1,12 @@
 package fr.mediaskol.projet.association;
 
 
-
-import fr.mediaskol.projet.bo.departement.Departement;
+import fr.mediaskol.projet.bo.formation.Formation;
 import fr.mediaskol.projet.bo.SessionFormation.SessionFormation;
-import fr.mediaskol.projet.dal.DepartementRepository;
+import fr.mediaskol.projet.bo.formation.TypeFormation;
+import fr.mediaskol.projet.dal.FormationRepository;
 import fr.mediaskol.projet.dal.SessionFormationRepository;
+import fr.mediaskol.projet.dal.TypeFormationRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,77 +23,89 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  * Test unitaire qui permet de valider l'association ManyToOne
- * Entre les entités SessionFormation et Departement
- * Ici, nous sommes dans le cadre d'une formation présentielle.
- * On n'oblige pas à associer une formation à la session.
+ * Entre les entités SessionFormation et Formation
+ * Dans le cadre d'une formation en distanciel, le département n'est pas nécessaire.
  */
 
 // Configure un contexte Spring Boot limité à la couche JPA
 @Slf4j
 @DataJpaTest
-public class TestManyToOneSessionFOPDepartement {
+public class SessionFormationFinFormationRelationTest {
 
     // Permet des opérations avancées sur l'EntityManager pour les tests
     @Autowired
     private TestEntityManager entityManager;
 
-    // Comme il n'y a pas de cascade dans notre @ManyToOne de SessionFormation vers Departement
+    // Comme il n'y a pas de cascade dans notre @ManyToOne de SessionFormation vers Formation
     // on doit appeler le repository pour créer ici nos départements
     @Autowired
-    DepartementRepository departementRepository;
+    FormationRepository formationRepository;
 
     @Autowired
     SessionFormationRepository sessionFormationRepository;
 
-    private Departement cotesdarmor;
-    private Departement finistere;
-    private Departement illeetvilaine;
-    private Departement morbihan;
+    private Formation sauveteurSecouristeInitial;
+    private Formation sauveteurSecouristeRecyclage;
+    private Formation comprendreLesEmotions;
+
+    // Liste utilisée pour stocker les objets Formation pré-chargés en base pour les tests
+    private List<Formation> listeFormationDB = new ArrayList<>();
+
+    private TypeFormation distanciel;
+
+    private TypeFormation presentiel;
+
+    @Autowired
+    private TypeFormationRepository typeFormationRepository;
 
     @BeforeEach
-    public void initDepartement() {
-        cotesdarmor = Departement
+    public void initFormations() {
+
+        distanciel = TypeFormation
                 .builder()
-                .idDepartement(22L)
-                .nomDepartement("Côtes d'Armor")
-                .couleurDepartement("#9AC8EB")
-                .region("Bretagne")
+                .libelleTypeFormation("Distanciel")
                 .build();
 
-        finistere = Departement
+
+        presentiel = TypeFormation
                 .builder()
-                .idDepartement(29L)
-                .nomDepartement("Finistère")
-                .couleurDepartement("#CE6A6B")
-                .region("Bretagne")
+                .libelleTypeFormation("Présentiel")
                 .build();
 
-        illeetvilaine = Departement
+        typeFormationRepository.save(distanciel);
+        typeFormationRepository.save(presentiel);
+
+
+        sauveteurSecouristeInitial = Formation
                 .builder()
-                .idDepartement(35L)
-                .nomDepartement("Ille et Vilaine")
-                .couleurDepartement("#F7F6CF")
-                .region("Bretagne")
+                .themeFormation("MISST")
+                .libelleFormation("Sauveteur secouriste du travail (SST initial)")
+                .typeFormation(presentiel)
                 .build();
 
-        morbihan = Departement
+        sauveteurSecouristeRecyclage = Formation
                 .builder()
-                .idDepartement(56L)
-                .nomDepartement("Morbihan")
-                .couleurDepartement("#D5CD90")
-                .region("Bretagne")
+                .themeFormation("MIMACSST")
+                .libelleFormation("Recyclage sauveteur secouriste du travail")
+                .typeFormation(presentiel)
                 .build();
 
-        departementRepository.save(cotesdarmor);
-        departementRepository.save(finistere);
-        departementRepository.save(illeetvilaine);
-        departementRepository.save(morbihan);
+        comprendreLesEmotions = Formation
+                .builder()
+                .themeFormation("MICE")
+                .libelleFormation("Comprendre les émotions de l'enfant pour mieux l'accompagner au quotidien")
+                .typeFormation(distanciel)
+                .build();
 
+
+        formationRepository.save(sauveteurSecouristeInitial);
+        formationRepository.save(sauveteurSecouristeRecyclage);
+        formationRepository.save(comprendreLesEmotions);
     }
 
-    // Sauvegarde d'une session de formation et de son département
+    // Sauvegarde d'une session de formation et de sa formation
     @Test
-    public void test_save_session_formation(){
+    public void test_save_session_distanciel() {
 
         // Création d'une nouvelle session de formation avec le builder Lombok
         final SessionFormation sessionMICE = SessionFormation
@@ -103,8 +116,8 @@ public class TestManyToOneSessionFOPDepartement {
                 .nbHeureSession(21)
                 .build();
 
-        // Association ManyToOne entre la session et le département
-        sessionMICE.setDepartement(illeetvilaine);
+        // Association ManyToOne entre la session et la formation
+        sessionMICE.setFormation(comprendreLesEmotions);
 
         // Sauvegarde de la session en base via le repository
         final SessionFormation sessionMICEDB = sessionFormationRepository.save(sessionMICE);
@@ -115,21 +128,21 @@ public class TestManyToOneSessionFOPDepartement {
         // Vérification de la cascade de l'association
         // Vérifie que l'objet retourné n'est pas null
         assertThat(sessionMICEDB.getIdSessionFormation()).isGreaterThan(0);
-        assertThat(sessionMICEDB.getDepartement()).isNotNull();
-        assertThat(sessionMICEDB.getDepartement()).isEqualTo(illeetvilaine);
+        assertThat(sessionMICEDB.getFormation()).isNotNull();
+        assertThat(sessionMICEDB.getFormation()).isEqualTo(comprendreLesEmotions);
 
     }
 
     //
     @Test
-    public void test_find_all(){
+    public void test_find_all() {
 
         // Récupération des données de la méthode jeuDeDonnees()
         List<SessionFormation> sessionFormations = jeuDeDonnees();
 
         // Sauvegarde du jeu de données dans la base
         sessionFormations.forEach(session -> {
-           sessionFormationRepository.save(session);
+            sessionFormationRepository.save(session);
             assertThat(session.getIdSessionFormation()).isGreaterThan(0);
         });
 
@@ -138,13 +151,14 @@ public class TestManyToOneSessionFOPDepartement {
         sessionFormationDB.forEach(session -> {
             assertThat(session.getIdSessionFormation()).isGreaterThan(0);
 
-            // Vérification du département
-            assertThat(session.getDepartement()).isNotNull();
+            // Vérification de la formation
+            assertThat(session.getFormation()).isNotNull();
         });
     }
 
+
     @Test
-    public void test_delete_session_formation(){
+    public void test_delete_session_distanciel() {
 
         // Création d'une nouvelle session avec le builder Lombok
         final SessionFormation sessionMICE = SessionFormation
@@ -155,18 +169,18 @@ public class TestManyToOneSessionFOPDepartement {
                 .nbHeureSession(21)
                 .build();
 
-        // Association ManyToOne entre la session et le département
-        sessionMICE.setDepartement(illeetvilaine);
+        // Association ManyToOne entre la session et la formation
+        sessionMICE.setFormation(sauveteurSecouristeRecyclage);
 
         // Persistance de la session dans la base de test
         final SessionFormation sessionMICEDB = sessionFormationRepository.save(sessionMICE);
-        entityManager.flush();
+
 
         // Vérification s'il y a au moins un identifiant dans SessionFormation, s'il n'est pas null,
-        // et si son département est égal au département illeetvilaine
+        // et si sa formation est égale à la formation sauveteurSecouristeRecyclage
         assertThat(sessionMICEDB.getIdSessionFormation()).isGreaterThan(0);
-        assertThat(sessionMICEDB.getDepartement()).isNotNull();
-        assertThat(sessionMICEDB.getDepartement()).isEqualTo(illeetvilaine);
+        assertThat(sessionMICEDB.getFormation()).isNotNull();
+        assertThat(sessionMICEDB.getFormation()).isEqualTo(sauveteurSecouristeRecyclage);
 
         // Suppression de la session de formation MICE
         sessionFormationRepository.delete(sessionMICEDB);
@@ -177,10 +191,10 @@ public class TestManyToOneSessionFOPDepartement {
 
 
         // Vérifie que les départements associés existent toujours en base (pas de suppression en cascade)
-        List<Departement> departements = departementRepository.findAll();
-        assertThat(departements).isNotNull();
-        assertThat(departements).isNotEmpty();
-        assertThat(departements.size()).isEqualTo(4);
+        List<Formation> formations = formationRepository.findAll();
+        assertThat(formations).isNotNull();
+        assertThat(formations).isNotEmpty();
+        assertThat(formations.size()).isEqualTo(3);
 
 
     }
@@ -190,27 +204,30 @@ public class TestManyToOneSessionFOPDepartement {
     private List<SessionFormation> jeuDeDonnees() {
         List<SessionFormation> sessionsFormation = new ArrayList<>();
         sessionsFormation.add(SessionFormation.builder()
-                .departement(illeetvilaine)
+                .formation(sauveteurSecouristeInitial)
                 .noYoda("123456")
                 .libelleSessionFormation("MICE24052025")
+                .dateDebutSession(LocalDate.parse("2025-01-01"))
+                .nbHeureSession(21)
+                .build());
+        sessionsFormation.add(SessionFormation.builder()
+                .formation(sauveteurSecouristeRecyclage)
+                .noYoda("234567")
+                .libelleSessionFormation("MICE20092025")
                 .dateDebutSession(LocalDate.parse("2025-01-01"))
                 .nbHeureSession(14)
                 .build());
         sessionsFormation.add(SessionFormation.builder()
-                .departement(morbihan)
-                .noYoda("234567")
-                .libelleSessionFormation("MICE20092025")
-                .dateDebutSession(LocalDate.parse("2025-02-01"))
-                .nbHeureSession(14)
-                .build());
-        sessionsFormation.add(SessionFormation.builder()
-                .departement(cotesdarmor)
+                .formation(comprendreLesEmotions)
                 .noYoda("345678")
                 .libelleSessionFormation("MISST24052025")
-                .dateDebutSession(LocalDate.parse("2025-03-01"))
+                .dateDebutSession(LocalDate.parse("2025-01-01"))
                 .nbHeureSession(21)
                 .build());
+
         return sessionsFormation;
     }
 
 }
+
+

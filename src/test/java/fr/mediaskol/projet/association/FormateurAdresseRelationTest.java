@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 @Slf4j
 // Permet de configurer un contexte Spring Boot limité à la couche JPA
 @DataJpaTest
-public class TestOneToOneUniFormateurAdresse {
+public class FormateurAdresseRelationTest {
 
     // Permet des opérations avancées sur l'EntityManager pour les tests
     @Autowired

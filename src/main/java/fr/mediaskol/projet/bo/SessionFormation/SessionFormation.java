@@ -125,10 +125,10 @@ public class SessionFormation {
      * La valeur est stockée en base sous forme de chaîne de caractères grâce à {@link StatutSessionFormation}
      * </p>
      */
-    // Todo mettre automatiquement au statut "SESSION_FORMATION_NON_COMMENCEE" à la création et rendre obligatoire ?
     @Enumerated(EnumType.STRING)
     @Column(name="STATUT_SESSION_FORMATION")
-    private StatutSessionFormation statutSessionFormation;
+    @NotNull(message="{sessionFormation.statutSessionFormation.notnull}")
+    private StatutSessionFormation statutSessionFormation = StatutSessionFormation.SESSION_FORMATION_NON_COMMENCEE;
 
     /**
      * Formation à laquelle est rattachée la session de formation.
@@ -138,12 +138,14 @@ public class SessionFormation {
      * et d'assurer l'intégrité des données. Plusieurs Sessions peuvent être associées à la même formation.
      * </p>
      * <p>
-     * Cette relation est facultative : une session de formation n'est pas obligé d'avoir une formation de renseignée.
+     * Cette relation est obligatoire : une session de formation est obligée d'avoir une formation de renseignée.
      * La récupération de la formation est effectuée en mode paresseux (lazy loading).
      * </p>
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "FORMATION_ID")
+    @NotNull(message = "{sessionFormation.formation.notnull }")
+    @NotBlank(message = "{sessionFormation.formation.notblank}")
     private Formation formation;
 
 
