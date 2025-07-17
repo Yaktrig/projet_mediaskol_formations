@@ -31,7 +31,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "SESSION_FORMATEUR")
 public class SessionFormateur {
 
-    // Todo  test association
+
 
     /**
      * Identifiant unique de la session formateur.

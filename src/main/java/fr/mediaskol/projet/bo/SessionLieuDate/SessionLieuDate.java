@@ -37,7 +37,6 @@ import java.time.LocalDateTime;
 @Table(name = "SESSION_LIEU_DATE")
 public class SessionLieuDate {
 
-    // Todo  test association
 
     /**
      * Identifiant unique de la session lieu date.

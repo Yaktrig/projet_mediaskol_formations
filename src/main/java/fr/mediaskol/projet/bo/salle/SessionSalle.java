@@ -34,7 +34,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "SESSION_SALLE")
 public class SessionSalle {
 
-    // Todo  test association
 
     /**
      * Identifiant unique de la session salle.

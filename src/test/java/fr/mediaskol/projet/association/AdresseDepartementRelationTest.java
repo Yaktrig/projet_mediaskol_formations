@@ -155,7 +155,7 @@ public class AdresseDepartementRelationTest {
 
        // Persistance de l'adresse dans la base de test
         final Adresse adresseBrestDB = adresseRepository.save(adresseBrest);
-        entityManager.flush();
+
 
         // Vérification s'il y a au moins un identifiant dans Adresse, s'il n'est pas null,
         // et si son département est égal au département finistere
