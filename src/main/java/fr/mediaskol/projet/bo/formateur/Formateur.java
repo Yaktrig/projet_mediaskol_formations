@@ -13,6 +13,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Représente un formateur dans le système de gestion.
@@ -122,7 +123,7 @@ public class Formateur extends Personne {
             joinColumns = {@JoinColumn(name = "FORMATEUR_ID")},
             inverseJoinColumns = {@JoinColumn(name = "FORMATION_ID")})
     @ToString.Exclude
-    private @Builder.Default List<Formation> formationsDispensees = new ArrayList<>();
+    private @Builder.Default Set<Formation> formationsDispensees;
 
     /**
      * Liste des types de formation que le formateur est habilité à dispenser.
@@ -142,4 +143,6 @@ public class Formateur extends Personne {
             inverseJoinColumns = {@JoinColumn(name = "TYPE_FORMATION_ID")})
     @ToString.Exclude
     private @Builder.Default List<TypeFormation> typeFormationDispensee = new ArrayList<>();
+
+    // Todo vérifier dans le test pour le type de formation
 }

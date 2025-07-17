@@ -1,9 +1,14 @@
 package fr.mediaskol.projet.bll;
 
+import fr.mediaskol.projet.bo.apprenant.Apprenant;
+import fr.mediaskol.projet.bo.apprenant.StatutNumPasseport;
 import fr.mediaskol.projet.bo.departement.Departement;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.time.LocalDate;
 
 
 /**
@@ -23,7 +28,28 @@ public class TestTransactionApprenant {
     @Autowired
     AdresseService adresseService;
 
-    @Autowired
-    DepartementService departementService;
+
+    @Test
+    public void test_save(){
+
+
+
+        // Création d'un nouvel apprenant avec le builder Lombok
+        final Apprenant tigrou = Apprenant
+                .builder()
+                .nom("Le tigre")
+                .prenom("Tigrou")
+                .email("tigrou.letigre@gmail.fr")
+                .numPortable("0600000000")
+                .dateNaissance(LocalDate.parse("2000-12-12"))
+                .apprenantActif(true)
+                .numPasseport("A123456")
+                .commentaireApprenant("Fais des bonds partout")
+                .statutNumPasseport(StatutNumPasseport.NUM_PASSEPORT_A_CREER)
+                .build();
+
+        // Persistence dans la base de données
+        //final Apprenant tigrouDB = apprenantService.save
+    }
 
 }

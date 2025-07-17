@@ -10,8 +10,8 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Représente un apprenant dans le système de gestion.
@@ -65,7 +65,8 @@ public class Apprenant extends Personne {
      * </p>
      */
     @Column(name = "APPRENANT_ACTIF", nullable = false)
-    private boolean apprenantActif;
+    @Builder.Default
+    private boolean apprenantActif = true;
 
     /**
      * Numéro du passeport unique de l'apprenant
@@ -134,10 +135,9 @@ public class Apprenant extends Personne {
             joinColumns = {@JoinColumn(name = "APPRENANT_ID")},
             inverseJoinColumns = {@JoinColumn(name = "TYPE_FORMATION_ID")})
     @ToString.Exclude
-    private @Builder.Default List<TypeFormation> typeFormationSuivie = new ArrayList<>();
+    private @Builder.Default Set<TypeFormation> typeFormationSuivie = new HashSet<>();
 
-
-
+    // TODO vérifier si le type de formation suivie ok pour apprenant
 
 
 }
