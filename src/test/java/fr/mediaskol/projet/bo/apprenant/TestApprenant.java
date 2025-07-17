@@ -1,6 +1,6 @@
 package fr.mediaskol.projet.bo.apprenant;
 
-import fr.mediaskol.projet.dal.ApprenantRepository;
+import fr.mediaskol.projet.dal.apprenant.ApprenantRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

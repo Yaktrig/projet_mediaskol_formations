@@ -1,13 +1,14 @@
 package fr.mediaskol.projet.association;
 
 
-import fr.mediaskol.projet.bo.SessionFormation.FinSessionFormation;
-import fr.mediaskol.projet.bo.SessionFormation.SessionFormation;
-import fr.mediaskol.projet.bo.departement.Departement;
+import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
 import fr.mediaskol.projet.bo.formation.Formation;
 import fr.mediaskol.projet.bo.formation.TypeFormation;
 import fr.mediaskol.projet.bo.sessionFormationDistanciel.SessionFormationDistanciel;
-import fr.mediaskol.projet.dal.*;
+import fr.mediaskol.projet.dal.formation.FormationRepository;
+import fr.mediaskol.projet.dal.formation.TypeFormationRepository;
+import fr.mediaskol.projet.dal.sessionFormation.SessionFormationRepository;
+import fr.mediaskol.projet.dal.sessionFormationDistanciel.SessionFormationDistancielRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,8 +17,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNull;

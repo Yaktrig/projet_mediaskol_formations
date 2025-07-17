@@ -1,10 +1,14 @@
 package fr.mediaskol.projet.bll;
 
-import fr.mediaskol.projet.bo.SessionFormation.SessionFormation;
+import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
 import fr.mediaskol.projet.bo.apprenant.Apprenant;
 import fr.mediaskol.projet.bo.apprenant.SessionApprenant;
-import fr.mediaskol.projet.dal.SessionApprenantRepository;
+import fr.mediaskol.projet.dal.apprenant.SessionApprenantRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
+@AllArgsConstructor
+@Service
 public class InscriptionServiceImpl implements InscriptionService{
 
     /**

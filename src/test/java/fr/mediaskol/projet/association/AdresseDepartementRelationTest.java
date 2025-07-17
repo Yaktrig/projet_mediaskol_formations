@@ -2,8 +2,8 @@ package fr.mediaskol.projet.association;
 
 import fr.mediaskol.projet.bo.adresse.Adresse;
 import fr.mediaskol.projet.bo.departement.Departement;
-import fr.mediaskol.projet.dal.AdresseRepository;
-import fr.mediaskol.projet.dal.DepartementRepository;
+import fr.mediaskol.projet.dal.adresse.AdresseRepository;
+import fr.mediaskol.projet.dal.departement.DepartementRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

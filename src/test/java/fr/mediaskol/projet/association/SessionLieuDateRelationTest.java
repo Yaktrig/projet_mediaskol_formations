@@ -1,16 +1,15 @@
 package fr.mediaskol.projet.association;
 
-import fr.mediaskol.projet.bo.SessionFormation.SessionFormation;
-import fr.mediaskol.projet.bo.SessionLieuDate.SessionLieuDate;
-import fr.mediaskol.projet.bo.SessionLieuDate.StatutSessionLieuDate;
+import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
+import fr.mediaskol.projet.bo.sessionLieuDate.SessionLieuDate;
+import fr.mediaskol.projet.bo.sessionLieuDate.StatutSessionLieuDate;
 import fr.mediaskol.projet.bo.formation.Formation;
 import fr.mediaskol.projet.bo.formation.TypeFormation;
-import fr.mediaskol.projet.bo.salle.Salle;
-import fr.mediaskol.projet.bo.salle.SessionSalle;
-import fr.mediaskol.projet.bo.salle.StatutSessionSalle;
-import fr.mediaskol.projet.dal.*;
+import fr.mediaskol.projet.dal.formation.FormationRepository;
+import fr.mediaskol.projet.dal.formation.TypeFormationRepository;
+import fr.mediaskol.projet.dal.sessionFormation.SessionFormationRepository;
+import fr.mediaskol.projet.dal.sessionLieuDate.SessionLieuDateRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.Session;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,5 +1,10 @@
 package fr.mediaskol.projet.bll;
 
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+
+@AllArgsConstructor
+@Service
 public class AdresseServiceImpl implements AdresseService {
 
     /**

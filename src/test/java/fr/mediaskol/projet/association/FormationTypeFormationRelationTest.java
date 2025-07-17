@@ -2,7 +2,8 @@ package fr.mediaskol.projet.association;
 
 import fr.mediaskol.projet.bo.formation.Formation;
 import fr.mediaskol.projet.bo.formation.TypeFormation;
-import fr.mediaskol.projet.dal.*;
+import fr.mediaskol.projet.dal.formation.FormationRepository;
+import fr.mediaskol.projet.dal.formation.TypeFormationRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

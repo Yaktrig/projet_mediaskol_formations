@@ -1,8 +1,7 @@
 package fr.mediaskol.projet.bo.salle;
 
 
-import fr.mediaskol.projet.bo.SessionFormation.SessionFormation;
-import fr.mediaskol.projet.bo.formateur.Formateur;
+import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

@@ -1,13 +1,17 @@
 package fr.mediaskol.projet.association;
 
-import fr.mediaskol.projet.bo.SessionFormation.SessionFormation;
+import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
 import fr.mediaskol.projet.bo.apprenant.Apprenant;
 import fr.mediaskol.projet.bo.apprenant.SessionApprenant;
 import fr.mediaskol.projet.bo.apprenant.StatutNumPasseport;
 import fr.mediaskol.projet.bo.document.CategorieDocument;
 import fr.mediaskol.projet.bo.document.SessionApprenantDocument;
 import fr.mediaskol.projet.bo.document.StatutSessionApprenantDocument;
-import fr.mediaskol.projet.dal.*;
+import fr.mediaskol.projet.dal.apprenant.ApprenantRepository;
+import fr.mediaskol.projet.dal.apprenant.SessionApprenantRepository;
+import fr.mediaskol.projet.dal.document.CategorieDocumentRepository;
+import fr.mediaskol.projet.dal.document.SessionApprenantDocumentRepository;
+import fr.mediaskol.projet.dal.sessionFormation.SessionFormationRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

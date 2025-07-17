@@ -1,7 +1,6 @@
 package fr.mediaskol.projet.bo.apprenant;
 
-import fr.mediaskol.projet.bo.SessionFormation.SessionFormation;
-import fr.mediaskol.projet.bo.formateur.Formateur;
+import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
