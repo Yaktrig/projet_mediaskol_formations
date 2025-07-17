@@ -251,25 +251,25 @@ public class FactureRelationsTest {
         List<Facture> factures = new ArrayList<>();
 
         // Création d'une nouvelle facture avec le builder Lombok
-        final Facture factureFormateur = Facture
+        factures.add(Facture
                 .builder()
                 .numFacture("AF123456")
                 .typeFacture("Formateur")
                 .libelleFacture("Facture SessionSTT du 05-01-2025")
                 .montantFacture(50.00F)
                 .formateur(coco)
-                .build();
+                .build());
 
 
         // Création d'une seconde facture avec le builder Lombok
-        final Facture factureSalle = Facture
+       factures.add(Facture
                 .builder()
                 .numFacture("AF123456")
                 .typeFacture("Salle")
                 .libelleFacture("Facture SessionSTT du 05-01-2025")
                 .montantFacture(20.00F)
                 .salle(sallePlovan)
-                .build();
+                .build());
 
         return factures;
     }

@@ -17,9 +17,9 @@ import java.time.LocalDate;
  * Représente une note de frais émise par un formateur salarié dans le système de gestion.
  * <p>
  * Cette entité contient les informations spécifiques à une note de frais, elle contient un identifiant,
- *  l'intitulé de la session de formation concernée, la date de la session de formation concernée, le nombre de
- *  kilomètres, le prix du repas, le prix pour la pause café, les frais divers, le prix de la nuit d'hôtel, le montant
- *  total.
+ * l'intitulé de la session de formation concernée, la date de la session de formation concernée, le nombre de
+ * kilomètres, le prix du repas, le prix pour la pause café, les frais divers, le prix de la nuit d'hôtel, le montant
+ * total.
  * </p>
  * <p>
  * Utilisation de Lombok (@Data, @Builder, @NoArgsConstructor, @AllArgsConstructor) pour générer
@@ -34,11 +34,8 @@ import java.time.LocalDate;
 @Builder
 
 @Entity
-@Table(name="NOTE_DE_FRAIS")
+@Table(name = "NOTE_DE_FRAIS")
 public class NoteDeFrais {
-
-
-    // Todo tester association à Formateur
 
 
     /**
@@ -49,7 +46,7 @@ public class NoteDeFrais {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="NOTE_DE_FRAIS_ID")
+    @Column(name = "NOTE_DE_FRAIS_ID")
     private int idNoteDeFrais;
 
     // Todo libelle note de frais ??
@@ -61,10 +58,10 @@ public class NoteDeFrais {
      * </p>
      */
     @Column(name = "LIBELLE_SESSION_FORMATION", nullable = false, length = 120)
-    @Size(min=3, max = 120, message = "{noteDeFrais.libelle.size}")
+    @Size(min = 3, max = 120, message = "{noteDeFrais.libelle.size}")
     @NotNull(message = "{noteDeFrais.libelle.notnull}")
     @NotBlank(message = "{noteDeFrais.libelle.notblank}")
-    private String libelleSessionFormation  ;
+    private String libelleSessionFormation;
 
     // Todo dates pertinentes ? Date session - date création - date règlement
     /**
@@ -181,5 +178,7 @@ public class NoteDeFrais {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "FORMATEUR_ID", nullable = false)
     private Formateur formateur;
+
+
 
 }
