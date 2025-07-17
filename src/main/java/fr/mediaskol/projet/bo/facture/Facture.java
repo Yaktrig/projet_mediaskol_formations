@@ -48,7 +48,7 @@ public class Facture {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="FACTURE_ID")
-    private int idFacture;
+    private Long idFacture;
 
     /**
      * Numéro de la facture

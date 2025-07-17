@@ -32,7 +32,6 @@ import lombok.NoArgsConstructor;
 @Table(name="FORMATION")
 public class Formation {
 
-    // Todo test association avec TypeFormation (ManyToOne)
 
     /**
      * Identifiant unique de la formation.
