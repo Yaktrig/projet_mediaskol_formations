@@ -7,6 +7,7 @@ import fr.mediaskol.projet.bo.formation.TypeFormation;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 public interface ApprenantService {
 
@@ -29,19 +30,19 @@ public interface ApprenantService {
      * Fonctionnalité qui va ajouter un apprenant
      * @param apprenant
      */
-    void ajouterApprenant(Apprenant apprenant);
+    void ajouterApprenant(Apprenant apprenant, Adresse adresse, Set<TypeFormation> typesFormation);
 
     /**
      * Fonctionnalité qui va ajouter une adresse à un apprenant
      * @param apprenant
      * @param adresse
      */
-    void ajouterAdresseApprenant(Apprenant apprenant, Adresse adresse);
+    //void ajouterAdresseApprenant(Apprenant apprenant, Adresse adresse);
 
     /**
      * Fonctionnalité qui va ajouter un type de formation à un apprenant
      * @param apprenant
      * @param typeFormation
      */
-    void ajouterTypeFormationApprenant(Apprenant apprenant, TypeFormation typeFormation);
+    //void ajouterTypeFormationApprenant(Apprenant apprenant, TypeFormation typeFormation);
 }

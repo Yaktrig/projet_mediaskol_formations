@@ -3,8 +3,10 @@ package fr.mediaskol.projet.bll;
 import fr.mediaskol.projet.bo.adresse.Adresse;
 import fr.mediaskol.projet.bo.apprenant.Apprenant;
 import fr.mediaskol.projet.bo.formation.TypeFormation;
+import fr.mediaskol.projet.dal.adresse.AdresseRepository;
 import fr.mediaskol.projet.dal.apprenant.ApprenantRepository;
 import fr.mediaskol.projet.dal.apprenant.ApprenantSpecifications;
+import fr.mediaskol.projet.dal.formation.TypeFormationRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
@@ -13,13 +15,19 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @AllArgsConstructor
 @Service
 public class ApprenantServiceImpl implements ApprenantService {
 
-    // Injection des repository en couplage faible
-    ApprenantRepository apprenantRepository;
+
+    /**
+     * Injection des repository en couplage faible
+     */
+    private final ApprenantRepository apprenantRepository;
+    private final AdresseRepository adresseRepository;
+    private final TypeFormationRepository typeFormationRepository;
 
     /**
      * Appel de la méthode findAll() du repository qui retourne tous les apprenants
@@ -62,12 +70,17 @@ public class ApprenantServiceImpl implements ApprenantService {
      *     <li>On vérifie si les données de l'apprenant sont existantes, sinon on déclenche une exception.</li>
      *     <li>Vérification de l'ensemble des contraintes avant de créer un apprenant.</li>
      *     <li>Si toutes les contraintes sont respectées, on peut créer l'apprenant.</li>
+     *     <li>Si l'adresse existe, elle est créée et associée à l'apprenant</li>
+     *     <li>Si le type de formation existe, il est créé et associé à l'apprenant</li>
      * </ul>
      *
      * @param apprenant
+     * @param adresse
+     * @param typesFormation
      */
     @Override
-    public void ajouterApprenant(Apprenant apprenant) {
+    @Transactional
+    public void ajouterApprenant(Apprenant apprenant,Adresse adresse, Set<TypeFormation> typesFormation) {
 
         if (apprenant == null) {
             throw new RuntimeException("L'apprenant n'est pas renseigné");
@@ -79,13 +92,32 @@ public class ApprenantServiceImpl implements ApprenantService {
         validerDateNaissance(apprenant.getDateNaissance(), "Vous devez renseigner la date de naissance de l'apprenant.");
         validerEnumNonNulle(apprenant.getStatutNumPasseport(), "Vous devez indiquer un statut pour le passeport de l'apprenant.");
 
+        if(adresse !=null){
+            adresseRepository.save(adresse);
+            apprenant.setAdresse(adresse);
+        }
+
+        if(typesFormation != null){
+            Set<TypeFormation> formationAEnregistrer = new HashSet<>();
+
+            for(TypeFormation tf : typesFormation){
+
+                if(tf.getIdTypeFormation() == null){
+                    // Si le set de type de formation est nul, on le crée d'abord
+                    formationAEnregistrer.add(typeFormationRepository.save(tf));
+                } else {
+                    // sinon, on suppose que le set existe déjà
+                    formationAEnregistrer.add(tf);
+                }
+            }
+            apprenant.setTypesFormationSuivies(formationAEnregistrer);
+        }
+
         try {
             apprenantRepository.save(apprenant);
         } catch (RuntimeException e) {
             throw new RuntimeException("Impossible de sauvegarder - " + apprenant.toString());
         }
-
-
     }
 
     /**
@@ -99,18 +131,18 @@ public class ApprenantServiceImpl implements ApprenantService {
      * @param adresse   l'adresse à associer à l'apprenant (doit être non nulle).
      * @throws RuntimeException si l'apprenant ou l'adresse sont nuls
      */
-    @Override
-    @Transactional
-    public void ajouterAdresseApprenant(Apprenant apprenant, Adresse adresse) {
-
-        if (apprenant == null || adresse == null) {
-            throw new RuntimeException("L'apprenant ou l'adresse n'est pas renseigné.");
-        }
-
-        apprenant.setAdresse(adresse);
-        apprenantRepository.save(apprenant);
-
-    }
+//    @Override
+//    @Transactional
+//    public void ajouterAdresseApprenant(Apprenant apprenant, Adresse adresse) {
+//
+//        if (apprenant == null || adresse == null) {
+//            throw new RuntimeException("L'apprenant ou l'adresse n'est pas renseigné.");
+//        }
+//
+//        apprenant.setAdresse(adresse);
+//        apprenantRepository.save(apprenant);
+//
+//    }
 
     /**
      * Ajoute un type de formation à la collection des types de formations d'un apprenant existant, puis enregistre
@@ -126,22 +158,21 @@ public class ApprenantServiceImpl implements ApprenantService {
      * @param typeFormation, le type de formation à associer (doit être non nul).
      * @throws RuntimeException si l'apprenant ou le type de formation sont nuls.
      */
-    @Override
-    @Transactional
-    public void ajouterTypeFormationApprenant(Apprenant apprenant, TypeFormation typeFormation) {
-
-        if (apprenant == null || typeFormation == null) {
-            throw new RuntimeException("L'apprenant ou le type de formation n'est pas renseigné.");
-        }
-
-        if (apprenant.getTypeFormationSuivie() == null) {
-            apprenant.setTypeFormationSuivie(new HashSet<>());
-        }
-
-        apprenant.getTypeFormationSuivie().add(typeFormation);
-        apprenantRepository.save(apprenant);
-    }
-
+//    @Override
+//    @Transactional
+//    public void ajouterTypeFormationApprenant(Apprenant apprenant, TypeFormation typeFormation) {
+//
+//        if (apprenant == null || typeFormation == null) {
+//            throw new RuntimeException("L'apprenant ou le type de formation n'est pas renseigné.");
+//        }
+//
+//        if (apprenant.getTypesFormationSuivies() == null) {
+//            apprenant.setTypesFormationSuivies(new HashSet<>());
+//        }
+//
+//        apprenant.getTypesFormationSuivies().add(typeFormation);
+//        apprenantRepository.save(apprenant);
+//    }
 
 
     // Méthodes de contrôle de contraintes

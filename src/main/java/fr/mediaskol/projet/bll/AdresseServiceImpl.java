@@ -1,18 +1,30 @@
 package fr.mediaskol.projet.bll;
 
+import fr.mediaskol.projet.bo.adresse.Adresse;
+import fr.mediaskol.projet.dal.adresse.AdresseRepository;
+import fr.mediaskol.projet.dal.apprenant.ApprenantRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
 @Service
 public class AdresseServiceImpl implements AdresseService {
+    /**
+     * Injection des repository en couplage faible
+     */
+    private final AdresseRepository adresseRepository;
+
+    @Override
+    public static void validerAdresse(Adresse adresse) {
+
+
+    }
 
     /**
      *     On affecte le numéro du département en fonction du code postal
      *     Ne gère pas tous les cas particuliers, comme certaines communes qui ont le code postal
      *     de la ville du département voisin.
      */
-
 
     @Override
     public String getNumDepartement(String codePostal) {

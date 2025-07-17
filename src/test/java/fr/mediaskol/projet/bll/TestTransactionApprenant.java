@@ -1,5 +1,6 @@
 package fr.mediaskol.projet.bll;
 
+import fr.mediaskol.projet.bo.adresse.Adresse;
 import fr.mediaskol.projet.bo.apprenant.Apprenant;
 import fr.mediaskol.projet.bo.apprenant.StatutNumPasseport;
 import fr.mediaskol.projet.bo.departement.Departement;
@@ -32,6 +33,13 @@ public class TestTransactionApprenant {
     @Test
     public void test_save(){
 
+        // Création d'une nouvelle adresse
+        final Adresse adresseBrest = Adresse
+                .builder()
+                .rue("44, boulevard de Lagarde")
+                .codePostal("29200")
+                .ville("Brest")
+                .build();
 
 
         // Création d'un nouvel apprenant avec le builder Lombok

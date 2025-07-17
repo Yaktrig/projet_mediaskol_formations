@@ -135,7 +135,7 @@ public class Apprenant extends Personne {
             joinColumns = {@JoinColumn(name = "APPRENANT_ID")},
             inverseJoinColumns = {@JoinColumn(name = "TYPE_FORMATION_ID")})
     @ToString.Exclude
-    private @Builder.Default Set<TypeFormation> typeFormationSuivie = new HashSet<>();
+    private @Builder.Default Set<TypeFormation> typesFormationSuivies = new HashSet<>();
 
     // TODO vérifier si le type de formation suivie ok pour apprenant
 
