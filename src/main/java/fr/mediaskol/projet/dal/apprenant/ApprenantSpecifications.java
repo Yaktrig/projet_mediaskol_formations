@@ -58,7 +58,7 @@ public class ApprenantSpecifications {
     public static Specification<Apprenant> numDepartement(Long numDepartement) {
         return (root, query, builder) ->
                 numDepartement == null ? null : builder.equal(
-                        root.join("adresse").join("departement").get("idDepartement"), numDepartement);
+                        root.join("adresse").join("departement").get("numDepartement"), numDepartement);
     }
 
 

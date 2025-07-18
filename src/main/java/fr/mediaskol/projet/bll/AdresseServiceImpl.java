@@ -107,21 +107,6 @@ public class AdresseServiceImpl implements AdresseService {
         }
     }
 
-    /**
-     * Méthode qui permet de récupérer
-     */
-    private Departement getOrCreateDepartement(String numDepartement) {
-        return departementRepository.findByNumDepartement(numDepartement)
-                .orElseGet(() -> {
-                    Departement departement = Departement.builder()
-                            .numDepartement(numDepartement)
-                            .nomDepartement("Non défini") // ou utilisez une logique personnalisée
-                            .region("Inconnue")
-                            .couleurDepartement("#FFFFFF")
-                            .build();
-                    return departementRepository.save(departement);
-                });
-    }
 
 
     // Méthodes de contraintes
