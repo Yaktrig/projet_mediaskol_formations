@@ -2,7 +2,6 @@ package fr.mediaskol.projet.bll;
 
 import fr.mediaskol.projet.bo.adresse.Adresse;
 import fr.mediaskol.projet.bo.departement.Departement;
-import fr.mediaskol.projet.dal.adresse.AdresseRepository;
 import fr.mediaskol.projet.dal.departement.DepartementRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -55,9 +54,10 @@ public class AdresseServiceImpl implements AdresseService {
 
         if (adresse.getCodePostal() != null && !adresse.getCodePostal().isBlank()) {
             String numDepartement = getNumDepartement(adresse.getCodePostal());
-//            departementRepository
-//                    .findByNumDepartement(numDepartement)
-//                    .ifPresent(adresse::setDepartement);
+            Departement departement = departementRepository
+                    .findByNumDepartement(numDepartement)
+                    .orElseThrow(()-> new RuntimeException("Le département est inconnu : " + numDepartement));
+            adresse.setDepartement(departement);
         }
     }
 

@@ -4,7 +4,6 @@ import fr.mediaskol.projet.bo.adresse.Adresse;
 import fr.mediaskol.projet.bo.apprenant.Apprenant;
 import fr.mediaskol.projet.bo.apprenant.SessionApprenant;
 import fr.mediaskol.projet.bo.formation.TypeFormation;
-import fr.mediaskol.projet.dal.adresse.AdresseRepository;
 import fr.mediaskol.projet.dal.apprenant.ApprenantRepository;
 import fr.mediaskol.projet.dal.apprenant.ApprenantSpecifications;
 import fr.mediaskol.projet.dal.formation.TypeFormationRepository;
@@ -30,8 +29,9 @@ public class ApprenantServiceImpl implements ApprenantService {
      * Injection des repository en couplage faible
      */
     private final ApprenantRepository apprenantRepository;
-    private final AdresseRepository adresseRepository;
     private final TypeFormationRepository typeFormationRepository;
+
+    private final AdresseService adresseService;
 
     /**
      * Appel de la méthode findAll() du repository qui retourne tous les apprenants
@@ -68,11 +68,7 @@ public class ApprenantServiceImpl implements ApprenantService {
         return apprenantRepository.findAll(specApprenant);
     }
 
-    /**
-     * Retourne une liste d'apprenants selon l'id d'une session de formation
-     */
-//    @Override
-//    public List<Apprenant> rechercherApprenantsParSessionFormation(Session)
+
 
     /**
      * Création d'un nouvel apprenant
@@ -104,7 +100,7 @@ public class ApprenantServiceImpl implements ApprenantService {
         validerEnumNonNulle(apprenant.getStatutNumPasseport(), "Vous devez indiquer un statut pour le passeport de l'apprenant.");
 
         if (adresse != null) {
-            adresseRepository.save(adresse);
+            adresseService.validerAdresse(adresse);
             apprenant.setAdresse(adresse);
         }
 

@@ -49,17 +49,6 @@ public class TestTransactionApprenant {
     @Test
     public void test_transaction_OK() {
 
-        // Création d'un nouveau département
-        final Departement finistere = Departement
-                .builder()
-                .numDepartement("29")
-                .nomDepartement("Finistère")
-                .region("Bretagne")
-                .couleurDepartement("#6FBBD5")
-                .build();
-
-        // Sauvegarde du département dans le BDD
-        departementRepository.save(finistere);
 
         // Création d'une nouvelle adresse
         final Adresse adresseBrest = Adresse
@@ -67,9 +56,7 @@ public class TestTransactionApprenant {
                 .rue("44, boulevard de Lagarde")
                 .codePostal("29200")
                 .ville("Brest")
-                .departement(finistere)
                 .build();
-
 
 
         // Création d'un nouvel apprenant avec le builder Lombok
@@ -80,9 +67,8 @@ public class TestTransactionApprenant {
                 .email("tigrou.letigre@gmail.fr")
                 .numPortable("0600000000")
                 .dateNaissance(LocalDate.parse("2000-12-12"))
-                .apprenantActif(true)
                 .numPasseport("A123456")
-                .commentaireApprenant("Fais des bonds partout")
+                .commentaireApprenant("Fait des bonds partout")
                 .statutNumPasseport(StatutNumPasseport.NUM_PASSEPORT_A_CREER)
                 .build();
 
@@ -97,54 +83,37 @@ public class TestTransactionApprenant {
         assertThat(adresseBrest.getIdAdresse()).isGreaterThan(0);
         log.info(adresseBrest.toString());
 
-        // Le département a été enregistré
-        assertThat(finistere.getIdDepartement()).isGreaterThan(0);
-        log.info(finistere.toString());
     }
 
 
     @Test
-    public void test_transaction_Rollback(){
+    public void test_transaction_Rollback() {
 
-        // Création d'un nouveau département
-        final Departement finistere = Departement
-                .builder()
-                .numDepartement("29")
-                .nomDepartement("Finistère")
-                .region("Bretagne")
-                .couleurDepartement("#6FBBD5")
-                .build();
-
-        // Sauvegarde du département dans le BDD
-        departementRepository.save(finistere);
 
         // Création d'une nouvelle adresse
-        final Adresse adresseBrest = Adresse
+        final Adresse adresseLanester = Adresse
                 .builder()
-                .rue("44, boulevard de Lagarde")
-                .codePostal("29200")
-                .ville("Brest")
-                .departement(finistere)
+                .rue("Lieu Dit Kerpont, Les Hauts De Kerousse - Lann Sevelin")
+                .codePostal("56600")
+                .ville("Lanester")
                 .build();
-
 
 
         // Création d'un nouvel apprenant avec le builder Lombok
-        final Apprenant tigrou = Apprenant
+        final Apprenant tigrou2 = Apprenant
                 .builder()
-                .nom("Le tigre")
-                .prenom("Tigrou")
-                .email("tigrou.letigre@gmail.fr")
+                .nom("Le tigre2")
+                .prenom("Tigrou2")
+                .email("tigrou2.letigre@gmail.fr")
                 .numPortable("0600000000")
                 .dateNaissance(LocalDate.parse("2000-12-12"))
-                .apprenantActif(true)
-                .numPasseport("A123456")
-                .commentaireApprenant("Fais des bonds partout")
+                .commentaireApprenant("Fait des bonds partout")
+                .numPasseport("A123456") // Pour qu'une exception soit levée, je mets le même numéro de passeport, qui doit être unique.
                 .statutNumPasseport(StatutNumPasseport.NUM_PASSEPORT_A_CREER)
                 .build();
 
 
-        assertThrows(RuntimeException.class, () -> apprenantService.ajouterApprenant(tigrou, adresseBrest, null));
+        assertThrows(RuntimeException.class, () -> apprenantService.ajouterApprenant(tigrou2, adresseLanester, null));
 
         // Vérification des données en base
         List<Adresse> adresses = adresseRepository.findAll();
@@ -152,9 +121,10 @@ public class TestTransactionApprenant {
 
         Adresse adresseDB = adresses
                 .stream()
-                .filter(item -> item.getVille().equals("Brest"))
+                .filter(item -> item.getVille().equals("Lanester"))
                 .findAny()
                 .orElse(null);
+
         assertThat(adresseDB).isNull();
 
 
@@ -162,7 +132,7 @@ public class TestTransactionApprenant {
         assertThat(apprenants).isNotNull();
         Apprenant apprenantDB = apprenants
                 .stream()
-                .filter(item -> item.getNom().equals("Le tigre"))
+                .filter(item -> item.getNom().equals("Le tigre2"))
                 .findAny()
                 .orElse(null);
         assertThat(apprenantDB).isNull();
