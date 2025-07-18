@@ -88,7 +88,7 @@ public class Adresse {
      * La récupération du département est effectuée en mode paresseux (lazy loading).
      * </p>
      */
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "NUM_DEPARTEMENT", nullable = false)
     //@NotNull(message = "{adresse.departement.notnull}")
     private Departement departement;
