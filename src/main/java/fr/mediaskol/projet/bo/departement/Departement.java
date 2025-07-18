@@ -41,6 +41,7 @@ public class Departement {
      * Identifiant unique du département.
      */
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "DEPARTEMENT_ID")
     private Long idDepartement;
 
@@ -83,12 +84,12 @@ public class Departement {
     /**
      * Couleur hexadécimale du département
      * <p>
-     * Ce champ est obligatoire et limité à 7 caractères.
+     * Ce champ n'est pas obligatoire, il est réservé pour les départements de la Bretagne.
      * </p>
      */
     @Column(name = "COULEUR_DEPARTEMENT", nullable = false, length = 7)
     @Size(min=3, max = 7, message = "{departement.couleurDepartement.size}")
-    @NotNull(message = "{departement.couleurDepartement.notnull}")
-    @NotBlank(message = "{departement.couleurDepartement.notblank}")
+//    @NotNull(message = "{departement.couleurDepartement.notnull}")
+//    @NotBlank(message = "{departement.couleurDepartement.notblank}")
     private String couleurDepartement;
 }

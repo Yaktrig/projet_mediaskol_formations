@@ -12,7 +12,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -40,7 +43,7 @@ public class FormateurTypeFormationRelationTest {
 
 
     // Liste utilisée pour stocker les objets Formation pré-chargés en base pour les tests
-    private List<TypeFormation> listeTypeFormationDB = new ArrayList<>();
+    private Set<TypeFormation> listeTypeFormationDB = new HashSet<>();
 
 
     /**
@@ -90,10 +93,10 @@ public class FormateurTypeFormationRelationTest {
 
 
         // Sélectionne le type de formation dont le libellé est distanciel
-        final List<TypeFormation> typesFormations = listeTypeFormationDB
+        final Set<TypeFormation> typesFormations = listeTypeFormationDB
                 .stream()
                 .filter(item -> item.getLibelleTypeFormation().equals("Distanciel"))
-                .toList();
+                .collect(Collectors.toSet());
 
         // Vérifie que la liste retournée n'est pas nulle, ni vide et contient bien un type de formation
         assertThat(typesFormations).isNotNull();
@@ -101,8 +104,8 @@ public class FormateurTypeFormationRelationTest {
         assertThat(typesFormations.size()).isEqualTo(1);
 
         // Association entre le formateur et la liste des types de formations
-        formateurCoco.setTypeFormationDispensee(typesFormations);
-        log.info(formateurCoco.getTypeFormationDispensee().toString());
+        formateurCoco.setTypesFormationDispensees(typesFormations);
+        log.info(formateurCoco.getTypesFormationDispensees().toString());
 
         // Sauvegarde du formateur en base via le repository
         final Formateur formateurCocoDB = formateurRepository.save(formateurCoco);
@@ -111,9 +114,9 @@ public class FormateurTypeFormationRelationTest {
         assertThat(formateurCocoDB.getIdPersonne()).isGreaterThan(0);
 
         // Vérifie que l'association ManyToMany est bien persistée
-        assertThat(formateurCocoDB.getTypeFormationDispensee()).isNotNull();
-        assertThat(formateurCocoDB.getTypeFormationDispensee()).isNotEmpty();
-        assertThat(formateurCocoDB.getTypeFormationDispensee().size()).isEqualTo(1);
+        assertThat(formateurCocoDB.getTypesFormationDispensees()).isNotNull();
+        assertThat(formateurCocoDB.getTypesFormationDispensees()).isNotEmpty();
+        assertThat(formateurCocoDB.getTypesFormationDispensees().size()).isEqualTo(1);
         log.info(formateurCocoDB.toString());
 
     }
@@ -139,10 +142,10 @@ public class FormateurTypeFormationRelationTest {
 
 
         // Sélectionne le type de formation dont le libellé est distanciel
-        final List<TypeFormation> typesFormations = listeTypeFormationDB
+        final Set<TypeFormation> typesFormations = listeTypeFormationDB
                 .stream()
                 .filter(item -> item.getLibelleTypeFormation().equals("Distanciel") || item.getLibelleTypeFormation().equals("Présentiel"))
-                .toList();
+                .collect(Collectors.toSet());
 
         // Vérifie que la liste n'est ni nulle ni vide et contient deux formations
         assertThat(typesFormations).isNotNull();
@@ -150,8 +153,8 @@ public class FormateurTypeFormationRelationTest {
         assertThat(typesFormations.size()).isEqualTo(2);
 
         // Association entre le formateur et la liste des types de formations
-        formateurCoco.setTypeFormationDispensee(typesFormations);
-        log.info(formateurCoco.getTypeFormationDispensee().toString());
+        formateurCoco.setTypesFormationDispensees(typesFormations);
+        log.info(formateurCoco.getTypesFormationDispensees().toString());
 
         // Persistance du formateur dans la base de test
         final Formateur formateurCocoDB = formateurRepository.save(formateurCoco);
@@ -159,11 +162,11 @@ public class FormateurTypeFormationRelationTest {
 
         // Vérifie que le formateur a bien un identifiant et les types de formation sont associés
         assertThat(formateurCocoDB.getIdPersonne()).isGreaterThan(0);
-        assertThat(formateurCocoDB.getTypeFormationDispensee()).isNotNull();
-        assertThat(formateurCocoDB.getTypeFormationDispensee()).isNotEmpty();
+        assertThat(formateurCocoDB.getTypesFormationDispensees()).isNotNull();
+        assertThat(formateurCocoDB.getTypesFormationDispensees()).isNotEmpty();
 
         // Récupère la liste des types de formations associés depuis la base
-        List<TypeFormation> typeFormationDispenseDB = formateurCocoDB.getTypeFormationDispensee();
+        Set<TypeFormation> typeFormationDispenseDB = formateurCocoDB.getTypesFormationDispensees();
         assertThat(typeFormationDispenseDB).isNotNull();
         assertThat(typeFormationDispenseDB).isNotEmpty();
         assertThat(typeFormationDispenseDB.size()).isEqualTo(2);
@@ -176,7 +179,7 @@ public class FormateurTypeFormationRelationTest {
         assertNull(formateurCocoDB2);
 
         // Vérifie que les types de formations associés existent toujours en base (pas de suppression en cascade)
-        List<TypeFormation> typeFormationsDispenseesDB2 = typeFormationRepository.findAll();
+        Set<TypeFormation> typeFormationsDispenseesDB2 = new HashSet<>(typeFormationRepository.findAll());
         assertThat(typeFormationsDispenseesDB2).isNotNull();
         assertThat(typeFormationsDispenseesDB2).isNotEmpty();
         assertThat(typeFormationsDispenseesDB2.size()).isEqualTo(2);

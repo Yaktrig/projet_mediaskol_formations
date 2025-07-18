@@ -2,19 +2,23 @@ package fr.mediaskol.projet.bll;
 
 import fr.mediaskol.projet.bo.adresse.Adresse;
 import fr.mediaskol.projet.bo.apprenant.Apprenant;
+import fr.mediaskol.projet.bo.apprenant.SessionApprenant;
 import fr.mediaskol.projet.bo.formation.TypeFormation;
 import fr.mediaskol.projet.dal.adresse.AdresseRepository;
 import fr.mediaskol.projet.dal.apprenant.ApprenantRepository;
 import fr.mediaskol.projet.dal.apprenant.ApprenantSpecifications;
 import fr.mediaskol.projet.dal.formation.TypeFormationRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -65,6 +69,12 @@ public class ApprenantServiceImpl implements ApprenantService {
     }
 
     /**
+     * Retourne une liste d'apprenants selon l'id d'une session de formation
+     */
+//    @Override
+//    public List<Apprenant> rechercherApprenantsParSessionFormation(Session)
+
+    /**
      * Création d'un nouvel apprenant
      * <ul>
      *     <li>On vérifie si les données de l'apprenant sont existantes, sinon on déclenche une exception.</li>
@@ -80,7 +90,7 @@ public class ApprenantServiceImpl implements ApprenantService {
      */
     @Override
     @Transactional
-    public void ajouterApprenant(Apprenant apprenant,Adresse adresse, Set<TypeFormation> typesFormation) {
+    public void ajouterApprenant(Apprenant apprenant, Adresse adresse, Set<TypeFormation> typesFormation) {
 
         if (apprenant == null) {
             throw new RuntimeException("L'apprenant n'est pas renseigné");
@@ -90,19 +100,20 @@ public class ApprenantServiceImpl implements ApprenantService {
         validerChaineNonNulle(apprenant.getPrenom(), "Vous devez renseigner le prénom de l'apprenant.");
         validerEmail(apprenant.getEmail(), "Vous devez renseigner l'email de l'apprenant.");
         validerDateNaissance(apprenant.getDateNaissance(), "Vous devez renseigner la date de naissance de l'apprenant.");
+        validerUnicitePasseport(apprenant, "Le numéro du passeport existe déjà.");
         validerEnumNonNulle(apprenant.getStatutNumPasseport(), "Vous devez indiquer un statut pour le passeport de l'apprenant.");
 
-        if(adresse !=null){
+        if (adresse != null) {
             adresseRepository.save(adresse);
             apprenant.setAdresse(adresse);
         }
 
-        if(typesFormation != null){
+        if (typesFormation != null) {
             Set<TypeFormation> formationAEnregistrer = new HashSet<>();
 
-            for(TypeFormation tf : typesFormation){
+            for (TypeFormation tf : typesFormation) {
 
-                if(tf.getIdTypeFormation() == null){
+                if (tf.getIdTypeFormation() == null) {
                     // Si le set de type de formation est nul, on le crée d'abord
                     formationAEnregistrer.add(typeFormationRepository.save(tf));
                 } else {
@@ -120,59 +131,55 @@ public class ApprenantServiceImpl implements ApprenantService {
         }
     }
 
-    /**
-     * Associe une adresse à un apprenant existant et enregistre la modification en base de données.
-     * <p>
-     * Si l'apprenant n'existait pas déjà, une exception est levée.
-     * L'adresse précédente de l'apprenant (le cas échéant) est remplacée par la nouvelle adresse passée en paramètre.
-     * </p>
-     *
-     * @param apprenant l'apprenant auquel on associe une nouvelle adresse (doit être non nul).
-     * @param adresse   l'adresse à associer à l'apprenant (doit être non nulle).
-     * @throws RuntimeException si l'apprenant ou l'adresse sont nuls
-     */
-//    @Override
-//    @Transactional
-//    public void ajouterAdresseApprenant(Apprenant apprenant, Adresse adresse) {
-//
-//        if (apprenant == null || adresse == null) {
-//            throw new RuntimeException("L'apprenant ou l'adresse n'est pas renseigné.");
-//        }
-//
-//        apprenant.setAdresse(adresse);
-//        apprenantRepository.save(apprenant);
-//
-//    }
 
     /**
-     * Ajoute un type de formation à la collection des types de formations d'un apprenant existant, puis enregistre
-     * la modification en base de données.
+     * Suppression d'un apprenant de la base de données
+     *
+     * <p>Cette méthode effectue les validations suivantes avant la suppression :
      * <ul>
-     *     <li>On vérifie si les données de l'apprenant sont existantes, sinon on déclenche une exception.</li>
-     *     <li>Vérification de l'ensemble des contraintes avant de créer un apprenant.</li>
-     *     <li>Si toutes les contraintes sont respectées, on peut créer l'apprenant.</li>
-     *     <li>On ajoute le(s) type(s) de formation s'il est (sont) renseigné(s).</li>
+     *   <li>Vérifie que l'identifiant est valide (positif)</li>
+     *   <li>Contrôle l'existence de l'apprenant en base</li>
      * </ul>
      *
-     * @param apprenant,     l'apprenant auquel on ajoute un type de formation (doit être non nul).
-     * @param typeFormation, le type de formation à associer (doit être non nul).
-     * @throws RuntimeException si l'apprenant ou le type de formation sont nuls.
+     * <p><strong>Attention :</strong> Cette méthode peut échouer si l'apprenant est lié à d'autres entités,
+     * notamment à l'entité {@code SessionApprenant}. Dans ce cas, une exception sera levée pour préserver
+     * l'intégrité référentielle de la base de données.</p>
+     *
+     * <p>Pour supprimer un apprenant lié à des sessions, il est recommandé de :
+     * <ul>
+     *   <li>Supprimer d'abord les relations dans {@code SessionApprenant}</li>
+     *   <li>Ou configurer une suppression en cascade appropriée</li>
+     *   <li>Ou implémenter une suppression logique (soft delete)</li>
+     * </ul>
+     *
+     * @param idApprenant l'identifiant de l'apprenant à supprimer, doit être positif
+     * @throws RuntimeException si l'identifiant est invalide (négatif ou zéro)
+     * @throws RuntimeException si l'apprenant n'existe pas en base de données
+     * @throws RuntimeException si la suppression échoue en raison de contraintes d'intégrité
+     *                          référentielle (notamment avec l'entité SessionApprenant)
+     * @see SessionApprenant
+     * @since 1.0
      */
-//    @Override
-//    @Transactional
-//    public void ajouterTypeFormationApprenant(Apprenant apprenant, TypeFormation typeFormation) {
-//
-//        if (apprenant == null || typeFormation == null) {
-//            throw new RuntimeException("L'apprenant ou le type de formation n'est pas renseigné.");
-//        }
-//
-//        if (apprenant.getTypesFormationSuivies() == null) {
-//            apprenant.setTypesFormationSuivies(new HashSet<>());
-//        }
-//
-//        apprenant.getTypesFormationSuivies().add(typeFormation);
-//        apprenantRepository.save(apprenant);
-//    }
+    @Transactional
+    @Override
+    public void supprimerApprenant(long idApprenant) {
+
+        if (idApprenant <= 0) {
+            throw new IllegalArgumentException("L'identifiant de l'apprenant n'existe pas.");
+        }
+
+        if (!apprenantRepository.existsById(idApprenant)) {
+            throw new EntityNotFoundException("L'apprenant avec l'ID " + idApprenant + " n'existe pas.");
+        }
+
+        try {
+            apprenantRepository.deleteById(idApprenant);
+        } catch (DataIntegrityViolationException e) {
+            throw new RuntimeException("Impossible de supprimer l'apprenant : il est lié à des sessions apprenants.");
+        } catch (Exception e) {
+            throw new RuntimeException("Impossible de supprimer l'apprenant (id = " + idApprenant + ")" + e.getMessage());
+        }
+    }
 
 
     // Méthodes de contrôle de contraintes
@@ -219,6 +226,28 @@ public class ApprenantServiceImpl implements ApprenantService {
         }
 
 
+    }
+
+    /**
+     * Valide l'unicité du numéro de passeport dans la base de données, s'il est renseigné.
+     * Exclut l'apprenant actuel lors de la vérification si celui-ci existe déjà (cas modification).
+     *
+     * @param apprenant l'apprenant à valider (contient le numéro de passeport et l'ID)
+     * @param msgErreur le message d'erreur à afficher en cas de doublon
+     * @throws RuntimeException si le numéro de passeport existe déjà pour un autre apprenant
+     */
+    public void validerUnicitePasseport(Apprenant apprenant, String msgErreur) {
+        if (apprenant.getNumPasseport() != null && !apprenant.getNumPasseport().isBlank()) {
+
+            // Vérifier l'unicité seulement si le numéro est renseigné
+            Optional<Apprenant> existant = apprenantRepository.findByNumPasseport(apprenant.getNumPasseport());
+
+            if (existant.isPresent()) {
+                if (apprenant.getIdPersonne() == null || !existant.get().getIdPersonne().equals(apprenant.getIdPersonne())) {
+                    throw new RuntimeException(msgErreur);
+                }
+            }
+        }
     }
 
 

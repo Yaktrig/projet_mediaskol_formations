@@ -12,8 +12,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static fr.mediaskol.projet.bo.apprenant.StatutNumPasseport.NUM_PASSEPORT_CREE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -42,7 +43,7 @@ public class ApprenantTypeFormationRelationTest {
 
 
     // Liste utilisée pour stocker les objets Formation pré-chargés en base pour les tests
-    private List<TypeFormation> listeTypeFormationDB = new ArrayList<>();
+    private Set<TypeFormation> listeTypeFormationDB = new HashSet<>();
 
 
     /**
@@ -94,10 +95,10 @@ public class ApprenantTypeFormationRelationTest {
 
 
         // Sélectionne le type de formation dont le libellé est distanciel
-        final List<TypeFormation> typesFormations = listeTypeFormationDB
+        final Set<TypeFormation> typesFormations = listeTypeFormationDB
                 .stream()
                 .filter(item -> item.getLibelleTypeFormation().equals("Distanciel"))
-                .toList();
+                .collect(Collectors.toSet());
 
         // Vérifie que la liste retournée n'est pas nulle, ni vide et contient bien un type de formation
         assertThat(typesFormations).isNotNull();
@@ -105,8 +106,8 @@ public class ApprenantTypeFormationRelationTest {
         assertThat(typesFormations.size()).isEqualTo(1);
 
         // Association entre l'apprenant et la liste des types de formations
-        tigrou.setTypeFormationSuivie(typesFormations);
-        log.info(tigrou.getTypeFormationSuivie().toString());
+        tigrou.setTypesFormationSuivies(typesFormations);
+        log.info(tigrou.getTypesFormationSuivies().toString());
 
         // Sauvegarde de l'apprenant en base via le repository
         final Apprenant tigrouDB = apprenantRepository.save(tigrou);
@@ -115,9 +116,9 @@ public class ApprenantTypeFormationRelationTest {
         assertThat(tigrouDB.getIdPersonne()).isGreaterThan(0);
 
         // Vérifie que l'association ManyToMany est bien persistée
-        assertThat(tigrouDB.getTypeFormationSuivie()).isNotNull();
-        assertThat(tigrouDB.getTypeFormationSuivie()).isNotEmpty();
-        assertThat(tigrouDB.getTypeFormationSuivie().size()).isEqualTo(1);
+        assertThat(tigrouDB.getTypesFormationSuivies()).isNotNull();
+        assertThat(tigrouDB.getTypesFormationSuivies()).isNotEmpty();
+        assertThat(tigrouDB.getTypesFormationSuivies().size()).isEqualTo(1);
         log.info(tigrouDB.toString());
 
     }
@@ -146,10 +147,10 @@ public class ApprenantTypeFormationRelationTest {
 
 
         // Sélectionne le type de formation dont le libellé est distanciel
-        final List<TypeFormation> typesFormations = listeTypeFormationDB
+        final Set<TypeFormation> typesFormations = listeTypeFormationDB
                 .stream()
                 .filter(item -> item.getLibelleTypeFormation().equals("Distanciel") || item.getLibelleTypeFormation().equals("Présentiel"))
-                .toList();
+                .collect(Collectors.toSet());
 
         // Vérifie que la liste n'est ni nulle ni vide et contient deux formations
         assertThat(typesFormations).isNotNull();
@@ -157,8 +158,8 @@ public class ApprenantTypeFormationRelationTest {
         assertThat(typesFormations.size()).isEqualTo(2);
 
         // Association entre l'apprenant et la liste des types de formations
-        tigrou.setTypeFormationSuivie(typesFormations);
-        log.info(tigrou.getTypeFormationSuivie().toString());
+        tigrou.setTypesFormationSuivies(typesFormations);
+        log.info(tigrou.getTypesFormationSuivies().toString());
 
         // Persistance de l'apprenant dans la base de test
         final Apprenant tigrouDB = apprenantRepository.save(tigrou);
@@ -166,11 +167,11 @@ public class ApprenantTypeFormationRelationTest {
 
         // Vérifie que l'apprenant a bien un identifiant et les types de formation sont associés
         assertThat(tigrouDB.getIdPersonne()).isGreaterThan(0);
-        assertThat(tigrouDB.getTypeFormationSuivie()).isNotNull();
-        assertThat(tigrouDB.getTypeFormationSuivie()).isNotEmpty();
+        assertThat(tigrouDB.getTypesFormationSuivies()).isNotNull();
+        assertThat(tigrouDB.getTypesFormationSuivies()).isNotEmpty();
 
         // Récupère la liste des types de formations associés depuis la base
-        List<TypeFormation> typeFormationSuivieDB = tigrouDB.getTypeFormationSuivie();
+        Set<TypeFormation> typeFormationSuivieDB = tigrouDB.getTypesFormationSuivies();
         assertThat(typeFormationSuivieDB).isNotNull();
         assertThat(typeFormationSuivieDB).isNotEmpty();
         assertThat(typeFormationSuivieDB.size()).isEqualTo(2);
@@ -183,7 +184,7 @@ public class ApprenantTypeFormationRelationTest {
         assertNull(apprenantTigrouDB2);
 
         // Vérifie que les types de formations associés existent toujours en base (pas de suppression en cascade)
-        List<TypeFormation> typeFormationsSuiviesDB2 = typeFormationRepository.findAll();
+        Set<TypeFormation> typeFormationsSuiviesDB2 = new HashSet<>(typeFormationRepository.findAll());
         assertThat(typeFormationsSuiviesDB2).isNotNull();
         assertThat(typeFormationsSuiviesDB2).isNotEmpty();
         assertThat(typeFormationsSuiviesDB2.size()).isEqualTo(2);

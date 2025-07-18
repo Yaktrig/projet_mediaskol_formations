@@ -49,6 +49,7 @@ public class FormateurFormationRelationTest {
     private TypeFormation distanciel;
 
     private TypeFormation presentiel;
+
     @Autowired
     private TypeFormationRepository typeFormationRepository;
 

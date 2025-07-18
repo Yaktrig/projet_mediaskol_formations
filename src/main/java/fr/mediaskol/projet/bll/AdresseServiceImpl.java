@@ -3,21 +3,19 @@ package fr.mediaskol.projet.bll;
 import fr.mediaskol.projet.bo.adresse.Adresse;
 import fr.mediaskol.projet.bo.departement.Departement;
 import fr.mediaskol.projet.dal.adresse.AdresseRepository;
-import fr.mediaskol.projet.dal.apprenant.ApprenantRepository;
 import fr.mediaskol.projet.dal.departement.DepartementRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 
 @AllArgsConstructor
 @Service
 public class AdresseServiceImpl implements AdresseService {
+
     /**
      * Injection des repository en couplage faible
      */
-    private final AdresseRepository adresseRepository;
     private final DepartementRepository departementRepository;
 
 
@@ -57,9 +55,9 @@ public class AdresseServiceImpl implements AdresseService {
 
         if (adresse.getCodePostal() != null && !adresse.getCodePostal().isBlank()) {
             String numDepartement = getNumDepartement(adresse.getCodePostal());
-            departementRepository
-                    .findByNumDepartement(numDepartement)
-                    .ifPresent(adresse::setDepartement);
+//            departementRepository
+//                    .findByNumDepartement(numDepartement)
+//                    .ifPresent(adresse::setDepartement);
         }
     }
 
@@ -107,8 +105,22 @@ public class AdresseServiceImpl implements AdresseService {
         } catch (NumberFormatException e) {
             throw new NumberFormatException(e.getMessage());
         }
+    }
 
-
+    /**
+     * Méthode qui permet de récupérer
+     */
+    private Departement getOrCreateDepartement(String numDepartement) {
+        return departementRepository.findByNumDepartement(numDepartement)
+                .orElseGet(() -> {
+                    Departement departement = Departement.builder()
+                            .numDepartement(numDepartement)
+                            .nomDepartement("Non défini") // ou utilisez une logique personnalisée
+                            .region("Inconnue")
+                            .couleurDepartement("#FFFFFF")
+                            .build();
+                    return departementRepository.save(departement);
+                });
     }
 
 

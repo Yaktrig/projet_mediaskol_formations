@@ -4,6 +4,7 @@ package fr.mediaskol.projet.bo.sessionFormation;
 import fr.mediaskol.projet.bo.departement.Departement;
 import fr.mediaskol.projet.bo.formation.Formation;
 import fr.mediaskol.projet.bo.sessionFormationDistanciel.SessionFormationDistanciel;
+import fr.mediaskol.projet.bo.sessionFormation.StatutSessionFormation;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

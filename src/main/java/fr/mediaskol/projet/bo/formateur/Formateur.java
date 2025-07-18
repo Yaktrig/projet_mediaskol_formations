@@ -11,7 +11,7 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -123,7 +123,7 @@ public class Formateur extends Personne {
             joinColumns = {@JoinColumn(name = "FORMATEUR_ID")},
             inverseJoinColumns = {@JoinColumn(name = "FORMATION_ID")})
     @ToString.Exclude
-    private @Builder.Default Set<Formation> formationsDispensees;
+    private List<Formation> formationsDispensees;
 
     /**
      * Liste des types de formation que le formateur est habilité à dispenser.
@@ -142,7 +142,8 @@ public class Formateur extends Personne {
             joinColumns = {@JoinColumn(name = "FORMATEUR_ID")},
             inverseJoinColumns = {@JoinColumn(name = "TYPE_FORMATION_ID")})
     @ToString.Exclude
-    private @Builder.Default List<TypeFormation> typeFormationDispensee = new ArrayList<>();
+    private @Builder.Default Set<TypeFormation> typesFormationDispensees = new HashSet<>();
+
 
     // Todo vérifier dans le test pour le type de formation
 }

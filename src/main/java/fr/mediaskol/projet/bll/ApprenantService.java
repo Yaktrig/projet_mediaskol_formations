@@ -3,6 +3,7 @@ package fr.mediaskol.projet.bll;
 import fr.mediaskol.projet.bo.adresse.Adresse;
 import fr.mediaskol.projet.bo.apprenant.Apprenant;
 import fr.mediaskol.projet.bo.formation.TypeFormation;
+import jakarta.transaction.Transactional;
 
 
 import java.time.LocalDate;
@@ -15,7 +16,7 @@ public interface ApprenantService {
     List<Apprenant> chargerTousApprenants();
 
     /**
-     * Fonctionnalités qui retourne un ou des apprenants selon des critères de recherches
+     * Fonctionnalité qui retourne un ou des apprenants selon des critères de recherches
      *
      * @param nom
      * @param email
@@ -25,6 +26,13 @@ public interface ApprenantService {
      */
     List<Apprenant> rechercheApprenants(String nom, String email, LocalDate dateNaissance, Long numDepartement, String ville);
 
+//
+//    /**
+//     * Fonctionnalité qui retourne les apprenants d'une session de formation
+//     */
+//    List<Apprenant> find
+
+
 
     /**
      * Fonctionnalité qui va ajouter un apprenant
@@ -32,17 +40,14 @@ public interface ApprenantService {
      */
     void ajouterApprenant(Apprenant apprenant, Adresse adresse, Set<TypeFormation> typesFormation);
 
-    /**
-     * Fonctionnalité qui va ajouter une adresse à un apprenant
-     * @param apprenant
-     * @param adresse
-     */
-    //void ajouterAdresseApprenant(Apprenant apprenant, Adresse adresse);
 
     /**
-     * Fonctionnalité qui va ajouter un type de formation à un apprenant
-     * @param apprenant
-     * @param typeFormation
+     * Fonctionnalité qui va supprimer un apprenant à partir de son identifiant
+     * @param idApprenant
      */
-    //void ajouterTypeFormationApprenant(Apprenant apprenant, TypeFormation typeFormation);
+    void supprimerApprenant(long idApprenant);
+
+
+
+
 }
