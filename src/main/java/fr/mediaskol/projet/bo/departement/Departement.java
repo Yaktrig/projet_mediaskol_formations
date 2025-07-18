@@ -45,6 +45,18 @@ public class Departement {
     private Long idDepartement;
 
     /**
+     * Numéro du département
+     * <p>
+     * Ce champ est obligatoire, unique et limité à TROIS caractères.
+     * </p>
+     */
+    @Column(name = "NUM_DEPARTEMENT", unique = true, nullable = false, length = 3)
+    @Size(min=2, max = 3, message = "{departement.numDepartement.size}")
+    @NotNull(message = "{departement.numDepartement.notnull}")
+    @NotBlank(message="{departement.numDepartement.notblank}")
+    private String numDepartement;
+
+    /**
      * Nom du département
      * <p>
      * Ce champ est obligatoire, unique et limité à 100 caractères.

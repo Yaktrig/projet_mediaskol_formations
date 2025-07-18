@@ -9,7 +9,7 @@ public interface AdresseService {
      * @param adresse
      * @return
      */
-    void validerAdresse(Adresse adresse);
+    void validerAdresse(Adresse adresse );
 
 
     /**
