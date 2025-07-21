@@ -4,21 +4,20 @@ import fr.mediaskol.projet.bo.adresse.Adresse;
 import fr.mediaskol.projet.bo.apprenant.Apprenant;
 import fr.mediaskol.projet.bo.apprenant.SessionApprenant;
 import fr.mediaskol.projet.bo.formation.TypeFormation;
+import fr.mediaskol.projet.dal.adresse.AdresseRepository;
 import fr.mediaskol.projet.dal.apprenant.ApprenantRepository;
-import fr.mediaskol.projet.dal.apprenant.ApprenantSpecifications;
 import fr.mediaskol.projet.dal.formation.TypeFormationRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -29,6 +28,7 @@ public class ApprenantServiceImpl implements ApprenantService {
      * Injection des repository en couplage faible
      */
     private final ApprenantRepository apprenantRepository;
+    private final AdresseRepository adresseRepository;
     private final TypeFormationRepository typeFormationRepository;
 
     private final AdresseService adresseService;
@@ -40,34 +40,35 @@ public class ApprenantServiceImpl implements ApprenantService {
      */
     @Override
     public List<Apprenant> chargerTousApprenants() {
-
         return apprenantRepository.findAll();
-
     }
 
     /**
      * Retourne une liste d'apprenants en fonction de la saisie utilisateur.
      *
-     * @param nom
-     * @param email
-     * @param dateNaissance
-     * @param numDepartement
-     * @param ville
+     * @param termeRecherche
      * @return apprenantRepository.findAll(specApprenant)
      */
     @Override
-    public List<Apprenant> rechercheApprenants(String nom, String email, LocalDate dateNaissance, Long numDepartement, String ville) {
+    public List<Apprenant> rechercheApprenants(String termeRecherche) {
 
-        Specification<Apprenant> specApprenant = ApprenantSpecifications
-                .nomContains(nom)
-                .and(ApprenantSpecifications.emailContains(email))
-                .and(ApprenantSpecifications.dateNaissanceContains(dateNaissance))
-                .and(ApprenantSpecifications.numDepartement(numDepartement))
-                .and(ApprenantSpecifications.villeContains(ville));
+        String recherche = termeRecherche != null ? termeRecherche.trim().toLowerCase() : "";
 
-        return apprenantRepository.findAll(specApprenant);
+        // Vérification si le terme est une date au format jjmmaaaa
+        LocalDate dateNaissance = null;
+        if (recherche.matches("^[0-3][0-9][0-1][0-9][0-9]{4}$")) {
+            try {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
+                dateNaissance = LocalDate.parse(recherche, formatter);
+
+                // si c'est le cas, on cherche en priorité sur la date
+                return apprenantRepository.findByDateNaissance(dateNaissance);
+            } catch (DateTimeParseException e) {
+
+            }
+        }
+        return apprenantRepository.findApprenantsBySearchText(termeRecherche);
     }
-
 
 
     /**
@@ -82,11 +83,11 @@ public class ApprenantServiceImpl implements ApprenantService {
      *
      * @param apprenant
      * @param adresse
-     * @param typesFormation
+     * @param typesFormationSuivies
      */
     @Override
     @Transactional
-    public void ajouterApprenant(Apprenant apprenant, Adresse adresse, Set<TypeFormation> typesFormation) {
+    public void ajouterApprenant(Apprenant apprenant, Adresse adresse, Set<TypeFormation> typesFormationSuivies) {
 
         if (apprenant == null) {
             throw new RuntimeException("L'apprenant n'est pas renseigné");
@@ -101,24 +102,27 @@ public class ApprenantServiceImpl implements ApprenantService {
 
         if (adresse != null) {
             adresseService.validerAdresse(adresse);
-            apprenant.setAdresse(adresse);
+            Adresse adresseDB = adresseRepository.save(adresse);
+            apprenant.setAdresse(adresseDB);
         }
 
-        if (typesFormation != null) {
-            Set<TypeFormation> formationAEnregistrer = new HashSet<>();
+        if (typesFormationSuivies != null && !typesFormationSuivies.isEmpty()) {
+            Set<TypeFormation> formationsDB = typesFormationSuivies.stream()
+                    .map(tf -> {
+                        Long id = tf.getIdTypeFormation();
+                        if (id == null) {
+                            throw new RuntimeException("Un type de formation transmis n'a pas d'identifiant.");
+                        }
+                        return typeFormationRepository.findById(id)
+                                .orElseThrow(() -> new RuntimeException("Type de formation inexistant : " + id));
+                    })
+                    .collect(Collectors.toSet());
 
-            for (TypeFormation tf : typesFormation) {
-
-                if (tf.getIdTypeFormation() == null) {
-                    // Si le set de type de formation est nul, on le crée d'abord
-                    formationAEnregistrer.add(typeFormationRepository.save(tf));
-                } else {
-                    // sinon, on suppose que le set existe déjà
-                    formationAEnregistrer.add(tf);
-                }
-            }
-            apprenant.setTypesFormationSuivies(formationAEnregistrer);
+            apprenant.setTypesFormationSuivies(formationsDB);
+        } else {
+            apprenant.setTypesFormationSuivies(Collections.emptySet());
         }
+
 
         try {
             apprenantRepository.save(apprenant);

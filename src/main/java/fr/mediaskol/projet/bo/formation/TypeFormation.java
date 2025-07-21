@@ -57,9 +57,7 @@ public class TypeFormation {
      * Ce champ est obligatoire, il est unique et limité à 100 caractères.
      * </p>
      */
-    @Column(name = "LIBELLE_TYPE_FORMATION", nullable = false, unique = true, length = 100)
+    @Column(name = "LIBELLE_TYPE_FORMATION", unique = true, length = 100)
     @Size(min=5, max=100, message = "{typeFormation.libelle.size}")
-    @NotNull(message = "{typeFormation.libelle.notnull}")
-    @NotBlank(message = "{typeFormation.libelle.notblank}")
     private String libelleTypeFormation;
 }

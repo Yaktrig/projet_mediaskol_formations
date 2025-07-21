@@ -89,7 +89,7 @@ public class Adresse {
      * </p>
      */
     @ManyToOne()
-    @JoinColumn(name = "NUM_DEPARTEMENT", nullable = false)
+    @JoinColumn(name = "NUM_DEPARTEMENT", nullable = true)
     //@NotNull(message = "{adresse.departement.notnull}")
     private Departement departement;
 

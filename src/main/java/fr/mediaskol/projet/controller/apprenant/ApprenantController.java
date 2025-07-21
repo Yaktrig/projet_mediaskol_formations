@@ -61,86 +61,94 @@ public class ApprenantController {
      * selon le critère saisi dans le champ
      */
     @GetMapping("/recherche")
-    public ResponseEntity<?> rechercheApprenants(@RequestParam(required = false) String nom,
-                                                 @RequestParam(required = false) String email,
-                                                 @RequestParam(required = false) LocalDate dateNaissance,
-                                                 @RequestParam(required = false) String ville,
-                                                 @RequestParam(required = false) Long numDepartement
-    ) {
+    public ResponseEntity<List<Apprenant>> rechercheApprenants(@RequestParam String termeRecherche) {
 
-        final List<Apprenant> apprenantsRecherches = apprenantService.rechercheApprenants(nom, email, dateNaissance, numDepartement, ville);
+        final List<Apprenant> apprenantsRecherches = apprenantService.rechercheApprenants(termeRecherche);
 
         if (apprenantsRecherches == null || apprenantsRecherches.isEmpty()) {
             // Statut 204 : No content - Pas de body car rien à afficher
             return ResponseEntity.noContent().build();
         }
         // Sinon, on retourne Statut 200 : Ok + dans le body les apprenants
-        // Sinon, on retourne Statut 200 : Ok + dans le body les apprenants
-        //return ResponseEntity.ok(apprenants);
-        // Conversion liste Apprenant -> liste ApprenantDTO
-        List<ApprenantResponseDTO> apprenantResponseDTOS = apprenantsRecherches.stream()
-                .map(ApprenantResponseDTO::new)
-                .toList();
 
-        return ResponseEntity.ok(apprenantResponseDTOS);
-        //return ResponseEntity.ok(apprenantsRecherches);
-
+        return ResponseEntity.ok(apprenantsRecherches);
 
     }
+
+
 
     /**
      * TODO Ajouter un apprenant
      */
-//    @PostMapping
-//    @Valid
-//    public ResponseEntity<?> ajoutApprenant(@Valid @RequestBody Apprenant apprenant, Adresse adresse, TypeFormation typeFormation) {
-//
-//        // L'apprenant ne doit pas être nul
-//        if (apprenant == null) {
-//            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("L'apprenant à ajouter est obligatoire");
-//        }
-//
-//        // L'apprenant ne doit pas avoir d'identifiant de saisi
-//        if (apprenant.getIdPersonne() != null) {
-//            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Impossible de sauvegarder un apprenant");
-//        }
-//        try {
-//            apprenantService.ajouterApprenant(apprenant, adresse, typeFormation);
-//            return ResponseEntity.ok(apprenant);
-//        } catch (RuntimeException e) {
-//            // Erreur BLL ou DAL
-//            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(e.getMessage());
-//        }
-//    }
+    @PostMapping
+    @Valid
+    public ResponseEntity<?> ajouterApprenant(@Valid @RequestBody Apprenant apprenant) {
+
+        // L'apprenant ne doit pas être nul
+        if (apprenant == null) {
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("L'apprenant à ajouter est obligatoire");
+        }
+
+        // L'apprenant ne doit pas avoir d'identifiant de saisi
+        if (apprenant.getIdPersonne() != null) {
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Impossible de sauvegarder un apprenant");
+        }
+        try {
+            apprenantService.ajouterApprenant(apprenant, apprenant.getAdresse(), apprenant.getTypesFormationSuivies());
+            return ResponseEntity.ok(apprenant);
+        } catch (RuntimeException e) {
+            // Erreur BLL ou DAL
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(e.getMessage());
+        }
+    }
 
 
     /**
      * Modifier un apprenant
      */
-//    @PutMapping
-//    @Valid
-//    public ResponseEntity<?> modifierApprenant(@Valid @RequestBody Apprenant apprenant, Adresse adresse, TypeFormation typeFormation) {
-//
-//        // L'apprenant ne doit pas être nul - l'identifiant ne pas être nul ou inférieur ou égal à 0
-//        if (apprenant == null || apprenant.getIdPersonne() == null || apprenant.getIdPersonne() <= 0) {
-//            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("L'identifiant de l'appreannt et l'apprenant sont obligatoires.");
-//        }
+    @PutMapping
+    @Valid
+    public ResponseEntity<?> modifierApprenant(@Valid @RequestBody Apprenant apprenant) {
 
-//        try {
-//            apprenantService.ajouterApprenant(apprenant, adresse, typeFormation);
-//                return ResponseEntity.ok(apprenant);
-//            } catch(RuntimeException e){
-//                return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(e.getMessage());
-//            }
-    //}
+        // L'apprenant ne doit pas être nul - l'identifiant ne pas être nul ou inférieur ou égal à 0
+        if (apprenant == null || apprenant.getIdPersonne() == null || apprenant.getIdPersonne() <= 0) {
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("L'identifiant de l'apprenant et l'apprenant sont obligatoires.");
+        }
+
+        try {
+            apprenantService.ajouterApprenant(apprenant, apprenant.getAdresse(), apprenant.getTypesFormationSuivies());
+                return ResponseEntity.ok(apprenant);
+            } catch(RuntimeException e){
+                return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(e.getMessage());
+            }
+    }
 
     /**
      * TODO Désactiver un apprenant
      */
 
     /**
-     * TODO Supprimer un apprenant
+     * Supprimer un apprenant
      */
+    @DeleteMapping("/{id}")
+    @Valid
+    public ResponseEntity<?> supprimerApprenant(@PathVariable("id") String idInPath) {
+
+
+        try {
+            final int idApprenant = Integer.parseInt(idInPath);
+            apprenantService.supprimerApprenant(idApprenant);
+            return ResponseEntity.ok("Apprenant " + idApprenant + " est supprimé de la base de données.");
+        } catch(NumberFormatException e){
+            // Statut 406 : No acceptable
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Votre identifiant n'est pas un entier.");
+        } catch(RuntimeException e){
+            // Erreur BLL ou DAL
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(e.getMessage());
+        }
+    }
+
+
 
 
 }

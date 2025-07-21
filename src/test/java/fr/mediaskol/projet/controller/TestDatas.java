@@ -1,5 +1,6 @@
 package fr.mediaskol.projet.controller;
 
+import fr.mediaskol.projet.bll.AdresseService;
 import fr.mediaskol.projet.bll.ApprenantService;
 import fr.mediaskol.projet.bo.adresse.Adresse;
 import fr.mediaskol.projet.bo.apprenant.Apprenant;
@@ -33,6 +34,9 @@ public class TestDatas {
 
     @Autowired
     private AdresseRepository adresseRepository;
+
+    @Autowired
+    private AdresseService adresseService;
 
 
     @Autowired
@@ -74,21 +78,21 @@ public class TestDatas {
                 .codePostal("56600")
                 .ville("Lanester")
                 .build();
-        adresseRepository.save(adresseTigrou);
+
 
         final Adresse adresseSimba = Adresse.builder()
                 .rue("4 Avenue Desambrois")
                 .codePostal("06000")
                 .ville("Nice")
                 .build();
-        adresseRepository.save(adresseSimba);
+
 
         final Adresse adresseAriel = Adresse.builder()
                 .rue("10 Rue de Gouesnou")
                 .codePostal("29283")
                 .ville("Brest")
                 .build();
-        adresseRepository.save(adresseAriel);
+
 
 
         final Apprenant tigrou = Apprenant
@@ -106,8 +110,7 @@ public class TestDatas {
                 .adresse(adresseTigrou)
                 .build();
 
-        //apprenantService.ajouterApprenant(tigrou, tigrou.getAdresse(), tigrou.getTypesFormationSuivies());
-        apprenantRepository.save(tigrou);
+        apprenantService.ajouterApprenant(tigrou, adresseTigrou, tigrou.getTypesFormationSuivies());
 
         final Apprenant simba = Apprenant
                 .builder()
@@ -125,8 +128,7 @@ public class TestDatas {
                 .build();
 
 
-        //apprenantService.ajouterApprenant(simba, simba.getAdresse(), simba.getTypesFormationSuivies());
-        apprenantRepository.save(simba);
+        apprenantService.ajouterApprenant(simba, adresseSimba, simba.getTypesFormationSuivies());
 
         final Apprenant ariel = Apprenant
                 .builder()
@@ -144,8 +146,7 @@ public class TestDatas {
                 .build();
 
 
-        // apprenantService.ajouterApprenant(ariel, ariel.getAdresse(), ariel.getTypesFormationSuivies());
-        apprenantRepository.save(ariel);
+        apprenantService.ajouterApprenant(ariel, adresseAriel, ariel.getTypesFormationSuivies());
 
     }
 

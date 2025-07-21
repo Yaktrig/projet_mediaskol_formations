@@ -18,13 +18,9 @@ public interface ApprenantService {
     /**
      * Fonctionnalité qui retourne un ou des apprenants selon des critères de recherches
      *
-     * @param nom
-     * @param email
-     * @param dateNaissance
-     * @param numDepartement
-     * @param ville
+     * @param termeRecherche
      */
-    List<Apprenant> rechercheApprenants(String nom, String email, LocalDate dateNaissance, Long numDepartement, String ville);
+    List<Apprenant> rechercheApprenants(String termeRecherche);
 
 //
 //    /**
