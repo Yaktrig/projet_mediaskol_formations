@@ -15,6 +15,7 @@ public class TestPatternLombok {
     @Test
     void test_patternBuilder_TousLesAttributs(){
 
+        // Création d'une nouvelle personne avec le builder Lombok
         Personne krokmou = Personne
                 .builder()
                 .idPersonne(1L)
@@ -25,8 +26,14 @@ public class TestPatternLombok {
 
         // permet d'afficher l'objet avec tous les attributs
         log.info("test_patternBuilder_TousLesAttributs : " + krokmou.toString());
+
+        // Vérification si le nom correspond bien à celui attendu
         assertThat(krokmou.getNom()).isEqualTo("DRAGON");
+
+        // Vérification si le prénom correspond bien à celui attendu
         assertThat(krokmou.getPrenom()).isEqualTo("Krokmou");
+
+        // Vérification si l'email correspond bien à celui attendu
         assertThat(krokmou.getEmail()).isEqualTo("krokmouDragon@gmail.fr");
     }
 
