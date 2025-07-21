@@ -1,0 +1,10 @@
+<h2>Liste des Apprenants</h2>
+<ul>
+  @for (apprenant of apprenants; track apprenant) {
+    <li>
+      {{ apprenant.prenom }} {{ apprenant.nom }}
+    </li>
+  }
+</ul>
+
+
