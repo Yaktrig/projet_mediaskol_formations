@@ -1,11 +1,14 @@
 #Connection to DB
 spring:
+  sql:
+    init:
+      mode: always
   datasource:
     url: jdbc:mysql://localhost:3306/projet_mediaskol_formations
     username: root
     password: root
 
-#Options to DB
+  #Options to DB
   jpa:
     show-sql: true
     hibernate:

@@ -1,6 +1,5 @@
 package fr.mediaskol.projet.controller;
 
-import fr.mediaskol.projet.bll.AdresseService;
 import fr.mediaskol.projet.bll.ApprenantService;
 import fr.mediaskol.projet.bo.adresse.Adresse;
 import fr.mediaskol.projet.bo.apprenant.Apprenant;
@@ -31,6 +30,9 @@ public class TestDatas {
 
     @Autowired
     private ApprenantService apprenantService;
+
+    @Autowired
+    private AdresseRepository adresseRepository;
 
 
     @Autowired
@@ -67,6 +69,27 @@ public class TestDatas {
         final TypeFormation presentiel = listeTypeFormation.get(0);
         final TypeFormation distanciel = listeTypeFormation.get(1);
 
+        final Adresse adresseTigrou = Adresse.builder()
+                .rue("Lieu Dit Kerpont, Les Hauts De Kerousse - Lann Sevelin")
+                .codePostal("56600")
+                .ville("Lanester")
+                .build();
+        adresseRepository.save(adresseTigrou);
+
+        final Adresse adresseSimba = Adresse.builder()
+                .rue("4 Avenue Desambrois")
+                .codePostal("06000")
+                .ville("Nice")
+                .build();
+        adresseRepository.save(adresseSimba);
+
+        final Adresse adresseAriel = Adresse.builder()
+                .rue("10 Rue de Gouesnou")
+                .codePostal("29283")
+                .ville("Brest")
+                .build();
+        adresseRepository.save(adresseAriel);
+
 
         final Apprenant tigrou = Apprenant
                 .builder()
@@ -80,15 +103,11 @@ public class TestDatas {
                 .commentaireApprenant("Fais des bonds partout")
                 .statutNumPasseport(StatutNumPasseport.NUM_PASSEPORT_A_CREER)
                 .typesFormationSuivies(Set.of(presentiel, distanciel))
-                .adresse(Adresse
-                        .builder()
-                        .rue("Lieu Dit Kerpont, Les Hauts De Kerousse - Lann Sevelin")
-                        .codePostal("56600")
-                        .ville("Lanester")
-                        .build())
+                .adresse(adresseTigrou)
                 .build();
 
-        apprenantService.ajouterApprenant(tigrou, tigrou.getAdresse(), tigrou.getTypesFormationSuivies());
+        //apprenantService.ajouterApprenant(tigrou, tigrou.getAdresse(), tigrou.getTypesFormationSuivies());
+        apprenantRepository.save(tigrou);
 
         final Apprenant simba = Apprenant
                 .builder()
@@ -102,17 +121,12 @@ public class TestDatas {
                 .commentaireApprenant("")
                 .statutNumPasseport(StatutNumPasseport.NUM_PASSEPORT_CREE)
                 .typesFormationSuivies(Set.of(distanciel))
-                .adresse(Adresse
-                        .builder()
-                        .rue("4 Avenue Desambrois")
-                        .codePostal("06000")
-                        .ville("Nice")
-                        .build())
+                .adresse(adresseSimba)
                 .build();
 
 
-        apprenantService.ajouterApprenant(simba, simba.getAdresse(), simba.getTypesFormationSuivies());
-
+        //apprenantService.ajouterApprenant(simba, simba.getAdresse(), simba.getTypesFormationSuivies());
+        apprenantRepository.save(simba);
 
         final Apprenant ariel = Apprenant
                 .builder()
@@ -126,17 +140,12 @@ public class TestDatas {
                 .commentaireApprenant("")
                 .statutNumPasseport(StatutNumPasseport.NUM_PASSEPORT_A_CREER)
                 .typesFormationSuivies(Set.of(presentiel))
-                .adresse(Adresse
-                        .builder()
-                        .rue("10 Rue de Gouesnou")
-                        .codePostal("29283")
-                        .ville("Brest")
-                        .build())
+                .adresse(adresseAriel)
                 .build();
 
 
-        apprenantService.ajouterApprenant(ariel, ariel.getAdresse(), ariel.getTypesFormationSuivies());
-
+        // apprenantService.ajouterApprenant(ariel, ariel.getAdresse(), ariel.getTypesFormationSuivies());
+        apprenantRepository.save(ariel);
 
     }
 
