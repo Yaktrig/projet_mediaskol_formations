@@ -48,7 +48,6 @@ public class Formateur extends Personne {
      * </p>
      */
     @Column(name = "NUM_PORTABLE_FORMATEUR", length = 10)
-    @Size(max = 10, message = "{formateur.numPortable.size}")
     private String numPortable;
 
     /**
@@ -63,7 +62,6 @@ public class Formateur extends Personne {
      * </ul>
      */
     @Column(name = "STATUT_FORMATEUR", nullable = false, length = 10)
-    @Size(min=1, max = 10, message = "{formateur.statutFormateur.size}")
     @NotNull(message = "{formateur.statutFormateur.notnull}")
     @NotBlank(message = "{formateur.statutFormateur.notblank}")
     private String statutFormateur;
@@ -77,7 +75,6 @@ public class Formateur extends Personne {
      * </p>
      */
     @Column(name = "ZONE_INTERVENTION",length = 1000)
-    @Size(max = 1000, message = "{formateur.zoneIntervention.size}")
     private String zoneIntervention;
 
     /**
@@ -87,7 +84,6 @@ public class Formateur extends Personne {
      * </p>
      */
     @Column(name = "COMMENTAIRE_FORMATEUR",  length = 2000)
-    @Size(max = 2000,message = "{formateur.commentaireFormateur.size}")
     private String commentaireFormateur;
 
     /**

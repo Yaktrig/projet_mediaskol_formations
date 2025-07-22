@@ -32,7 +32,6 @@ public class ApprenantServiceImpl implements ApprenantService {
     private final ApprenantRepository apprenantRepository;
     private final AdresseRepository adresseRepository;
     private final TypeFormationRepository typeFormationRepository;
-    private final FormationRepository formationRepository;
 
     private final AdresseService adresseService;
 
@@ -50,7 +49,7 @@ public class ApprenantServiceImpl implements ApprenantService {
      * Retourne une liste d'apprenants en fonction de la saisie utilisateur.
      *
      * @param termeRecherche
-     * @return apprenantRepository.findAll(specApprenant)
+     * @return apprenantRepository.findApprenantsBySearchText(termeRecherche)
      */
     @Override
     public List<Apprenant> rechercheApprenants(String termeRecherche) {
@@ -136,6 +135,8 @@ public class ApprenantServiceImpl implements ApprenantService {
 
     /**
      * Modification d'un apprenant
+     * @param dto
+     * @return
      */
     @Transactional
     @Override
@@ -149,9 +150,9 @@ public class ApprenantServiceImpl implements ApprenantService {
 
         // 2. Valider les champs (chaînes, email, unicité...)
         validerChaineNonNulle(dto.getNom(), "Le nom est obligatoire.");
-        validerEmail(dto.getEmail(), "Le email doit correspondre au format mail.");
+        validerEmail(dto.getEmail(), "L'adresse mail doit correspondre au format email.");
 
-        // 3. Appliquer les modification sur les champs autorisés
+        // 3. Appliquer les modifications sur les champs autorisés
         apprenant.setNom(dto.getNom());
         apprenant.setEmail(dto.getEmail());
         apprenant.setNumPortable(dto.getNumPortable());

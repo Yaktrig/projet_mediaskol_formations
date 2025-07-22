@@ -25,6 +25,7 @@ public class ApprenantResponseDTO {
     private String numPasseport;
     private StatutNumPasseport statutNumPasseport;
     private String commentaireApprenant;
+    private boolean apprenantActif;
     private AdresseResponseDTO adresse;
     private Set<TypeFormation> typeFormations;
 
@@ -39,6 +40,7 @@ public class ApprenantResponseDTO {
         this.email = apprenant.getEmail();
         this.numPortable = apprenant.getNumPortable();
         this.dateNaissance = apprenant.getDateNaissance();
+        this.apprenantActif = apprenant.getApprenantActif();
         this.adresse = new AdresseResponseDTO(apprenant.getAdresse());
         this.numPasseport = apprenant.getNumPasseport();
         this.statutNumPasseport = apprenant.getStatutNumPasseport();

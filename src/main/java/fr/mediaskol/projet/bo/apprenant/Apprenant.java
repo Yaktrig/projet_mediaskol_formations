@@ -65,7 +65,7 @@ public class Apprenant extends Personne {
      */
     @Column(name = "APPRENANT_ACTIF", nullable = false)
     @Builder.Default
-    private boolean apprenantActif = true;
+    private Boolean apprenantActif = true;
 
     /**
      * Numéro du passeport unique de l'apprenant

@@ -37,9 +37,9 @@ public interface ApprenantService {
      * Fonctionnalité qui va ajouter un apprenant
      * @param apprenant
      * @param adresse
-     * @param typesFormation
+     * @param typesFormationSuivies
      */
-    void ajouterApprenant(Apprenant apprenant, Adresse adresse, Set<TypeFormation> typesFormation);
+    void ajouterApprenant(Apprenant apprenant, Adresse adresse, Set<TypeFormation> typesFormationSuivies);
 
 
     /**
