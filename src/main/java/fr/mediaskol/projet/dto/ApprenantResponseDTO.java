@@ -29,7 +29,7 @@ public class ApprenantResponseDTO {
 
 
     /**
-     * Constructeur avec entité (ou utilisation d'un mapper)
+     * Constructeur avec entité
      */
     public ApprenantResponseDTO(Apprenant apprenant){
         this.idPersonne = apprenant.getIdPersonne();

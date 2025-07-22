@@ -19,7 +19,8 @@ import java.util.Set;
  * Contrôleur qui permet :
  * d'afficher les apprenants
  * d'ajouter un apprenant
- * de rechercher un ou des apprenants *
+ * de rechercher un ou des apprenants avec saisie libre
+ * de supprimer un apprenant
  * Utilisation de lombok pour injecter le service à la place d'un constructeur
  */
 
@@ -78,7 +79,7 @@ public class ApprenantController {
 
 
     /**
-     * TODO Ajouter un apprenant
+     * Méthode qui permet de créer un nouvel apprenant dans la base de données
      */
     @PostMapping
     @Valid
