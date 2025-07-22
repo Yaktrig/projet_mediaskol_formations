@@ -5,7 +5,7 @@ import {NgModule} from '@angular/core';
 export const routes: Routes = [
 
 
-  { path: '', redirectTo: '/apprenants', pathMatch: 'full' },
+  { path: '', redirectTo: '/', pathMatch: 'full' },
   { path: 'apprenants', component: ListeApprenantsComponent },
 ];
 

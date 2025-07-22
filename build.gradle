@@ -50,6 +50,12 @@ dependencies {
 
 	// ajout de la dépendance de la datasource H2 pour les test unitaires JPA
 	runtimeOnly 'com.h2database:h2'
+
+	// utilisation de flyway pour la bdd et les jeux de données
+	implementation 'org.flywaydb:flyway-core'
+	implementation 'org.flywaydb:flyway-mysql'
+
+
 }
 
 tasks.named('test') {
