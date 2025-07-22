@@ -1,6 +1,5 @@
 package fr.mediaskol.projet.bo.formation;
 
-import fr.mediaskol.projet.bo.departement.Departement;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

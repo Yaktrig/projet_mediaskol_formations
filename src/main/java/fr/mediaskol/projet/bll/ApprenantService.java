@@ -12,7 +12,9 @@ import java.util.Set;
 
 public interface ApprenantService {
 
-    // Fonctionnalité qui permet de charger tous les apprenants
+    /**
+     *     Fonctionnalité qui permet de charger tous les apprenants
+      */
     List<Apprenant> chargerTousApprenants();
 
     /**
@@ -33,6 +35,8 @@ public interface ApprenantService {
     /**
      * Fonctionnalité qui va ajouter un apprenant
      * @param apprenant
+     * @param adresse
+     * @param typesFormation
      */
     void ajouterApprenant(Apprenant apprenant, Adresse adresse, Set<TypeFormation> typesFormation);
 
