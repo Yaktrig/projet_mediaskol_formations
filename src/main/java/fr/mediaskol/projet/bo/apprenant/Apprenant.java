@@ -45,7 +45,6 @@ public class Apprenant extends Personne {
      * </p>
      */
     @Column(name = "NUM_PORTABLE_APPRENANT", length = 10)
-    @Size(max = 10, message = "{apprenant.numPortable.size}")
     private String numPortable;
 
     /**
@@ -81,7 +80,6 @@ public class Apprenant extends Personne {
      * </ul>
      */
     @Column(name = "NUM_PASSEPORT", length = 120, unique = true)
-    @Size(max = 120, message = "{apprenant.numPasseport.size}")
     private String numPasseport;
 
     /**
@@ -103,7 +101,6 @@ public class Apprenant extends Personne {
      * Commentaire qui permet d'ajouter des informations sur l'apprenant en général
      */
     @Column(name = "COMMENTAIRE_APPRENANT", length = 2000)
-    @Size(max = 2000, message = "{apprenant.commentaireApprenant.size}")
     private String commentaireApprenant;
 
     /**
@@ -137,7 +134,6 @@ public class Apprenant extends Personne {
     @ToString.Exclude
     private @Builder.Default Set<TypeFormation> typesFormationSuivies = new HashSet<>();
 
-    // TODO vérifier si le type de formation suivie ok pour apprenant
 
 
 }

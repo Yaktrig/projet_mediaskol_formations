@@ -50,10 +50,8 @@ public class Formation {
      * Ce champ est obligatoire à la création de la formation, il est limité à 20 caractères.
      * </p>
      */
-    @Column(name = "THEME_FORMATION", nullable = false, length = 20)
-    @Size(min=3, max = 20, message = "{formation.themeFormation.size}")
+    @Column(name = "THEME_FORMATION", nullable = false, length = 20, unique = true)
     @NotNull(message = "{formation.themeFormation.notnull}")
-    @NotBlank(message = "{formation.themeFormation.notblank}")
     private String themeFormation;
 
 
@@ -64,9 +62,7 @@ public class Formation {
      * </p>
      */
     @Column(name = "LIBELLE_FORMATION", nullable = false, length = 300)
-    @Size(min=3, max = 300, message = "{formation.libelleFormation.size}")
     @NotNull(message = "{formation.libelleFormation.notnull}")
-    @NotBlank(message = "{formation.libelleFormation.notblank}")
     private String libelleFormation;
 
 

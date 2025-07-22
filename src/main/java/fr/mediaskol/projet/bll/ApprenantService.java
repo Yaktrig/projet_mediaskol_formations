@@ -3,6 +3,7 @@ package fr.mediaskol.projet.bll;
 import fr.mediaskol.projet.bo.adresse.Adresse;
 import fr.mediaskol.projet.bo.apprenant.Apprenant;
 import fr.mediaskol.projet.bo.formation.TypeFormation;
+import fr.mediaskol.projet.dto.ApprenantInputDTO;
 import jakarta.transaction.Transactional;
 
 
@@ -40,6 +41,13 @@ public interface ApprenantService {
      */
     void ajouterApprenant(Apprenant apprenant, Adresse adresse, Set<TypeFormation> typesFormation);
 
+
+    /**
+     * Fonctionnalité qui va modifier un apprenant
+     * @param dto
+     * @return
+     */
+    Apprenant modifierApprenant(ApprenantInputDTO dto);
 
     /**
      * Fonctionnalité qui va supprimer un apprenant à partir de son identifiant

@@ -2,7 +2,11 @@ package fr.mediaskol.projet.controller.formation;
 
 import fr.mediaskol.projet.bll.FormationService;
 import fr.mediaskol.projet.bo.formation.Formation;
+import fr.mediaskol.projet.bo.formation.TypeFormation;
+import fr.mediaskol.projet.dal.formation.TypeFormationRepository;
+import fr.mediaskol.projet.dto.FormationInputDTO;
 import fr.mediaskol.projet.dto.FormationResponseDTO;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -29,6 +33,7 @@ public class FormationController {
      * Injection de dépendances pour aller chercher le service qui correspond aux formations
      */
     private FormationService formationService;
+    private TypeFormationRepository typeFormationRepository;
 
     /**
      * Retourne la liste des formations en Json dans l'url "mediaskolFormation/formations en méthode GET
@@ -77,20 +82,33 @@ public class FormationController {
      */
     @PostMapping
     @Valid
-    public ResponseEntity<?> ajouterFormation(@Valid @RequestBody Formation formation) {
+    public ResponseEntity<?> ajouterFormation(@Valid @RequestBody FormationInputDTO formationInputDTO) {
 
         // La formation ne doit pas être nulle
-        if (formation == null) {
+        if (formationInputDTO == null) {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("La formation à ajouter est obligatoire");
         }
 
-        // La formation ne doit pas avoir d'identifiant de saisi
-        if (formation.getIdFormation() != null) {
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Impossible de sauvegarder une formation");
-        }
         try {
-            formationService.ajouterFormation(formation, formation.getTypeFormation());
-            return ResponseEntity.ok(formation);
+            // Recherche du type de formation en base à partir de l'id fourni dans le DTO
+            TypeFormation typeFormation = typeFormationRepository.findById(formationInputDTO.getTypeFormationId())
+                    .orElseThrow(() -> new RuntimeException(
+                            "Type de formation inexistant pour l'id : " + formationInputDTO.getTypeFormationId()));
+
+            // Construction de l'entité Formation à partir du DTO et de l'entité associée
+            Formation formation = Formation.builder()
+                    .themeFormation(formationInputDTO.getThemeFormation())
+                    .libelleFormation(formationInputDTO.getLibelleFormation())
+                    .typeFormation(typeFormation)
+                    .build();
+
+            // Persist en base via le service
+            Formation nouvelleFormation = formationService.ajouterFormation(formation);
+
+            // Prépare la réponse au client
+            FormationResponseDTO responseDTO = new FormationResponseDTO(nouvelleFormation);
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
         } catch (RuntimeException e) {
             // Erreur BLL ou DAL
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(e.getMessage());
@@ -102,17 +120,18 @@ public class FormationController {
      */
     @PutMapping
     @Valid
-    public ResponseEntity<?> modifierFormation(@Valid @RequestBody Formation formation) {
+    public ResponseEntity<?> modifierFormation(@Valid @RequestBody FormationInputDTO formationInputDTO) {
 
         // La formation ne doit pas être nulle - l'identifiant ne pas être nul ou inférieur ou égal à 0.
-        if (formation == null || formation.getIdFormation() == null || formation.getIdFormation() <= 0) {
+        if (formationInputDTO == null ||formationInputDTO.getIdFormation() <= 0) {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("L'identifiant de la formation et la formation sont obligatoires.");
         }
 
         try {
-            formationService.ajouterFormation(formation, formation.getTypeFormation());
-            return ResponseEntity.ok(formation);
-        } catch(RuntimeException e){
+          Formation formationModifiee = formationService.modifierFormation(formationInputDTO);
+          return ResponseEntity.ok(new FormationResponseDTO(formationModifiee));
+
+        } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(e.getMessage());
         }
     }

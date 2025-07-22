@@ -52,7 +52,6 @@ public class Adresse {
      * </p>
      */
     @Column(name = "RUE", length = 250)
-    @Size(max = 250, message = "{adresse.rue.size}")
     private String rue;
 
     /**
@@ -62,7 +61,6 @@ public class Adresse {
      * </p>
      */
     @Column(name = "CODE_POSTAL", length = 5)
-    @Size(max = 5, message = "{adresse.codePostal.size}")
     private String codePostal;
 
     /**
@@ -72,7 +70,6 @@ public class Adresse {
      * </p>
      */
     @Column(name = "VILLE", length = 200)
-    @Size(max = 200, message ="{adresse.ville.size}" )
     private String ville;
 
 
@@ -90,7 +87,6 @@ public class Adresse {
      */
     @ManyToOne()
     @JoinColumn(name = "NUM_DEPARTEMENT", nullable = true)
-    //@NotNull(message = "{adresse.departement.notnull}")
     private Departement departement;
 
 }

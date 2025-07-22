@@ -6,7 +6,9 @@ import fr.mediaskol.projet.bo.apprenant.SessionApprenant;
 import fr.mediaskol.projet.bo.formation.TypeFormation;
 import fr.mediaskol.projet.dal.adresse.AdresseRepository;
 import fr.mediaskol.projet.dal.apprenant.ApprenantRepository;
+import fr.mediaskol.projet.dal.formation.FormationRepository;
 import fr.mediaskol.projet.dal.formation.TypeFormationRepository;
+import fr.mediaskol.projet.dto.ApprenantInputDTO;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -30,6 +32,7 @@ public class ApprenantServiceImpl implements ApprenantService {
     private final ApprenantRepository apprenantRepository;
     private final AdresseRepository adresseRepository;
     private final TypeFormationRepository typeFormationRepository;
+    private final FormationRepository formationRepository;
 
     private final AdresseService adresseService;
 
@@ -129,6 +132,59 @@ public class ApprenantServiceImpl implements ApprenantService {
         } catch (RuntimeException e) {
             throw new RuntimeException("Impossible de sauvegarder - " + apprenant.toString());
         }
+    }
+
+    /**
+     * Modification d'un apprenant
+     */
+    @Transactional
+    @Override
+    public Apprenant modifierApprenant(ApprenantInputDTO dto) {
+
+        // 1. Vérifier que l'apprenant à modifier existe
+        Apprenant apprenant = apprenantRepository.findById(dto.getIdApprenant())
+                .orElseThrow(() -> new EntityNotFoundException("Apprenant introuvable (id= "+ dto.getIdApprenant() + ")"));
+
+
+
+        // 2. Valider les champs (chaînes, email, unicité...)
+        validerChaineNonNulle(dto.getNom(), "Le nom est obligatoire.");
+        validerEmail(dto.getEmail(), "Le email doit correspondre au format mail.");
+
+        // 3. Appliquer les modification sur les champs autorisés
+        apprenant.setNom(dto.getNom());
+        apprenant.setEmail(dto.getEmail());
+        apprenant.setNumPortable(dto.getNumPortable());
+        apprenant.setApprenantActif(dto.isApprenantActif());
+        apprenant.setNumPasseport(dto.getNumPasseport());
+        apprenant.setStatutNumPasseport(dto.getStatutNumPasseport());
+        apprenant.setCommentaireApprenant(dto.getCommentaireApprenant());
+
+        // Associer l'adresse
+        if (dto.getAdresseId() != null) {
+            Adresse adresse = adresseRepository.findById(dto.getAdresseId())
+                    .orElseThrow(() -> new EntityNotFoundException("Adresse introuvable (id = " + dto.getAdresseId() + ")"));
+            apprenant.setAdresse(adresse);
+        } else {
+            apprenant.setAdresse(null); // ou garder l'existante
+        }
+
+
+        // 4. Conversion des IDs de type formations en objets réels
+        if (dto.getTypeFormationIds() != null) {
+            Set<TypeFormation> typesFormation = dto.getTypeFormationIds().stream()
+                    .map(id -> typeFormationRepository.findById(id)
+                            .orElseThrow(() -> new EntityNotFoundException("TypeFormation introuvable (id = " + id + ")")))
+                    .collect(Collectors.toSet());
+
+            apprenant.setTypesFormationSuivies(typesFormation);
+        }
+
+        // 5. Validation d'unicité du numéro de passeport (à l'exclusion de l'apprenant actuel)
+        validerUnicitePasseport(apprenant, "Le numéro de passeport doit être unique.");
+
+        // 6. Sauvegarde finale
+        return apprenantRepository.save(apprenant);
     }
 
 
@@ -236,14 +292,18 @@ public class ApprenantServiceImpl implements ApprenantService {
      * @param msgErreur le message d'erreur à afficher en cas de doublon
      * @throws RuntimeException si le numéro de passeport existe déjà pour un autre apprenant
      */
-    public void validerUnicitePasseport(Apprenant apprenant, String msgErreur) {
-        if (apprenant.getNumPasseport() != null && !apprenant.getNumPasseport().isBlank()) {
+    public void validerUnicitePasseport(Apprenant apprenant , String msgErreur) {
+        String numPasseport = apprenant.getNumPasseport();
 
-            // Vérifier l'unicité seulement si le numéro est renseigné
-            Optional<Apprenant> existant = apprenantRepository.findByNumPasseport(apprenant.getNumPasseport());
+        if (numPasseport != null && !numPasseport.isBlank()) {
+            // Recherche d'un apprenant ayant déjà ce même numéro
+            Optional<Apprenant> existant = apprenantRepository.findByNumPasseport(numPasseport);
 
             if (existant.isPresent()) {
-                if (apprenant.getIdPersonne() == null || !existant.get().getIdPersonne().equals(apprenant.getIdPersonne())) {
+                // Si on est en création (idPersonne null) OU
+                // Si le numéro appartient à un autre apprenant => erreur
+                if (apprenant.getIdPersonne() == null ||
+                        !existant.get().getIdPersonne().equals(apprenant.getIdPersonne())) {
                     throw new RuntimeException(msgErreur);
                 }
             }

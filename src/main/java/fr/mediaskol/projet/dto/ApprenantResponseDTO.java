@@ -1,5 +1,6 @@
 package fr.mediaskol.projet.dto;
 
+import fr.mediaskol.projet.bo.adresse.Adresse;
 import fr.mediaskol.projet.bo.apprenant.Apprenant;
 import fr.mediaskol.projet.bo.apprenant.StatutNumPasseport;
 import fr.mediaskol.projet.bo.formation.TypeFormation;
@@ -15,7 +16,7 @@ import java.util.Set;
 
 public class ApprenantResponseDTO {
 
-    private Long idPersonne;
+    private Long idApprenant;
     private String nom;
     private String prenom;
     private String email;
@@ -24,7 +25,7 @@ public class ApprenantResponseDTO {
     private String numPasseport;
     private StatutNumPasseport statutNumPasseport;
     private String commentaireApprenant;
-    private String adresse;
+    private AdresseResponseDTO adresse;
     private Set<TypeFormation> typeFormations;
 
 
@@ -32,13 +33,13 @@ public class ApprenantResponseDTO {
      * Constructeur avec entité
      */
     public ApprenantResponseDTO(Apprenant apprenant){
-        this.idPersonne = apprenant.getIdPersonne();
+        this.idApprenant = apprenant.getIdPersonne();
         this.nom = apprenant.getNom();
         this.prenom = apprenant.getPrenom();
         this.email = apprenant.getEmail();
         this.numPortable = apprenant.getNumPortable();
         this.dateNaissance = apprenant.getDateNaissance();
-        this.adresse =apprenant.getAdresse() != null ? apprenant.getAdresse().getRue() + " " + apprenant.getAdresse().getCodePostal() + " " + apprenant.getAdresse().getVille() : "";
+        this.adresse = new AdresseResponseDTO(apprenant.getAdresse());
         this.numPasseport = apprenant.getNumPasseport();
         this.statutNumPasseport = apprenant.getStatutNumPasseport();
         this.commentaireApprenant = apprenant.getCommentaireApprenant();

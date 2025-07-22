@@ -1,6 +1,7 @@
 package fr.mediaskol.projet.bo;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -54,9 +55,7 @@ public class Personne {
      * </p>
      */
     @Column(name = "NOM", nullable = false, length = 90)
-    @Size(min=3, max = 90, message="{personne.nom.size}")
     @NotNull(message="{personne.nom.notnull}")
-    @NotBlank(message="{personne.nom.notblank}")
     private String nom;
 
     /**
@@ -66,9 +65,7 @@ public class Personne {
      * </p>
      */
     @Column(name = "PRENOM", nullable = false, length = 150)
-    @Size(min=3, max = 150, message="{personne.prenom.size}")
     @NotNull(message="{personne.prenom.notnull}")
-    @NotBlank(message="{personne.prenom.notblank}")
     private String prenom;
 
     /**
@@ -79,9 +76,8 @@ public class Personne {
      * </p>
      */
     @Column(name = "EMAIL", nullable = false, unique = true, length = 255)
-    @Size(min=10, max = 255, message = "{personne.email.size}")
     @NotNull(message = "{personne.email.notnull}")
-    @NotBlank(message = "{personne.email.notblank}")
+    @Email
     private String email;
 
 }
