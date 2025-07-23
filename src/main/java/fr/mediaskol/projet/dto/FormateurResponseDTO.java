@@ -29,10 +29,9 @@ public class FormateurResponseDTO {
     private String statutFormateur;
     private String zoneIntervention;
     private String commentaireFormateur;
-   // private Long adresseId;
     private AdresseResponseDTO adresse;
-    private List<String> formationsIds;
-    private Set<String> typeFormationIds;
+    private List<String> formationsLibelle;
+    private Set<TypeFormation> typeFormationIds;
 
 
     /**
@@ -54,18 +53,19 @@ public class FormateurResponseDTO {
         } else {
             this.adresse = null;
         }
-        // Transformation explicite des collections entités en collections d'IDs
-        if (formateur.getTypesFormationDispensees() != null) {
-            this.typeFormationIds = formateur.getTypesFormationDispensees().stream()
-                    .map(TypeFormation::getLibelleTypeFormation)// ou ton getter d'ID
-                    .collect(Collectors.toSet());
+
+
+        if(formateur.getTypesFormationDispensees() !=null){
+            this.typeFormationIds= formateur.getTypesFormationDispensees();
         }
 
 
         if (formateur.getFormationsDispensees() != null) {
-            this.formationsIds = formateur.getFormationsDispensees().stream()
+            this.formationsLibelle = formateur.getFormationsDispensees().stream()
                     .map(Formation::getLibelleFormation) // ou ton getter d'ID
                     .collect(Collectors.toList());
         }
+
+
     }
 }

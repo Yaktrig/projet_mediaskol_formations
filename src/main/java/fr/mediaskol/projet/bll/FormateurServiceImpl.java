@@ -42,21 +42,7 @@ public class FormateurServiceImpl implements  FormateurService {
     @Override
     public List<Formateur> chargerTousFormateurs() {
 
-        List<Formateur> list = formateurRepository.findAll();
-        list.forEach(formateur -> {
-            formateur.getFormationsDispensees().forEach(f -> {
-                if (f.getTypeFormation() != null) {
-                    f.getTypeFormation().getLibelleTypeFormation(); // force init
-                }
-            });
-            formateur.getTypesFormationDispensees().size(); // force init
-            if (formateur.getAdresse() != null) {
-                formateur.getAdresse().getIdAdresse();
-            }
-        });
-        return list;
-
-        //return formateurRepository.findAll();
+        return formateurRepository.findAll();
     }
 
     /**
@@ -70,7 +56,7 @@ public class FormateurServiceImpl implements  FormateurService {
 
         String recherche = termeRecherche != null ? termeRecherche.trim().toLowerCase() : "";
 
-        return formateurRepository.findFormateursBySearchText(termeRecherche);
+        return formateurRepository.findFormateursBySearchText(recherche);
     }
 
     /**
