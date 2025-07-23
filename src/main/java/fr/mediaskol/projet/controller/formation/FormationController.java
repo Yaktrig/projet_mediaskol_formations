@@ -3,6 +3,7 @@ package fr.mediaskol.projet.controller.formation;
 import fr.mediaskol.projet.bll.formation.FormationService;
 import fr.mediaskol.projet.bo.formation.Formation;
 import fr.mediaskol.projet.bo.formation.TypeFormation;
+import fr.mediaskol.projet.bo.salle.Salle;
 import fr.mediaskol.projet.dal.formation.TypeFormationRepository;
 import fr.mediaskol.projet.dto.formation.FormationInputDTO;
 import fr.mediaskol.projet.dto.formation.FormationResponseDTO;
@@ -53,6 +54,27 @@ public class FormationController {
                 .toList();
 
         return ResponseEntity.ok(formationResponseDTOS);
+    }
+
+    /**
+     * Retourne une formation par rapport à son identifiant
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<?> rechercherFormationParId(@PathVariable("id") String idInPath) {
+
+        try {
+            long id = Long.parseLong(idInPath);
+            final Formation formation = formationService.chargerFormationParId(id);
+
+            FormationResponseDTO formationDto = new FormationResponseDTO(formation);
+            return ResponseEntity.ok(formationDto);
+        } catch (NumberFormatException e) {
+            // Statut 406 : No Acceptable
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Votre identifiant n'est pas valide");
+        } catch (RuntimeException e) {
+            // Statut 404 : Not found
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 
 

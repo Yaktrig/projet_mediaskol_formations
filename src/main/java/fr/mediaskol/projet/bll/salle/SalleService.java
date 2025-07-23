@@ -5,7 +5,6 @@ import fr.mediaskol.projet.bo.salle.Salle;
 import fr.mediaskol.projet.dto.salle.SalleInputDTO;
 
 import java.util.List;
-import java.util.Set;
 
 public interface SalleService {
 
@@ -14,6 +13,11 @@ public interface SalleService {
      * @return
      */
     List<Salle> chargerToutesSalles();
+
+    /**
+     * Fonctionnalité qui permet de charger une salle par son id
+     */
+    Salle chargerSalleParId(long idSalle);
 
     /**
      * Fonctionnalité qui retourne une ou des salles selon des critères

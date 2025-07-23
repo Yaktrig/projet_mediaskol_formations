@@ -5,6 +5,7 @@ import fr.mediaskol.projet.bo.adresse.Adresse;
 import fr.mediaskol.projet.bo.apprenant.Apprenant;
 import fr.mediaskol.projet.bo.apprenant.SessionApprenant;
 import fr.mediaskol.projet.bo.formation.TypeFormation;
+import fr.mediaskol.projet.bo.salle.Salle;
 import fr.mediaskol.projet.dal.adresse.AdresseRepository;
 import fr.mediaskol.projet.dal.apprenant.ApprenantRepository;
 import fr.mediaskol.projet.dal.formation.TypeFormationRepository;
@@ -43,6 +44,31 @@ public class ApprenantServiceImpl implements ApprenantService {
     @Override
     public List<Apprenant> chargerTousApprenants() {
         return apprenantRepository.findAll();
+    }
+
+
+
+    /**
+     * Fonctionnalité qui permet de charger un apprenant par son id
+     *
+     * @param idApprenant
+     */
+    @Override
+    public Apprenant chargerApprenantParId(long idApprenant) {
+
+        // Validation de l'identifiant
+        if (idApprenant <= 0) {
+            throw new RuntimeException("L'identifiant n'existe pas");
+        }
+
+        // On retourne un apprenant
+        final Optional<Apprenant> opt = apprenantRepository.findById(idApprenant);
+        if (opt.isPresent()) {
+            return opt.get();
+        }
+
+        // Identifiant correspond à aucun enregistrement en base
+        throw new RuntimeException("Aucun apprenant ne correspond");
     }
 
     /**
@@ -135,6 +161,7 @@ public class ApprenantServiceImpl implements ApprenantService {
 
     /**
      * Modification d'un apprenant
+     *
      * @param dto
      * @return
      */
@@ -144,8 +171,7 @@ public class ApprenantServiceImpl implements ApprenantService {
 
         // 1. Vérifier que l'apprenant à modifier existe
         Apprenant apprenant = apprenantRepository.findById(dto.getIdApprenant())
-                .orElseThrow(() -> new EntityNotFoundException("Apprenant introuvable (id= "+ dto.getIdApprenant() + ")"));
-
+                .orElseThrow(() -> new EntityNotFoundException("Apprenant introuvable (id= " + dto.getIdApprenant() + ")"));
 
 
         // 2. Valider les champs (chaînes, email, unicité...)
@@ -293,7 +319,7 @@ public class ApprenantServiceImpl implements ApprenantService {
      * @param msgErreur le message d'erreur à afficher en cas de doublon
      * @throws RuntimeException si le numéro de passeport existe déjà pour un autre apprenant
      */
-    public void validerUnicitePasseport(Apprenant apprenant , String msgErreur) {
+    public void validerUnicitePasseport(Apprenant apprenant, String msgErreur) {
         String numPasseport = apprenant.getNumPasseport();
 
         if (numPasseport != null && !numPasseport.isBlank()) {

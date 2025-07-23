@@ -28,10 +28,11 @@ public class SalleInputDTO {
     @Size(max = 255, message = "{salle.mailContact.size}")
     private String mailContact;
 
-    private boolean cleSalle;
+
+    private Boolean cleSalle;
 
     @Size(max = 10, message = "{salle.digiCodeSalle.size}")
-    private String digiCodeSalle;
+    private String digicodeSalle;
 
     @Size(max = 2000, message = "{salle.commentaireSalle.size}")
     private String commentaireSalle;

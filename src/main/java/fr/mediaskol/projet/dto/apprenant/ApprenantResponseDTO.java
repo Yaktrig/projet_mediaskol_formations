@@ -24,7 +24,7 @@ public class ApprenantResponseDTO {
     private String numPasseport;
     private StatutNumPasseport statutNumPasseport;
     private String commentaireApprenant;
-    private boolean apprenantActif;
+    private Boolean apprenantActif;
     private AdresseResponseDTO adresse;
     private Set<TypeFormation> typeFormationsIds;
 
@@ -32,7 +32,7 @@ public class ApprenantResponseDTO {
     /**
      * Constructeur avec entité
      */
-    public ApprenantResponseDTO(Apprenant apprenant){
+    public ApprenantResponseDTO(Apprenant apprenant) {
         this.idApprenant = apprenant.getIdPersonne();
         this.nom = apprenant.getNom();
         this.prenom = apprenant.getPrenom();
@@ -40,13 +40,18 @@ public class ApprenantResponseDTO {
         this.numPortable = apprenant.getNumPortable();
         this.dateNaissance = apprenant.getDateNaissance();
         this.apprenantActif = apprenant.getApprenantActif();
-        this.adresse = new AdresseResponseDTO(apprenant.getAdresse());
+
+        if (apprenant.getAdresse() != null) {
+            this.adresse = new AdresseResponseDTO(apprenant.getAdresse());
+        } else {
+            this.adresse = null;
+        }
+
         this.numPasseport = apprenant.getNumPasseport();
         this.statutNumPasseport = apprenant.getStatutNumPasseport();
         this.commentaireApprenant = apprenant.getCommentaireApprenant();
         this.typeFormationsIds = apprenant.getTypesFormationSuivies();
     }
-
 
 
 }

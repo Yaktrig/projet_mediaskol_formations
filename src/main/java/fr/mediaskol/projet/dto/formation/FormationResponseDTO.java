@@ -24,8 +24,8 @@ public class FormationResponseDTO {
         this.idFormation = formation.getIdFormation();
         this.libelleFormation = formation.getLibelleFormation();
         this.themeFormation = formation.getThemeFormation();
-        this.typeFormation = new TypeFormationDTO(formation.getTypeFormation());
+        if (formation.getTypeFormation() != null) {
+            this.typeFormation = new TypeFormationDTO(formation.getTypeFormation());
+        }
     }
-
-
 }

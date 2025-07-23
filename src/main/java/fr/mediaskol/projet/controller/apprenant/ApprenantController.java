@@ -2,6 +2,7 @@ package fr.mediaskol.projet.controller.apprenant;
 
 import fr.mediaskol.projet.bll.apprenant.ApprenantService;
 import fr.mediaskol.projet.bo.apprenant.Apprenant;
+import fr.mediaskol.projet.bo.salle.Salle;
 import fr.mediaskol.projet.dto.apprenant.ApprenantResponseDTO;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -29,6 +30,26 @@ public class ApprenantController {
      * Injection de dépendances pour aller chercher le service qui correspond aux apprenants
      */
     private ApprenantService apprenantService;
+
+
+    /**
+     * Retourne un apprenant par rapport à son identifiant
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<?> rechercherApprenantParId(@PathVariable("id") String idInPath) {
+
+        try {
+            long id = Long.parseLong(idInPath);
+            final Apprenant apprenant = apprenantService.chargerApprenantParId(id);
+            return ResponseEntity.ok(apprenant);
+        } catch (NumberFormatException e) {
+            // Statut 406 : No Acceptable
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Votre identifiant n'est pas valide");
+        } catch (RuntimeException e) {
+            // Statut 404 : Not found
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
 
     /**
      * Retourne la liste des apprenants en Json dans l'url "mediaskolFormation/apprenants en méthode GET

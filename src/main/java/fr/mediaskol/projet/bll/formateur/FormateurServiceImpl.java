@@ -5,6 +5,7 @@ import fr.mediaskol.projet.bo.adresse.Adresse;
 import fr.mediaskol.projet.bo.formateur.Formateur;
 import fr.mediaskol.projet.bo.formation.Formation;
 import fr.mediaskol.projet.bo.formation.TypeFormation;
+import fr.mediaskol.projet.bo.salle.Salle;
 import fr.mediaskol.projet.dal.adresse.AdresseRepository;
 import fr.mediaskol.projet.dal.formateur.FormateurRepository;
 import fr.mediaskol.projet.dal.formation.FormationRepository;
@@ -19,12 +20,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
-public class FormateurServiceImpl implements  FormateurService {
+public class FormateurServiceImpl implements FormateurService {
 
     /**
      * Injection des repository en couplage faible
@@ -44,6 +46,31 @@ public class FormateurServiceImpl implements  FormateurService {
     public List<Formateur> chargerTousFormateurs() {
 
         return formateurRepository.findAll();
+    }
+
+    /**
+     * Fonctionnalité qui permet de charger un formateur par son id
+     *
+     * @param idFormateur
+     */
+    @Override
+    public Formateur chargerFormateurParId(long idFormateur) {
+
+        // Validation de l'identifiant
+        if (idFormateur <= 0) {
+            throw new RuntimeException("L'identifiant n'existe pas");
+        }
+
+        // On retourne un formateur
+        final Optional<Formateur> opt = formateurRepository.findById(idFormateur);
+        if (opt.isPresent()) {
+            return opt.get();
+        }
+
+        // Identifiant correspond à aucun enregistrement en base
+        throw new RuntimeException("Aucune formateur ne correspond");
+
+
     }
 
     /**
@@ -80,7 +107,7 @@ public class FormateurServiceImpl implements  FormateurService {
     @Transactional
     public void ajouterFormateur(Formateur formateur, Adresse adresse, Set<TypeFormation> typesFormationDispensees, List<Formation> formationDispensees) {
 
-        if(formateur == null){
+        if (formateur == null) {
             throw new RuntimeException("Le formateur n'est pas renseigné.");
         }
 
@@ -151,7 +178,7 @@ public class FormateurServiceImpl implements  FormateurService {
 
         // Vérifier si le formateur existe dans la base
         Formateur formateur = formateurRepository.findById(dto.getIdFormateur())
-                .orElseThrow(() -> new EntityNotFoundException("Formateur introuvable (id= "+ dto.getIdFormateur() + ")"));
+                .orElseThrow(() -> new EntityNotFoundException("Formateur introuvable (id= " + dto.getIdFormateur() + ")"));
 
         // Valider les champs
         validerChaineNonNulle(dto.getNom(), "Le nom est obligatoire.");
@@ -202,7 +229,7 @@ public class FormateurServiceImpl implements  FormateurService {
     @Override
     public void supprimerFormateur(long idFormateur) {
 
-        if(idFormateur <=0){
+        if (idFormateur <= 0) {
             throw new IllegalArgumentException("L'identifiant du formateur n'existe pas.");
         }
 
@@ -218,8 +245,6 @@ public class FormateurServiceImpl implements  FormateurService {
             throw new RuntimeException("Impossible de supprimer le formateur (id = " + idFormateur + ")" + e.getMessage());
         }
     }
-
-
 
 
     /**
@@ -243,7 +268,6 @@ public class FormateurServiceImpl implements  FormateurService {
             throw new RuntimeException(msgErreur);
         }
     }
-
 
 
 }

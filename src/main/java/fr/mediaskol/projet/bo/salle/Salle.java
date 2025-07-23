@@ -89,7 +89,8 @@ public class Salle {
      * </ul>
      */
     @Column(name = "CLE_SALLE", nullable = false)
-    private Boolean cleSalle;
+    @Builder.Default
+    private Boolean cleSalle = false;
 
     /**
      * Numéro du digicode s'il y en a un pour accéder à la salle.
@@ -98,7 +99,7 @@ public class Salle {
      * </p>
      */
     @Column(name = "DIGICODE_SALLE",  length = 10)
-    private String digiCodeSalle;
+    private String digicodeSalle;
 
     /**
      * Commentaire général à propos de la salle.

@@ -14,10 +14,11 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service
-public class SalleServiceImpl implements SalleService{
+public class SalleServiceImpl implements SalleService {
 
     /**
      * Injection des repository en couplage faible
@@ -39,8 +40,33 @@ public class SalleServiceImpl implements SalleService{
     }
 
     /**
+     * Fonctionnalité qui permet de charger une salle par son id
+     *
+     * @param idSalle
+     */
+    @Override
+    public Salle chargerSalleParId(long idSalle) {
+
+        // Validation de l'identifiant
+        if (idSalle <= 0) {
+            throw new RuntimeException("L'identifiant n'existe pas");
+        }
+
+        // On retourne une salle
+        final Optional<Salle> opt = salleRepository.findById(idSalle);
+        if (opt.isPresent()) {
+            return opt.get();
+        }
+
+        // Identifiant correspond à aucun enregistrement en base
+        throw new RuntimeException("Aucune salle ne correspond");
+    }
+
+
+    /**
      * Fonctionnalité qui retourne une ou des salles selon des critères
      * Todo à compléter
+     *
      * @param termeRecherche
      */
     @Override
@@ -62,7 +88,7 @@ public class SalleServiceImpl implements SalleService{
             throw new RuntimeException("La salle n'est pas renseignée");
         }
 
-        validerChaineNonNulle(salle.getNomSalle(),"La salle n'est pas renseignée.");
+        validerChaineNonNulle(salle.getNomSalle(), "La salle n'est pas renseignée.");
 
         if (adresse != null) {
             adresseService.validerAdresse(adresse);
@@ -91,7 +117,7 @@ public class SalleServiceImpl implements SalleService{
 
         // 1. Vérifier que la salle à modifier existe
         Salle salle = salleRepository.findById(dto.getIdSalle())
-                .orElseThrow(() -> new EntityNotFoundException("Salle introuvable (id= "+ dto.getIdSalle() + ")"));
+                .orElseThrow(() -> new EntityNotFoundException("Salle introuvable (id= " + dto.getIdSalle() + ")"));
 
         // 2. Valider les champs
         validerChaineNonNulle(dto.getNomSalle(), "Le nom de la salle est obligatoire.");

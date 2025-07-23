@@ -2,6 +2,7 @@ package fr.mediaskol.projet.bll.formation;
 
 import fr.mediaskol.projet.bo.formation.Formation;
 import fr.mediaskol.projet.bo.formation.TypeFormation;
+import fr.mediaskol.projet.bo.salle.Salle;
 import fr.mediaskol.projet.dal.formation.FormationRepository;
 import fr.mediaskol.projet.dal.formation.TypeFormationRepository;
 import fr.mediaskol.projet.dto.formation.FormationInputDTO;
@@ -33,8 +34,32 @@ public class FormationServiceImpl implements FormationService {
         return formationRepository.findAll();
     }
 
+
     /**
-     * Fonctionnalité qui permet d'ajouter une formation     *
+     * Fonctionnalité qui permet de charger une formation par son id
+     *
+     * @param idFormation
+     */
+    @Override
+    public Formation chargerFormationParId(long idFormation) {
+
+        // Validation de l'identifiant
+        if (idFormation <= 0) {
+            throw new RuntimeException("L'identifiant n'existe pas");
+        }
+
+        // On retourne une formation
+        final Optional<Formation> opt = formationRepository.findById(idFormation);
+        if (opt.isPresent()) {
+            return opt.get();
+        }
+
+        // Identifiant correspond à aucun enregistrement en base
+        throw new RuntimeException("Aucune formation ne correspond");
+    }
+
+    /**
+     * Fonctionnalité qui permet d'ajouter une formation
      *
      * @param formation
      * @return

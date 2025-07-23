@@ -1,5 +1,7 @@
 package fr.mediaskol.projet.bo.formation;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import fr.mediaskol.projet.bo.formateur.Formateur;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -8,6 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 /**
  * Représente une formation dans le système de gestion.
@@ -28,7 +32,7 @@ import lombok.NoArgsConstructor;
 @Builder
 
 @Entity
-@Table(name="FORMATION")
+@Table(name = "FORMATION")
 public class Formation {
 
 
@@ -82,6 +86,8 @@ public class Formation {
     @JoinColumn(name = "TYPE_FORMATION_ID", nullable = false)
     @NotNull(message = "{formation.typeFormation.notnull}")
     private TypeFormation typeFormation;
+
+
 
 
 }

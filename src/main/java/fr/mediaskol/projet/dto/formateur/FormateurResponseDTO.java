@@ -4,11 +4,14 @@ import fr.mediaskol.projet.bo.formateur.Formateur;
 import fr.mediaskol.projet.bo.formation.Formation;
 import fr.mediaskol.projet.bo.formation.TypeFormation;
 import fr.mediaskol.projet.dto.adresse.AdresseResponseDTO;
+import fr.mediaskol.projet.dto.formation.FormationResponseDTO;
+import fr.mediaskol.projet.dto.formation.TypeFormationDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -31,8 +34,8 @@ public class FormateurResponseDTO {
     private String zoneIntervention;
     private String commentaireFormateur;
     private AdresseResponseDTO adresse;
-    private List<String> formationsLibelle;
-    private Set<TypeFormation> typeFormationIds;
+    private List<FormationResponseDTO> formations;
+    private Set<TypeFormationDTO> typesFormations;
 
 
     /**
@@ -56,16 +59,27 @@ public class FormateurResponseDTO {
         }
 
 
-        if(formateur.getTypesFormationDispensees() !=null){
-            this.typeFormationIds= formateur.getTypesFormationDispensees();
+//        if(formateur.getTypesFormationDispensees() !=null){
+//            this.typeFormationIds= formateur.getTypesFormationDispensees();
+//        }
+
+        if (formateur.getTypesFormationDispensees() != null) {
+            this.typesFormations = formateur.getTypesFormationDispensees().stream()
+                    .map(TypeFormationDTO::new)
+                    .collect(Collectors.toSet());
+        } else {
+            this.typesFormations = Collections.emptySet();
         }
 
 
         if (formateur.getFormationsDispensees() != null) {
-            this.formationsLibelle = formateur.getFormationsDispensees().stream()
-                    .map(Formation::getLibelleFormation) // ou ton getter d'ID
+            this.formations = formateur.getFormationsDispensees().stream()
+                    .map(FormationResponseDTO::new)
                     .collect(Collectors.toList());
+        } else {
+            this.formations = Collections.emptyList();
         }
+
 
 
     }

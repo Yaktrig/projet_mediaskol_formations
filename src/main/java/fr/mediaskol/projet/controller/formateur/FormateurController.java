@@ -3,6 +3,7 @@ package fr.mediaskol.projet.controller.formateur;
 
 import fr.mediaskol.projet.bll.formateur.FormateurService;
 import fr.mediaskol.projet.bo.formateur.Formateur;
+import fr.mediaskol.projet.bo.salle.Salle;
 import fr.mediaskol.projet.dto.formateur.FormateurResponseDTO;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -43,6 +44,28 @@ public class FormateurController {
 
         // Sinon, on retourne Statut 200 : Ok + dans le body les formateurs
         return ResponseEntity.ok(formateurResponseDTOS);
+    }
+
+    /**
+     * Retourne un formateur par rapport à son identifiant
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<?> rechercherFormateurParId(@PathVariable("id") String idInPath) {
+
+        try {
+            long id = Long.parseLong(idInPath);
+            final Formateur formateur = formateurService.chargerFormateurParId(id);
+
+            FormateurResponseDTO dto = new FormateurResponseDTO(formateur);
+            return ResponseEntity.ok(dto);
+
+        } catch (NumberFormatException e) {
+            // Statut 406 : No Acceptable
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Votre identifiant n'est pas valide");
+        } catch (RuntimeException e) {
+            // Statut 404 : Not found
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 
 

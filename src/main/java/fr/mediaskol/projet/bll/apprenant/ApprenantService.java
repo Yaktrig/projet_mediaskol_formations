@@ -3,6 +3,7 @@ package fr.mediaskol.projet.bll.apprenant;
 import fr.mediaskol.projet.bo.adresse.Adresse;
 import fr.mediaskol.projet.bo.apprenant.Apprenant;
 import fr.mediaskol.projet.bo.formation.TypeFormation;
+import fr.mediaskol.projet.bo.salle.Salle;
 import fr.mediaskol.projet.dto.apprenant.ApprenantInputDTO;
 
 
@@ -12,9 +13,14 @@ import java.util.Set;
 public interface ApprenantService {
 
     /**
-     *     Fonctionnalité qui permet de charger tous les apprenants
-      */
+     * Fonctionnalité qui permet de charger tous les apprenants
+     */
     List<Apprenant> chargerTousApprenants();
+
+    /**
+     * Fonctionnalité qui permet de charger un apprenant par son id
+     */
+    Apprenant chargerApprenantParId(long idApprenant);
 
     /**
      * Fonctionnalité qui retourne un ou des apprenants selon des critères de recherches
@@ -30,9 +36,9 @@ public interface ApprenantService {
 //    List<Apprenant> find
 
 
-
     /**
      * Fonctionnalité qui va ajouter un apprenant
+     *
      * @param apprenant
      * @param adresse
      * @param typesFormationSuivies
@@ -42,6 +48,7 @@ public interface ApprenantService {
 
     /**
      * Fonctionnalité qui va modifier un apprenant
+     *
      * @param dto
      * @return
      */
@@ -49,11 +56,10 @@ public interface ApprenantService {
 
     /**
      * Fonctionnalité qui va supprimer un apprenant à partir de son identifiant
+     *
      * @param idApprenant
      */
     void supprimerApprenant(long idApprenant);
-
-
 
 
 }
