@@ -13,7 +13,6 @@ import java.util.Set;
 @AllArgsConstructor
 @Data
 @Builder
-
 public class ApprenantResponseDTO {
 
     private Long idApprenant;
@@ -27,7 +26,7 @@ public class ApprenantResponseDTO {
     private String commentaireApprenant;
     private boolean apprenantActif;
     private AdresseResponseDTO adresse;
-    private Set<TypeFormation> typeFormations;
+    private Set<TypeFormation> typeFormationsIds;
 
 
     /**
@@ -45,7 +44,7 @@ public class ApprenantResponseDTO {
         this.numPasseport = apprenant.getNumPasseport();
         this.statutNumPasseport = apprenant.getStatutNumPasseport();
         this.commentaireApprenant = apprenant.getCommentaireApprenant();
-        this.typeFormations = apprenant.getTypesFormationSuivies();
+        this.typeFormationsIds = apprenant.getTypesFormationSuivies();
     }
 
 

@@ -2,9 +2,9 @@ package fr.mediaskol.projet.bll;
 
 import fr.mediaskol.projet.bo.adresse.Adresse;
 import fr.mediaskol.projet.bo.formateur.Formateur;
+import fr.mediaskol.projet.bo.formation.Formation;
 import fr.mediaskol.projet.bo.formation.TypeFormation;
 import fr.mediaskol.projet.dal.adresse.AdresseRepository;
-import fr.mediaskol.projet.dal.apprenant.ApprenantRepository;
 import fr.mediaskol.projet.dal.formateur.FormateurRepository;
 import fr.mediaskol.projet.dal.formation.FormationRepository;
 import fr.mediaskol.projet.dal.formation.TypeFormationRepository;
@@ -12,16 +12,12 @@ import fr.mediaskol.projet.dto.FormateurInputDTO;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import org.hibernate.annotations.SecondaryRow;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
+
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -35,6 +31,7 @@ public class FormateurServiceImpl implements  FormateurService {
     private final FormateurRepository formateurRepository;
     private final AdresseRepository adresseRepository;
     private final TypeFormationRepository typeFormationRepository;
+    private final FormationRepository formationRepository;
 
     private final AdresseService adresseService;
 
@@ -44,7 +41,22 @@ public class FormateurServiceImpl implements  FormateurService {
      */
     @Override
     public List<Formateur> chargerTousFormateurs() {
-        return formateurRepository.findAll();
+
+        List<Formateur> list = formateurRepository.findAll();
+        list.forEach(formateur -> {
+            formateur.getFormationsDispensees().forEach(f -> {
+                if (f.getTypeFormation() != null) {
+                    f.getTypeFormation().getLibelleTypeFormation(); // force init
+                }
+            });
+            formateur.getTypesFormationDispensees().size(); // force init
+            if (formateur.getAdresse() != null) {
+                formateur.getAdresse().getIdAdresse();
+            }
+        });
+        return list;
+
+        //return formateurRepository.findAll();
     }
 
     /**
@@ -74,9 +86,12 @@ public class FormateurServiceImpl implements  FormateurService {
      * @param formateur
      * @param adresse
      * @param typesFormationDispensees
+     * @param formationDispensees
      */
+
     @Override
-    public void ajouterFormateur(Formateur formateur, Adresse adresse, Set<TypeFormation> typesFormationDispensees) {
+    @Transactional
+    public void ajouterFormateur(Formateur formateur, Adresse adresse, Set<TypeFormation> typesFormationDispensees, List<Formation> formationDispensees) {
 
         if(formateur == null){
             throw new RuntimeException("Le formateur n'est pas renseigné.");
@@ -111,6 +126,25 @@ public class FormateurServiceImpl implements  FormateurService {
             formateur.setTypesFormationDispensees(Collections.emptySet());
         }
 
+
+        if (formationDispensees != null && !formationDispensees.isEmpty()) {
+            List<Formation> formationsDB = formationDispensees.stream()
+                    .map(tf -> {
+                        Long id = tf.getIdFormation();
+                        if (id == null) {
+                            throw new RuntimeException("Une formation transmise n'a pas d'identifiant.");
+                        }
+                        return formationRepository.findById(id)
+                                .orElseThrow(() -> new RuntimeException("Formation inexistante : " + id));
+                    })
+                    .collect(Collectors.toList());
+
+            formateur.setFormationsDispensees(formationsDB);
+        } else {
+            formateur.setFormationsDispensees(Collections.emptyList());
+        }
+
+
         try {
             formateurRepository.save(formateur);
         } catch (RuntimeException e) {
@@ -130,7 +164,7 @@ public class FormateurServiceImpl implements  FormateurService {
 
         // Vérifier si le formateur existe dans la base
         Formateur formateur = formateurRepository.findById(dto.getIdFormateur())
-                .orElseThrow(() -> new RuntimeException("Formateur introuvable (id= "+ dto.getIdFormateur() + ")"));
+                .orElseThrow(() -> new EntityNotFoundException("Formateur introuvable (id= "+ dto.getIdFormateur() + ")"));
 
         // Valider les champs
         validerChaineNonNulle(dto.getNom(), "Le nom est obligatoire.");
@@ -156,6 +190,18 @@ public class FormateurServiceImpl implements  FormateurService {
                     .collect(Collectors.toSet());
 
             formateur.setTypesFormationDispensees(typesFormation);
+        }
+
+        // 5. Conversion des IDs des formations en objets réels
+        if (dto.getFormationsIds() != null) {
+            List<Formation> formationsDB = dto.getFormationsIds().stream()
+                    .map(id -> formationRepository.findById(id)
+                            .orElseThrow(() -> new EntityNotFoundException("Formation introuvable (id = " + id + ")")))
+                    .collect(Collectors.toList());
+
+            formateur.setFormationsDispensees(formationsDB);
+        } else {
+            formateur.setFormationsDispensees(Collections.emptyList());
         }
 
         return formateurRepository.save(formateur);

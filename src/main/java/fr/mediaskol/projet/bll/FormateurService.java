@@ -2,6 +2,7 @@ package fr.mediaskol.projet.bll;
 
 import fr.mediaskol.projet.bo.adresse.Adresse;
 import fr.mediaskol.projet.bo.formateur.Formateur;
+import fr.mediaskol.projet.bo.formation.Formation;
 import fr.mediaskol.projet.bo.formation.TypeFormation;
 import fr.mediaskol.projet.dto.FormateurInputDTO;
 
@@ -29,7 +30,7 @@ public interface FormateurService {
      * @param adresse
      * @param typesFormationDispensees
      */
-    void ajouterFormateur(Formateur formateur, Adresse adresse, Set<TypeFormation> typesFormationDispensees);
+    void ajouterFormateur(Formateur formateur, Adresse adresse, Set<TypeFormation> typesFormationDispensees, List<Formation> formationsDispensees);
 
     /**
      * Fonctionnalité qui va modifier un formateur

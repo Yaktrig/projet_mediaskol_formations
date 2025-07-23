@@ -119,7 +119,7 @@ public class Formateur extends Personne {
             joinColumns = {@JoinColumn(name = "FORMATEUR_ID")},
             inverseJoinColumns = {@JoinColumn(name = "FORMATION_ID")})
     @ToString.Exclude
-    private List<Formation> formationsDispensees;
+    private List<Formation> formationsDispensees; // Todo voir si possible de faire un set en faisant la diff avec le type de formation
 
     /**
      * Liste des types de formation que le formateur est habilité à dispenser.

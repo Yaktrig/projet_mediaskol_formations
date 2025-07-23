@@ -1,8 +1,6 @@
 package fr.mediaskol.projet.dto;
 
-import fr.mediaskol.projet.bo.adresse.Adresse;
 import fr.mediaskol.projet.bo.apprenant.StatutNumPasseport;
-import fr.mediaskol.projet.bo.formation.TypeFormation;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

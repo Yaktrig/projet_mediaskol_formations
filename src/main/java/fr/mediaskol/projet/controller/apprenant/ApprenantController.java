@@ -124,9 +124,6 @@ public class ApprenantController {
             }
     }
 
-    /**
-     * TODO Désactiver un apprenant
-     */
 
     /**
      * Supprimer un apprenant
