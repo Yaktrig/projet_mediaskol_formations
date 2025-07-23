@@ -1,4 +1,4 @@
-package fr.mediaskol.projet.dto;
+package fr.mediaskol.projet.dto.formation;
 
 import fr.mediaskol.projet.bo.formation.TypeFormation;
 import lombok.AllArgsConstructor;

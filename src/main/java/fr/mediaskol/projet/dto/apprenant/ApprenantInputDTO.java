@@ -1,4 +1,4 @@
-package fr.mediaskol.projet.dto;
+package fr.mediaskol.projet.dto.apprenant;
 
 import fr.mediaskol.projet.bo.apprenant.StatutNumPasseport;
 import jakarta.validation.constraints.Email;

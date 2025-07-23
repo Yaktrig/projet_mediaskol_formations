@@ -1,12 +1,11 @@
 package fr.mediaskol.projet.controller.formation;
 
-import fr.mediaskol.projet.bll.FormationService;
+import fr.mediaskol.projet.bll.formation.FormationService;
 import fr.mediaskol.projet.bo.formation.Formation;
 import fr.mediaskol.projet.bo.formation.TypeFormation;
 import fr.mediaskol.projet.dal.formation.TypeFormationRepository;
-import fr.mediaskol.projet.dto.FormationInputDTO;
-import fr.mediaskol.projet.dto.FormationResponseDTO;
-import jakarta.persistence.EntityNotFoundException;
+import fr.mediaskol.projet.dto.formation.FormationInputDTO;
+import fr.mediaskol.projet.dto.formation.FormationResponseDTO;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

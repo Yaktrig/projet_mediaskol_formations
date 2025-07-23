@@ -1,8 +1,9 @@
-package fr.mediaskol.projet.dto;
+package fr.mediaskol.projet.dto.formateur;
 
 import fr.mediaskol.projet.bo.formateur.Formateur;
 import fr.mediaskol.projet.bo.formation.Formation;
 import fr.mediaskol.projet.bo.formation.TypeFormation;
+import fr.mediaskol.projet.dto.adresse.AdresseResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

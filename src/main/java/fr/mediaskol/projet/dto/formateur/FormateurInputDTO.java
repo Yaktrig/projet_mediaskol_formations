@@ -1,4 +1,4 @@
-package fr.mediaskol.projet.dto;
+package fr.mediaskol.projet.dto.formateur;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

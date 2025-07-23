@@ -1,4 +1,4 @@
-package fr.mediaskol.projet.dto;
+package fr.mediaskol.projet.dto.adresse;
 
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;

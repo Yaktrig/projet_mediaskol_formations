@@ -1,7 +1,7 @@
 package fr.mediaskol.projet.controller;
 
-import fr.mediaskol.projet.bll.AdresseService;
-import fr.mediaskol.projet.bll.ApprenantService;
+import fr.mediaskol.projet.bll.adresse.AdresseService;
+import fr.mediaskol.projet.bll.apprenant.ApprenantService;
 import fr.mediaskol.projet.bo.adresse.Adresse;
 import fr.mediaskol.projet.bo.apprenant.Apprenant;
 import fr.mediaskol.projet.bo.apprenant.StatutNumPasseport;

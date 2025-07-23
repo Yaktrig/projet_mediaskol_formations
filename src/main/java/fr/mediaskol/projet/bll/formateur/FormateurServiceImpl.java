@@ -1,5 +1,6 @@
-package fr.mediaskol.projet.bll;
+package fr.mediaskol.projet.bll.formateur;
 
+import fr.mediaskol.projet.bll.adresse.AdresseService;
 import fr.mediaskol.projet.bo.adresse.Adresse;
 import fr.mediaskol.projet.bo.formateur.Formateur;
 import fr.mediaskol.projet.bo.formation.Formation;
@@ -8,7 +9,7 @@ import fr.mediaskol.projet.dal.adresse.AdresseRepository;
 import fr.mediaskol.projet.dal.formateur.FormateurRepository;
 import fr.mediaskol.projet.dal.formation.FormationRepository;
 import fr.mediaskol.projet.dal.formation.TypeFormationRepository;
-import fr.mediaskol.projet.dto.FormateurInputDTO;
+import fr.mediaskol.projet.dto.formateur.FormateurInputDTO;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;

@@ -1,10 +1,10 @@
-package fr.mediaskol.projet.bll;
+package fr.mediaskol.projet.bll.formateur;
 
 import fr.mediaskol.projet.bo.adresse.Adresse;
 import fr.mediaskol.projet.bo.formateur.Formateur;
 import fr.mediaskol.projet.bo.formation.Formation;
 import fr.mediaskol.projet.bo.formation.TypeFormation;
-import fr.mediaskol.projet.dto.FormateurInputDTO;
+import fr.mediaskol.projet.dto.formateur.FormateurInputDTO;
 
 import java.util.List;
 import java.util.Set;

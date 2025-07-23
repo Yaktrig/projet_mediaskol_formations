@@ -1,8 +1,6 @@
-package fr.mediaskol.projet.dto;
+package fr.mediaskol.projet.dto.adresse;
 
 import fr.mediaskol.projet.bo.departement.Departement;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

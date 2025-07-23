@@ -1,9 +1,9 @@
-package fr.mediaskol.projet.dto;
+package fr.mediaskol.projet.dto.apprenant;
 
-import fr.mediaskol.projet.bo.adresse.Adresse;
 import fr.mediaskol.projet.bo.apprenant.Apprenant;
 import fr.mediaskol.projet.bo.apprenant.StatutNumPasseport;
 import fr.mediaskol.projet.bo.formation.TypeFormation;
+import fr.mediaskol.projet.dto.adresse.AdresseResponseDTO;
 import lombok.*;
 
 import java.time.LocalDate;

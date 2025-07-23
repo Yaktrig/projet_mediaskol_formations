@@ -1,9 +1,10 @@
 package fr.mediaskol.projet.bll;
 
+import fr.mediaskol.projet.bll.adresse.AdresseService;
+import fr.mediaskol.projet.bll.apprenant.ApprenantService;
 import fr.mediaskol.projet.bo.adresse.Adresse;
 import fr.mediaskol.projet.bo.apprenant.Apprenant;
 import fr.mediaskol.projet.bo.apprenant.StatutNumPasseport;
-import fr.mediaskol.projet.bo.departement.Departement;
 import fr.mediaskol.projet.dal.adresse.AdresseRepository;
 import fr.mediaskol.projet.dal.apprenant.ApprenantRepository;
 import fr.mediaskol.projet.dal.departement.DepartementRepository;

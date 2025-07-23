@@ -1,4 +1,4 @@
-package fr.mediaskol.projet.bll;
+package fr.mediaskol.projet.bll.adresse;
 
 import fr.mediaskol.projet.bo.adresse.Adresse;
 import fr.mediaskol.projet.bo.departement.Departement;

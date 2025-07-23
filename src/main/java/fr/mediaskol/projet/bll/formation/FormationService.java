@@ -1,11 +1,9 @@
-package fr.mediaskol.projet.bll;
+package fr.mediaskol.projet.bll.formation;
 
 import fr.mediaskol.projet.bo.formation.Formation;
-import fr.mediaskol.projet.dto.FormationInputDTO;
-import jakarta.validation.Valid;
+import fr.mediaskol.projet.dto.formation.FormationInputDTO;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface FormationService {
 

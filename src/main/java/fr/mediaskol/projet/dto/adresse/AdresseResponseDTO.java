@@ -1,4 +1,4 @@
-package fr.mediaskol.projet.dto;
+package fr.mediaskol.projet.dto.adresse;
 
 import fr.mediaskol.projet.bo.adresse.Adresse;
 import lombok.AllArgsConstructor;

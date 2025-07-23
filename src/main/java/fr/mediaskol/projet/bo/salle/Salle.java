@@ -51,8 +51,6 @@ public class Salle {
      * </p>
      */
     @Column(name = "NOM_SALLE", nullable = false, length = 255)
-    @Size(min=5, max = 255, message = "{salle.nom.size}")
-    @NotBlank(message = "{salle.nom.notblank}")
     @NotNull(message = "{salle.nom.notnull}")
     private String nomSalle;
 
@@ -63,7 +61,6 @@ public class Salle {
      * </p>
      */
     @Column(name = "NOM_CONTACT", length = 200)
-    @Size(max = 200, message = "{salle.nomContact.size}")
     private String nomContact;
 
     /**
@@ -73,7 +70,6 @@ public class Salle {
      * </p>
      */
     @Column(name = "PORTABLE_CONTACT", length = 10)
-    @Size(max = 10, message = "{salle.portableContact.size}")
     private String portableContact;
 
     /**
@@ -83,7 +79,6 @@ public class Salle {
      * </p>
      */
     @Column(name = "MAIL_CONTACT", length = 255)
-    @Size(max = 255, message = "{salle.mailContact.size}")
     private String mailContact;
 
     /**
@@ -94,7 +89,7 @@ public class Salle {
      * </ul>
      */
     @Column(name = "CLE_SALLE", nullable = false)
-    private boolean cleSalle;
+    private Boolean cleSalle;
 
     /**
      * Numéro du digicode s'il y en a un pour accéder à la salle.
@@ -103,7 +98,6 @@ public class Salle {
      * </p>
      */
     @Column(name = "DIGICODE_SALLE",  length = 10)
-    @Size(max = 10, message = "{salle.digiCodeSalle.size}")
     private String digiCodeSalle;
 
     /**
@@ -113,7 +107,6 @@ public class Salle {
      * </p>
      */
     @Column(name = "COMMENTAIRE_SALLE",  length = 2000)
-    @Size(max = 2000, message = "{salle.commentaireSalle.size}")
     private String commentaireSalle;
 
 

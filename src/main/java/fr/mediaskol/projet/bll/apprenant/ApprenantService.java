@@ -1,13 +1,11 @@
-package fr.mediaskol.projet.bll;
+package fr.mediaskol.projet.bll.apprenant;
 
 import fr.mediaskol.projet.bo.adresse.Adresse;
 import fr.mediaskol.projet.bo.apprenant.Apprenant;
 import fr.mediaskol.projet.bo.formation.TypeFormation;
-import fr.mediaskol.projet.dto.ApprenantInputDTO;
-import jakarta.transaction.Transactional;
+import fr.mediaskol.projet.dto.apprenant.ApprenantInputDTO;
 
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 

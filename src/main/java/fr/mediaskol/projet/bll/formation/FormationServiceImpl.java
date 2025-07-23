@@ -1,10 +1,10 @@
-package fr.mediaskol.projet.bll;
+package fr.mediaskol.projet.bll.formation;
 
 import fr.mediaskol.projet.bo.formation.Formation;
 import fr.mediaskol.projet.bo.formation.TypeFormation;
 import fr.mediaskol.projet.dal.formation.FormationRepository;
 import fr.mediaskol.projet.dal.formation.TypeFormationRepository;
-import fr.mediaskol.projet.dto.FormationInputDTO;
+import fr.mediaskol.projet.dto.formation.FormationInputDTO;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;

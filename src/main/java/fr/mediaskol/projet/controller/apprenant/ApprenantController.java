@@ -1,19 +1,15 @@
 package fr.mediaskol.projet.controller.apprenant;
 
-import fr.mediaskol.projet.bll.ApprenantService;
-import fr.mediaskol.projet.bo.adresse.Adresse;
+import fr.mediaskol.projet.bll.apprenant.ApprenantService;
 import fr.mediaskol.projet.bo.apprenant.Apprenant;
-import fr.mediaskol.projet.bo.formation.TypeFormation;
-import fr.mediaskol.projet.dto.ApprenantResponseDTO;
+import fr.mediaskol.projet.dto.apprenant.ApprenantResponseDTO;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Contrôleur qui permet :

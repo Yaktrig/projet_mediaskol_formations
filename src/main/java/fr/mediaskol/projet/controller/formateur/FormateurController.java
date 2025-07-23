@@ -1,9 +1,9 @@
 package fr.mediaskol.projet.controller.formateur;
 
 
-import fr.mediaskol.projet.bll.FormateurService;
+import fr.mediaskol.projet.bll.formateur.FormateurService;
 import fr.mediaskol.projet.bo.formateur.Formateur;
-import fr.mediaskol.projet.dto.FormateurResponseDTO;
+import fr.mediaskol.projet.dto.formateur.FormateurResponseDTO;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
