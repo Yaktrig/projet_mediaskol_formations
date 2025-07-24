@@ -31,6 +31,7 @@ public class FormationServiceImpl implements FormationService {
      */
     @Override
     public List<Formation> chargerToutesFormations() {
+
         return formationRepository.findAll();
     }
 

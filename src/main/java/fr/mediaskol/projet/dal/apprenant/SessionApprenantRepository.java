@@ -8,6 +8,5 @@ import java.util.List;
 
 public interface SessionApprenantRepository extends JpaRepository<SessionApprenant, Long> {
 
-    // Retourne la liste des apprenants
-    List<SessionApprenant> findByApprenant(Apprenant apprenant);
+
 }

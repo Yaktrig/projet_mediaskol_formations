@@ -52,7 +52,6 @@ public class SessionApprenant {
      * </p>
      */
     @Column(name = "COMMENTAIRE_SESSION_APPRENANT", length = 2000)
-    @Size(max = 2000, message = "{sessionApprenant.commentaireSessionApprenant.size}")
     private String commentaireSessionApprenant;
 
     /**
@@ -63,9 +62,7 @@ public class SessionApprenant {
      * </p>
      */
     @Column(name = "MODE_RECEPTION_INSCRIPTION", length = 20, nullable = false)
-    @Size(min=3, max = 20, message = "{sessionApprenant.modeReceptionInscription.size}")
     @NotNull(message = "{sessionApprenant.modeReceptionInscription.notnull}")
-    @NotBlank(message = "{sessionApprenant.modeReceptionInscription.notblank}")
     private String modeReceptionInscription;
 
 

@@ -115,7 +115,6 @@ public class SessionFormationController {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Impossible de sauvegarder une session " +
                     "de formation");
         }
-
         try {
             sessionFormationService.ajouterSessionFormation(sessionFormation);
             return ResponseEntity.ok(sessionFormation);
@@ -158,7 +157,7 @@ public class SessionFormationController {
         try {
             final int idSessionFormation = Integer.parseInt(idInPath);
             sessionFormationService.supprimerSessionFormation(idSessionFormation);
-            return ResponseEntity.ok("La session de formation " + idSessionFormation + " est supprimée de la base de données.");
+            return ResponseEntity.ok("La session formation " + idSessionFormation + " est supprimé de la base de données.");
         } catch(NumberFormatException e){
             // Statut 406 : No acceptable
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Votre identifiant n'est pas un entier.");
