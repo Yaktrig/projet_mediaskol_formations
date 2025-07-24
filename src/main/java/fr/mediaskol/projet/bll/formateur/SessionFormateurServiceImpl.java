@@ -160,6 +160,7 @@ public class SessionFormateurServiceImpl implements SessionFormateurService {
      */
     public void validerCommentaire(SessionFormateur sessionFormateur) {
 
+
         String commentaire = sessionFormateur.getCommentaireSessionFormateur();
 
         if (commentaire.length() > 2000) {

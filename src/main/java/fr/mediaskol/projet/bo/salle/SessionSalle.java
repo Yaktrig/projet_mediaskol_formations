@@ -52,7 +52,6 @@ public class SessionSalle {
      * </p>
      */
     @Column(name = "COMMENTAIRE_SESSION_SALLE", length = 2000)
-    @Size(max = 2000, message = "{sessionSalle.commentaire.size}")
     private String commentaireSessionSalle;
 
 

@@ -52,6 +52,7 @@ public class FormateurResponseDTO {
         this.statutFormateur = formateur.getStatutFormateur();
         this.zoneIntervention = formateur.getZoneIntervention();
         this.commentaireFormateur = formateur.getCommentaireFormateur();
+
         if(formateur.getAdresse() !=null){
             this.adresse = new AdresseResponseDTO(formateur.getAdresse());
         } else {
