@@ -80,7 +80,9 @@ public class SessionFormationServiceImpl implements SessionFormationService {
             throw new RuntimeException("La session de formation n'est pas renseignée.");
         }
 
-        validerUniciteNoYoda(sessionFormation);
+        if(sessionFormation.getNoYoda() != null){
+            validerUniciteNoYoda(sessionFormation);
+        }
         validerLibelle(sessionFormation.getLibelleSessionFormation());
         validerChaineNonNulle(sessionFormation.getStatutYoda(), "Le statut Yoda est obligatoire.");
         validerDate(sessionFormation);
@@ -92,10 +94,11 @@ public class SessionFormationServiceImpl implements SessionFormationService {
         sessionFormation.setFormation(sessionFormation.getFormation());
 
         // valider si le département existe
-        if (sessionFormation.getDepartement() != null) {
-            Departement departementDB = departementRepository.save(sessionFormation.getDepartement());
-            sessionFormation.setDepartement(departementDB);
-        }
+//        if (sessionFormation.getDepartement() != null) {
+//            Departement departementDB = departementRepository.save(sessionFormation.getDepartement());
+//            sessionFormation.setDepartement(departementDB);
+//        }
+        sessionFormation.setDepartement(sessionFormation.getDepartement());
 
         // valider si la fin de session existe
         if (sessionFormation.getFinSessionFormation() != null) {
@@ -113,7 +116,7 @@ public class SessionFormationServiceImpl implements SessionFormationService {
         try {
             return sessionFormationRepository.save(sessionFormation);
         } catch (RuntimeException e) {
-            throw new RuntimeException("Impossible de sauvegarder - " + sessionFormation.toString());
+            throw new RuntimeException("Impossible de sauvegarder - " + sessionFormation.getLibelleSessionFormation());
         }
     }
 
@@ -145,10 +148,8 @@ public class SessionFormationServiceImpl implements SessionFormationService {
         sessionFormation.setFormation(sessionFormation.getFormation());
 
         // Associer le département
-        if (dto.getDepartementId() != null) {
-            Departement departement = departementRepository.findById(dto.getDepartementId())
-                    .orElseThrow(() -> new EntityNotFoundException("Departement introuvable (id = " + dto.getDepartementId() + ")"));
-            sessionFormation.setDepartement(departement);
+        if (dto.getDepartement() != null) {
+            sessionFormation.setDepartement(sessionFormation.getDepartement());
         } else {
             sessionFormation.setDepartement(null); // ou garder l'existante
         }

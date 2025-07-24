@@ -32,25 +32,7 @@ public class SessionFormationController {
     private SessionFormationService sessionFormationService;
 
 
-    /**
-     * Retourne une session de formation par rapport à son identifiant
-     */
-    @GetMapping("/{id}")
-    public ResponseEntity<?> rechercherSessionFormationParId(@PathVariable("id") String idInPath) {
 
-        try {
-            long id = Long.parseLong(idInPath);
-            final SessionFormation sessionFormation = sessionFormationService.chargerSessionFormationParId(id);
-            return ResponseEntity.ok(sessionFormation);
-        } catch (NumberFormatException e) {
-            // Statut 406 : No Acceptable
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Votre identifiant n'est pas valide");
-        } catch (RuntimeException e) {
-            // Statut 404 : Not found
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
-
-    }
 
     /**
      * Retourne la liste des sessions de formation en Json dans l'url "mediaskolFormation/sessionsFormations en méthode GET
@@ -72,6 +54,28 @@ public class SessionFormationController {
                 .toList();
 
         return ResponseEntity.ok(sessionFormationRespDTOS);
+    }
+
+    /**
+     * Retourne une session de formation par rapport à son identifiant
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<?> rechercherSessionFormationParId(@PathVariable("id") String idInPath) {
+
+        try {
+            long id = Long.parseLong(idInPath);
+            final SessionFormation sessionFormation = sessionFormationService.chargerSessionFormationParId(id);
+
+            SessionFormationRespDTO sessionFormationDto = new SessionFormationRespDTO(sessionFormation);
+            return ResponseEntity.ok(sessionFormationDto);
+        } catch (NumberFormatException e) {
+            // Statut 406 : No Acceptable
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Votre identifiant n'est pas valide");
+        } catch (RuntimeException e) {
+            // Statut 404 : Not found
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+
     }
 
     /**
@@ -111,6 +115,7 @@ public class SessionFormationController {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Impossible de sauvegarder une session " +
                     "de formation");
         }
+
         try {
             sessionFormationService.ajouterSessionFormation(sessionFormation);
             return ResponseEntity.ok(sessionFormation);
@@ -153,7 +158,7 @@ public class SessionFormationController {
         try {
             final int idSessionFormation = Integer.parseInt(idInPath);
             sessionFormationService.supprimerSessionFormation(idSessionFormation);
-            return ResponseEntity.ok("SessionFormation " + idSessionFormation + " est supprimé de la base de données.");
+            return ResponseEntity.ok("La session de formation " + idSessionFormation + " est supprimée de la base de données.");
         } catch(NumberFormatException e){
             // Statut 406 : No acceptable
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Votre identifiant n'est pas un entier.");

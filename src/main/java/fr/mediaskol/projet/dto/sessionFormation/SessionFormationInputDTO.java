@@ -33,11 +33,14 @@ public class SessionFormationInputDTO {
     private String statutYoda;
 
     private LocalDate dateDebutSession;
+
     private Integer nbHeureSession;
+
     private StatutSessionFormation statutSessionFormation;
+
     private FormationResponseDTO formation;
 
-    private Long departementId;
+    private DepartementDTO departement;
 
     // todo créer leurs dto Response et input
    // private FinSessionFormation finSessionFormation;

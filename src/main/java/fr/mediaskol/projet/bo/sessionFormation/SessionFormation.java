@@ -56,7 +56,7 @@ public class SessionFormation {
      * Il est limité à 30 caractères.
      * </p>
      */
-    @Column(name = "NO_AF_YODA", unique = true, length = 30)
+    @Column(name = "NO_AF_YODA", unique = true, length = 30, nullable = true)
     private String noYoda;
 
     /**
