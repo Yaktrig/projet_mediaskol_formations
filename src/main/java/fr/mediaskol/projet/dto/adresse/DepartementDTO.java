@@ -12,12 +12,13 @@ import lombok.NoArgsConstructor;
 @Builder
 public class DepartementDTO {
 
-
+    private long idDepartement;
     private String numDepartement;
     private String couleurDepartement;
 
     public DepartementDTO(Departement d) {
 
+        this.idDepartement = d.getIdDepartement();
         this.numDepartement = d.getNumDepartement();
         this.couleurDepartement = d.getCouleurDepartement();
     }

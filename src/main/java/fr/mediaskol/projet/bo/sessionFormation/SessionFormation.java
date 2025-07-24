@@ -57,7 +57,6 @@ public class SessionFormation {
      * </p>
      */
     @Column(name = "NO_AF_YODA", unique = true, length = 30)
-    @Size(max = 30, message = "{formation.numAfYoda.size}")
     private String noYoda;
 
     /**
@@ -70,7 +69,6 @@ public class SessionFormation {
      * </p>
      */
     @Column(name = "LIBELLE_SESSION_FORMATION", length = 50)
-    @Size(max = 50, message="{sessionFormation.libelle.size}")
     private String libelleSessionFormation;
 
 
@@ -88,9 +86,7 @@ public class SessionFormation {
      */
     @Builder.Default
     @Column(name = "STATUT_YODA", nullable = false, length = 5)
-    @Size(min=1, max = 5, message = "{sessionFormation.statutYoda.size}")
     @NotNull(message = "{sessionFormation.statutYoda.notnull}")
-    @NotBlank(message = "{sessionFormation.statutYoda.notblank}")
     private String statutYoda = "DO";
 
     /**

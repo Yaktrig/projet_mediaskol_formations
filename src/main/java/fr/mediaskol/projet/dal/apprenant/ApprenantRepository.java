@@ -1,7 +1,6 @@
 package fr.mediaskol.projet.dal.apprenant;
 
 import fr.mediaskol.projet.bo.apprenant.Apprenant;
-import jakarta.validation.constraints.Size;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -21,7 +20,7 @@ public interface ApprenantRepository extends JpaRepository<Apprenant, Long>, Jpa
      * @param numPasseport
      * @return
      */
-    Optional<Apprenant> findByNumPasseport(@Size(max = 120, message = "{apprenant.numPasseport.size}") String numPasseport);
+    Optional<Apprenant> findByNumPasseport(String numPasseport);
 
     /**
      * Requête qui permet de faire un filtrage libre sur les apprenants
