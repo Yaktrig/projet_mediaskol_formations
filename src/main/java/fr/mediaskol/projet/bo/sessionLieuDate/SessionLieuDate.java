@@ -67,7 +67,6 @@ public class SessionLieuDate {
      * </p>
      */
     @Column(name = "LIEU_SESSION", length = 100)
-    @Size(max = 100, message = "{sessionLieuDate.lieuSession.size}")
     private String lieuSession;
 
     /**
