@@ -26,9 +26,9 @@ import java.util.List;
 @RequestMapping("/mediaskolFormation/sessionsApprenants")
 public class SessionApprenantController {
 
-    /**
-     * Injection de dépendances pour aller chercher le service qui correspond aux sessions d'apprenant
-     */
+        /**
+         * Injection de dépendances pour aller chercher le service qui correspond aux sessions d'apprenant
+         */
     private SessionApprenantService sessionApprenantService;
 
 

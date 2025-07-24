@@ -24,7 +24,6 @@ public class SessionApprenantServiceImpl implements SessionApprenantService {
      * Injection des repository en couplage faible.
      */
     private final SessionApprenantRepository sessionApprenantRepository;
-    private final ApprenantRepository apprenantRepository;
 
 
     /***
@@ -72,7 +71,9 @@ public class SessionApprenantServiceImpl implements SessionApprenantService {
             throw new RuntimeException("La session de l'apprenant n'est pas renseignée.");
         }
 
-        validerCommentaire(sessionApprenant);
+        if (sessionApprenant.getCommentaireSessionApprenant() != null) {
+            validerCommentaire(sessionApprenant);
+        }
         validerModeReception(sessionApprenant);
         validerEnumNonNulle(sessionApprenant.getStatutSessionApprenant(), "Le statut ne peut pas être nul.");
         validerApprenant(sessionApprenant.getApprenant().getIdPersonne());
@@ -87,7 +88,6 @@ public class SessionApprenantServiceImpl implements SessionApprenantService {
     }
 
 
-
     /**
      * Fonctionnalité qui permet de modifier une sessionApprenant
      *
@@ -100,7 +100,6 @@ public class SessionApprenantServiceImpl implements SessionApprenantService {
         // 1. Vérifier que la session apprenant à modifier existe
         SessionApprenant sessionApprenant = sessionApprenantRepository.findById(dto.getIdSessionApprenant())
                 .orElseThrow(() -> new EntityNotFoundException("Session de l'apprenant introuvable"));
-
 
 
         // 2. Appliquer les modifications aux champs autorisés
@@ -167,7 +166,7 @@ public class SessionApprenantServiceImpl implements SessionApprenantService {
 
         String commentaire = sessionApprenant.getCommentaireSessionApprenant();
 
-        if(commentaire.length() > 2000) {
+        if (commentaire.length() > 2000) {
             throw new RuntimeException("Le commentaire ne doit pas dépasser 2000 caractères.");
         }
 
@@ -176,13 +175,13 @@ public class SessionApprenantServiceImpl implements SessionApprenantService {
     /**
      * Valider mode de réception, not null, longueur entre 3 et 20
      */
-    public void validerModeReception(SessionApprenant sessionApprenant){
+    public void validerModeReception(SessionApprenant sessionApprenant) {
 
         String modeReception = sessionApprenant.getModeReceptionInscription();
 
         validerChaineNonNulle(modeReception, "Le mode de réception est obligatoire.");
 
-        if(modeReception.length() <3 || modeReception.length() > 20) {
+        if (modeReception.length() < 3 || modeReception.length() > 20) {
             throw new RuntimeException("Le nombre de caractères doit être compris entre 3 et 20.");
         }
     }

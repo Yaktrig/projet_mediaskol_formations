@@ -1,9 +1,7 @@
 package fr.mediaskol.projet.bll.apprenant;
 
 import fr.mediaskol.projet.bo.apprenant.SessionApprenant;
-import fr.mediaskol.projet.bo.formation.Formation;
 import fr.mediaskol.projet.dto.apprenant.SessionApprenantInputDTO;
-import org.hibernate.Session;
 
 
 import java.util.List;

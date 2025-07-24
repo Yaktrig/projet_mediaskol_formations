@@ -1,13 +1,9 @@
 package fr.mediaskol.projet.bll.sessionFormation;
 
-import fr.mediaskol.projet.bo.adresse.Adresse;
-import fr.mediaskol.projet.bo.departement.Departement;
-import fr.mediaskol.projet.bo.formation.Formation;
-import fr.mediaskol.projet.bo.formation.TypeFormation;
+
 import fr.mediaskol.projet.bo.sessionFormation.FinSessionFormation;
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
 import fr.mediaskol.projet.bo.sessionFormationDistanciel.SessionFormationDistanciel;
-import fr.mediaskol.projet.dal.departement.DepartementRepository;
 import fr.mediaskol.projet.dal.sessionFormation.FinSessionFormationRepository;
 import fr.mediaskol.projet.dal.sessionFormation.SessionFormationRepository;
 import fr.mediaskol.projet.dal.sessionFormationDistanciel.SessionFormationDistancielRepository;
@@ -17,13 +13,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
+
 
 @AllArgsConstructor
 @Service
@@ -33,7 +27,6 @@ public class SessionFormationServiceImpl implements SessionFormationService {
      * Injection des repository en couplage faible.
      */
     private final SessionFormationRepository sessionFormationRepository;
-    private final DepartementRepository departementRepository;
     private final FinSessionFormationRepository finSessionFormationRepository;
     private final SessionFormationDistancielRepository sessionFormationDistancielRepository;
 
@@ -93,11 +86,6 @@ public class SessionFormationServiceImpl implements SessionFormationService {
         // Associer la formation
         sessionFormation.setFormation(sessionFormation.getFormation());
 
-        // valider si le département existe
-//        if (sessionFormation.getDepartement() != null) {
-//            Departement departementDB = departementRepository.save(sessionFormation.getDepartement());
-//            sessionFormation.setDepartement(departementDB);
-//        }
         sessionFormation.setDepartement(sessionFormation.getDepartement());
 
         // valider si la fin de session existe

@@ -59,10 +59,6 @@ public class FormateurResponseDTO {
         }
 
 
-//        if(formateur.getTypesFormationDispensees() !=null){
-//            this.typeFormationIds= formateur.getTypesFormationDispensees();
-//        }
-
         if (formateur.getTypesFormationDispensees() != null) {
             this.typesFormations = formateur.getTypesFormationDispensees().stream()
                     .map(TypeFormationDTO::new)

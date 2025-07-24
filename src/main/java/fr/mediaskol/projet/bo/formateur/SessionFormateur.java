@@ -51,7 +51,6 @@ public class SessionFormateur {
      * </p>
      */
     @Column(name = "COMMENTAIRE_SESSION_FORMATEUR", length = 2000)
-    @Size(max = 2000, message = "{sessionFormateur.commentaireFormateur.size}")
     private String commentaireSessionFormateur;
 
 

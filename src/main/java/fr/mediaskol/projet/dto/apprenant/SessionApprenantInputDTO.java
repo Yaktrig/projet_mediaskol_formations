@@ -1,6 +1,5 @@
 package fr.mediaskol.projet.dto.apprenant;
 
-import fr.mediaskol.projet.bo.apprenant.SessionApprenant;
 import fr.mediaskol.projet.bo.apprenant.StatutSessionApprenant;
 import fr.mediaskol.projet.dto.sessionFormation.SessionFormationRespDTO;
 import jakarta.validation.constraints.NotBlank;
@@ -33,8 +32,5 @@ public class SessionApprenantInputDTO {
     private ApprenantResponseDTO apprenant;
 
     private SessionFormationRespDTO sessionFormation;
-
-
-
 
 }

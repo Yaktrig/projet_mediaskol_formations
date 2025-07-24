@@ -4,10 +4,13 @@ import fr.mediaskol.projet.bo.apprenant.Apprenant;
 import fr.mediaskol.projet.bo.apprenant.StatutNumPasseport;
 import fr.mediaskol.projet.bo.formation.TypeFormation;
 import fr.mediaskol.projet.dto.adresse.AdresseResponseDTO;
+import fr.mediaskol.projet.dto.formation.TypeFormationDTO;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,7 +29,7 @@ public class ApprenantResponseDTO {
     private String commentaireApprenant;
     private Boolean apprenantActif;
     private AdresseResponseDTO adresse;
-    private Set<TypeFormation> typeFormationsIds;
+    private Set<TypeFormationDTO> typesFormations;
 
 
     /**
@@ -50,7 +53,15 @@ public class ApprenantResponseDTO {
         this.numPasseport = apprenant.getNumPasseport();
         this.statutNumPasseport = apprenant.getStatutNumPasseport();
         this.commentaireApprenant = apprenant.getCommentaireApprenant();
-        this.typeFormationsIds = apprenant.getTypesFormationSuivies();
+
+
+        if (apprenant.getTypesFormationSuivies() != null) {
+            this.typesFormations = apprenant.getTypesFormationSuivies().stream()
+                    .map(TypeFormationDTO::new)
+                    .collect(Collectors.toSet());
+        } else {
+            this.typesFormations = Collections.emptySet();
+        }
     }
 
 
