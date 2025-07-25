@@ -3,3 +3,38 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+
+  /* Couleur du background du header et du footer */
+  --color-rose-pastel: rgb(253, 243, 246);
+
+  /* Couleur des titres (navbar, footer, formulaire, main) */
+  --color-title-purple: #6e1c6b;
+
+  /* Couleur des titres des colonnes d'un tableau */
+  --color-title-column: #ffffff;
+
+  /* Couleur des champs d'un tableau */
+  --color-value-tab: #000000;
+
+  /* Couleur du background des boutons et des entête de colonne du tableau */
+  --color-bg-button: #08909d ;
+
+  /* Couleur du background des boutons en survol et des affichages de confirmation */
+  --color-bg-button-hover: #f4bf4f;
+
+  /* Couleur des textes des boutons */
+  --color-text-button: #ffffff;
+
+  /* Couleurs des textes des boutons en survol et des affichages de confirmation */
+  --color-text-button-hover: #6e1c6b  ;
+
+  /* Couleur du background des formulaires 5% */
+  --color-bg-form: #cbb5ff ;
+
+  /* Couleur du texte des input des formulaires 70% */
+  --color-text-input: #DB366C;
+
+}
+
