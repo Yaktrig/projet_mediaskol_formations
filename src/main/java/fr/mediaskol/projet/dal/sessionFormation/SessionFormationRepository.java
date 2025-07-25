@@ -1,9 +1,14 @@
 package fr.mediaskol.projet.dal.sessionFormation;
 
 
+import fr.mediaskol.projet.bo.apprenant.Apprenant;
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 public interface SessionFormationRepository extends JpaRepository<SessionFormation, Long> {
@@ -16,4 +21,26 @@ public interface SessionFormationRepository extends JpaRepository<SessionFormati
      */
     Optional<SessionFormation> findByNoYoda(String noYoda);
 
+
+
+    /**
+     * Requête qui permet de faire un filtrage libre sur les sessions de formation
+     * parmi le numéro Yoda, le numéro du département, le libellé, la date de début de session, le statut de la session
+     */
+    @Query("SELECT sf FROM SessionFormation sf WHERE " +
+            "LOWER(sf.noYoda) LIKE LOWER(CONCAT('%', :termeRecherche, '%')) OR " +
+            "LOWER(sf.departement.numDepartement) LIKE LOWER(CONCAT('%', :termeRecherche, '%')) OR " +
+            "LOWER(sf.libelleSessionFormation) LIKE LOWER(CONCAT('%', :termeRecherche, '%')) OR " +
+            "LOWER(CAST(sf.dateDebutSession AS string)) LIKE LOWER(CONCAT('%', :termeRecherche, '%')) OR " +
+            "LOWER(sf.statutSessionFormation) LIKE LOWER(CONCAT('%', :termeRecherche, '%')) OR " +
+            "LOWER(sf.finSessionFormation) LIKE LOWER(CONCAT('%', :termeRecherche, '%')) ")
+    List<SessionFormation> findSessionFormationsBySearchText(@Param("termeRecherche") String termeRecherche);
+
+
+    /**
+     * Requête qui permet de retourner une date de début de session
+     * @param dateDebutSession
+     * @return
+     */
+    List<SessionFormation> findByDateDebutSession(LocalDate dateDebutSession);
 }

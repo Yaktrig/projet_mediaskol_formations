@@ -5,6 +5,7 @@ import {Header} from '../header/header';
 @Component({
   selector: 'app-home',
   imports: [
+
     Footer,
     Header
   ],

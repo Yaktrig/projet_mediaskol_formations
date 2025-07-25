@@ -1,0 +1,32 @@
+<app-header></app-header>
+<main>
+  <h2 class="text-[var(--color-title-purple)]">Liste des sessions de formation - Présentiel</h2>
+
+  <!-- Formulaire de recherche des sessions de formation -->
+  <div class="mb-4">
+    <input
+      type="text"
+      [(ngModel)]="searchTerm"
+      (input)="onSearch()"
+      placeholder="Recherche une session"
+      class="border px-2 py-1 rounded w-full"
+    />
+  </div>
+
+  <!-- Affichage des sessions de formation en présentiel  -->
+  <div class="m-4">
+
+    <ul>
+      @for (session of sessions; track session.id) {
+        <li> {{ session.libelleSessionFormation }} – {{ session.statutYoda }} - {{ session.dateDebutSession }}
+          - {{ session.nbHeureSession }}
+        </li>
+      } @empty {
+        Aucune session de formation n'a été trouvée.
+      }
+    </ul>
+  </div>
+
+
+</main>
+<app-footer></app-footer>

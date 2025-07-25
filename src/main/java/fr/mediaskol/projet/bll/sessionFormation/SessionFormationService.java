@@ -1,5 +1,6 @@
 package fr.mediaskol.projet.bll.sessionFormation;
 
+import fr.mediaskol.projet.bo.apprenant.Apprenant;
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
 import fr.mediaskol.projet.dto.sessionFormation.SessionFormationInputDTO;
 
@@ -15,6 +16,13 @@ public interface SessionFormationService {
     /**
      * Todo permettre la recherche d'une session de formation par son thème, département
      */
+    /**
+     * Fonctionnalité qui retourne un ou des apprenants selon des critères de recherches
+     *
+     * @param termeRecherche
+     */
+    List<SessionFormation> rechercheSessionFormations(String termeRecherche);
+
 
 
     /**

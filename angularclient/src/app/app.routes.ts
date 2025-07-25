@@ -1,11 +1,11 @@
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
-import {Home} from './home/home';
+import {ListeSessionFormationPresentiel} from './liste-session-formation-presentiel/liste-session-formation-presentiel';
 
 export const routes: Routes = [
 
 
-  {path: '', component: Home}
+  {path: '', component: ListeSessionFormationPresentiel}
   //{ path: 'apprenants', component: ListeApprenants},
   // { path: 'formations', component: ListeFormations},
   // { path: 'sessionsFormation', component: SessionFormations}

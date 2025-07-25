@@ -82,20 +82,20 @@ public class SessionFormationController {
      * Retourne une ou des sessions de formations en Json dans l'url "mediaskolFormation/sessionsFormations/recherche
      * selon le critère saisi dans le champ
      */
-//    @GetMapping("/recherche")
-//    public ResponseEntity<List<SessionFormation>> rechercheSessionFormations(@RequestParam String termeRecherche) {
-//
-//        final List<SessionFormation> sessionFormationsRecherches = sessionFormationService.rechercheSessionFormations(termeRecherche);
-//
-//        if (sessionFormationsRecherches == null || sessionFormationsRecherches.isEmpty()) {
-//            // Statut 204 : No content - Pas de body car rien à afficher
-//            return ResponseEntity.noContent().build();
-//        }
-//        // Sinon, on retourne Statut 200 : Ok + dans le body les sessionFormations
-//
-//        return ResponseEntity.ok(sessionFormationsRecherches);
-//
-//    }
+    @GetMapping("/recherche")
+    public ResponseEntity<List<SessionFormation>> rechercheSessionFormations(@RequestParam String termeRecherche) {
+
+        final List<SessionFormation> sessionFormationsRecherches = sessionFormationService.rechercheSessionFormations(termeRecherche);
+
+        if (sessionFormationsRecherches == null || sessionFormationsRecherches.isEmpty()) {
+            // Statut 204 : No content - Pas de body car rien à afficher
+            return ResponseEntity.noContent().build();
+        }
+        // Sinon, on retourne Statut 200 : Ok + dans le body les sessionFormations
+
+        return ResponseEntity.ok(sessionFormationsRecherches);
+
+    }
 
     /**
      * Méthode qui permet de créer une nouvelle session de formation dans la base de données

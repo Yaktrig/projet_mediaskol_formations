@@ -1,6 +1,7 @@
 package fr.mediaskol.projet.bll.sessionFormation;
 
 
+import fr.mediaskol.projet.bo.apprenant.Apprenant;
 import fr.mediaskol.projet.bo.sessionFormation.FinSessionFormation;
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
 import fr.mediaskol.projet.bo.sessionFormationDistanciel.SessionFormationDistanciel;
@@ -11,11 +12,14 @@ import fr.mediaskol.projet.dto.sessionFormation.SessionFormationInputDTO;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.hibernate.Session;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,6 +65,35 @@ public class SessionFormationServiceImpl implements SessionFormationService {
         // Identifiant correspond à aucun enregistrement en base
         throw new RuntimeException("Aucune session de formation ne correspond");
     }
+
+
+    /**
+     * Retourne une liste d'apprenants en fonction de la saisie utilisateur.
+     *
+     * @param termeRecherche
+     * @return sessionFormationRepository.findSessionFormationsBySearchText(termeRecherche)
+     */
+    @Override
+    public List<SessionFormation> rechercheSessionFormations(String termeRecherche) {
+
+        String recherche = termeRecherche != null ? termeRecherche.trim().toLowerCase() : "";
+
+        // Vérification si le terme est une date au format jjmmaaaa
+        LocalDate dateDebutSession = null;
+        if (recherche.matches("^[0-3][0-9][0-1][0-9][0-9]{4}$")) {
+            try {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
+                dateDebutSession = LocalDate.parse(recherche, formatter);
+
+                // si c'est le cas, on cherche en priorité sur la date
+                return sessionFormationRepository.findByDateDebutSession(dateDebutSession);
+            } catch (DateTimeParseException e) {
+
+            }
+        }
+        return sessionFormationRepository.findSessionFormationsBySearchText(termeRecherche);
+    }
+
 
     /**
      * Fonctionnalité qui permet d'ajouter une session de formation
