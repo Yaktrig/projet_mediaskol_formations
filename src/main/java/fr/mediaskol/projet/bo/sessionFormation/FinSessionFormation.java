@@ -59,7 +59,6 @@ public class FinSessionFormation {
      * </p>
      */
     @Column(name = "STATUT_YODA_FIN_SESSION_FORMATION", length = 5)
-    @Size(max = 5, message="{sessionFinFormation.statutYoda.size}")
     private String statutYodaFinSessionFormation;
 
 
@@ -81,7 +80,6 @@ public class FinSessionFormation {
      * </p>
      */
     @Column(name = "COMMENTAIRE_FIN_SESSION_FORMATION", length = 2000)
-    @Size(max=2000, message="{sessionFinFormation.commentaire.size}")
     private String commentaireFinSessionFormation;
 
 

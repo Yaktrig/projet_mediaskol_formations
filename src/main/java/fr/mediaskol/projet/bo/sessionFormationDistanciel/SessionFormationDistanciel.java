@@ -54,7 +54,6 @@ public class SessionFormationDistanciel {
      * </p>
      */
     @Column(name = "CONTRAT_SESSION_FOAD", length = 300)
-    @Size(max = 300, message = "{sessionFormationDistanciel.contratSessionFoad.size}")
     private String contratSessionFormationDistanciel;
 
     /**
@@ -105,7 +104,6 @@ public class SessionFormationDistanciel {
      * </p>
      */
     @Column(name = "COMMENTAIRE_SESSION_FOAD", length = 2000)
-    @Size(max = 2000, message = "{sessionFormationDistanciel.commentaireSessionFoad.size}")
     private String commentaireSessionFormationDistanciel;
 
 

@@ -8,6 +8,7 @@ import fr.mediaskol.projet.bo.sessionFormation.StatutSessionFormation;
 import fr.mediaskol.projet.bo.sessionFormationDistanciel.SessionFormationDistanciel;
 import fr.mediaskol.projet.dto.adresse.DepartementDTO;
 import fr.mediaskol.projet.dto.formation.FormationResponseDTO;
+import fr.mediaskol.projet.dto.sessionFormationDistanciel.SessionFOADRespDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,14 +25,14 @@ public class SessionFormationRespDTO {
     private Long idSessionFormation;
     private String noYoda;
     private String libelleSessionFormation;
-    private String statutYoda = "DO";
+    private String statutYoda;
     private LocalDate dateDebutSession;
     private Integer nbHeureSession;
     private StatutSessionFormation statutSessionFormation = StatutSessionFormation.SESSION_FORMATION_NON_COMMENCEE;
     private FormationResponseDTO formation;
     private DepartementDTO departement;
-   // private FinSessionFormation finSessionFormation;
-   // private SessionFormationDistanciel sessionFormationDistanciel;
+   //todo private FinSessionFormation finSessionFormation;
+    private SessionFOADRespDTO sessionFormationDistanciel;
 
     /**
      * Constructeur
@@ -54,10 +55,13 @@ public class SessionFormationRespDTO {
             this.departement = null;
         }
 
+        if(sessionFormation.getSessionFormationDistanciel() != null){
+            this.sessionFormationDistanciel = new SessionFOADRespDTO(sessionFormation.getSessionFormationDistanciel());
+        } else {
+            this.sessionFormationDistanciel = null;
+        }
 
-
-       // this.finSessionFormation = sessionFormation.getFinSessionFormation();
-        //this.sessionFormationDistanciel = sessionFormation.getSessionFormationDistanciel();
+       // todo  this.finSessionFormation = sessionFormation.getFinSessionFormation();
     }
 
 }

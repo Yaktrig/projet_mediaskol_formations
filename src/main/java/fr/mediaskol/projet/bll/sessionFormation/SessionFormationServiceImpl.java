@@ -142,24 +142,23 @@ public class SessionFormationServiceImpl implements SessionFormationService {
             sessionFormation.setDepartement(null); // ou garder l'existante
         }
 
-
         // Associer la fin de session de formation
-//        if (dto.getFinSessionFormationId() != null) {
-//            FinSessionFormation finSessionFormation = finSessionFormationRepository.findById(dto.getFinSessionFormationId())
-//                    .orElseThrow(() -> new EntityNotFoundException("FinSessionFormation introuvable (id = " + dto.getFinSessionFormationId() + ")"));
-//            sessionFormation.setFinSessionFormation(departement);
-//        } else {
-//            sessionFormation.setFinSessionFormation(null); // ou garder l'existante
-//        }
+        if (dto.getFinSessionFormationId() != null) {
+            FinSessionFormation finSessionFormation = finSessionFormationRepository.findById(dto.getFinSessionFormationId())
+                    .orElseThrow(() -> new EntityNotFoundException("FinSessionFormation introuvable (id = " + dto.getFinSessionFormationId() + ")"));
+            sessionFormation.setFinSessionFormation(finSessionFormation);
+        } else {
+            sessionFormation.setFinSessionFormation(null); // ou garder l'existante
+        }
 
         // Associer la session de formation en distanciel
-//        if (dto.setSessionFormationDistancielId() = null) {
-//            SessionFormationDistanciel sessionFoad = sessionFormationDistancielRepository.findById(dto.setSessionFormationDistancielId())
-//                    .orElseThrow(() -> new EntityNotFoundException("SessionFormationDistanciel introuvable (id = " + dto.getSessionFormationDistancielId() + ")"));
-//            sessionFormation.setFinSessionFormation(sessionFoad);
-//        } else {
-//            sessionFormation.setSessionFormationDistanciel(null); // ou garder l'existante
-//        }
+        if (dto.getSessionFormationDistancielId() != null) {
+            SessionFormationDistanciel sessionFoad = sessionFormationDistancielRepository.findById(dto.getSessionFormationDistancielId())
+                    .orElseThrow(() -> new EntityNotFoundException("SessionFormationDistanciel introuvable (id = " + dto.getSessionFormationDistancielId() + ")"));
+            sessionFormation.setSessionFormationDistanciel(sessionFoad);
+        } else {
+            sessionFormation.setSessionFormationDistanciel(null); // ou garder l'existante
+        }
 
         // 4. Valider
         validerUniciteNoYoda(sessionFormation);

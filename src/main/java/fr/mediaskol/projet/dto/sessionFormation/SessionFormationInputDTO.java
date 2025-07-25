@@ -1,8 +1,7 @@
 package fr.mediaskol.projet.dto.sessionFormation;
 
-import fr.mediaskol.projet.bo.sessionFormation.FinSessionFormation;
+
 import fr.mediaskol.projet.bo.sessionFormation.StatutSessionFormation;
-import fr.mediaskol.projet.bo.sessionFormationDistanciel.SessionFormationDistanciel;
 import fr.mediaskol.projet.dto.adresse.DepartementDTO;
 import fr.mediaskol.projet.dto.formation.FormationResponseDTO;
 import jakarta.validation.constraints.NotBlank;
@@ -19,6 +18,9 @@ import java.time.LocalDate;
 @Data
 @Builder
 public class SessionFormationInputDTO {
+
+
+
 
     private Long idSessionFormation;
 
@@ -42,8 +44,8 @@ public class SessionFormationInputDTO {
 
     private DepartementDTO departement;
 
-    // todo créer leurs dto Response et input
-   // private FinSessionFormation finSessionFormation;
+    private Long finSessionFormationId;
 
-    //private SessionFormationDistanciel sessionFormationDistanciel;
+    private Long sessionFormationDistancielId;
+
 }
