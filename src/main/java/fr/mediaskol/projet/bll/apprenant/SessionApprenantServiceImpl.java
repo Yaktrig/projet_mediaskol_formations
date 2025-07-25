@@ -95,6 +95,7 @@ public class SessionApprenantServiceImpl implements SessionApprenantService {
      * @return
      */
     @Override
+    @Transactional
     public SessionApprenant modifierSessionApprenant(SessionApprenantInputDTO dto) {
 
         // 1. Vérifier que la session apprenant à modifier existe

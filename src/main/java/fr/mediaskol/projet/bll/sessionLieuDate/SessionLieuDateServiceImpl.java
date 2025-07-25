@@ -112,9 +112,18 @@ public class SessionLieuDateServiceImpl implements SessionLieuDateService {
         sessionLieuDate.setDuree(dto.getDuree());
         sessionLieuDate.setHeureVisio(dto.getHeureVisio());
         sessionLieuDate.setStatutSessionLieuDate(dto.getStatutSessionLieuDate());
-        sessionLieuDate.setSessionFormateur(sessionLieuDate.getSessionFormateur());
-        sessionLieuDate.setSessionFormation(sessionLieuDate.getSessionFormation());
-        sessionLieuDate.setSessionSalle(sessionLieuDate.getSessionSalle());
+
+        if(dto.getSessionFormateurId() != null){
+            sessionLieuDate.setSessionFormateur(sessionLieuDate.getSessionFormateur());
+        }
+
+        if(dto.getSessionFormationId() !=null){
+            sessionLieuDate.setSessionFormation(sessionLieuDate.getSessionFormation());
+        }
+
+        if(dto.getSessionSalleId() !=null){
+            sessionLieuDate.setSessionSalle(sessionLieuDate.getSessionSalle());
+        }
 
         // 4. Sauvegarde finale
         return sessionLieuDateRepository.save(sessionLieuDate);
@@ -129,11 +138,12 @@ public class SessionLieuDateServiceImpl implements SessionLieuDateService {
     public void supprimerSessionLieuDate(long idSessionLieuDate) {
 
         if (idSessionLieuDate <= 0) {
-            throw new IllegalArgumentException("L'identifiant du lieu et de la date de la session n'existen pas.");
+            throw new IllegalArgumentException("L'identifiant du lieu et de la date de la session n'existent pas.");
         }
 
         if (!sessionLieuDateRepository.existsById(idSessionLieuDate)) {
-            throw new EntityNotFoundException(STR."Le lieu et la date de la session de formation avec l'ID \{idSessionLieuDate} n'existent pas.");
+            throw new EntityNotFoundException("Le lieu et la date de la session de formation avec l'ID idSessionLieuDate" +
+                    " n'existent pas.");
         }
 
         try {
@@ -141,7 +151,8 @@ public class SessionLieuDateServiceImpl implements SessionLieuDateService {
         } catch (DataIntegrityViolationException e) {
             throw new RuntimeException("Impossible de supprimer le lieu et la date : il est liée à des sessions.");
         } catch (Exception e) {
-            throw new RuntimeException(STR."Impossible de supprimer le lieu et la date de la session de formation (id = \{idSessionLieuDate})\{e.getMessage()}");
+            throw new RuntimeException("Impossible de supprimer le lieu et la date de la session de formation" +
+                    " (id = idSessionLieuDate) " + e.getMessage());
         }
 
     }

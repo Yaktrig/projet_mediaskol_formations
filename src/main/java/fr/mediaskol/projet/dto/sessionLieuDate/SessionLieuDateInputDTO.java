@@ -37,11 +37,11 @@ public class SessionLieuDateInputDTO {
 
     private StatutSessionLieuDate statutSessionLieuDate;
 
-    private SessionFormateurRespDTO sessionFormateur;
+    private SessionFormateurRespDTO sessionFormateurId;
 
-    private SessionFormationRespDTO sessionFormation;
+    private SessionFormationRespDTO sessionFormationId;
 
-    private SessionSalleRespDTO sessionSalle;
+    private SessionSalleRespDTO sessionSalleId;
 
 
 }

@@ -4,6 +4,7 @@ import fr.mediaskol.projet.bo.salle.SessionSalle;
 import fr.mediaskol.projet.dal.salle.SessionSalleRepository;
 import fr.mediaskol.projet.dto.salle.SessionSalleInputDTO;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -59,6 +60,7 @@ public class SessionSalleServiceImpl implements SessionSalleService{
      * @param sessionSalle
      */
     @Override
+    @Transactional
     public SessionSalle ajouterSessionSalle(SessionSalle sessionSalle) {
 
         if (sessionSalle == null) {
@@ -87,6 +89,7 @@ public class SessionSalleServiceImpl implements SessionSalleService{
      * @return
      */
     @Override
+    @Transactional
     public SessionSalle modifierSessionSalle(SessionSalleInputDTO dto) {
 
         // 1. Vérifier que la session de salle à modifier existe

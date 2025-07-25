@@ -41,7 +41,6 @@ public class AdresseServiceImpl implements AdresseService {
      * @see DepartementRepository#findByNumDepartement(String)
      */
     @Override
-    @Transactional
     public void validerAdresse(Adresse adresse) {
 
         if (adresse == null) {

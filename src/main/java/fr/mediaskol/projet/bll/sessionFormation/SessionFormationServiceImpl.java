@@ -9,6 +9,7 @@ import fr.mediaskol.projet.dal.sessionFormation.SessionFormationRepository;
 import fr.mediaskol.projet.dal.sessionFormationDistanciel.SessionFormationDistancielRepository;
 import fr.mediaskol.projet.dto.sessionFormation.SessionFormationInputDTO;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -67,6 +68,7 @@ public class SessionFormationServiceImpl implements SessionFormationService {
      * @param sessionFormation
      */
     @Override
+    @Transactional
     public SessionFormation ajouterSessionFormation(SessionFormation sessionFormation) {
 
         if (sessionFormation == null) {
@@ -116,6 +118,7 @@ public class SessionFormationServiceImpl implements SessionFormationService {
      * @return
      */
     @Override
+    @Transactional
     public SessionFormation modifierSessionFormation(SessionFormationInputDTO dto) {
 
         // 1. Vérifier que la sessionFormation à modifier existe

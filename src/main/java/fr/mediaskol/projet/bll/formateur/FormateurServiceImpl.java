@@ -111,7 +111,7 @@ public class FormateurServiceImpl implements FormateurService {
             throw new RuntimeException("Le formateur n'est pas renseigné.");
         }
 
-        // Todo validation
+
         validerChaineNonNulle(formateur.getNom(), "Vous devez renseigner le nom du formateur.");
         validerChaineNonNulle(formateur.getPrenom(), "Vous devez renseigner le prénom du formateur.");
         validerEmail(formateur.getEmail(), "Le email doit correspondre au format mail.");

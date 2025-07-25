@@ -242,7 +242,6 @@ public class ApprenantServiceImpl implements ApprenantService {
      * @see SessionApprenant
      * @since 1.0
      */
-    @Transactional
     @Override
     public void supprimerApprenant(long idApprenant) {
 
