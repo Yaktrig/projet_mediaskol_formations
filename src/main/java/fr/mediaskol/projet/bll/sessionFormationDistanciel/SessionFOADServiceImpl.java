@@ -97,6 +97,7 @@ public class SessionFOADServiceImpl implements SessionFOADService {
      * @return
      */
     @Override
+    @Transactional
     public SessionFormationDistanciel modifierSessionFoad(SessionFOADInputDTO dto) {
 
         // 1. Vérifier que la sessionFormationDistanciel à modifier existe
