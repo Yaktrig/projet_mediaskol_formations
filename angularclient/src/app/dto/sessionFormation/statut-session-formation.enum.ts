@@ -26,19 +26,19 @@ export const StatutSessionFormationDetails: {
   },
   [StatutSessionFormation.DOSSIER_EN_COURS]: {
     label: 'Dossier en cours',
-    color: 'pink-300', // exemple Tailwind : adapte selon ta config
+    color: '#FADADD', // exemple Tailwind : adapte selon ta config
   },
   [StatutSessionFormation.DOSSIER_TERMINE]: {
     label: 'Dossier terminé',
-    color: 'pink-600',
+    color: '#F6C1C1',
   },
   [StatutSessionFormation.SESSION_FORMATION_TERMINEE]: {
     label: 'Formation terminée',
-    color: 'blue-500',
+    color: '#89CFF0',
   },
   [StatutSessionFormation.SESSION_FORMATION_ANNULEE]: {
     label: 'Formation annulée',
-    color: 'red-500',
+    color: '#F4A6A6',
   },
 };
 

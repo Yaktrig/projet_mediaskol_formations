@@ -10,31 +10,57 @@
   --color-rose-pastel: rgb(253, 243, 246);
 
   /* Couleur des titres (navbar, footer, formulaire, main) */
-  --color-title-purple: #6e1c6b;
+  --color-title-purple: rgb(110,28,107);
 
   /* Couleur des titres des colonnes d'un tableau */
-  --color-title-column: #ffffff;
+  --color-title-column:rgb(255,255,255);
 
-  /* Couleur des champs d'un tableau */
-  --color-value-tab: #000000;
+  /* Couleur des textes des champs d'un tableau */
+  --color-value-tab: rgb(0,0,0);
 
   /* Couleur du background des boutons et des entête de colonne du tableau */
-  --color-bg-button: #08909d ;
+  --color-bg-button: rgb(8, 144, 157);
 
   /* Couleur du background des boutons en survol et des affichages de confirmation */
-  --color-bg-button-hover: #f4bf4f;
+  --color-bg-button-hover:rgb(244,191,79);
 
   /* Couleur des textes des boutons */
-  --color-text-button: #ffffff;
+  --color-text-button: rgb(255,255,255);
 
   /* Couleurs des textes des boutons en survol et des affichages de confirmation */
-  --color-text-button-hover: #6e1c6b  ;
+  --color-text-button-hover: rgb(110,28,107);
 
   /* Couleur du background des formulaires 5% */
-  --color-bg-form: #cbb5ff ;
+  --color-bg-form: rgb(252,251,255);
 
   /* Couleur du texte des input des formulaires 70% */
-  --color-text-input: #DB366C;
+  --color-text-input: rgb(239, 132, 173);
 
 }
+
+
+h1 {
+  @apply text-[var(--color-title-purple)] text-center m-4 font-bold text-xl;
+}
+
+h2 {
+  @apply text-[var(--color-title-purple)] text-center m-4 font-semibold text-lg;
+}
+
+label {
+  @apply text-[var(--color-title-purple)] m-2;
+}
+
+button {
+  @apply bg-[var(--color-bg-button)]  p-2 border rounded-md text-[var(--color-text-button)];
+}
+
+th {
+  @apply text-[var(--color-title-column)] bg-[var(--color-bg-button)] font-normal p-2;
+}
+
+td {
+  @apply text-[var(--color-value-tab)] border border-gray-300 px-2 py-1;
+}
+
 

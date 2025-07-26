@@ -26,16 +26,16 @@ public enum StatutSessionFormation {
     SESSION_FORMATION_NON_COMMENCEE("Session non commencée", "#FFFFFF"),
 
     // Statut indiquant qu'un.e salarié.e est en train de traiter le dossier
-    DOSSIER_EN_COURS("Dossier en cours", "Rose1"),
+    DOSSIER_EN_COURS("Dossier en cours", "#FADADD"),
 
     // Statut indiquant qu'un.e salarié.e a terminé le traitement du dossier
-    DOSSIER_TERMINE("Dossier terminé", "Rose2"),
+    DOSSIER_TERMINE("Dossier terminé", "#F6C1C1"),
 
     // Statut indiquant que la session de formation est terminée (Date du dernier jour passé)
-    SESSION_FORMATION_TERMINEE("Formation terminée", "Bleu"),
+    SESSION_FORMATION_TERMINEE("Formation terminée", "#89CFF0"),
 
     // Statut indiquant que la session de formation a été annulée.
-    SESSION_FORMATION_ANNULEE("Formation annulée", "Rouge");
+    SESSION_FORMATION_ANNULEE("Formation annulée", "#F4A6A6");
 
     // Libelle du statut de la session de formation
     private final String libelleSessionFormation;
