@@ -13,8 +13,8 @@ export enum StatutNumPasseport {
 
 }
 
-export const StatutNumPasseportDetails: StatutNumPasseport = {
-  label: string, color: string
+export const StatutNumPasseportDetails:  {
+  [key in StatutNumPasseport]: {label: string, color: string}
 } = {
   [StatutNumPasseport.NUM_PASSEPORT_CREE]: {
     label: 'Numéro passeport créé',

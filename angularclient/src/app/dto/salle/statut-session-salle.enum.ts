@@ -9,8 +9,8 @@ export enum StatutSessionSalle {
 
 }
 
-export const StatutSessionSalleDetails: StatutSessionSalle = {
-  label: string, color: string
+export const StatutSessionSalleDetails: {
+  [key in StatutSessionSalle]: {label: string, color: string}
 } = {
   [StatutSessionSalle.SESSION_SALLE_VALIDEE]: {
     label: 'Salle durant la session validée',

@@ -13,8 +13,8 @@ export enum StatutSessionLieuDate {
 
 }
 
-export const StatutSessionLieuDateDetails: StatutSessionLieuDate = {
-  label: string, color: string,
+export const StatutSessionLieuDateDetails:{
+  [key in StatutSessionLieuDate]: {label: string, color: string}
 } = {
   [StatutSessionLieuDate.SESSION_LIEU_DATE_SALLE_GRATUITE]: {
     label: 'Salle de formation gratuite',

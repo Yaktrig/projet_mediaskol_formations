@@ -10,8 +10,8 @@ export enum StatutSessionApprenant {
   ABSENT_SESSION = 'ABSENT_SESSION',
 }
 
-export const StatutSessionApprenantDetails: ApprenantResponseDTO | null = {
-  label: string, color: string
+export const StatutSessionApprenantDetails: {
+  [key in StatutSessionApprenant]: {label: string, color: string}
 } = {
   [StatutSessionApprenant.INSCRIT_SUR_YODA]: {
     label: 'Inscrit sur Yoda',

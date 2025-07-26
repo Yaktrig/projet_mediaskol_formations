@@ -16,8 +16,8 @@ export enum StatutFinSessionFormation {
   SESSION_FIN_FORMATION_TERMINEE_NON_VALIDEE='SESSION_FIN_FORMATION_TERMINEE_NON_VALIDEE',
 }
 
-export const StatutFinSessionFormationDetails: StatutFinSessionFormation = {
-  label: string, color:string,
+export const StatutFinSessionFormationDetails: {
+  [key in StatutFinSessionFormation]: {label: string, color: string}
 } = {
   [StatutFinSessionFormation.SESSION_FORMATION_NON_TERMINEE]:{
     label:'Session non terminée',
