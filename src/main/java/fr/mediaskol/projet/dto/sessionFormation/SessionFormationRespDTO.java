@@ -1,11 +1,8 @@
 package fr.mediaskol.projet.dto.sessionFormation;
 
-import fr.mediaskol.projet.bo.departement.Departement;
-import fr.mediaskol.projet.bo.formation.Formation;
-import fr.mediaskol.projet.bo.sessionFormation.FinSessionFormation;
+
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
 import fr.mediaskol.projet.bo.sessionFormation.StatutSessionFormation;
-import fr.mediaskol.projet.bo.sessionFormationDistanciel.SessionFormationDistanciel;
 import fr.mediaskol.projet.dto.adresse.DepartementDTO;
 import fr.mediaskol.projet.dto.formation.FormationResponseDTO;
 import fr.mediaskol.projet.dto.sessionFormationDistanciel.SessionFOADRespDTO;
@@ -31,13 +28,13 @@ public class SessionFormationRespDTO {
     private StatutSessionFormation statutSessionFormation = StatutSessionFormation.SESSION_FORMATION_NON_COMMENCEE;
     private FormationResponseDTO formation;
     private DepartementDTO departement;
-   //todo private FinSessionFormation finSessionFormation;
+    private FinSessionFormationRespDTO finSessionFormation;
     private SessionFOADRespDTO sessionFormationDistanciel;
 
     /**
      * Constructeur
      */
-    public SessionFormationRespDTO(SessionFormation sessionFormation){
+    public SessionFormationRespDTO(SessionFormation sessionFormation) {
 
         this.idSessionFormation = sessionFormation.getIdSessionFormation();
         this.noYoda = sessionFormation.getNoYoda();
@@ -55,13 +52,17 @@ public class SessionFormationRespDTO {
             this.departement = null;
         }
 
-        if(sessionFormation.getSessionFormationDistanciel() != null){
+        if (sessionFormation.getSessionFormationDistanciel() != null) {
             this.sessionFormationDistanciel = new SessionFOADRespDTO(sessionFormation.getSessionFormationDistanciel());
         } else {
             this.sessionFormationDistanciel = null;
         }
 
-       // todo  this.finSessionFormation = sessionFormation.getFinSessionFormation();
+        if (sessionFormation.getFinSessionFormation() != null) {
+            this.finSessionFormation = new FinSessionFormationRespDTO(sessionFormation.getFinSessionFormation());
+        } else {
+            this.finSessionFormation = null;
+        }
     }
 
 }

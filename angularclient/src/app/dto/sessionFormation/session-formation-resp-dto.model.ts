@@ -1,7 +1,8 @@
 import { StatutSessionFormation } from './statut-session-formation.enum';
-import { FormationResponseDTO } from './formation-response-dto.model';
-import { DepartementDTO } from './departement.dto';
-import { SessionFOADRespDTO } from './session-foad-resp-dto.model';
+import { FormationResponseDTO } from '../formation/formation-resp-dto.model';
+import { DepartementDTO } from '../adresse/departement-resp-dto.model';
+import { SessionFoadResponseDTO } from '../sessionFormationDistanciel/session-formation-distanciel-resp-dto.model';
+
 // import { FinSessionFormation } from './fin-session-formation.model'; // A décommenter/ajouter quand disponible
 
 export interface SessionFormationRespDTO {
@@ -15,5 +16,5 @@ export interface SessionFormationRespDTO {
   formation: FormationResponseDTO | null;
   departement: DepartementDTO | null;
   // finSessionFormation?: FinSessionFormation | null; // à ajouter selon évolution
-  sessionFormationDistanciel: SessionFOADRespDTO | null;
+  sessionFormationDistanciel: SessionFoadResponseDTO | null;
 }

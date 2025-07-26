@@ -32,14 +32,11 @@ public class SalleResponseDTO {
         this.cleSalle = salle.getCleSalle();
         this.digicodeSalle = salle.getDigicodeSalle();
         this.commentaireSalle = salle.getCommentaireSalle();
-        if(salle.getAdresse() != null){
+        if (salle.getAdresse() != null) {
             this.adresse = new AdresseResponseDTO(salle.getAdresse());
         } else {
             this.adresse = null;
         }
-
-
-
 
 
     }
