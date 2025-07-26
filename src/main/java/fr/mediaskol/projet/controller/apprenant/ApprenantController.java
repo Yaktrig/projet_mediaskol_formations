@@ -2,7 +2,6 @@ package fr.mediaskol.projet.controller.apprenant;
 
 import fr.mediaskol.projet.bll.apprenant.ApprenantService;
 import fr.mediaskol.projet.bo.apprenant.Apprenant;
-import fr.mediaskol.projet.bo.salle.Salle;
 import fr.mediaskol.projet.dto.apprenant.ApprenantResponseDTO;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;

@@ -44,7 +44,12 @@ public class SessionFormationRespDTO {
         this.nbHeureSession = sessionFormation.getNbHeureSession();
         this.statutSessionFormation = sessionFormation.getStatutSessionFormation();
 
-        this.formation = new FormationResponseDTO(sessionFormation.getFormation());
+        if(sessionFormation.getFormation() != null) {
+            this.formation = new FormationResponseDTO(sessionFormation.getFormation());
+        } else {
+            this.formation = null;
+        }
+
 
         if (sessionFormation.getDepartement() != null) {
             this.departement = new DepartementDTO(sessionFormation.getDepartement());

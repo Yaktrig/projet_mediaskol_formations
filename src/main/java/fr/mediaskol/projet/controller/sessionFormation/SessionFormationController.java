@@ -31,9 +31,6 @@ public class SessionFormationController {
      */
     private SessionFormationService sessionFormationService;
 
-
-
-
     /**
      * Retourne la liste des sessions de formation en Json dans l'url "mediaskolFormation/sessionsFormations en méthode GET
      */
@@ -83,7 +80,7 @@ public class SessionFormationController {
      * selon le critère saisi dans le champ
      */
     @GetMapping("/recherche")
-    public ResponseEntity<List<SessionFormation>> rechercheSessionFormations(@RequestParam String termeRecherche) {
+    public ResponseEntity<List<SessionFormationRespDTO>> rechercheSessionFormations(@RequestParam String termeRecherche) {
 
         final List<SessionFormation> sessionFormationsRecherches = sessionFormationService.rechercheSessionFormations(termeRecherche);
 
@@ -91,10 +88,13 @@ public class SessionFormationController {
             // Statut 204 : No content - Pas de body car rien à afficher
             return ResponseEntity.noContent().build();
         }
+
+        List<SessionFormationRespDTO> dtos = sessionFormationsRecherches.stream()
+                .map(SessionFormationRespDTO::new)
+                .toList();
+
         // Sinon, on retourne Statut 200 : Ok + dans le body les sessionFormations
-
-        return ResponseEntity.ok(sessionFormationsRecherches);
-
+        return ResponseEntity.ok(dtos);
     }
 
     /**
