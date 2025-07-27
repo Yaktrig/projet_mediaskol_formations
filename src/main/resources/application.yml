@@ -18,3 +18,14 @@ spring:
   flyway:
     baseline-on-migrate: false
     locations: classpath:db/migration
+
+#i18n
+  messages:
+    encoding: UTF-8
+  web:
+    locale: fr
+
+#jwt
+app:
+  jwt:
+    secret: 436a726878792a6a2333725030382050303877505e30585b6351413978

@@ -1,4 +1,4 @@
-package fr.mediaskol.projet.security.jwt;
+package fr.mediaskol.projet.bo;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,7 +20,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class UserInfo implements UserDetails {
+public class Utilisateur implements UserDetails {
 
     private static final long serialVersionUID = 1L;
 
@@ -28,8 +28,9 @@ public class UserInfo implements UserDetails {
      * Le pseudo correspond à l'email du salarié
      */
     @Id
-    @Column(length = 250)
+    @Column(name = "LOGIN", nullable = false, length = 255)
     private String pseudo;
+
 
     /**
      * Mot du passe pour que le salarié puisse se connecter.
@@ -38,7 +39,7 @@ public class UserInfo implements UserDetails {
      *    <li>Il est limité à 68 caractères.</li>
      * </ul>
      */
-    @Column(nullable = false, length = 68)
+    @Column(name = "PASSWORD", nullable = false, length = 68)
     private String password;
 
     /**
@@ -48,7 +49,7 @@ public class UserInfo implements UserDetails {
      * Ce champ est obligatoire et limité à 50 caractères.
      * </p>
      */
-    @Column(length = 15, nullable = false)
+    @Column(name="ROLE", length = 15, nullable = false)
     private String authority;
 
 

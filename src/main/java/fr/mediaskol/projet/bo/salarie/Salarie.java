@@ -7,6 +7,11 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Représente un salarié dans le système de gestion.
@@ -29,7 +34,7 @@ import lombok.experimental.SuperBuilder;
 
 @Entity
 @Table(name="SALARIE")
-public class Salarie extends Personne {
+public class Salarie extends Personne  {
 
 
 
@@ -48,19 +53,20 @@ public class Salarie extends Personne {
 
 
 
-    /**
-     * Statut de l'inscription à l'espace de connexion du salarié.
-     * <ul>
-     *  <li>L'administrateur peut créer un compte pour un salarié et le mettre en statut inactif.</li>
-     *  <li>Ensuite le salarié pourra, en ajoutant son mot de passe, rendre actif son compte utilisateur.</li>
-     *  <li> 0 : Compte inactif — pas de mot de passe</li>
-     *  <li> 1 : Compte actif — mot de passe présent</li>
-     * </ul>
-     * Ce champ est un booléen.
-     */
-    @Column(name="STATUT_INSCRIPTION", nullable = false)
-    @NotNull(message = "{salarie.statutInscription.notnull}")
-    private boolean statutInscription;
+//    /**
+//     * Statut de l'inscription à l'espace de connexion du salarié.
+//     * <ul>
+//     *  <li>L'administrateur peut créer un compte pour un salarié et le mettre en statut inactif.</li>
+//     *  <li>Ensuite le salarié pourra, en ajoutant son mot de passe, rendre actif son compte utilisateur.</li>
+//     *  <li> 0 : Compte inactif — pas de mot de passe</li>
+//     *  <li> 1 : Compte actif — mot de passe présent</li>
+//     * </ul>
+//     * Ce champ est un booléen.
+//     */
+//    @Column(name="STATUT_INSCRIPTION", nullable = false)
+//    @NotNull(message = "{salarie.statutInscription.notnull}")
+//    private boolean statutInscription;
+
 
 
 }

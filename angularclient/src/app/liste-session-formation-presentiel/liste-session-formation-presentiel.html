@@ -114,11 +114,11 @@ md:min-w-[450px] md:max-w-[940px] flex flex-col md:flex-row md:items-center md:m
             <!--            }-->
             <td>---</td><!-- récupérer le nombre d'inscrit avec une requête -->
             <td>---</td><!-- récupérer le nombre de confirmée avec une requête -->
-            <td [style.background-color]="statutSessionFormationDetails[session.statutSessionFormation]?.color">
+            <td [style.background-color]="statutSessionFormationDetails[session.statutSessionFormation].color">
               {{ session.noYoda }}
             </td>
             <td
-              [style.background-color]="statutSessionFormationDetails[session.statutSessionFormation]?.color">
+              [style.background-color]="statutSessionFormationDetails[session.statutSessionFormation].color">
               {{ session.libelleSessionFormation }}
             </td>
             <td class="text-center">{{ session.statutYoda }}</td>
