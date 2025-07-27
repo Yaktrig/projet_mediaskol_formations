@@ -1,6 +1,7 @@
 package fr.mediaskol.projet.controller.sessionFormation;
 
 import fr.mediaskol.projet.bll.sessionFormation.SessionFormationService;
+import fr.mediaskol.projet.bo.ApiResponse;
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
 import fr.mediaskol.projet.dto.sessionFormation.SessionFormationRespDTO;
 import jakarta.validation.Valid;
@@ -117,10 +118,10 @@ public class SessionFormationController {
         }
         try {
             sessionFormationService.ajouterSessionFormation(sessionFormation);
-            return ResponseEntity.ok(sessionFormation);
+            return ResponseEntity.ok(new ApiResponse(true, "Session ajoutée avec succès."));
         } catch (RuntimeException e) {
             // Erreur BLL ou DAL
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ApiResponse(false, "Erreur lors de la création de la session."));
         }
     }
 

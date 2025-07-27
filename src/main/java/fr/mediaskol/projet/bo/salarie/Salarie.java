@@ -34,17 +34,6 @@ public class Salarie extends Personne {
 
 
     /**
-     * Mot du passe pour que le salarié puisse se connecter.
-     * <ul>
-     *    <li>Le mot de passe n'est pas obligatoire si le statut de l'inscription est non actif.</li>
-     *    <li>Il est limité à 68 caractères.</li>
-     * </ul>
-     */
-    @Column(name="MOT_DE_PASSE",  length = 68)
-    @Size(max=68, message = "{salarie.mdp.size}")
-    private String mdp;
-
-    /**
      * Couleur hexadécimale associée au salarié.
      * <p>
      * Permet aux utilisateurs de visualiser qui traite les dossiers liés aux sessions de formations.
@@ -57,18 +46,7 @@ public class Salarie extends Personne {
     @NotBlank(message = "{salarie.couleurSalarie.notblank}")
     private String couleurSalarie;
 
-    /**
-     * Rôle associé au salarié.
-     * <p>
-     * Permet de donner des droits d'accès à certaines fonctionnalités et pages, en fonction du rôle attribué.
-     * Ce champ est obligatoire et limité à 50 caractères.
-     * </p>
-     */
-    @Column(name="ROLE_SALARIE", nullable = false, length = 50)
-    @Size(min=3, max=50, message = "{salarie.roleSalarie.size}")
-    @NotNull(message = "{salarie.roleSalarie.notnull}")
-    @NotBlank(message = "{salarie.roleSalarie.notblank}")
-    private String roleSalarie;
+
 
     /**
      * Statut de l'inscription à l'espace de connexion du salarié.
