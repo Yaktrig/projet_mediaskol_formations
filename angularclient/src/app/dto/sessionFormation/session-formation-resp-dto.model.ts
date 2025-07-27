@@ -10,6 +10,9 @@ export interface SessionFormationRespDTO {
   noYoda: string | null;
   libelleSessionFormation: string | null;
   statutYoda: string | null;
+  lieuSessionFormation: string |null;
+  commanditaire: string | null;
+  confirmationRPE: string | null;
   dateDebutSession: string | null; // chaîne ISO: conversion à Date possible
   nbHeureSession: number | null;
   statutSessionFormation: StatutSessionFormation;

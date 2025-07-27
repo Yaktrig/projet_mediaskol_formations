@@ -23,6 +23,9 @@ public class SessionFormationRespDTO {
     private String noYoda;
     private String libelleSessionFormation;
     private String statutYoda;
+    private String lieuSessionFormation;
+    private String commanditaire;
+    private String confirmationRPE;
     private LocalDate dateDebutSession;
     private Integer nbHeureSession;
     private StatutSessionFormation statutSessionFormation = StatutSessionFormation.SESSION_FORMATION_NON_COMMENCEE;
@@ -40,6 +43,9 @@ public class SessionFormationRespDTO {
         this.noYoda = sessionFormation.getNoYoda();
         this.libelleSessionFormation = sessionFormation.getLibelleSessionFormation();
         this.statutYoda = sessionFormation.getStatutYoda();
+        this.lieuSessionFormation = sessionFormation.getLieuSessionFormation();
+        this.commanditaire = sessionFormation.getCommanditaire();
+        this.confirmationRPE = sessionFormation.getConfirmationRPE();
         this.dateDebutSession = sessionFormation.getDateDebutSession();
         this.nbHeureSession = sessionFormation.getNbHeureSession();
         this.statutSessionFormation = sessionFormation.getStatutSessionFormation();

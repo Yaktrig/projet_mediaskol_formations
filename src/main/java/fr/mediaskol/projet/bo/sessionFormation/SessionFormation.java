@@ -4,11 +4,8 @@ package fr.mediaskol.projet.bo.sessionFormation;
 import fr.mediaskol.projet.bo.departement.Departement;
 import fr.mediaskol.projet.bo.formation.Formation;
 import fr.mediaskol.projet.bo.sessionFormationDistanciel.SessionFormationDistanciel;
-import fr.mediaskol.projet.bo.sessionFormation.StatutSessionFormation;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -88,6 +85,30 @@ public class SessionFormation {
     @Column(name = "STATUT_YODA", nullable = false, length = 5)
     @NotNull(message = "{sessionFormation.statutYoda.notnull}")
     private String statutYoda = "DO";
+
+    /**
+     * Ville du lieu principal de formation
+     */
+    @Column(name="LIEU", nullable=false, length=100)
+    @NotNull(message="{sessionFormation.lieu.notnull}")
+    private String lieuSessionFormation;
+
+    /**
+     * Commanditaire de la session de formation
+     * RPE (Relais Petite Enfance, Assistantes maternelles, Présidents d'association)
+     */
+    @Column(name= "COMMANDITAIRE", length=125)
+    private String commanditaire;
+
+
+
+    /**
+     * RPE de la session de formation
+     * Indique oui, si la date a été confirmée au RPE
+     */
+    @Column(name= "CONFIRMATION_RPE", length=255)
+    private String confirmationRPE;
+
 
     /**
      * Date du début de la session de formation
@@ -181,8 +202,4 @@ public class SessionFormation {
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "SESSION_FOAD_ID")
     private SessionFormationDistanciel sessionFormationDistanciel;
-
-
-
-
 }

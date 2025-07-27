@@ -34,6 +34,13 @@ public class SessionFormationInputDTO {
     @NotBlank(message = "{sessionFormation.statutYoda.notblank}")
     private String statutYoda;
 
+    @Size(max=100, message="{sessionFormation.lieu.size}")
+    private String lieuSessionFormation;
+
+    private String commanditaire;
+
+    private String confirmationRPE;
+
     private LocalDate dateDebutSession;
 
     private Integer nbHeureSession;

@@ -17,12 +17,10 @@ public class FormationInputDTO {
 
     private Long idFormation;
 
-    @NotNull(message = "{formation.themeFormation.notnull}")
     @NotBlank(message = "{formation.themeFormation.notblank}")
-    @Size(min = 3, max = 20)
+    @Size(min = 3, max = 20 , message="{formation.themeFormation.size}")
     private String themeFormation;
 
-    @NotNull(message = "{formation.libelleFormation.notnull}")
     @NotBlank(message = "{formation.libelleFormation.notblank}")
     @Size(min = 3, max = 300)
     private String libelleFormation;

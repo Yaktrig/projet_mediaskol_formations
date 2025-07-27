@@ -1,131 +1,229 @@
 <app-header></app-header>
 <main class="pb-16">
-  <h1 class="">Ajouter une session de formation présentiel</h1>
+  <h1 class="">Ajouter une session de formation en présentiel</h1>
 
   <div class="space-y-12">
+    <!-- Formulaire -->
     <div
-      class="bg-[var(--color-bg-form)] border-[1.5px]  shadow-md rounded-lg px-4 py-6 m-4">
+      class="bg-[var(--color-bg-form)] border-[1.5px]  shadow-md rounded-lg px-4 py-6 m-4 max-w-7xl mx-auto">
 
-      <!-- Ligne 1  -->
-      <div class="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-        <div class="sm:col-span-2 sm:col-start-1">
-          <label for="typeFormation" class="block text-sm/6 font-medium ">Type de formation</label>
-          <div class="mt-2">
+      <div class="mt-5 grid grid-cols-3 gap-4">
+
+        <!-- Colonne 1 - 7 rangs -->
+        <div class="space-y-4">
+
+          <!-- rang 1 -->
+          <div>
+            <label for="typeFormation" class="block text-sm/6 font-medium ">Type de formation</label>
             <select id="typeFormation" name="typeFormation"
-                    class="col-start-1 row-start-1 w-full appearance-none rounded-md  py-1.5 pr-8 pl-3
-                    bg-pink-50 text-base text-[var(--color-text-input)] outline-1 -outline-offset-1  focus:outline-2 focus:-outline-offset-2
-                    focus:outline-indigo-600 sm:text-sm/6">
+                    class="min-w-64 rounded-md  py-1.5 pr-8 pl-3 bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6">
               <option>Présentiel</option>
               <option>Distanciel</option>
             </select>
           </div>
-        </div>
+          <!-- rang 2 -->
+          <div className="">
+            <label for="noYoda" class="block text-sm/6">N°YODA</label>
+            <div class="mt-2">
+              <input id="noYoda" type="text" name="noYoda"
+                     class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
+                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6"/>
+            </div>
+          </div>
 
-        <div class="sm:col-span-2">
-          <label for="themeSessionF" class="block text-sm/6 font-medium ">Thème</label>
-          <div class="mt-2">
-            <select id="themeSessionF" name="themeSessionF"
-                    class="col-start-1 row-start-1 w-full appearance-none rounded-md  py-1.5 pr-8 pl-3
-                    bg-pink-50 text-[var(--color-text-input)] outline-1 -outline-offset-1  focus:outline-2 focus:-outline-offset-2
-                    focus:outline-indigo-600 sm:text-sm/6">
-              <!-- boucler sur les thèmes en présentiel -->
-            </select>
+          <!-- rang 3 -->
+          <div className="">
+            <label for="intituleSessionF" class="block text-sm/6 font-medium ">Intituté de la session de
+              formation</label>
+            <div class="mt-2">
+              <input id="intituleSessionF" type="text" name="intituleSessionF"
+                     class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
+                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6"
+                     title="Intitulé de la session de formation"/>
+            </div>
+          </div>
+          <!-- rang 4 -->
+          <div className="">
+            <label for="ttDossier" class="block text-sm/6 font-medium ">Dossier traité par</label>
+            <div class="mt-2">
+              <select id="ttDossier" name="ttDossier"
+                      class="min-w-64 rounded-md  py-1.5 pr-8 pl-3 bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6"
+                      title="Dossier traité par">
+                <option value="">Elodie</option>
+                <option value="">Emmanuelle</option>
+                <option value="">Béatrice</option>
+                <option value="">Johanne</option>
+                <option>- - -</option>
+              </select>
+            </div>
+          </div>
+          <!-- rang 5 -->
+          <div className="">
+            <label for="BI" class="block text-sm/6 font-medium ">Bulletin d'inscription</label>
+            <div class="mt-2">
+              <select id="BI" name="BI"
+                      class="min-w-64 rounded-md  py-1.5 pr-8 pl-3 bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6"
+                      title="Bulletin d'inscription">
+                <option value="1">OUI</option>
+                <option value="0">NON</option>
+              </select>
+            </div>
+          </div>
+          <!-- rang 6 -->
+          <div className="">
+            <label for="dateLimiteYoda" class="block text-sm/6 font-medium ">Date limite Yoda</label>
+            <div class="mt-2">
+              <input id="dateLimiteYoda" type="text" name="dateLimiteYoda"
+                     class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
+                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6"
+                     title="Date limite Yoda"/>
+            </div>
+          </div>
+          <!-- rang 7 -->
+          <div className="">7</div>
+        </div>
+        <!-- Fin colonne 1-->
+
+        <!-- Colonne 2 - 7 rangs -->
+        <div class="space-y-4">
+          <!-- rang 1 - Thème récupéré parmi la liste des formations en présentiel-->
+          <div className="">
+            <label for="themeSessionF" class="block text-sm/6 font-medium ">Thème de la formation</label>
+            <div class="mt-2">
+              <select id="themeSessionF" name="themeSessionF"
+                      class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
+                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6" title="Thème de la formation">
+                <!-- boucler sur les thèmes en présentiel -->
+                <option></option>
+              </select>
+            </div>
+          </div>
+          <!-- rang 2 - Libellé récupéré parmi la liste des formations en présentiel ou afficher en fonction du thème ? -->
+          <div className="">
+            <label for="intituleFormation" class="block text-sm/6">Intitulé de la formation</label>
+            <div class="mt-2">
+              <input id="intituleFormation" type="text" name="intituleFormation"
+                     class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
+                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6" title="Intitulé de la formation"/>
+            </div>
+          </div>
+          <!-- rang 3 -->
+          <div className="">
+            <label for="noDepartement" class="block text-sm/6 font-medium ">Département</label>
+            <div class="mt-2">
+              <select id="noDepartement" name="noDepartement"
+                      class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
+                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6"
+                      title="Numéro des départements bretons.">
+                <option value="22">22</option>
+                <option value="29">29</option>
+                <option value="35">35</option>
+                <option value="56">56</option>
+              </select>
+            </div>
+          </div>
+          <!-- rang 4 -->
+          <div className="">
+            <label for="lieuFormation" class="block text-sm/6">Lieu de la formation</label>
+            <div class="mt-2">
+              <input id="lieuFormation" type="text" name="lieuFormation"
+                     class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
+                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6" title="Lieu de la formation"/>
+            </div>
+          </div>
+          <!-- rang 5 -->
+          <div className="">
+            <label for="dureeFormation" class="block text-sm/6">Durée total en heure</label>
+            <div class="mt-2">
+              <input id="dureeFormation" type="number" name="dureeFormation" min="0" max="100" step="1"
+                     class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
+                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6"
+                     title="Durée total en heure de la formation"/>
+            </div>
+          </div>
+          <!-- rang 6 -->
+          <div className="">
+            <label for="commanditaire" class="block text-sm/6">Commanditaire</label>
+            <div class="mt-2">
+              <input id="commanditaire" type="text" name="commanditaire"
+                     class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
+                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6"
+                     title="Commanditaire de la formation"/>
+            </div>
+          </div>
+          <!-- rang 7 -->
+          <div className="">
+            <label for="RPE" class="block text-sm/6">Confirmation au RPE</label>
+            <div class="mt-2">
+              <input id="RPE" type="text" name="RPE"
+                     class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
+                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6" title="Confirmation au RPE"/>
+            </div>
           </div>
         </div>
+        <!-- Fin colonne 2-->
 
-        <div class="sm:col-span-2">
-          <label for="nbJournee" class="block text-sm/6 ">Nombre de journées</label>
-          <div class="mt-2">
-            <input id="nbJournee" type="number" name="nbJournee" step="1" min="0" max="5"
-                   class="block w-full rounded-md px-3 py-1.5 bg-pink-50 text-[var(--color-text-input)] outline-1 -outline-offset-1 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"/>
+
+        <!-- 3ème colonne - avec au minimum 2 rangs jusqu'à 7 rangs -->
+        <div class="space-y-4">
+          <!-- rang 1 -->
+          <div className="">
+            <label for="nbJournee" class="block text-sm/6 ">Nombre de journées</label>
+            <div class="mt-2">
+              <input id="nbJournee" type="number" name="nbJournee" step="1" min="0" max="5"
+                     class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
+                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6"/>
+            </div>
           </div>
+          <!-- rang 2 -->
+          <div className="">
+            <label for="journee1" class="text-sm/6 font-bold text-[var(--color-bg-button)]">Journée 1</label>
+            <div class="flex items-center gap-2 w-full">
+              <label for="dateJournee1" class="text-sm/6 min-w-16">Date</label>
+              <input id="dateJournee1" type="date" name="dateJournee1"
+                     class="min-w-56 rounded-md  py-1.5 pr-8 pl-3
+                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6"/>
+            </div>
+            <div class="flex items-center gap-2 w-full">
+              <label for="formateurJourneeN" class="text-sm/6 min-w-16">Formateur</label>
+              <select id="formateurJourneeN" name="formateurJourneeN"
+                      class="min-w-56 rounded-md  py-1.5 pr-8 pl-3
+                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6">
+                <!-- boucler sur les thèmes en présentiel -->
+              </select>
+            </div>
+            <div class="flex items-center gap-2 w-full">
+              <label for="SalleJourneeN" class="text-sm/6 min-w-16">Salle</label>
+              <select id="SalleJourneeN" name="SalleJourneeN"
+                      class="min-w-56 rounded-md  py-1.5 pr-8 pl-3
+                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6">
+                <!-- boucler sur les thèmes en présentiel -->
+              </select>
+            </div>
+          </div>
+          <!-- rang 3 -->
+          <div className="">3</div>
+          <!-- rang 4 -->
+          <div className="">4</div>
+          <!-- rang 5 -->
+          <div className="">5</div>
+          <!-- rang 6 -->
+          <div className="">6</div>
+          <!-- rang 7 -->
+          <div className="">7</div>
         </div>
+        <!-- Fin colonne 3 -->
       </div>
-      <!-- Fin ligne 1 -->
 
-      <!-- Ligne 2  -->
-      <div class="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-        <div class="sm:col-span-2 sm:col-start-1">
-          <label for="noYoda" class="block text-sm/6">N°YODA</label>
-          <div class="mt-2">
-            <input id="noYoda" type="text" name="noYoda"
-                   class="block w-full rounded-md  px-3 py-1.5 bg-pink-50 text-[var(--color-text-input)] outline-1 -outline-offset-1  placeholder:text-[var(--color-text-input)]
-                   focus:outline-1 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"/>
-          </div>
-        </div>
-
-        <!-- Information récupérée à partir du thème choisi et la bdd"-->
-        <div class="sm:col-span-2">
-          <label for="intituleFormation" class="block text-sm/6">Intitulé de la formation</label>
-          <div class="mt-2">
-            <input id="intituleFormation" type="text" name="intituleFormation"
-                   class="block w-full rounded-md  px-3 py-1.5 bg-pink-50 text-[var(--color-text-input)] outline-1 -outline-offset-1  placeholder:text-[var(--color-text-input)]
-                   focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"/>
-          </div>
-        </div>
-
-        <!-- boucler sur le nombre de journées choisies -->
-        <div class="sm:col-span-2">
-          <label for="journee1" class="block text-sm/6 font-bold">Journée 1</label>
-          <div class="mt-1">
-            <label for="dateJournee1" class="block text-sm/6">Date</label>
-            <input id="dateJournee1" type="date" name="dateJournee1"
-                   class="block w-full rounded-md px-3 py-1.5 bg-pink-50 text-[var(--color-text-input)] outline-1 -outline-offset-1 placeholder:text-[var(--color-text-input)] focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"/>
-          </div>
-          <div class="mt-1">
-            <label for="formateurJourneeN" class="block text-sm/6">Formateur</label>
-            <select id="formateurJourneeN" name="formateurJourneeN"
-                    class="col-start-1 row-start-1 w-full appearance-none rounded-md  py-1.5 pr-8 pl-3 bg-pink-50 text-[var(--color-text-input)] outline-1 -outline-offset-1  focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
-              <!-- boucler sur les thèmes en présentiel -->
-            </select>
-          </div>
-          <div class="mt-1">
-            <label for="SalleJourneeN" class="block text-sm/6 ">Salle</label>
-            <select id="SalleJourneeN" name="SalleJourneeN"
-                    class="col-start-1 row-start-1 w-full appearance-none rounded-md  py-1.5 pr-8 pl-3 bg-pink-50 text-[var(--color-text-input)] outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
-              <!-- boucler sur les thèmes en présentiel -->
-            </select>
-          </div>
-        </div>
-      </div>
-      <!-- Fin ligne 2 -->
-
-      <!-- Ligne 3  -->
-      <div class="mt-5 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-        <div class="sm:col-span-2 sm:col-start-1">
-          <label for="intituleSessionF" class="block text-sm/6 font-medium ">Intituté de la session de formation</label>
-          <div class="mt-2">
-            <input id="intituleSessionF" type="text" name="intituleSessionF"
-                   class="block w-full rounded-md px-3 py-1.5 bg-pink-50 text-[var(--color-text-input)] outline-1 -outline-offset-1 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"/>
-          </div>
-        </div>
-      </div>
-
-      <div class="sm:col-span-2">
-        <label for="noDepartement" class="block text-sm/6 font-medium ">Département</label>
-        <div class="mt-2">
-          <select id="noDepartement" name="noDepartement"
-                  class="col-start-1 row-start-1 w-full appearance-none rounded-md  py-1.5 pr-8 pl-3
-                    bg-pink-50 text-[var(--color-text-input)] outline-1 -outline-offset-1  focus:outline-2 focus:-outline-offset-2
-                    focus:outline-indigo-600 sm:text-sm/6">
-            <option>22</option>
-            <option>29</option>
-            <option>35</option>
-            <option>56</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="sm:col-span-2">
-        <label for="nbJournee" class="block text-sm/6 ">Nombre de journées</label>
-        <div class="mt-2">
-          <input id="nbJournee" type="number" name="nbJournee" step="1" min="0" max="5"
-                 class="block w-full rounded-md px-3 py-1.5 bg-pink-50 text-[var(--color-text-input)] outline-1 -outline-offset-1 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"/>
-        </div>
+      <div>
+        <button routerLink="/enregistrerSessionFormationPresentiel"
+                class="min-w-64 bg-[var(--color-bg-button)] text-[var(--color-text-button)] py-2 rounded
+        hover:bg-[var(--color-bg-button-hover)] hover:text-[var(--color-text-button-hover)] text-center pl-6 rounded-md">
+          Enregistrer
+        </button>
       </div>
     </div>
-    <!-- Fin ligne 3 -->
-
+    <!-- Fin du formulaire -->
   </div>
 
 </main>
