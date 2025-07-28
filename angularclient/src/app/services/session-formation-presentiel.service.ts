@@ -12,7 +12,7 @@ import {SessionFormationRespDTO} from '../dto/sessionFormation/session-formation
 @Injectable({
   providedIn: 'root'
 })
-export class SessionFormationServicePresentiel {
+export class SessionFormationPresentielService {
   private apiUrl = 'http://localhost:8080/mediaskolFormation/sessionsFormations';
 
 

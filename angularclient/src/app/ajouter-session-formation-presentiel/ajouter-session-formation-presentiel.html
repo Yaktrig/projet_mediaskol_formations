@@ -88,23 +88,27 @@
         <div class="space-y-4">
           <!-- rang 1 - Thème récupéré parmi la liste des formations en présentiel-->
           <div className="">
-            <label for="themeSessionF" class="block text-sm/6 font-medium ">Thème de la formation</label>
+            <label for="intituleFormation" class="block text-sm/6">Intitulé de la formation</label>
             <div class="mt-2">
-              <select id="themeSessionF" name="themeSessionF"
+              <select [(ngModel)]="idFormationChoisie" id="idFormationChoisie" type="text" name="idFormationChoisie"
                       class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
-                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6" title="Thème de la formation">
-                <!-- boucler sur les thèmes en présentiel -->
-                <option></option>
+                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6" title="Intitulé de la formation">
+                @for (formation of formations; track formation.idFormation) {
+                  <option value="{{formation.idFormation}}">
+                    {{ formation.libelleFormation }}
+                  </option>
+                }
               </select>
             </div>
           </div>
           <!-- rang 2 - Libellé récupéré parmi la liste des formations en présentiel ou afficher en fonction du thème ? -->
           <div className="">
-            <label for="intituleFormation" class="block text-sm/6">Intitulé de la formation</label>
+            <label for="themeSessionF" class="block text-sm/6 font-medium ">Thème de la formation</label>
             <div class="mt-2">
-              <input id="intituleFormation" type="text" name="intituleFormation"
-                     class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
-                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6" title="Intitulé de la formation"/>
+              <input id="themeSessionF" name="themeSessionF" [value]="themeFormationSelectionnee"
+                      class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
+                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6" title="Thème de la formation"
+              readonly/>
             </div>
           </div>
           <!-- rang 3 -->
