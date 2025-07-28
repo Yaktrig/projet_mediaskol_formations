@@ -20,9 +20,9 @@
             <a class="text-[var(--color-title-purple)] mx-2" (click)="loginUser()">| Se connecter</a>
 
             <!-- Si utilisateur connecté-->
-            <a class="text-[var(--color-title-purple)] mx-2" routerLink="/contact">| Se déconnecter</a>
+            <a class="text-[var(--color-title-purple)] mx-2" (click)="logout()">| Se déconnecter</a>
             <!-- Si utilisateur non connecté et sans compte ou sans compte actif-->
-            <a class="text-[var(--color-title-purple)] mx-2" routerLink="/contact">| Créer un compte</a>
+            <a class="text-[var(--color-title-purple)] mx-2" (click)="subscribeUser()">| Créer un compte</a>
 
         </div>
     </div>

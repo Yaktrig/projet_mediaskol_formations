@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {Router} from '@angular/router';
 import {UserService} from '../services/user.service';
 import {FormsModule} from '@angular/forms';
+import {firstValueFrom} from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -18,12 +19,14 @@ export class LoginComponent {
   error: string = '';
   public rememberMe = false;
 
-  constructor(private auth: UserService, private router: Router) {}
+  constructor(private auth: UserService, private router: Router) {
+  }
 
 
   ngOnInit() {
     this.autoLogin();
   }
+
   async autoLogin() {
     if (await this.auth.autologin()) {
       await this.router.navigate(["listeSessionFormationPresentiel"]);
@@ -34,39 +37,41 @@ export class LoginComponent {
     this.error = "";
     if (this.pseudo.length < 3) {
       this.error = "Le login doit faire au moins 3 caractères";
-    } else if (this.password.length < 6) {
+      return;
+    }
+    if (this.password.length < 6) {
       this.error = "Le mot de passe doit faire au moins 6 caractères";
-    } else {
-      try {
-        await this.auth.login(this.pseudo, this.password, this.rememberMe);
-        await this.router.navigate(["summary"]);
-      } catch (err) {
-        console.error(err);
-        this.error = "Erreur lors de la connexion : " + err;
-      }
+      return;
+    }
+    try {
+      await firstValueFrom(this.auth.login(this.pseudo, this.password, this.rememberMe));
+      await this.router.navigate(["listeSessionFormationPresentiel"]);
+    } catch (err: any) {
+      console.error(err);
+      this.error = "Erreur lors de la connexion : " + (err.message || err);
     }
   }
 
+
   async subscribeUser() {
     this.error = "";
+    if (this.pseudo.length < 3) {
+      this.error = "Le pseudo doit faire au moins 3 caractères.";
+      return;
+    }
+    if (this.password.length < 6) {
+      this.error = "Le mot de passe doit faire au moins 6 caractères";
+      return;
+    }
     try {
-      if (this.pseudo.length < 3) {
-        this.error = "Le pseudo doit faire au moins 3 caractères.";
-      } else if (this.password.length < 6) {
-        this.error = "Le mot de passe doit faire au moins 6 caractères";
-      } else {
-        await this.auth.register(this.pseudo, this.password);
-      }
-    } catch (err) {
+      await this.auth.register(this.pseudo, this.password);
+    } catch (err: any) {
       console.error(err);
-      this.error = "Erreur lors de l'enregistrement : " + err;
+      this.error = "Erreur lors de l'enregistrement : " + (err.message || err);
     }
   }
 
   onSubmit() {
-    this.auth.login(this.pseudo, this.password).subscribe({
-      next: () => this.router.navigate(['']),
-      error: () => this.error = 'Identifiant ou mot de passe invalide'
-    });
+    this.loginUser();
   }
 }
