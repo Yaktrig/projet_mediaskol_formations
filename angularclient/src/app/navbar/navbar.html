@@ -17,7 +17,7 @@
             <a class="text-[var(--color-title-purple)] mx-2" routerLink="/contact">| Mon profil</a>
 
             <!-- Si utilisateur non connecté ayant un compte existant -->
-            <a class="text-[var(--color-title-purple)] mx-2" routerLink="/contact">| Se connecter</a>
+            <a class="text-[var(--color-title-purple)] mx-2" (click)="loginUser()">| Se connecter</a>
 
             <!-- Si utilisateur connecté-->
             <a class="text-[var(--color-title-purple)] mx-2" routerLink="/contact">| Se déconnecter</a>

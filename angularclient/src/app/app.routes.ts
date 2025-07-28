@@ -1,13 +1,30 @@
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
 import {ListeSessionFormationPresentiel} from './liste-session-formation-presentiel/liste-session-formation-presentiel';
-import {AjouterSessionFormationPresentiel} from './ajouter-session-formation-presentiel/ajouter-session-formation-presentiel';
+import {
+  AjouterSessionFormationPresentiel
+} from './ajouter-session-formation-presentiel/ajouter-session-formation-presentiel';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {JwtInterceptor} from './jwt/jwt-interceptor';
+import {UserGuard} from './guards/user-guard';
+import {LoginComponent} from './login/login';
 
 export const routes: Routes = [
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: 'listeSessionFormationPresentiel',
+    component: ListeSessionFormationPresentiel,
+    canActivate: [UserGuard]
+  },
+  {
+    path: 'ajouterSessionFormationPresentiel',
+    component: AjouterSessionFormationPresentiel,
+    canActivate: [UserGuard]
+  },
 
-
-  {path: '', component: ListeSessionFormationPresentiel},
-  {path: 'ajouterSessionFormationPresentiel', component: AjouterSessionFormationPresentiel},
   //{ path: 'apprenants', component: ListeApprenants},
   // { path: 'formations', component: ListeFormations},
   // { path: 'sessionsFormation', component: SessionFormations}
@@ -16,6 +33,10 @@ export const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+  ]
 })
 
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

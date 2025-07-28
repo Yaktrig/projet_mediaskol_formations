@@ -1,9 +1,7 @@
 package fr.mediaskol.projet.bo;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import fr.mediaskol.projet.bo.salarie.Salarie;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,10 +22,14 @@ public class Utilisateur implements UserDetails {
 
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="USER_ID")
+    private Long id;
+
     /**
      * Le pseudo correspond à l'email du salarié
      */
-    @Id
     @Column(name = "LOGIN", nullable = false, length = 255)
     private String pseudo;
 
@@ -52,6 +54,14 @@ public class Utilisateur implements UserDetails {
     @Column(name="ROLE", length = 15, nullable = false)
     private String authority;
 
+
+    /**
+     * Association OneToOne entre l'utilisateur et le salarié
+     * Un utilisateur est un salarié - ils ont le même mail
+     */
+    @OneToOne
+    @JoinColumn(name="SALARIE_ID")
+    private Salarie salarie;
 
     /**
      * Rôles de l'utilisateur
