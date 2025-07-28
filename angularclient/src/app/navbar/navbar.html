@@ -1,31 +1,41 @@
 <!--Barre navigation -->
-<nav class="bg-[var(--color-rose-pastel)] p-4"  >
+<nav class="bg-[var(--color-rose-pastel)] p-4">
 
-    <div class="flex items-center justify-between">
-        <div class="">
-            <img src="assets/images/logo_mediaskol.png" width="100" height="120" alt="Logo Mediaskol">
-        </div>
-
-        <div class="flex space-x-4">
-            <a class="text-[var(--color-title-purple)] font-bold" routerLink="/">Accueil</a>
-            <a class="text-[var(--color-title-purple)] mx-2" routerLink="/about">| Liste des formations</a>
-            <a class="text-[var(--color-title-purple)] mx-2" routerLink="/contact">| Liste des apprenants</a>
-            <a class="text-[var(--color-title-purple)] mx-2" routerLink="/contact">| Liste des formateurs</a>
-            <a class="text-[var(--color-title-purple)] mx-2" routerLink="/contact">| Liste des salles</a>
-
-            <!-- Si utilisateur connecté -->
-            <a class="text-[var(--color-title-purple)] mx-2" routerLink="/contact">| Mon profil</a>
-
-            <!-- Si utilisateur non connecté ayant un compte existant -->
-            <a class="text-[var(--color-title-purple)] mx-2" (click)="loginUser()">| Se connecter</a>
-
-            <!-- Si utilisateur connecté-->
-            <a class="text-[var(--color-title-purple)] mx-2" (click)="logout()">| Se déconnecter</a>
-            <!-- Si utilisateur non connecté et sans compte ou sans compte actif-->
-            <a class="text-[var(--color-title-purple)] mx-2" (click)="subscribeUser()">| Créer un compte</a>
-
-        </div>
+  <div class="flex items-center justify-between">
+    <div class="">
+      <img src="assets/images/logo_mediaskol.png" width="100" height="120" alt="Logo Mediaskol">
     </div>
+
+    <div class="flex space-x-4">
+      <a class="text-[var(--color-title-purple)] font-bold"
+         routerLink="/listeSessionFormationPresentiel" routerLinkActive="font-bold"  [routerLinkActiveOptions]="{ exact: true }">Accueil</a>
+      <a class="text-[var(--color-title-purple)] mx-2 hover:font-bold" routerLink="/formations" routerLinkActive="font-bold">| Liste des formations</a>
+      <a class="text-[var(--color-title-purple)] mx-2 hover:font-bold" routerLink="/apprenants" routerLinkActive="font-bold">| Liste des apprenants</a>
+      <a class="text-[var(--color-title-purple)] mx-2 hover:font-bold" routerLink="/formateurs" routerLinkActive="font-bold">| Liste des formateurs</a>
+      <a class="text-[var(--color-title-purple)] mx-2 hover:font-bold" routerLink="/salles" routerLinkActive="font-bold">| Liste des salles</a>
+
+      <!-- Si utilisateur connecté -->
+      @if(isLoggedIn){
+        <a class="text-[var(--color-title-purple)] mx-2 hover:font-bold" routerLink="/profil" routerLinkActive="font-bold">| Mon profil</a>
+      }
+
+      <!-- Si utilisateur non connecté ayant un compte existant -->
+      @if(!isLoggedIn){
+        <a class="text-[var(--color-title-purple)] mx-2 cursor-pointer hover:font-bold" (click)="loginUser()" routerLinkActive="font-bold">| Se connecter</a>
+      }
+
+      <!-- Si utilisateur connecté-->
+      @if (isLoggedIn) {
+        <a class="text-[var(--color-title-purple)] mx-2 cursor-pointer hover:font-bold" (click)="logout()" routerLinkActive="font-bold">| Se déconnecter</a>
+      }
+
+      <!-- Si utilisateur non connecté et sans compte ou sans compte actif-->
+      @if(!isLoggedIn){
+        <a class="text-[var(--color-title-purple)] mx-2 cursor-pointer hover:font-bold" (click)="subscribeUser()" routerLinkActive="font-bold">| Créer un compte</a>
+      }
+
+    </div>
+  </div>
 </nav>
 
 

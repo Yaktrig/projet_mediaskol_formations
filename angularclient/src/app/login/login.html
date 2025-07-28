@@ -1,15 +1,59 @@
-<!-- src/app/login/login.component.html -->
-<form (ngSubmit)="onSubmit()">
-  <div>
-    <label>Pseudo :</label>
-    <input type="text" [(ngModel)]="pseudo" name="pseudo" required/>
+<app-header></app-header>
+<main class="pb-16">
+
+  <h1 class="">Connexion</h1>
+  <div class="space-y-12">
+    <!-- Formulaire -->
+    <div
+      class="bg-[var(--color-bg-form)] border-[1.5px]  shadow-md rounded-lg px-4 py-6 m-4 max-w-3xl mx-auto">
+
+      <!-- Formulaire de connexion -->
+      <form (ngSubmit)="onSubmit()">
+
+        <!-- Label et champs du pseudo  -->
+        <div class="text-center mt-8">
+          <label class="text-sm/6 font-semibold min-w-16">Adresse mail</label>
+          <input type="text" [(ngModel)]="pseudo" name="pseudo" class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
+           bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6" required
+                 title="Votre adresse mail pour se connecter" placeholder="exemple@email.com"/>
+        </div>
+
+        <!-- Label et champs du mot de passe -->
+        <div class="text-center mt-8">
+          <label class="text-sm/6 font-semibold min-w-16">Mot de passe</label>
+          <input type="password" [(ngModel)]="password" name="password" class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
+  bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6" title="Votre mot de passe" required/>
+        </div>
+
+        <div class="text-center mt-4">
+          <label for="rememberMe">Se souvenir de moi</label>
+          <input id="rememberMe" type="checkbox" name="rememberMe" [(ngModel)]="rememberMe">
+        </div>
+
+        <!-- Bouton de connexion -->
+        <div class="text-center mt-8">
+          <button type="submit" class="min-w-64 bg-[var(--color-bg-button)] text-[var(--color-text-button)] py-2 rounded
+        hover:bg-[var(--color-bg-button-hover)] hover:text-[var(--color-text-button-hover)] text-center pl-6 rounded-md
+         ml-8" title="Bouton de connexion">Connexion
+          </button>
+        </div>
+
+        <!-- Message d'erreur si la connexion ne fonctionne pas-->
+        @if (error) {
+          <div style="color:red">{{ error }}</div>
+        }
+
+      </form>
+      <!-- Bouton pour créer un compte -->
+      <div class="text-center mt-8">
+        <button type="button" routerLink="/creerCompte" class="min-w-64 bg-[var(--color-bg-button)] text-[var(--color-text-button)] py-2 rounded
+        hover:bg-[var(--color-bg-button-hover)] hover:text-[var(--color-text-button-hover)] text-center pl-6 rounded-md
+         ml-8" title="Bouton de connexion">Créer un compte
+        </button>
+      </div>
+
+    </div>
   </div>
-  <div>
-    <label>Mot de passe :</label>
-    <input type="password" [(ngModel)]="password" name="password" required/>
-  </div>
-  <button type="submit">Connexion</button>
-  @if (error) {
-    <div style="color:red">{{ error }}</div>
-  }
-</form>
+
+</main>
+<app-footer></app-footer>

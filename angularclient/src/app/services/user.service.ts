@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {tap} from 'rxjs/operators';
-import {firstValueFrom, Observable, throwError} from 'rxjs';
+import {firstValueFrom, Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +10,7 @@ export class UserService {
   private baseUrl = 'http://localhost:8080/mediaskolFormation/auth';
   private registerUrl = 'http://localhost:8080/enregistrerUtilisateur';
   private tokenKey = 'jwt-token';
-  private usernameKey = 'username';
-  private userIdKey = 'utilisateurID';
+  private usernameKey = 'pseudo';
   private passwordKey = 'password';
 
   constructor(private http: HttpClient) {
@@ -49,9 +48,7 @@ export class UserService {
     }
   }
 
-  getUserId(): string | null {
-    return localStorage.getItem(this.userIdKey);
-  }
+
 
   async autologin(): Promise<boolean> {
     const username = localStorage.getItem(this.usernameKey);
@@ -80,7 +77,6 @@ export class UserService {
     localStorage.removeItem(this.tokenKey);
     localStorage.removeItem(this.usernameKey);
     localStorage.removeItem(this.passwordKey);
-    localStorage.removeItem(this.userIdKey);
   }
 }
 

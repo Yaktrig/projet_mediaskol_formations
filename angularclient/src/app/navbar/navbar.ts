@@ -1,12 +1,14 @@
-import { Component } from '@angular/core';
-import {RouterLink} from '@angular/router';
+import {Component} from '@angular/core';
+import {Router, RouterLink, RouterLinkActive} from '@angular/router';
 import {UserService} from '../services/user.service';
+import {MessageService} from '../services/message.service';
 
 
 @Component({
   selector: 'app-navbar',
   imports: [
-    RouterLink
+    RouterLink,
+    RouterLinkActive
   ],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css'
@@ -15,7 +17,7 @@ export class Navbar {
 
   isLoggedIn = false;
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private router: Router, private messageService: MessageService) {
     this.checkLogin();
   }
 
@@ -36,8 +38,8 @@ export class Navbar {
   logout() {
     this.userService.logout();
     this.isLoggedIn = false;
-    // Eventuellement rediriger vers accueil ou page login
-    console.log('Déconnexion effectuée');
+    this.router.navigate(['/login']);
+    this.messageService.showSuccess("Vous avez été déconnecté avec succès.")
   }
 
 }

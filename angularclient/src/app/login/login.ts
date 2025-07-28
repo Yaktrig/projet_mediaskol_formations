@@ -1,13 +1,18 @@
 import {Component} from '@angular/core';
-import {Router} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {UserService} from '../services/user.service';
 import {FormsModule} from '@angular/forms';
 import {firstValueFrom} from 'rxjs';
+import {Header} from '../header/header';
+import {Footer} from '../footer/footer';
 
 @Component({
   selector: 'app-login',
   imports: [
-    FormsModule
+    FormsModule,
+    Header,
+    Footer,
+    RouterLink
   ],
   templateUrl: './login.html',
   styleUrl: './login.css'

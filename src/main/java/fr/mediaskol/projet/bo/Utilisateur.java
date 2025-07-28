@@ -22,14 +22,11 @@ public class Utilisateur implements UserDetails {
 
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="USER_ID")
-    private Long id;
 
     /**
      * Le pseudo correspond à l'email du salarié
      */
+    @Id
     @Column(name = "LOGIN", nullable = false, length = 255)
     private String pseudo;
 

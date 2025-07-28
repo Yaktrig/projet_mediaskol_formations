@@ -4,6 +4,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 :root {
 
   /* Couleur du background du header et du footer */
@@ -63,4 +64,12 @@ td {
   @apply text-[var(--color-value-tab)] border border-gray-300 px-2 py-1;
 }
 
+.snackbar-custom-success {
+  @apply bg-[#f4bf4f] text-[rgb(110,28,107)] font-bold tracking-wide;
+}
+
+
+.snackbar-custom-error {
+  @apply bg-red-600 text-white font-bold tracking-wide;
+}
 
