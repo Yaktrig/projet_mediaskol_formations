@@ -101,7 +101,7 @@ public class SessionFOADServiceImpl implements SessionFOADService {
     public SessionFormationDistanciel modifierSessionFoad(SessionFOADInputDTO dto) {
 
         // 1. Vérifier que la sessionFormationDistanciel à modifier existe
-        SessionFormationDistanciel sessionFoad = sessionFoadRepository.findById(dto.getIdSessionFormationDistanciel())
+        SessionFormationDistanciel sessionFoad = sessionFoadRepository.findById(dto.getIdSessionFormation())
                 .orElseThrow(() -> new EntityNotFoundException("SessionFormationDistanciel introuvable"));
 
 
@@ -123,7 +123,7 @@ public class SessionFOADServiceImpl implements SessionFOADService {
         // 3. Appliquer les modifications aux champs autorisés
         sessionFoad.setContratSessionFormationDistanciel(dto.getContratSessionFormationDistanciel());
         sessionFoad.setNbBlocSessionFormationDistanciel(dto.getNbBlocSessionFormationDistanciel());
-        sessionFoad.setDateDebutSession(dto.getDateDebutSessionFormationDistanciel());
+        sessionFoad.setDateDebutSession(dto.getDateDebutSession());
         sessionFoad.setDateFinSessionFormationDistanciel(dto.getDateFinSessionFormationDistanciel());
         sessionFoad.setDateRelanceSessionFormationDistanciel(dto.getDateRelanceSessionFormationDistanciel());
         sessionFoad.setCommentaireSessionFormationDistanciel(dto.getCommentaireSessionFormationDistanciel());

@@ -1,12 +1,16 @@
 package fr.mediaskol.projet.dto.sessionLieuDate;
 
 
+import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
+import fr.mediaskol.projet.bo.sessionFormation.SessionFormationDistanciel;
+import fr.mediaskol.projet.bo.sessionFormation.SessionFormationPresentiel;
 import fr.mediaskol.projet.bo.sessionLieuDate.SessionLieuDate;
 import fr.mediaskol.projet.bo.sessionLieuDate.StatutSessionLieuDate;
 import fr.mediaskol.projet.dto.formateur.SessionFormateurRespDTO;
 import fr.mediaskol.projet.dto.salle.SessionSalleRespDTO;
+import fr.mediaskol.projet.dto.sessionFormation.SessionFOADResponseDTO;
 import fr.mediaskol.projet.dto.sessionFormation.SessionFOPResponseDTO;
-import fr.mediaskol.projet.dto.sessionFormation.SessionFormationRespDTO;
+import fr.mediaskol.projet.dto.sessionFormation.SessionFormationResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,7 +35,7 @@ public class SessionLieuDateRespDTO {
     private LocalDateTime heureVisio;
     private StatutSessionLieuDate statutSessionLieuDate;
     private SessionFormateurRespDTO sessionFormateur;
-    private SessionFormationRespDTO sessionFormation;
+    private SessionFormationResponseDTO sessionFormation;
     private SessionSalleRespDTO sessionSalle;
 
     /**
@@ -52,11 +56,17 @@ public class SessionLieuDateRespDTO {
             this.sessionFormateur = null;
         }
 
-        if(sessionLieuDate.getSessionFormation() != null){
-            this.sessionFormation = new SessionFormationRespDTO(sessionLieuDate.getSessionFormation());
+
+        SessionFormation formation = sessionLieuDate.getSessionFormation();
+
+        if (formation instanceof SessionFormationPresentiel) {
+            this.sessionFormation = new SessionFOPResponseDTO((SessionFormationPresentiel) formation);
+        } else if (formation instanceof SessionFormationDistanciel) {
+            this.sessionFormation = new SessionFOADResponseDTO((SessionFormationDistanciel) formation);
         } else {
             this.sessionFormation = null;
         }
+
 
         if(sessionLieuDate.getSessionSalle() != null){
             this.sessionSalle = new  SessionSalleRespDTO(sessionLieuDate.getSessionSalle());

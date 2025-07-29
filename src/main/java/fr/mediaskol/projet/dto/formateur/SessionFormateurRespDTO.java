@@ -2,8 +2,12 @@ package fr.mediaskol.projet.dto.formateur;
 
 import fr.mediaskol.projet.bo.formateur.SessionFormateur;
 import fr.mediaskol.projet.bo.formateur.StatutSessionFormateur;
+import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
+import fr.mediaskol.projet.bo.sessionFormation.SessionFormationDistanciel;
+import fr.mediaskol.projet.bo.sessionFormation.SessionFormationPresentiel;
+import fr.mediaskol.projet.dto.sessionFormation.SessionFOADResponseDTO;
 import fr.mediaskol.projet.dto.sessionFormation.SessionFOPResponseDTO;
-import fr.mediaskol.projet.dto.sessionFormation.SessionFormationRespDTO;
+import fr.mediaskol.projet.dto.sessionFormation.SessionFormationResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,7 +26,7 @@ public class SessionFormateurRespDTO {
     private String commentaireSessionFormateur;
     private StatutSessionFormateur statutSessionFormateur;
     private FormateurResponseDTO formateur;
-    private SessionFormationRespDTO sessionFormation;
+    private SessionFormationResponseDTO sessionFormation;
 
     /**
      * Constructeur
@@ -31,6 +35,15 @@ public class SessionFormateurRespDTO {
         this.idSessionFormateur = sessionFormateur.getIdSessionFormateur();
         this.commentaireSessionFormateur = sessionFormateur.getCommentaireSessionFormateur();
         this.formateur = new  FormateurResponseDTO(sessionFormateur.getFormateur());
-        this.sessionFormation = new SessionFormationRespDTO(sessionFormateur.getSessionFormation());
+
+        SessionFormation formation = sessionFormateur.getSessionFormation();
+
+        if (formation instanceof SessionFormationPresentiel) {
+            this.sessionFormation = new SessionFOPResponseDTO((SessionFormationPresentiel) formation);
+        } else if (formation instanceof SessionFormationDistanciel) {
+            this.sessionFormation = new SessionFOADResponseDTO((SessionFormationDistanciel) formation);
+        } else {
+            this.sessionFormation = null;
+        }
     }
 }

@@ -1,5 +1,6 @@
 package fr.mediaskol.projet.dal.sessionFormation;
 
+import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormationDistanciel;
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormationPresentiel;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -33,29 +34,29 @@ public interface SessionFOADRepository extends JpaRepository<SessionFormationDis
 //            "LOWER(dep.numDepartement) LIKE LOWER(CONCAT('%', :termeRecherche, '%'))")
 //    List<SessionFormationPresentiel> findSessionFormationsBySearchText(@Param("termeRecherche") String termeRecherche);
 
-    /**
-     * Requête qui permet de retourner une session de formation en distanciel qui commence à la date saisie
-     *
-     * @param dateDebutSession
-     * @return
-     */
-    List<SessionFormationDistanciel> findByDateDebutSession(LocalDate dateDebutSession);
+//    /**
+//     * Requête qui permet de retourner une session de formation en distanciel qui commence à la date saisie
+//     *
+//     * @param dateDebutSession
+//     * @return
+//     */
+//    List<SessionFormationDistanciel> findByDateDebutSession(LocalDate dateDebutSession);
 
 
-    /**
-     * Requête qui retourne les sessions de formation en présentiel compris entre deux dates (début et fin)
-     *
-     * @param dateDebutSession
-     * @param dateFinSession
-     */
-    List<SessionFormationDistanciel> findbydateDebutSessionBetween(LocalDate dateDebutSession, LocalDate dateFinSession);
-
-
-    /**
-     * Requête qui retourne les sessions de formation en présentiel compris entre deux dates (début et fin)
-     *
-     * @param dateDebutSession
-     * @param dateFinSession
-     */
-    List<SessionFormationDistanciel> findbydateFinSessionBetween(LocalDate dateDebutSession, LocalDate dateFinSession);
+//    /**
+//     * Requête qui retourne les sessions de formation en présentiel compris entre deux dates (début et fin)
+//     *
+//     * @param dateDebutSession
+//     * @param dateFinSession
+//     */
+//    List<SessionFormationDistanciel> findbydateDebutSessionBetween(LocalDate dateDebutSession, LocalDate dateFinSession);
+//
+//
+//    /**
+//     * Requête qui retourne les sessions de formation en présentiel compris entre deux dates (début et fin)
+//     *
+//     * @param dateDebutSession
+//     * @param dateFinSession
+//     */
+//    List<SessionFormationDistanciel> findbydateFinSessionBetween(LocalDate dateDebutSession, LocalDate dateFinSession);
 }

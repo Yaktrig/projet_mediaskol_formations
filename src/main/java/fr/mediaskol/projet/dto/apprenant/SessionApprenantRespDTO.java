@@ -2,9 +2,12 @@ package fr.mediaskol.projet.dto.apprenant;
 
 import fr.mediaskol.projet.bo.apprenant.SessionApprenant;
 import fr.mediaskol.projet.bo.apprenant.StatutSessionApprenant;
+import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
+import fr.mediaskol.projet.bo.sessionFormation.SessionFormationDistanciel;
+import fr.mediaskol.projet.bo.sessionFormation.SessionFormationPresentiel;
 import fr.mediaskol.projet.dto.sessionFormation.SessionFOADResponseDTO;
 import fr.mediaskol.projet.dto.sessionFormation.SessionFOPResponseDTO;
-import fr.mediaskol.projet.dto.sessionFormation.SessionFormationRespDTO;
+import fr.mediaskol.projet.dto.sessionFormation.SessionFormationResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,7 +27,7 @@ public class SessionApprenantRespDTO {
     private String modeReceptionInscription;
     private StatutSessionApprenant statutSessionApprenant;
     private ApprenantResponseDTO apprenant;
-    private SessionFormationRespDTO sessionFormation;
+    private SessionFormationResponseDTO sessionFormation;
 
 
 
@@ -38,7 +41,16 @@ public class SessionApprenantRespDTO {
         this.modeReceptionInscription = sessionApprenant.getModeReceptionInscription();
         this.statutSessionApprenant = sessionApprenant.getStatutSessionApprenant();
         this.apprenant = new ApprenantResponseDTO(sessionApprenant.getApprenant());
-        this.sessionFormation = new SessionFormationRespDTO(sessionApprenant.getSessionFormation());
+
+        SessionFormation formation = sessionApprenant.getSessionFormation();
+
+        if (formation instanceof SessionFormationPresentiel) {
+            this.sessionFormation = new SessionFOPResponseDTO((SessionFormationPresentiel) formation);
+        } else if (formation instanceof SessionFormationDistanciel) {
+            this.sessionFormation = new SessionFOADResponseDTO((SessionFormationDistanciel) formation);
+        } else {
+            this.sessionFormation = null;
+        }
 
     }
 }

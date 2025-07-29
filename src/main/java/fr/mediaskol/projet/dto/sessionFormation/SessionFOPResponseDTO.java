@@ -2,21 +2,34 @@ package fr.mediaskol.projet.dto.sessionFormation;
 
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormationPresentiel;
 
+import fr.mediaskol.projet.bo.sessionFormation.StatutSessionFormation;
 import fr.mediaskol.projet.dto.adresse.DepartementDTO;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import fr.mediaskol.projet.dto.formation.FormationResponseDTO;
+import fr.mediaskol.projet.dto.salarie.SalarieResponseDTO;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDate;
 
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-@Builder
-public class SessionFOPResponseDTO {
+@Getter
+@Setter
+@ToString(callSuper = true)
+@SuperBuilder
+public class SessionFOPResponseDTO extends SessionFormationResponseDTO {
 
-
+//    private Long idSessionFormation;
+//    private String noYoda;
+//    private String libelleSessionFormation;
+//    private String statutYoda;
+//    private LocalDate dateDebutSession;
+//    private Integer nbHeureSession;
+//    private StatutSessionFormation statutSessionFormation = StatutSessionFormation.SESSION_FORMATION_NON_COMMENCEE;
+//    private FormationResponseDTO formation;
+//    private FinSessionFormationRespDTO finSessionFormation;
+//    private SalarieResponseDTO salarie;
     private String lieuSessionFormation;
     private String commanditaire;
     private String confirmationRPE;
@@ -27,7 +40,33 @@ public class SessionFOPResponseDTO {
      */
     public SessionFOPResponseDTO(SessionFormationPresentiel sessionFOP) {
 
+//        this.idSessionFormation =  sessionFOP.getIdSessionFormation();
+//        this.noYoda = sessionFOP.getNoYoda();
+//        this.libelleSessionFormation = sessionFOP.getLibelleSessionFormation();
+//        this.statutYoda = sessionFOP.getStatutYoda();
+//        this.dateDebutSession = sessionFOP.getDateDebutSession();
+//        this.nbHeureSession = sessionFOP.getNbHeureSession();
+//        this.statutSessionFormation = sessionFOP.getStatutSessionFormation();
+//
+//        if (sessionFOP.getFormation() != null) {
+//            this.formation = new FormationResponseDTO(sessionFOP.getFormation());
+//        } else {
+//            this.formation = null;
+//        }
 
+
+//        if (sessionFOP.getFinSessionFormation() != null) {
+//            this.finSessionFormation = new FinSessionFormationRespDTO(sessionFOP.getFinSessionFormation());
+//        } else {
+//            this.finSessionFormation = null;
+//        }
+//
+//
+//        if (sessionFOP.getSalarie() != null) {
+//            this.salarie = new SalarieResponseDTO(sessionFOP.getSalarie());
+//        } else {
+//            this.salarie = null;
+//        }
 
 
         if (sessionFOP.getDepartement() != null) {

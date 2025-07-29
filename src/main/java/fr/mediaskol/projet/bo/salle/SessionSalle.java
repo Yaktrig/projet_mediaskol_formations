@@ -108,7 +108,7 @@ public class SessionSalle {
      * </p>
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "SESSION_FORMATION_PRESENTIEL_ID",  nullable = false)
-    @NotNull(message="{sessionSalle.sessionFormationPresentiel.notnull= La formation est obligatoire.}")
+    @JoinColumn(name = "SESSION_FORMATION_ID",  nullable = false)
+    @NotNull(message="{sessionSalle.sessionFormationPresentiel.notnull}")
     private SessionFormationPresentiel sessionFormationPresentiel;
 }

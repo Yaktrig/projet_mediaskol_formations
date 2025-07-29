@@ -4,7 +4,6 @@ package fr.mediaskol.projet.dto.salle;
 import fr.mediaskol.projet.bo.salle.SessionSalle;
 import fr.mediaskol.projet.bo.salle.StatutSessionSalle;
 import fr.mediaskol.projet.dto.sessionFormation.SessionFOPResponseDTO;
-import fr.mediaskol.projet.dto.sessionFormation.SessionFormationRespDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -48,7 +47,7 @@ public class SessionSalleRespDTO {
         }
 
         if(sessionSalle.getSessionFormationPresentiel() != null){
-            this.sessionFOP = new SessionSalleRespDTO(sessionSalle.getSessionFormationPresentiel());
+            this.sessionFOP = new SessionFOPResponseDTO(sessionSalle.getSessionFormationPresentiel());
         } else {
             this.sessionFOP = null;
         }

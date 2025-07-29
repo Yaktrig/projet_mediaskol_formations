@@ -2,7 +2,6 @@ package fr.mediaskol.projet.dto.salle;
 
 import fr.mediaskol.projet.bo.salle.StatutSessionSalle;
 import fr.mediaskol.projet.dto.sessionFormation.SessionFOPResponseDTO;
-import fr.mediaskol.projet.dto.sessionFormation.SessionFormationRespDTO;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,5 +25,5 @@ public class SessionSalleInputDTO {
 
     private SalleResponseDTO salle;
 
-    private SessionFormationRespDTO sessionFormation;
+    private SessionFOPResponseDTO sessionFormation;
 }

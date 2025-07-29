@@ -4,20 +4,22 @@ import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
 import fr.mediaskol.projet.bo.sessionFormation.StatutSessionFormation;
 import fr.mediaskol.projet.dto.formation.FormationResponseDTO;
 import fr.mediaskol.projet.dto.salarie.SalarieResponseDTO;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-@Builder
-public class SessionFormationRespDTO {
+@SuperBuilder
+public class SessionFormationResponseDTO {
 
+    /**
+     * Déclaration des attributs
+     */
     private Long idSessionFormation;
     private String noYoda;
     private String libelleSessionFormation;
@@ -30,10 +32,7 @@ public class SessionFormationRespDTO {
     private SalarieResponseDTO salarie;
 
 
-    /**
-     * Constructeur
-     */
-    public SessionFormationRespDTO(SessionFormation sessionFormation){
+    public SessionFormationResponseDTO(SessionFormation sessionFormation){
 
         this.idSessionFormation =  sessionFormation.getIdSessionFormation();
         this.noYoda = sessionFormation.getNoYoda();
@@ -49,7 +48,6 @@ public class SessionFormationRespDTO {
             this.formation = null;
         }
 
-
         if (sessionFormation.getFinSessionFormation() != null) {
             this.finSessionFormation = new FinSessionFormationRespDTO(sessionFormation.getFinSessionFormation());
         } else {
@@ -63,6 +61,4 @@ public class SessionFormationRespDTO {
             this.salarie = null;
         }
     }
-
-
 }

@@ -1,9 +1,10 @@
-export interface SessionFoadResponseDTO {
+import {SessionFormation} from './session-formation-resp-dto.model';
 
-  idSessionFormationDistanciel: number | null;
+export interface SessionFoadResponseDTO extends SessionFormation{
+
+
   contratSessionFormationDistanciel: string | null;
   nbBlocSessionFormationDistanciel: number | null;
-  dateDebutSessionFormationDistanciel: string | null;
   dateFinSessionFormationDistanciel: string | null;
   dateRelanceSessionFormationDistanciel: string | null;
   commentaireSessionFormationDistanciel: string | null;

@@ -153,7 +153,7 @@ public class SessionFOPServiceImpl implements SessionFOPService {
     public SessionFormationPresentiel modifierSessionFop(SessionFOPInputDTO dto) {
 
         // Vérifier que la sessionFormation à modifier existe
-        SessionFormationPresentiel sessionFop = sessionFOPRepository.findById(dto.getIdSessionFormation())
+        SessionFormationPresentiel sessionFop = sessionFOPRepository.findById(dto.getIdSessionFormationPresentiel())
                 .orElseThrow(() -> new EntityNotFoundException("Session de formation en présentiel introuvable"));
 
 
@@ -180,9 +180,9 @@ public class SessionFOPServiceImpl implements SessionFOPService {
         }
 
         // Associer la fin de session de formation
-        if (dto.getFinSessionFormationId() != null) {
-            FinSessionFormation finSessionFormation= finSessionFormationRepository.findById(dto.getFinSessionFormationId())
-                    .orElseThrow(() -> new EntityNotFoundException("La fin de la session de formation présentiel introuvable (id = " + dto.getFinSessionFormationId() + ")"));
+        if (dto.getFinSessionFormation() != null) {
+            FinSessionFormation finSessionFormation= finSessionFormationRepository.findById(dto.getFinSessionFormation().getIdFinSessionFormation())
+                    .orElseThrow(() -> new EntityNotFoundException("La fin de la session de formation présentiel introuvable (id = " + dto.getFinSessionFormation().getIdFinSessionFormation() + ")"));
             sessionFop.setFinSessionFormation(finSessionFormation);
         } else {
             sessionFop.setFinSessionFormation(null); // ou garder l'existante

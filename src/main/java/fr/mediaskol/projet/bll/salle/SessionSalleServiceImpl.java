@@ -73,7 +73,7 @@ public class SessionSalleServiceImpl implements SessionSalleService{
         }
         validerEnumNonNulle(sessionSalle.getStatutSessionSalle(), "Le statut ne peut pas être nul.");
         validerSalle(sessionSalle.getSalle().getIdSalle());
-        validerSessionFormation(sessionSalle.getSessionFormation().getIdSessionFormation());
+        validerSessionFormation(sessionSalle.getSessionFormationPresentiel().getIdSessionFormation());
 
         try {
             return sessionSalleRepository.save(sessionSalle);
@@ -103,14 +103,14 @@ public class SessionSalleServiceImpl implements SessionSalleService{
         }
         validerEnumNonNulle(sessionSalle.getStatutSessionSalle(), "Le statut ne peut pas être nul.");
         validerSalle(sessionSalle.getSalle().getIdSalle());
-        validerSessionFormation(sessionSalle.getSessionFormation().getIdSessionFormation());
+        validerSessionFormation(sessionSalle.getSessionFormationPresentiel().getIdSessionFormation());
 
 
         // 3. Appliquer les modifications aux champs autorisés
         sessionSalle.setCommentaireSessionSalle(dto.getCommentaireSessionSalle());
         sessionSalle.setStatutSessionSalle(dto.getStatutSessionSalle());
         sessionSalle.setSalle(sessionSalle.getSalle());
-        sessionSalle.setSessionFormation(sessionSalle.getSessionFormation());
+        sessionSalle.setSessionFormationPresentiel(sessionSalle.getSessionFormationPresentiel());
 
         // 4. Sauvegarde finale
         return sessionSalleRepository.save(sessionSalle);
