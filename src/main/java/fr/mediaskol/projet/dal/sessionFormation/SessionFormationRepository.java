@@ -42,18 +42,5 @@ public interface SessionFormationRepository extends JpaRepository<SessionFormati
 //            "LOWER(CAST(sf.dateDebutSession AS string)) LIKE LOWER(CONCAT('%', :termeRecherche, '%')) OR " +
 //            "LOWER(sf.statutSessionFormation) LIKE LOWER(CONCAT('%', :termeRecherche, '%')) OR " +
 //            "LOWER(sf.finSessionFormation.statutFinSessionFormation) LIKE LOWER(CONCAT('%', :termeRecherche, '%'))" +
-    @Query("SELECT sf FROM SessionFormation sf  " +
-            "LEFT JOIN sf.departement dep " +
-            "WHERE LOWER(sf.noYoda) LIKE LOWER(CONCAT('%', :termeRecherche, '%')) OR " +
-            "LOWER(sf.libelleSessionFormation) LIKE LOWER(CONCAT('%', :termeRecherche, '%')) OR " +
-            "LOWER(dep.numDepartement) LIKE LOWER(CONCAT('%', :termeRecherche, '%'))")
-    List<SessionFormation> findSessionFormationsBySearchText(@Param("termeRecherche") String termeRecherche);
 
-    /**
-     * Requête qui permet de retourner une date de début de session
-     *
-     * @param dateDebutSession
-     * @return
-     */
-    List<SessionFormation> findByDateDebutSession(LocalDate dateDebutSession);
 }

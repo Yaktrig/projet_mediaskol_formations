@@ -71,7 +71,7 @@ public class SessionFOADServiceImpl implements SessionFOADService {
         if (sessionFoad.getContratSessionFormationDistanciel() != null) {
             validerContrat(sessionFoad);
         }
-        validerDate(sessionFoad.getDateDebutSessionFormationDistanciel());
+        validerDate(sessionFoad.getDateDebutSession());
         validerDate(sessionFoad.getDateFinSessionFormationDistanciel());
 
         if (sessionFoad.getDateRelanceSessionFormationDistanciel() != null) {
@@ -85,7 +85,7 @@ public class SessionFOADServiceImpl implements SessionFOADService {
         try {
             return sessionFoadRepository.save(sessionFoad);
         } catch (RuntimeException e) {
-            throw new RuntimeException("Impossible de sauvegarder - " + sessionFoad.getIdSessionFormationDistanciel());
+            throw new RuntimeException("Impossible de sauvegarder - " + sessionFoad.getIdSessionFormation());
         }
     }
 
@@ -109,7 +109,7 @@ public class SessionFOADServiceImpl implements SessionFOADService {
         if (sessionFoad.getContratSessionFormationDistanciel() != null) {
             validerContrat(sessionFoad);
         }
-        validerDate(sessionFoad.getDateDebutSessionFormationDistanciel());
+        validerDate(sessionFoad.getDateDebutSession());
         validerDate(sessionFoad.getDateFinSessionFormationDistanciel());
 
         if (sessionFoad.getDateRelanceSessionFormationDistanciel() != null) {
@@ -123,7 +123,7 @@ public class SessionFOADServiceImpl implements SessionFOADService {
         // 3. Appliquer les modifications aux champs autorisés
         sessionFoad.setContratSessionFormationDistanciel(dto.getContratSessionFormationDistanciel());
         sessionFoad.setNbBlocSessionFormationDistanciel(dto.getNbBlocSessionFormationDistanciel());
-        sessionFoad.setDateDebutSessionFormationDistanciel(dto.getDateDebutSessionFormationDistanciel());
+        sessionFoad.setDateDebutSession(dto.getDateDebutSessionFormationDistanciel());
         sessionFoad.setDateFinSessionFormationDistanciel(dto.getDateFinSessionFormationDistanciel());
         sessionFoad.setDateRelanceSessionFormationDistanciel(dto.getDateRelanceSessionFormationDistanciel());
         sessionFoad.setCommentaireSessionFormationDistanciel(dto.getCommentaireSessionFormationDistanciel());

@@ -14,7 +14,7 @@ public interface SalarieService {
      *
      * @param salarie
      */
-    void ajouter(Salarie salarie);
+    void ajouterSalarie(Salarie salarie);
 
     /**
      * Fonctionnalité qui va retourner un salarié par rapport à son identifiant

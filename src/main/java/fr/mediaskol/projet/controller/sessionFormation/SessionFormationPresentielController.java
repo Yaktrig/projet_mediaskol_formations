@@ -3,6 +3,7 @@ package fr.mediaskol.projet.controller.sessionFormation;
 import fr.mediaskol.projet.bll.sessionFormation.SessionFOPService;
 import fr.mediaskol.projet.bo.ApiResponse;
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
+import fr.mediaskol.projet.bo.sessionFormation.SessionFormationDistanciel;
 import fr.mediaskol.projet.dto.sessionFormation.SessionFOPResponseDTO;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -24,13 +25,13 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/mediaskolFormation/sessionsFormations")
-public class SessionFormationController {
+@RequestMapping("/mediaskolFormation/sessionsFormationsPresentiels")
+public class SessionFormationPresentielController {
 
     /**
      * Injection de dépendances pour aller chercher le service qui correspond aux sessions de formation
      */
-    private SessionFOPService sessionFormationService;
+    private SessionFOPService sessionFOPService;
 
     /**
      * Retourne la liste des sessions de formation en Json dans l'url "mediaskolFormation/sessionsFormations en méthode GET
@@ -38,16 +39,16 @@ public class SessionFormationController {
     @GetMapping
     public ResponseEntity<?> afficherTousLesSessionsFormations() {
 
-        final List<SessionFormation> sessionsFormations = sessionFormationService.chargerToutesSessionsFormations();
+        final List<SessionFormationDistanciel> sessionsFop = sessionFOPService.chargerToutesSessionsFop();
 
-        if (sessionsFormations == null || sessionsFormations.isEmpty()) {
+        if (sessionsFop == null || sessionsFop.isEmpty()) {
             // Statut 204 : No content - Pas de body car rien à afficher
             return ResponseEntity.noContent().build();
         }
 
         // Sinon, on retourne Statut 200 : Ok + dans le body les sessionFormation
         // Conversion liste SessionFormation -> liste SessionFormationDTO
-        List<SessionFOPResponseDTO> sessionFormationRespDTOS = sessionsFormations.stream()
+        List<SessionFOPResponseDTO> sessionFormationRespDTOS = sessionsFop.stream()
                 .map(SessionFOPResponseDTO::new)
                 .toList();
 

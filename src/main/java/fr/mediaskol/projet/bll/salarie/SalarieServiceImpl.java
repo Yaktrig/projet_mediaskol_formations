@@ -4,6 +4,7 @@ import fr.mediaskol.projet.bo.apprenant.Apprenant;
 import fr.mediaskol.projet.bo.salarie.Salarie;
 import fr.mediaskol.projet.dal.salarie.SalarieRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,8 @@ public class SalarieServiceImpl implements SalarieService {
      * @param salarie
      */
     @Override
-    public void ajouter(Salarie salarie) {
+    @Transactional
+    public void ajouterSalarie(Salarie salarie) {
 
         if (salarie == null) {
             throw new RuntimeException("Le salarié n'est pas renseigné.");
@@ -105,6 +107,7 @@ public class SalarieServiceImpl implements SalarieService {
      * @return
      */
     @Override
+    @Transactional
     public Salarie modifierSalarie(Salarie salarie) {
 
         // 1. Vérifier que le salarié à modifier existe

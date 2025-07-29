@@ -1,4 +1,4 @@
-package fr.mediaskol.projet.controller.sessionFormationDistanciel;
+package fr.mediaskol.projet.controller.sessionFormation;
 
 import fr.mediaskol.projet.bll.sessionFormation.SessionFOADService;
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormationDistanciel;
@@ -103,7 +103,7 @@ public class SessionFormationDistancielController {
      */
     @PostMapping
     @Valid
-    public ResponseEntity<?> ajouterSessionFormation(@Valid @RequestBody SessionFormationDistanciel sessionFoad) {
+    public ResponseEntity<?> ajouterSessionFoad(@Valid @RequestBody SessionFormationDistanciel sessionFoad) {
 
         // La session de formation ne doit pas être nulle
         if (sessionFoad == null) {
@@ -112,7 +112,7 @@ public class SessionFormationDistancielController {
         }
 
         // La session de formation ne doit pas avoir d'identifiant de saisi
-        if (sessionFoad.getIdSessionFormationDistanciel() != null) {
+        if (sessionFoad.getIdSessionFormation() != null) {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Impossible de sauvegarder une session " +
                     "de formation à distance");
         }
@@ -133,8 +133,8 @@ public class SessionFormationDistancielController {
     public ResponseEntity<?> modifierSessionFoad(@Valid @RequestBody SessionFormationDistanciel sessionFoad) {
 
         // La session de formation à distance ne doit pas être nulle - l'identifiant ne pas être nul ou inférieur ou égal à 0
-        if (sessionFoad == null || sessionFoad.getIdSessionFormationDistanciel() == null ||
-                sessionFoad.getIdSessionFormationDistanciel() <= 0) {
+        if (sessionFoad == null || sessionFoad.getIdSessionFormation() == null ||
+                sessionFoad.getIdSessionFormation() <= 0) {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("L'identifiant de la session de formation" +
                     " à distance et la session de formation à distance sont obligatoires.");
         }
