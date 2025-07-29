@@ -1,7 +1,7 @@
 package fr.mediaskol.projet.dto.formateur;
 
 import fr.mediaskol.projet.bo.formateur.StatutSessionFormateur;
-import fr.mediaskol.projet.dto.sessionFormation.SessionFormationRespDTO;
+import fr.mediaskol.projet.dto.sessionFormation.SessionFOPResponseDTO;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,5 +23,5 @@ public class SessionFormateurInputDTO {
 
     private FormateurResponseDTO formateur;
 
-    private SessionFormationRespDTO sessionFormation;
+    private SessionFOPResponseDTO sessionFormation;
 }

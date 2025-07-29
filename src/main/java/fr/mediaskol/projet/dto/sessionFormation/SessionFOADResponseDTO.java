@@ -1,7 +1,7 @@
-package fr.mediaskol.projet.dto.sessionFormationDistanciel;
+package fr.mediaskol.projet.dto.sessionFormation;
 
 
-import fr.mediaskol.projet.bo.sessionFormationDistanciel.SessionFormationDistanciel;
+import fr.mediaskol.projet.bo.sessionFormation.SessionFormationDistanciel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Data
 @Builder
-public class SessionFOADRespDTO {
+public class SessionFOADResponseDTO {
 
     /**
      * Déclaration des attributs
@@ -31,7 +31,7 @@ public class SessionFOADRespDTO {
     /**
      * Constructeur
      */
-    public SessionFOADRespDTO(SessionFormationDistanciel sessionFOAD){
+    public SessionFOADResponseDTO(SessionFormationDistanciel sessionFOAD){
 
         this.idSessionFormationDistanciel = sessionFOAD.getIdSessionFormationDistanciel();
         this.contratSessionFormationDistanciel = sessionFOAD.getContratSessionFormationDistanciel();

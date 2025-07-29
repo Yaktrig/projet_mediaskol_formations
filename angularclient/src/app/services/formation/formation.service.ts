@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { FormationResponseDTO } from '../dto/formation/formation-resp-dto.model';
+import { FormationResponseDTO } from '../../dto/formation/formation-resp-dto.model';
+import {SalarieRespDto} from '../../dto/salarie/salarie-resp-dto.model';
 
 @Injectable({ providedIn: 'root' })
 export class FormationService {
@@ -12,4 +13,6 @@ export class FormationService {
   getFormations(): Observable<FormationResponseDTO[]> {
     return this.http.get<FormationResponseDTO[]>(this.url);
   }
+
+
 }

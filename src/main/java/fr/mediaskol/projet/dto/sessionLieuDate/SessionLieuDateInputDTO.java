@@ -4,7 +4,7 @@ package fr.mediaskol.projet.dto.sessionLieuDate;
 import fr.mediaskol.projet.bo.sessionLieuDate.StatutSessionLieuDate;
 import fr.mediaskol.projet.dto.formateur.SessionFormateurRespDTO;
 import fr.mediaskol.projet.dto.salle.SessionSalleRespDTO;
-import fr.mediaskol.projet.dto.sessionFormation.SessionFormationRespDTO;
+import fr.mediaskol.projet.dto.sessionFormation.SessionFOPResponseDTO;
 
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -39,7 +39,7 @@ public class SessionLieuDateInputDTO {
 
     private SessionFormateurRespDTO sessionFormateurId;
 
-    private SessionFormationRespDTO sessionFormationId;
+    private SessionFOPResponseDTO sessionFormationId;
 
     private SessionSalleRespDTO sessionSalleId;
 

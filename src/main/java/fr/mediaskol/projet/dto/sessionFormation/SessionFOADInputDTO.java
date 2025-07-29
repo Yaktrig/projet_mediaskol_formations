@@ -1,4 +1,4 @@
-package fr.mediaskol.projet.dto.sessionFormationDistanciel;
+package fr.mediaskol.projet.dto.sessionFormation;
 
 
 import jakarta.validation.constraints.Size;

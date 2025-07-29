@@ -1,11 +1,8 @@
 package fr.mediaskol.projet.dto.formateur;
 
-import fr.mediaskol.projet.bo.formateur.Formateur;
 import fr.mediaskol.projet.bo.formateur.SessionFormateur;
 import fr.mediaskol.projet.bo.formateur.StatutSessionFormateur;
-import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
-import fr.mediaskol.projet.dto.sessionFormation.SessionFormationRespDTO;
-import jakarta.validation.constraints.Size;
+import fr.mediaskol.projet.dto.sessionFormation.SessionFOPResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,7 +21,7 @@ public class SessionFormateurRespDTO {
     private String commentaireSessionFormateur;
     private StatutSessionFormateur statutSessionFormateur;
     private FormateurResponseDTO formateur;
-    private SessionFormationRespDTO sessionFormation;
+    private SessionFOPResponseDTO sessionFormation;
 
     /**
      * Constructeur
@@ -33,6 +30,6 @@ public class SessionFormateurRespDTO {
         this.idSessionFormateur = sessionFormateur.getIdSessionFormateur();
         this.commentaireSessionFormateur = sessionFormateur.getCommentaireSessionFormateur();
         this.formateur = new  FormateurResponseDTO(sessionFormateur.getFormateur());
-        this.sessionFormation = new  SessionFormationRespDTO(sessionFormateur.getSessionFormation());
+        this.sessionFormation = new SessionFOPResponseDTO(sessionFormateur.getSessionFormation());
     }
 }

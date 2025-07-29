@@ -1,12 +1,14 @@
 package fr.mediaskol.projet.bo.sessionFormation;
 
-
-import fr.mediaskol.projet.bo.departement.Departement;
 import fr.mediaskol.projet.bo.formation.Formation;
-import fr.mediaskol.projet.bo.sessionFormationDistanciel.SessionFormationDistanciel;
+import fr.mediaskol.projet.bo.salarie.Salarie;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 
@@ -14,8 +16,7 @@ import java.time.LocalDate;
  * Représente une session de formation (en présentiel, en distanciel) dans le système de gestion.
  * <p>
  * Cette entité contient les informations spécifiques à une session de formation,
- * telles que l'identifiant, le numéro AF (Yoda) unique, le libellé, le statut Yoda, le numéro du département concerné
- * pour le présentiel, la couleur associée au numéro du département et le statut métier de la session.
+ * telles que l'identifiant, le numéro AF (Yoda) unique, le libellé, le statut Yoda
  * </p>
  * <p>
  * Utilisation de Lombok (@Data, @Builder, @NoArgsConstructor, @AllArgsConstructor) pour générer
@@ -27,12 +28,12 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Builder
+@SuperBuilder
 
 @Entity
 @Table(name = "SESSION_FORMATION")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class SessionFormation {
-
 
     /**
      * Identifiant unique de la session de formation.
@@ -55,6 +56,7 @@ public class SessionFormation {
      */
     @Column(name = "NO_AF_YODA", unique = true, length = 30, nullable = true)
     private String noYoda;
+
 
     /**
      * Libellé de la session de formation.
@@ -86,29 +88,6 @@ public class SessionFormation {
     @NotNull(message = "{sessionFormation.statutYoda.notnull}")
     private String statutYoda = "DO";
 
-    /**
-     * Ville du lieu principal de formation
-     */
-    @Column(name="LIEU", nullable=false, length=100)
-    @NotNull(message="{sessionFormation.lieu.notnull}")
-    private String lieuSessionFormation;
-
-    /**
-     * Commanditaire de la session de formation
-     * RPE (Relais Petite Enfance, Assistantes maternelles, Présidents d'association)
-     */
-    @Column(name= "COMMANDITAIRE", length=125)
-    private String commanditaire;
-
-
-
-    /**
-     * RPE de la session de formation
-     * Indique oui, si la date a été confirmée au RPE
-     */
-    @Column(name= "CONFIRMATION_RPE", length=255)
-    private String confirmationRPE;
-
 
     /**
      * Date du début de la session de formation
@@ -120,6 +99,8 @@ public class SessionFormation {
     @Column(name="DATE_DEBUT_SESSION", nullable = false)
     @NotNull(message = "{sessionFormation.dateDebutSession.notnull}")
     private LocalDate dateDebutSession;
+
+
 
     /**
      * Nombre total d'heures pour la session de formation
@@ -145,6 +126,7 @@ public class SessionFormation {
     @Builder.Default
     private StatutSessionFormation statutSessionFormation = StatutSessionFormation.SESSION_FORMATION_NON_COMMENCEE;
 
+
     /**
      * Formation à laquelle est rattachée la session de formation.
      * <p>
@@ -162,23 +144,6 @@ public class SessionFormation {
     @NotNull(message = "{sessionFormation.formation.notnull }")
     private Formation formation;
 
-
-    /**
-     * Département auquel est rattachée la session de formation (en présentiel).
-     * <p>
-     * Association Many-to-One vers l'entité {@link Departement}.
-     * Permet de centraliser les informations liées au département (numéro, nom, région, couleur, etc.)
-     * et d'assurer l'intégrité des données. Plusieurs Sessions peuvent être associées au même département.
-     * </p>
-     * <p>
-     * Cette relation est facultative : une session de formation en distanciel n'a pas de numéro de département renseigné.
-     * La récupération du département est effectuée en mode paresseux (lazy loading).
-     * </p>
-     */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "NUM_DEPARTEMENT")
-    private Departement departement;
-
     /**
      * SessionFinFormation associée à SessionFormation
      * <p>
@@ -191,15 +156,22 @@ public class SessionFormation {
     @JoinColumn(name = "FIN_SESSION_FORMATION_ID")
     private FinSessionFormation finSessionFormation;
 
+
     /**
-     * SessionFormationDistanciel associée à SessionFormation
+     * Formation à laquelle est rattachée à la personne qui traite le dossier.
      * <p>
-     * Association unidirectionnelle OneToOne avec {@link SessionFormationDistanciel}
-     * La suppression de la session de formation entraîne la suppression de la session de formation en distanciel
-     * (cascade et orphanRemoval).
+     * Association Many-to-One vers l'entité {@link Salarie}.
+     * Permet de savoir qui traite le dossier, permet au salarié de visualiser ses dossiers en priorité.
+     * et d'assurer l'intégrité des données. Plusieurs Sessions peuvent être associées à la même formation.
+     * </p>
+     * <p>
+     * Cette relation est obligatoire : une session de formation est obligée d'avoir un salarié de renseigné.
+     * La récupération du salarié est effectuée en mode paresseux (lazy loading).
      * </p>
      */
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    @JoinColumn(name = "SESSION_FOAD_ID")
-    private SessionFormationDistanciel sessionFormationDistanciel;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="TRAITEMENT_ID")
+    @NotNull(message="{sessionFormation.salarie.notnull}")
+    private Salarie salarie;
+
 }

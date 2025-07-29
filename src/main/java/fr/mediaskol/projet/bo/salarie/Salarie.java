@@ -46,9 +46,7 @@ public class Salarie extends Personne  {
      * </p>
      */
     @Column(name="COULEUR_SALARIE", nullable = false, length = 7)
-    @Size(min=3, max=7, message = "{salarie.couleurSalarie.size}")
     @NotNull(message = "{salarie.couleurSalarie.notnull}")
-    @NotBlank(message = "{salarie.couleurSalarie.notblank}")
     private String couleurSalarie;
 
 

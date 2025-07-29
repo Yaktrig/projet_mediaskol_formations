@@ -22,12 +22,16 @@
 md:min-w-[450px] md:max-w-[940px] flex flex-col md:flex-row md:items-center md:mr-12">
       <!-- Colonne gauche du formulaire (inputs) -->
       <div class="flex flex-col gap-3 grow md:pr-6">
-        <h2 class="text-left">Filtrer les sessions en distanciel</h2>
+        <h2 class="text-left">Filtrer les sessions</h2>
         <div class="flex flex-col sm:flex-row gap-3">
-          <input type="text" placeholder="Le filtre contient"
+          <input type="text"
+                 [(ngModel)]="searchTerm"
+                 (input)="onSearch()"
+                 placeholder="Rechercher"
                  class="border px-2 py-1 rounded text-gray-700 w-full sm:w-64 mb-2 text-[var(--color-text-input)]"/>
           <select class="border px-2 py-1 rounded w-full sm:w-56 text-gray-700 mb-2">
             <option>Choisir le filtre</option>
+            <option></option>
           </select>
         </div>
         <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3">
@@ -122,7 +126,9 @@ md:min-w-[450px] md:max-w-[940px] flex flex-col md:flex-row md:items-center md:m
               {{ session.libelleSessionFormation }}
             </td>
             <td class="text-center">{{ session.statutYoda }}</td>
-            <td>---</td><!-- Salarié(e) qui traite le dossier -->
+          <td class="text-center" [style.background-color]="session.salarie?.couleurSalarie">
+            {{ session.salarie?.nom | firstLetterUpper}}{{session.salarie?.prenom | firstLetterUpper}}
+          </td><!-- Salarié(e) qui traite le dossier -->
             <td>{{ session.finSessionFormation?.statutFinSessionFormation }}</td>
             <td>{{ session.finSessionFormation?.dateLimiteYodaFinSessionFormation }}</td>
             <td>{{ session.formation?.themeFormation }}</td>
@@ -130,7 +136,7 @@ md:min-w-[450px] md:max-w-[940px] flex flex-col md:flex-row md:items-center md:m
             <td class="text-center"
               [style.background-color]="session.departement?.couleurDepartement">{{ session.departement?.numDepartement }}
             </td>
-            <td>---</td><!-- lieu de la salle ou ville principale -->
+            <td>{{ session.lieuSessionFormation }}</td><!-- lieu de la salle ou ville principale -->
             <td class="text-center">{{ session.nbHeureSession }}</td>
             <!-- Mettre une condition en fonction du nombre de jours - pour le présentiel -->
             <td>{{ session.dateDebutSession | date:'dd-MM-yyyy' }}</td>

@@ -1,7 +1,7 @@
 package fr.mediaskol.projet.dto.apprenant;
 
 import fr.mediaskol.projet.bo.apprenant.StatutSessionApprenant;
-import fr.mediaskol.projet.dto.sessionFormation.SessionFormationRespDTO;
+import fr.mediaskol.projet.dto.sessionFormation.SessionFOPResponseDTO;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -31,6 +31,6 @@ public class SessionApprenantInputDTO {
 
     private ApprenantResponseDTO apprenant;
 
-    private SessionFormationRespDTO sessionFormation;
+    private SessionFOPResponseDTO sessionFormation;
 
 }

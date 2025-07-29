@@ -1,8 +1,8 @@
 package fr.mediaskol.projet.controller.sessionFormationDistanciel;
 
-import fr.mediaskol.projet.bll.sessionFormationDistanciel.SessionFOADService;
-import fr.mediaskol.projet.bo.sessionFormationDistanciel.SessionFormationDistanciel;
-import fr.mediaskol.projet.dto.sessionFormationDistanciel.SessionFOADRespDTO;
+import fr.mediaskol.projet.bll.sessionFormation.SessionFOADService;
+import fr.mediaskol.projet.bo.sessionFormation.SessionFormationDistanciel;
+import fr.mediaskol.projet.dto.sessionFormation.SessionFOADResponseDTO;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -49,8 +49,8 @@ public class SessionFormationDistancielController {
 
         // Sinon, on retourne Statut 200 : Ok + dans le body les sessionFormationDistanciel
         // Conversion liste SessionFormationDistanciel -> liste SessionFOADDTO
-        List<SessionFOADRespDTO> sessionFoadRespDTOS = sessionsFoads.stream()
-                .map(SessionFOADRespDTO::new)
+        List<SessionFOADResponseDTO> sessionFoadRespDTOS = sessionsFoads.stream()
+                .map(SessionFOADResponseDTO::new)
                 .toList();
 
         return ResponseEntity.ok(sessionFoadRespDTOS);
@@ -66,7 +66,7 @@ public class SessionFormationDistancielController {
             long id = Long.parseLong(idInPath);
             final SessionFormationDistanciel sessionFoad = sessionFoadService.chargerSessionFoadParId(id);
 
-            SessionFOADRespDTO sessionFoadDto = new SessionFOADRespDTO(sessionFoad);
+            SessionFOADResponseDTO sessionFoadDto = new SessionFOADResponseDTO(sessionFoad);
             return ResponseEntity.ok(sessionFoadDto);
         } catch (NumberFormatException e) {
             // Statut 406 : No Acceptable

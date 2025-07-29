@@ -2,12 +2,13 @@ import {Component} from '@angular/core';
 import {Footer} from "../footer/footer";
 import {Header} from "../header/header";
 import {FormsModule} from '@angular/forms';
-import {SessionFormationPresentielService} from '../services/session-formation-presentiel.service';
+import {SessionFormationPresentielService} from '../services/sessionFormation/session-formation-presentiel.service';
 import {SessionFormationRespDTO} from '../dto/sessionFormation/session-formation-resp-dto.model';
 import {StatutSessionFormationDetails} from '../dto/sessionFormation/statut-session-formation.enum';
 import {StatutFinSessionFormationDetails} from '../dto/sessionFormation/statut-fin-session-formation-resp-dto.model';
-import {DatePipe} from '@angular/common';
+import {DatePipe, JsonPipe} from '@angular/common';
 import {RouterLink} from '@angular/router';
+import {FirstLetterUpperPipe} from '../pipe/first-letter-upper.pipe';
 
 
 @Component({
@@ -18,6 +19,7 @@ import {RouterLink} from '@angular/router';
     Header,
     DatePipe,
     RouterLink,
+    FirstLetterUpperPipe,
 
   ],
   templateUrl: './liste-session-formation-presentiel.html',

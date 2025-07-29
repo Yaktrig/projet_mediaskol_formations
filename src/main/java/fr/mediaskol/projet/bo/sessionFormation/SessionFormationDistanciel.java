@@ -1,13 +1,9 @@
-package fr.mediaskol.projet.bo.sessionFormationDistanciel;
+package fr.mediaskol.projet.bo.sessionFormation;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 
@@ -28,24 +24,51 @@ import java.time.LocalDate;
  */
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-@Builder
+@Getter
+@Setter
+@ToString(callSuper=true)
+@SuperBuilder
 
 @Entity
 @Table(name="SESSION_FOAD")
-public class SessionFormationDistanciel {
+public class SessionFormationDistanciel extends  SessionFormation {
 
 
-    /**
-     * Identifiant unique de la session de formation en distanciel.
-     * <p>
-     * Clé primaire générée automatiquement par la base de données (IDENTITY).
-     * </p>
-     */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "SESSION_FOAD_ID")
-    private Long idSessionFormationDistanciel;
+//    /**
+//     * Identifiant unique de la session de formation en distanciel.
+//     * <p>
+//     * Clé primaire générée automatiquement par la base de données (IDENTITY).
+//     * </p>
+//     */
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "SESSION_FOAD_ID")
+//    private Long idSessionFormationDistanciel;
+
+//    /**
+//     * Numéro AF (Yoda) unique de la session de formation.
+//     * <p>
+//     * Ce numéro n'est pas obligatoire, car à la création d'une session de formation pour l'année suivante, il
+//     * n'existe pas encore de numéro attribué par Ipéria.
+//     * Il est limité à 30 caractères.
+//     * </p>
+//     */
+//    @Column(name = "NO_AF_YODA", unique = true, length = 30, nullable = true)
+//    private String noYodaFoad;
+
+
+//    /**
+//     * Libellé de la session de formation.
+//     * <p>
+//     * Formation en présentiel : composé du thème, des premières lettres du lieu de formation et de la date du premier
+//     * jour de la session.
+//     * Formation en distanciel : composé du thème, FOAD et date du premier jour de la session
+//     * Ce champ est optionnel à la création de la session de formation et limité à 50 caractères.
+//     * </p>
+//     */
+//    @Column(name = "LIBELLE_SESSION_FORMATION", length = 50)
+//    private String libelleSessionFormation;
+
 
     /**
      * Commentaire en lien avec le contrat de la session de formation en distanciel
@@ -66,15 +89,15 @@ public class SessionFormationDistanciel {
     @Column(name = "NB_BLOC_SESSION_FOAD")
     private Integer nbBlocSessionFormationDistanciel;
 
-    /**
-     * Date du début de la session de formation à distance.
-     * <p>
-     * Ce champ est obligatoire.
-     * </p>
-     */
-    @Column(name = "DATE_DEBUT_SESSION_FOAD", nullable = false)
-    @NotNull(message="{sessionFormationDistanciel.dateDebutSessionFoad.notnull}")
-    private LocalDate dateDebutSessionFormationDistanciel;
+//    /**
+//     * Date du début de la session de formation à distance.
+//     * <p>
+//     * Ce champ est obligatoire.
+//     * </p>
+//     */
+//    @Column(name = "DATE_DEBUT_SESSION_FOAD", nullable = false)
+//    @NotNull(message="{sessionFormationDistanciel.dateDebutSessionFoad.notnull}")
+//    private LocalDate dateDebutSessionFormationDistanciel;
 
     /**
      * Date de la fin de la session de formation à distance.

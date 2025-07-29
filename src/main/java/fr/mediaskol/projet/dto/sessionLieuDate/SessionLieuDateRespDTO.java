@@ -5,7 +5,7 @@ import fr.mediaskol.projet.bo.sessionLieuDate.SessionLieuDate;
 import fr.mediaskol.projet.bo.sessionLieuDate.StatutSessionLieuDate;
 import fr.mediaskol.projet.dto.formateur.SessionFormateurRespDTO;
 import fr.mediaskol.projet.dto.salle.SessionSalleRespDTO;
-import fr.mediaskol.projet.dto.sessionFormation.SessionFormationRespDTO;
+import fr.mediaskol.projet.dto.sessionFormation.SessionFOPResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,7 +30,7 @@ public class SessionLieuDateRespDTO {
     private LocalDateTime heureVisio;
     private StatutSessionLieuDate statutSessionLieuDate;
     private SessionFormateurRespDTO sessionFormateur;
-    private SessionFormationRespDTO sessionFormation;
+    private SessionFOPResponseDTO sessionFormation;
     private SessionSalleRespDTO sessionSalle;
 
     /**
@@ -52,7 +52,7 @@ public class SessionLieuDateRespDTO {
         }
 
         if(sessionLieuDate.getSessionFormation() != null){
-            this.sessionFormation = new  SessionFormationRespDTO(sessionLieuDate.getSessionFormation());
+            this.sessionFormation = new SessionFOPResponseDTO(sessionLieuDate.getSessionFormation());
         } else {
             this.sessionFormation = null;
         }

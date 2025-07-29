@@ -1,9 +1,9 @@
 package fr.mediaskol.projet.controller.sessionFormation;
 
-import fr.mediaskol.projet.bll.sessionFormation.SessionFormationService;
+import fr.mediaskol.projet.bll.sessionFormation.SessionFOPService;
 import fr.mediaskol.projet.bo.ApiResponse;
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
-import fr.mediaskol.projet.dto.sessionFormation.SessionFormationRespDTO;
+import fr.mediaskol.projet.dto.sessionFormation.SessionFOPResponseDTO;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,7 +30,7 @@ public class SessionFormationController {
     /**
      * Injection de dépendances pour aller chercher le service qui correspond aux sessions de formation
      */
-    private SessionFormationService sessionFormationService;
+    private SessionFOPService sessionFormationService;
 
     /**
      * Retourne la liste des sessions de formation en Json dans l'url "mediaskolFormation/sessionsFormations en méthode GET
@@ -47,8 +47,8 @@ public class SessionFormationController {
 
         // Sinon, on retourne Statut 200 : Ok + dans le body les sessionFormation
         // Conversion liste SessionFormation -> liste SessionFormationDTO
-        List<SessionFormationRespDTO> sessionFormationRespDTOS = sessionsFormations.stream()
-                .map(SessionFormationRespDTO::new)
+        List<SessionFOPResponseDTO> sessionFormationRespDTOS = sessionsFormations.stream()
+                .map(SessionFOPResponseDTO::new)
                 .toList();
 
         return ResponseEntity.ok(sessionFormationRespDTOS);
@@ -64,7 +64,7 @@ public class SessionFormationController {
             long id = Long.parseLong(idInPath);
             final SessionFormation sessionFormation = sessionFormationService.chargerSessionFormationParId(id);
 
-            SessionFormationRespDTO sessionFormationDto = new SessionFormationRespDTO(sessionFormation);
+            SessionFOPResponseDTO sessionFormationDto = new SessionFOPResponseDTO(sessionFormation);
             return ResponseEntity.ok(sessionFormationDto);
         } catch (NumberFormatException e) {
             // Statut 406 : No Acceptable
@@ -81,7 +81,7 @@ public class SessionFormationController {
      * selon le critère saisi dans le champ
      */
     @GetMapping("/recherche")
-    public ResponseEntity<List<SessionFormationRespDTO>> rechercheSessionFormations(@RequestParam String termeRecherche) {
+    public ResponseEntity<List<SessionFOPResponseDTO>> rechercheSessionFormations(@RequestParam String termeRecherche) {
 
         final List<SessionFormation> sessionFormationsRecherches = sessionFormationService.rechercheSessionFormations(termeRecherche);
 
@@ -90,8 +90,8 @@ public class SessionFormationController {
             return ResponseEntity.noContent().build();
         }
 
-        List<SessionFormationRespDTO> dtos = sessionFormationsRecherches.stream()
-                .map(SessionFormationRespDTO::new)
+        List<SessionFOPResponseDTO> dtos = sessionFormationsRecherches.stream()
+                .map(SessionFOPResponseDTO::new)
                 .toList();
 
         // Sinon, on retourne Statut 200 : Ok + dans le body les sessionFormations

@@ -3,6 +3,7 @@ import {FormationResponseDTO} from '../formation/formation-resp-dto.model';
 import {DepartementDTO} from '../adresse/departement-resp-dto.model';
 import {SessionFoadResponseDTO} from '../sessionFormationDistanciel/session-formation-distanciel-resp-dto.model';
 import {FinSessionFormationRespDTO} from './fin-session-formation-resp-dto.model';
+import {SalarieRespDto} from '../salarie/salarie-resp-dto.model';
 
 
 export interface SessionFormationRespDTO {
@@ -13,9 +14,10 @@ export interface SessionFormationRespDTO {
   lieuSessionFormation: string |null;
   commanditaire: string | null;
   confirmationRPE: string | null;
-  dateDebutSession: string | null; // chaîne ISO: conversion à Date possible
+  dateDebutSession: string | null;
   nbHeureSession: number | null;
   statutSessionFormation: StatutSessionFormation;
+  salarie: SalarieRespDto | null;
   formation: FormationResponseDTO | null;
   departement: DepartementDTO | null;
   finSessionFormation: FinSessionFormationRespDTO | null;

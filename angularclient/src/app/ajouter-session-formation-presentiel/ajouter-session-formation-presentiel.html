@@ -16,7 +16,7 @@
           <div>
             <label for="typeFormation" class="block text-sm/6 font-medium ">Type de formation</label>
             <select id="typeFormation" name="typeFormation"
-                    class="min-w-64 rounded-md  py-1.5 pr-8 pl-3 bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6">
+                    class="min-w-64 rounded-md  py-1.5 pr-8 pl-3 bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border">
               <option>Présentiel</option>
               <option>Distanciel</option>
             </select>
@@ -27,7 +27,7 @@
             <div class="mt-2">
               <input id="noYoda" type="text" name="noYoda"
                      class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
-                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6"/>
+                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border" title="Numéro AF Yoda"/>
             </div>
           </div>
 
@@ -38,22 +38,20 @@
             <div class="mt-2">
               <input id="intituleSessionF" type="text" name="intituleSessionF"
                      class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
-                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6"
-                     title="Intitulé de la session de formation"/>
+                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
+                     title="Intitulé de la session de formation" />
             </div>
           </div>
           <!-- rang 4 -->
           <div className="">
             <label for="ttDossier" class="block text-sm/6 font-medium ">Dossier traité par</label>
             <div class="mt-2">
-              <select id="ttDossier" name="ttDossier"
-                      class="min-w-64 rounded-md  py-1.5 pr-8 pl-3 bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6"
+              <select [(ngModel)]="idSalarieChoisi" id="idSalarieChoisi" name="idSalarieChoisi"
+                      class="min-w-64 rounded-md  py-1.5 pr-8 pl-3 bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
                       title="Dossier traité par">
-                <option value="">Elodie</option>
-                <option value="">Emmanuelle</option>
-                <option value="">Béatrice</option>
-                <option value="">Johanne</option>
-                <option>- - -</option>
+                @for (salarie of salaries; track salarie.idSalarie) {
+                <option value="{{salarie.idSalarie}}">{{salarie.prenom}} {{ salarie.nom }}</option>
+                }
               </select>
             </div>
           </div>
@@ -62,7 +60,7 @@
             <label for="BI" class="block text-sm/6 font-medium ">Bulletin d'inscription</label>
             <div class="mt-2">
               <select id="BI" name="BI"
-                      class="min-w-64 rounded-md  py-1.5 pr-8 pl-3 bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6"
+                      class="min-w-64 rounded-md  py-1.5 pr-8 pl-3 bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
                       title="Bulletin d'inscription">
                 <option value="1">OUI</option>
                 <option value="0">NON</option>
@@ -75,7 +73,7 @@
             <div class="mt-2">
               <input id="dateLimiteYoda" type="text" name="dateLimiteYoda"
                      class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
-                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6"
+                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
                      title="Date limite Yoda"/>
             </div>
           </div>
@@ -92,7 +90,7 @@
             <div class="mt-2">
               <select [(ngModel)]="idFormationChoisie" id="idFormationChoisie" type="text" name="idFormationChoisie"
                       class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
-                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6" title="Intitulé de la formation">
+                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border" title="Intitulé de la formation">
                 @for (formation of formations; track formation.idFormation) {
                   <option value="{{formation.idFormation}}">
                     {{ formation.libelleFormation }}
@@ -107,7 +105,7 @@
             <div class="mt-2">
               <input id="themeSessionF" name="themeSessionF" [value]="themeFormationSelectionnee"
                       class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
-                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6" title="Thème de la formation"
+                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border" title="Thème de la formation"
               readonly/>
             </div>
           </div>
@@ -117,7 +115,7 @@
             <div class="mt-2">
               <select id="noDepartement" name="noDepartement"
                       class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
-                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6"
+                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
                       title="Numéro des départements bretons.">
                 <option value="22">22</option>
                 <option value="29">29</option>
@@ -132,7 +130,7 @@
             <div class="mt-2">
               <input id="lieuFormation" type="text" name="lieuFormation"
                      class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
-                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6" title="Lieu de la formation"/>
+                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border" title="Lieu de la formation"/>
             </div>
           </div>
           <!-- rang 5 -->
@@ -141,7 +139,7 @@
             <div class="mt-2">
               <input id="dureeFormation" type="number" name="dureeFormation" min="0" max="100" step="1"
                      class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
-                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6"
+                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
                      title="Durée total en heure de la formation"/>
             </div>
           </div>
@@ -151,7 +149,7 @@
             <div class="mt-2">
               <input id="commanditaire" type="text" name="commanditaire"
                      class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
-                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6"
+                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
                      title="Commanditaire de la formation"/>
             </div>
           </div>
@@ -161,7 +159,7 @@
             <div class="mt-2">
               <input id="RPE" type="text" name="RPE"
                      class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
-                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6" title="Confirmation au RPE"/>
+                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border" title="Confirmation au RPE"/>
             </div>
           </div>
         </div>
@@ -176,7 +174,7 @@
             <div class="mt-2">
               <input id="nbJournee" type="number" name="nbJournee" step="1" min="0" max="5"
                      class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
-                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6"/>
+                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"/>
             </div>
           </div>
           <!-- rang 2 -->
@@ -186,13 +184,13 @@
               <label for="dateJournee1" class="text-sm/6 min-w-16">Date</label>
               <input id="dateJournee1" type="date" name="dateJournee1"
                      class="min-w-56 rounded-md  py-1.5 pr-8 pl-3
-                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6"/>
+                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"/>
             </div>
             <div class="flex items-center gap-2 w-full">
               <label for="formateurJourneeN" class="text-sm/6 min-w-16">Formateur</label>
               <select id="formateurJourneeN" name="formateurJourneeN"
                       class="min-w-56 rounded-md  py-1.5 pr-8 pl-3
-                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6">
+                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border">
                 <!-- boucler sur les thèmes en présentiel -->
               </select>
             </div>
@@ -200,7 +198,7 @@
               <label for="SalleJourneeN" class="text-sm/6 min-w-16">Salle</label>
               <select id="SalleJourneeN" name="SalleJourneeN"
                       class="min-w-56 rounded-md  py-1.5 pr-8 pl-3
-                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6">
+                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border">
                 <!-- boucler sur les thèmes en présentiel -->
               </select>
             </div>

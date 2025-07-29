@@ -1,9 +1,9 @@
-package fr.mediaskol.projet.bll.sessionFormationDistanciel;
+package fr.mediaskol.projet.bll.sessionFormation;
 
 
-import fr.mediaskol.projet.bo.sessionFormationDistanciel.SessionFormationDistanciel;
-import fr.mediaskol.projet.dal.sessionFormationDistanciel.SessionFormationDistancielRepository;
-import fr.mediaskol.projet.dto.sessionFormationDistanciel.SessionFOADInputDTO;
+import fr.mediaskol.projet.bo.sessionFormation.SessionFormationDistanciel;
+import fr.mediaskol.projet.dal.sessionFormation.SessionFOADRepository;
+import fr.mediaskol.projet.dto.sessionFormation.SessionFOADInputDTO;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -22,7 +22,7 @@ public class SessionFOADServiceImpl implements SessionFOADService {
     /**
      * Injection des repository en couplage faible.
      */
-    private final SessionFormationDistancielRepository sessionFoadRepository;
+    private final SessionFOADRepository sessionFoadRepository;
 
     /***
      * Fonctionnalité qui permet de charger toutes les Sessions de formations à distance

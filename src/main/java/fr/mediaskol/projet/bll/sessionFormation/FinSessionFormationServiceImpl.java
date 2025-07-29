@@ -1,7 +1,6 @@
 package fr.mediaskol.projet.bll.sessionFormation;
 
 import fr.mediaskol.projet.bo.sessionFormation.FinSessionFormation;
-import fr.mediaskol.projet.bo.sessionFormationDistanciel.SessionFormationDistanciel;
 import fr.mediaskol.projet.dal.sessionFormation.FinSessionFormationRepository;
 import fr.mediaskol.projet.dto.sessionFormation.FinSessionFormationInputDTO;
 import jakarta.persistence.EntityNotFoundException;

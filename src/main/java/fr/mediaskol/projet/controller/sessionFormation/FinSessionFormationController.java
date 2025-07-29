@@ -2,9 +2,7 @@ package fr.mediaskol.projet.controller.sessionFormation;
 
 import fr.mediaskol.projet.bll.sessionFormation.FinSessionFormationService;
 import fr.mediaskol.projet.bo.sessionFormation.FinSessionFormation;
-import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
 import fr.mediaskol.projet.dto.sessionFormation.FinSessionFormationRespDTO;
-import fr.mediaskol.projet.dto.sessionFormation.SessionFormationRespDTO;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -1,7 +1,7 @@
-package fr.mediaskol.projet.bll.sessionFormationDistanciel;
+package fr.mediaskol.projet.bll.sessionFormation;
 
-import fr.mediaskol.projet.bo.sessionFormationDistanciel.SessionFormationDistanciel;
-import fr.mediaskol.projet.dto.sessionFormationDistanciel.SessionFOADInputDTO;
+import fr.mediaskol.projet.bo.sessionFormation.SessionFormationDistanciel;
+import fr.mediaskol.projet.dto.sessionFormation.SessionFOADInputDTO;
 
 import java.util.List;
 

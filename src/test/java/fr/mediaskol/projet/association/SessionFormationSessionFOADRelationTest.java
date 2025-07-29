@@ -4,11 +4,11 @@ package fr.mediaskol.projet.association;
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
 import fr.mediaskol.projet.bo.formation.Formation;
 import fr.mediaskol.projet.bo.formation.TypeFormation;
-import fr.mediaskol.projet.bo.sessionFormationDistanciel.SessionFormationDistanciel;
+import fr.mediaskol.projet.bo.sessionFormation.SessionFormationDistanciel;
 import fr.mediaskol.projet.dal.formation.FormationRepository;
 import fr.mediaskol.projet.dal.formation.TypeFormationRepository;
 import fr.mediaskol.projet.dal.sessionFormation.SessionFormationRepository;
-import fr.mediaskol.projet.dal.sessionFormationDistanciel.SessionFormationDistancielRepository;
+import fr.mediaskol.projet.dal.sessionFormation.SessionFOADRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -54,7 +54,7 @@ public class SessionFormationSessionFOADRelationTest {
     private SessionFormationDistanciel sessionFormationDistanciel;
 
     @Autowired
-    private SessionFormationDistancielRepository sessionFormationDistancielRepository;
+    private SessionFOADRepository sessionFormationDistancielRepository;
 
     @BeforeEach
     public void initFormations() {

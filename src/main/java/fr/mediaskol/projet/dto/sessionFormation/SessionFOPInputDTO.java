@@ -4,6 +4,7 @@ package fr.mediaskol.projet.dto.sessionFormation;
 import fr.mediaskol.projet.bo.sessionFormation.StatutSessionFormation;
 import fr.mediaskol.projet.dto.adresse.DepartementDTO;
 import fr.mediaskol.projet.dto.formation.FormationResponseDTO;
+import fr.mediaskol.projet.dto.salarie.SalarieResponseDTO;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -17,10 +18,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Data
 @Builder
-public class SessionFormationInputDTO {
-
-
-
+public class SessionFOPInputDTO {
 
     private Long idSessionFormation;
 
@@ -46,6 +44,8 @@ public class SessionFormationInputDTO {
     private Integer nbHeureSession;
 
     private StatutSessionFormation statutSessionFormation;
+
+    private SalarieResponseDTO salarie;
 
     private FormationResponseDTO formation;
 

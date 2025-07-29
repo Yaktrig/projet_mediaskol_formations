@@ -1,18 +1,15 @@
 package fr.mediaskol.projet.bll.sessionFormation;
 
-
-import fr.mediaskol.projet.bo.apprenant.Apprenant;
-import fr.mediaskol.projet.bo.sessionFormation.FinSessionFormation;
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
-import fr.mediaskol.projet.bo.sessionFormationDistanciel.SessionFormationDistanciel;
+import fr.mediaskol.projet.bo.sessionFormation.SessionFormationPresentiel;
 import fr.mediaskol.projet.dal.sessionFormation.FinSessionFormationRepository;
+import fr.mediaskol.projet.dal.sessionFormation.SessionFOPRepository;
 import fr.mediaskol.projet.dal.sessionFormation.SessionFormationRepository;
-import fr.mediaskol.projet.dal.sessionFormationDistanciel.SessionFormationDistancielRepository;
-import fr.mediaskol.projet.dto.sessionFormation.SessionFormationInputDTO;
+import fr.mediaskol.projet.dal.sessionLieuDate.SessionLieuDateRepository;
+import fr.mediaskol.projet.dto.sessionFormation.SessionFOPInputDTO;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import org.hibernate.Session;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
@@ -26,55 +23,57 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @Service
-public class SessionFormationServiceImpl implements SessionFormationService {
+public class SessionFOPServiceImpl implements SessionFOPService {
 
     /**
      * Injection des repository en couplage faible.
      */
-    private final SessionFormationRepository sessionFormationRepository;
+    private final SessionFOPRepository sessionFOPRepository;
     private final FinSessionFormationRepository finSessionFormationRepository;
-    private final SessionFormationDistancielRepository sessionFormationDistancielRepository;
+    private final SessionLieuDateRepository sessionLieuDateRepository;
+    private final SessionFormationRepository sessionFormationRepository;
+
 
     /***
-     * Fonctionnalité qui permet de charger toutes les Sessions de formations
+     * Fonctionnalité qui permet de charger toutes les Sessions de formations en présentiel
      */
     @Override
-    public List<SessionFormation> chargerToutesSessionsFormations() {
-        return sessionFormationRepository.findAll();
+    public List<SessionFormationPresentiel> chargerToutesSessionsFop() {
+        return sessionFOPRepository.findAll();
     }
 
     /**
-     * Fonctionnalité qui permet de charger une session de formation par son id
+     * Fonctionnalité qui permet de charger une session de formation en présentiel par son id
      *
-     * @param idSessionFormation
+     * @param idSessionFop
      */
     @Override
-    public SessionFormation chargerSessionFormationParId(long idSessionFormation) {
+    public SessionFormationPresentiel chargerSessionFopParId(long idSessionFop) {
 
         // Validation de l'identifiant
-        if (idSessionFormation <= 0) {
+        if (idSessionFop <= 0) {
             throw new RuntimeException("L'identifiant n'existe pas");
         }
 
-        // On retourne une session de formation
-        final Optional<SessionFormation> opt = sessionFormationRepository.findById(idSessionFormation);
+        // On retourne une session de formation en présentiel
+        final Optional<SessionFormationPresentiel> opt = sessionFOPRepository.findById(idSessionFop);
         if (opt.isPresent()) {
             return opt.get();
         }
 
         // Identifiant correspond à aucun enregistrement en base
-        throw new RuntimeException("Aucune session de formation ne correspond");
+        throw new RuntimeException("Aucune session de formation en présentiel ne correspond");
     }
 
 
     /**
-     * Retourne une liste d'apprenants en fonction de la saisie utilisateur.
+     * Retourne une liste de sessions de formation en présentiel en fonction de la saisie utilisateur.
      *
      * @param termeRecherche
-     * @return sessionFormationRepository.findSessionFormationsBySearchText(termeRecherche)
+     * @return sessionFormationRepository.findSessionFormationPresentielsBySearchText(termeRecherche)
      */
     @Override
-    public List<SessionFormation> rechercheSessionFormations(String termeRecherche) {
+    public List<SessionFormationPresentiel> rechercheSessionFop(String termeRecherche) {
 
         String recherche = termeRecherche != null ? termeRecherche.trim().toLowerCase() : "";
 
@@ -102,7 +101,7 @@ public class SessionFormationServiceImpl implements SessionFormationService {
      */
     @Override
     @Transactional
-    public SessionFormation ajouterSessionFormation(SessionFormation sessionFormation) {
+    public SessionFormationPresentiel ajouterSessionFormationPresentiel(SessionFormationPresentiel sessionFormation) {
 
         if (sessionFormation == null) {
             throw new RuntimeException("La session de formation n'est pas renseignée.");
@@ -111,35 +110,40 @@ public class SessionFormationServiceImpl implements SessionFormationService {
         if(sessionFormation.getNoYoda() != null){
             validerUniciteNoYoda(sessionFormation);
         }
-        validerLibelle(sessionFormation.getLibelleSessionFormation());
+        validerLibelle(sessionFormation.getLibelleSessionFormationPresentiel());
         validerChaineNonNulle(sessionFormation.getStatutYoda(), "Le statut Yoda est obligatoire.");
         validerDate(sessionFormation);
         validerNombreNonNul(sessionFormation.getNbHeureSession(), "Le nombre d'heure pour la session de formation est obligatoire.");
-        validerEnumNonNulle(sessionFormation.getStatutSessionFormation());
+        validerEnumNonNulle(sessionFormation.getStatutSessionFormationPresentiel());
         validerFormationNonNulle(sessionFormation);
 
         // Associer la formation
         sessionFormation.setFormation(sessionFormation.getFormation());
 
+        // Associer le département
         sessionFormation.setDepartement(sessionFormation.getDepartement());
 
+        // Associer le salarié qui traite la session de formation
+        sessionFormation.setSalarie(sessionFormation.getSalarie());
+
+
         // valider si la fin de session existe
-        if (sessionFormation.getFinSessionFormation() != null) {
-            FinSessionFormation finSessionFormationDB = finSessionFormationRepository.save(sessionFormation.getFinSessionFormation());
-            sessionFormation.setFinSessionFormation(finSessionFormationDB);
+        if (sessionFormation.getFinSessionFormationPresentiel() != null) {
+            FinSessionFormationPresentiel finSessionFormationPresentielDB = finSessionFormationPresentielRepository.save(sessionFormation.getFinSessionFormationPresentiel());
+            sessionFormation.setFinSessionFormationPresentiel(finSessionFormationPresentielDB);
         }
 
         // valider si la session foad existe
-        if (sessionFormation.getSessionFormationDistanciel() != null) {
-            SessionFormationDistanciel sessionFormationDistancielDB = sessionFormationDistancielRepository.save(sessionFormation.getSessionFormationDistanciel());
-            sessionFormation.setSessionFormationDistanciel(sessionFormationDistancielDB);
+        if (sessionFormation.getSessionFormationPresentielDistanciel() != null) {
+            SessionFormationPresentielDistanciel sessionFormationDistancielDB = sessionFormationDistancielRepository.save(sessionFormation.getSessionFormationPresentielDistanciel());
+            sessionFormation.setSessionFormationPresentielDistanciel(sessionFormationDistancielDB);
         }
 
 
         try {
             return sessionFormationRepository.save(sessionFormation);
         } catch (RuntimeException e) {
-            throw new RuntimeException("Impossible de sauvegarder - " + sessionFormation.getLibelleSessionFormation());
+            throw new RuntimeException("Impossible de sauvegarder - " + sessionFormation.getLibelleSessionFormationPresentiel());
         }
     }
 
@@ -152,24 +156,27 @@ public class SessionFormationServiceImpl implements SessionFormationService {
      */
     @Override
     @Transactional
-    public SessionFormation modifierSessionFormation(SessionFormationInputDTO dto) {
+    public SessionFormationPresentiel modifierSessionFormationPresentiel(SessionFOPInputDTO dto) {
 
         // 1. Vérifier que la sessionFormation à modifier existe
-        SessionFormation sessionFormation = sessionFormationRepository.findById(dto.getIdSessionFormation())
-                .orElseThrow(() -> new EntityNotFoundException("SessionFormation introuvable"));
+        SessionFormationPresentiel sessionFormation = sessionFormationRepository.findById(dto.getIdSessionFormationPresentiel())
+                .orElseThrow(() -> new EntityNotFoundException("SessionFormationPresentiel introuvable"));
 
 
         // 3. Appliquer les modifications aux champs autorisés
         sessionFormation.setNoYoda(dto.getNoYoda());
         sessionFormation.setStatutYoda(dto.getStatutYoda());
-        sessionFormation.setLibelleSessionFormation(dto.getLibelleSessionFormation());
+        sessionFormation.setLibelleSessionFormationPresentiel(dto.getLibelleSessionFormationPresentiel());
         sessionFormation.setDateDebutSession(dto.getDateDebutSession());
         sessionFormation.setNbHeureSession(dto.getNbHeureSession());
-        sessionFormation.setStatutSessionFormation(dto.getStatutSessionFormation());
+        sessionFormation.setStatutSessionFormationPresentiel(dto.getStatutSessionFormationPresentiel());
         validerFormationNonNulle(sessionFormation);
 
         // Associer la formation
         sessionFormation.setFormation(sessionFormation.getFormation());
+
+        // Associer le salarié
+        sessionFormation.setSalarie(sessionFormation.getSalarie());
 
         // Associer le département
         if (dto.getDepartement() != null) {
@@ -179,30 +186,30 @@ public class SessionFormationServiceImpl implements SessionFormationService {
         }
 
         // Associer la fin de session de formation
-        if (dto.getFinSessionFormationId() != null) {
-            FinSessionFormation finSessionFormation = finSessionFormationRepository.findById(dto.getFinSessionFormationId())
-                    .orElseThrow(() -> new EntityNotFoundException("FinSessionFormation introuvable (id = " + dto.getFinSessionFormationId() + ")"));
-            sessionFormation.setFinSessionFormation(finSessionFormation);
+        if (dto.getFinSessionFormationPresentielId() != null) {
+            FinSessionFormationPresentiel finSessionFormationPresentiel = finSessionFormationPresentielRepository.findById(dto.getFinSessionFormationPresentielId())
+                    .orElseThrow(() -> new EntityNotFoundException("FinSessionFormationPresentiel introuvable (id = " + dto.getFinSessionFormationPresentielId() + ")"));
+            sessionFormation.setFinSessionFormationPresentiel(finSessionFormationPresentiel);
         } else {
-            sessionFormation.setFinSessionFormation(null); // ou garder l'existante
+            sessionFormation.setFinSessionFormationPresentiel(null); // ou garder l'existante
         }
 
         // Associer la session de formation en distanciel
-        if (dto.getSessionFormationDistancielId() != null) {
-            SessionFormationDistanciel sessionFoad = sessionFormationDistancielRepository.findById(dto.getSessionFormationDistancielId())
-                    .orElseThrow(() -> new EntityNotFoundException("SessionFormationDistanciel introuvable (id = " + dto.getSessionFormationDistancielId() + ")"));
-            sessionFormation.setSessionFormationDistanciel(sessionFoad);
+        if (dto.getSessionFormationPresentielDistancielId() != null) {
+            SessionFormationPresentielDistanciel sessionFoad = sessionFormationDistancielRepository.findById(dto.getSessionFormationPresentielDistancielId())
+                    .orElseThrow(() -> new EntityNotFoundException("SessionFormationPresentielDistanciel introuvable (id = " + dto.getSessionFormationPresentielDistancielId() + ")"));
+            sessionFormation.setSessionFormationPresentielDistanciel(sessionFoad);
         } else {
-            sessionFormation.setSessionFormationDistanciel(null); // ou garder l'existante
+            sessionFormation.setSessionFormationPresentielDistanciel(null); // ou garder l'existante
         }
 
         // 4. Valider
         validerUniciteNoYoda(sessionFormation);
-        validerLibelle(sessionFormation.getLibelleSessionFormation());
+        validerLibelle(sessionFormation.getLibelleSessionFormationPresentiel());
         validerChaineNonNulle(sessionFormation.getStatutYoda(), "Le statut Yoda est obligatoire.");
         validerDate(sessionFormation);
         validerNombreNonNul(sessionFormation.getNbHeureSession(), "Le nombre d'heure pour la session de formation est obligatoire.");
-        validerEnumNonNulle(sessionFormation.getStatutSessionFormation());
+        validerEnumNonNulle(sessionFormation.getStatutSessionFormationPresentiel());
         validerFormationNonNulle(sessionFormation);
 
 
@@ -213,25 +220,25 @@ public class SessionFormationServiceImpl implements SessionFormationService {
     /**
      * Fonctionnalité qui permet de supprimer une session de formation
      *
-     * @param idSessionFormation
+     * @param idSessionFormationPresentiel
      */
     @Override
-    public void supprimerSessionFormation(long idSessionFormation) {
+    public void supprimerSessionFormationPresentiel(long idSessionFormationPresentiel) {
 
-        if (idSessionFormation <= 0) {
+        if (idSessionFormationPresentiel <= 0) {
             throw new IllegalArgumentException("L'identifiant de la session de la formation n'existe pas.");
         }
 
-        if (!sessionFormationRepository.existsById(idSessionFormation)) {
-            throw new EntityNotFoundException("La session de la formation avec l'ID " + idSessionFormation + " n'existe pas.");
+        if (!sessionFormationRepository.existsById(idSessionFormationPresentiel)) {
+            throw new EntityNotFoundException("La session de la formation avec l'ID " + idSessionFormationPresentiel + " n'existe pas.");
         }
 
         try {
-            sessionFormationRepository.deleteById(idSessionFormation);
+            sessionFormationRepository.deleteById(idSessionFormationPresentiel);
         } catch (DataIntegrityViolationException e) {
             throw new RuntimeException("Impossible de supprimer la sessionFormation : il est liée à des sessions de sessionFormations.");
         } catch (Exception e) {
-            throw new RuntimeException("Impossible de supprimer la sessionFormation (id = " + idSessionFormation + ")" + e.getMessage());
+            throw new RuntimeException("Impossible de supprimer la sessionFormation (id = " + idSessionFormationPresentiel + ")" + e.getMessage());
         }
     }
 
@@ -261,7 +268,7 @@ public class SessionFormationServiceImpl implements SessionFormationService {
     /**
      * Valider date non nulle et format date
      */
-    private void validerDate(SessionFormation sessionFormation) {
+    private void validerDate(SessionFormationPresentiel sessionFormation) {
 
         LocalDate dateDebutSession = sessionFormation.getDateDebutSession();
 
@@ -278,7 +285,7 @@ public class SessionFormationServiceImpl implements SessionFormationService {
     /**
      * Valider formation non nulle
      */
-    private void validerFormationNonNulle(SessionFormation sessionFormation) {
+    private void validerFormationNonNulle(SessionFormationPresentiel sessionFormation) {
 
         long idFormation = sessionFormation.getFormation().getIdFormation();
 
@@ -292,7 +299,7 @@ public class SessionFormationServiceImpl implements SessionFormationService {
      * Validation le numéro Yoda de la session de formation, il est unique, il peut être nul.
      * Sa longueur maximale est de 30 caractères.
      */
-    private void validerUniciteNoYoda(SessionFormation sessionFormation) {
+    private void validerUniciteNoYoda(SessionFormationPresentiel sessionFormation) {
 
         String noYoda = sessionFormation.getNoYoda();
 
@@ -301,13 +308,13 @@ public class SessionFormationServiceImpl implements SessionFormationService {
         }
 
         if (noYoda != null && !noYoda.isBlank()) {
-            Optional<SessionFormation> existant = sessionFormationRepository.findByNoYoda(noYoda);
+            Optional<SessionFormationPresentiel> existant = sessionFormationRepository.findByNoYoda(noYoda);
 
             if (existant.isPresent()) {
-                // Si on est en création (idSessionFormation null) OU
+                // Si on est en création (idSessionFormationPresentiel null) OU
                 // Si le numéro appartient à une autre session de formation => erreur
-                if (sessionFormation.getIdSessionFormation() == null ||
-                        !existant.get().getIdSessionFormation().equals(sessionFormation.getIdSessionFormation())) {
+                if (sessionFormation.getIdSessionFormationPresentiel() == null ||
+                        !existant.get().getIdSessionFormationPresentiel().equals(sessionFormation.getIdSessionFormationPresentiel())) {
                     throw new RuntimeException("Le numéro Yoda existe déjà.");
                 }
             }
@@ -318,11 +325,11 @@ public class SessionFormationServiceImpl implements SessionFormationService {
     /**
      * Validation de la taille du libellé d'une session de formation - max 50 caractères
      */
-    private void validerLibelle(String libelleSessionFormation) {
+    private void validerLibelle(String libelleSessionFormationPresentiel) {
 
-        validerChaineNonNulle(libelleSessionFormation, "Le libellé de la session de formation est obligatoire.");
+        validerChaineNonNulle(libelleSessionFormationPresentiel, "Le libellé de la session de formation est obligatoire.");
 
-        if (libelleSessionFormation.length() > 50) {
+        if (libelleSessionFormationPresentiel.length() > 50) {
             throw new RuntimeException("Le champ du libellé ne doit pas dépasser 50 caractères.");
         }
     }

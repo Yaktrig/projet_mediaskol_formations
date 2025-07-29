@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {Router, RouterLink} from '@angular/router';
-import {UserService} from '../services/user.service';
+import {UserService} from '../services/user/user.service';
 import {FormsModule} from '@angular/forms';
 import {firstValueFrom} from 'rxjs';
 import {Header} from '../header/header';
