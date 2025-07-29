@@ -6,7 +6,7 @@ import {
   AjouterSessionFormationPresentielService
 } from '../services/sessionFormation/ajouter-session-formation-presentiel.service';
 import {MessageService} from '../services/message/message.service';
-import {SessionFormationRespDTO} from '../dto/sessionFormation/session-formation-resp-dto.model';
+import {SessionFormationRespDTO} from '../dto/sessionFormation/session-formation-presentiel-resp-dto.model';
 import {FormationResponseDTO} from '../dto/formation/formation-resp-dto.model';
 import {FormationService} from '../services/formation/formation.service';
 import {FormsModule} from '@angular/forms';

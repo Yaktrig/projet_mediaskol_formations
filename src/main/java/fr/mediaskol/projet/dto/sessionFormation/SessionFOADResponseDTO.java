@@ -18,7 +18,7 @@ public class SessionFOADResponseDTO {
     /**
      * Déclaration des attributs
      */
-    private Long idSessionFormationDistanciel;
+
     private String contratSessionFormationDistanciel;
     private Integer nbBlocSessionFormationDistanciel;
     private LocalDate dateDebutSessionFormationDistanciel;
@@ -33,9 +33,7 @@ public class SessionFOADResponseDTO {
      */
     public SessionFOADResponseDTO(SessionFormationDistanciel sessionFOAD){
 
-        this.idSessionFormationDistanciel = sessionFOAD.getIdSessionFormationDistanciel();
         this.contratSessionFormationDistanciel = sessionFOAD.getContratSessionFormationDistanciel();
-        this.dateDebutSessionFormationDistanciel = sessionFOAD.getDateDebutSessionFormationDistanciel();
         this.dateFinSessionFormationDistanciel = sessionFOAD.getDateFinSessionFormationDistanciel();
         this.dateRelanceSessionFormationDistanciel = sessionFOAD.getDateRelanceSessionFormationDistanciel();
         this.commentaireSessionFormationDistanciel = sessionFOAD.getCommentaireSessionFormationDistanciel();

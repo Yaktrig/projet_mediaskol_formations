@@ -4,6 +4,7 @@ package fr.mediaskol.projet.dto.salle;
 import fr.mediaskol.projet.bo.salle.SessionSalle;
 import fr.mediaskol.projet.bo.salle.StatutSessionSalle;
 import fr.mediaskol.projet.dto.sessionFormation.SessionFOPResponseDTO;
+import fr.mediaskol.projet.dto.sessionFormation.SessionFormationRespDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,7 +25,7 @@ public class SessionSalleRespDTO {
     private Float coutSessionSalle;
     private StatutSessionSalle statutSessionSalle;
     private SalleResponseDTO salle;
-    private SessionFOPResponseDTO sessionFormation;
+    private SessionFOPResponseDTO sessionFOP;
 
 
 
@@ -46,10 +47,10 @@ public class SessionSalleRespDTO {
             this.salle = null;
         }
 
-        if(sessionSalle.getSessionFormation() != null){
-            this.sessionFormation = new SessionFOPResponseDTO(sessionSalle.getSessionFormation());
+        if(sessionSalle.getSessionFormationPresentiel() != null){
+            this.sessionFOP = new SessionSalleRespDTO(sessionSalle.getSessionFormationPresentiel());
         } else {
-            this.sessionFormation = null;
+            this.sessionFOP = null;
         }
 
     }

@@ -1,6 +1,6 @@
 import {StatutSessionLieuDate} from './statut-session-lieu-date.enum';
 import {SessionFormateurRespDTO} from '../formateur/session-formateur-resp-dto.model';
-import {SessionFormationRespDTO} from '../sessionFormation/session-formation-resp-dto.model';
+import {SessionFormationRespDTO} from '../sessionFormation/session-formation-presentiel-resp-dto.model';
 import {SessionSalleRespDTO} from '../salle/session-salle-resp-dto.model';
 
 

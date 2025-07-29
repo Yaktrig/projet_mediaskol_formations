@@ -2,6 +2,7 @@ package fr.mediaskol.projet.bo.salle;
 
 
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
+import fr.mediaskol.projet.bo.sessionFormation.SessionFormationPresentiel;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -95,7 +96,7 @@ public class SessionSalle {
 
 
     /**
-     * Session de formation qui est rattachée à la sessionSalle.
+     * Session de formation en présentiel qui est rattachée à la sessionSalle.
      * <p>
      * Association Many-to-One vers l'entité {@link SessionFormation}.
      * Permet de centraliser les informations liées à la sessionFormation et d'assurer l'intégrité des données.
@@ -107,7 +108,7 @@ public class SessionSalle {
      * </p>
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "SESSION_FORMATION_ID", nullable = false)
-    @NotNull(message = "{sessionSalle.sessionFormation.notnull}")
-    private SessionFormation sessionFormation;
+    @JoinColumn(name = "SESSION_FORMATION_PRESENTIEL_ID",  nullable = false)
+    @NotNull(message="{sessionSalle.sessionFormationPresentiel.notnull= La formation est obligatoire.}")
+    private SessionFormationPresentiel sessionFormationPresentiel;
 }

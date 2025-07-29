@@ -15,14 +15,11 @@ import java.time.LocalDate;
 @Builder
 public class SessionFOADInputDTO {
 
-    private Long idSessionFormationDistanciel;
 
     @Size(max = 300, message = "{sessionFormationDistanciel.contratSessionFoad.size}")
     private String contratSessionFormationDistanciel;
 
     private Integer nbBlocSessionFormationDistanciel;
-
-    private LocalDate dateDebutSessionFormationDistanciel;
 
     private LocalDate dateFinSessionFormationDistanciel;
 

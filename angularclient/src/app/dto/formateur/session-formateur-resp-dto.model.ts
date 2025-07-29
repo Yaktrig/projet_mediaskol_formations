@@ -1,5 +1,5 @@
 import {StatutSessionFormateur} from './statut-session-formateur.enum';
-import {SessionFormationRespDTO} from '../sessionFormation/session-formation-resp-dto.model';
+import {SessionFormationRespDTO} from '../sessionFormation/session-formation-presentiel-resp-dto.model';
 import {FormateurResponseDTO} from './formateur-resp-dto.model';
 
 export interface SessionFormateurRespDTO {

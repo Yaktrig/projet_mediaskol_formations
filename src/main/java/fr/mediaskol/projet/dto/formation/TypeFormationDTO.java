@@ -23,4 +23,6 @@ public class TypeFormationDTO {
         this.id = tf.getIdTypeFormation() ;
         this.libelle = tf.getLibelleTypeFormation();
     }
+
+
 }

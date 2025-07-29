@@ -130,7 +130,7 @@ public class SalarieController {
         try {
             salarieService.ajouterSalarie(salarie);
             return ResponseEntity.ok(salarie);
-        } catch(RuntimeException e){
+        } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(e.getMessage());
         }
     }
@@ -147,10 +147,10 @@ public class SalarieController {
             final int idSalarie = Integer.parseInt(idInPath);
             salarieService.supprimerSalarie(idSalarie);
             return ResponseEntity.ok("Le salarié " + idSalarie + " est supprimé de la base de données.");
-        } catch(NumberFormatException e){
+        } catch (NumberFormatException e) {
             // Statut 406 : No acceptable
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Votre identifiant n'est pas un entier.");
-        } catch(RuntimeException e){
+        } catch (RuntimeException e) {
             // Erreur BLL ou DAL
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(e.getMessage());
         }

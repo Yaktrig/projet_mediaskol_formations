@@ -2,7 +2,9 @@ package fr.mediaskol.projet.dto.apprenant;
 
 import fr.mediaskol.projet.bo.apprenant.SessionApprenant;
 import fr.mediaskol.projet.bo.apprenant.StatutSessionApprenant;
+import fr.mediaskol.projet.dto.sessionFormation.SessionFOADResponseDTO;
 import fr.mediaskol.projet.dto.sessionFormation.SessionFOPResponseDTO;
+import fr.mediaskol.projet.dto.sessionFormation.SessionFormationRespDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,7 +24,8 @@ public class SessionApprenantRespDTO {
     private String modeReceptionInscription;
     private StatutSessionApprenant statutSessionApprenant;
     private ApprenantResponseDTO apprenant;
-    private SessionFOPResponseDTO sessionFormation;
+    private SessionFormationRespDTO sessionFormation;
+
 
 
 
@@ -35,7 +38,7 @@ public class SessionApprenantRespDTO {
         this.modeReceptionInscription = sessionApprenant.getModeReceptionInscription();
         this.statutSessionApprenant = sessionApprenant.getStatutSessionApprenant();
         this.apprenant = new ApprenantResponseDTO(sessionApprenant.getApprenant());
-        this.sessionFormation= new SessionFOPResponseDTO(sessionApprenant.getSessionFormation());
+        this.sessionFormation = new SessionFormationRespDTO(sessionApprenant.getSessionFormation());
 
     }
 }
