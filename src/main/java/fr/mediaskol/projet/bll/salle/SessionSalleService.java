@@ -34,4 +34,6 @@ public interface SessionSalleService {
      * Fonctionnalité qui permet de supprimer une session d'une salle
      */
     void supprimerSessionSalle(long idSessionSalle);
+
+
 }

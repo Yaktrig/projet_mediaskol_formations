@@ -7,6 +7,8 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 
+
+
 /**
  * Représente une session de formation (en présentiel, en distanciel) dans le système de gestion.
  * <p>

@@ -1,5 +1,5 @@
 import { ApprenantResponseDTO} from './apprenant-resp-dto.model';
-import {SessionFormationRespDTO} from '../sessionFormation/session-formation-presentiel-resp-dto.model';
+import {SessionFormationRespDTO} from '../sessionFormation/session-formation-resp-dto.model';
 import { StatutSessionApprenant} from './statut-session-apprenant.enum';
 
 export interface SessionApprenantRespDtoModel {

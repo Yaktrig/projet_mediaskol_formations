@@ -1,16 +1,21 @@
 package fr.mediaskol.projet.bll.sessionFormation;
 
+import fr.mediaskol.projet.bo.salle.SessionSalle;
 import fr.mediaskol.projet.bo.sessionFormation.FinSessionFormation;
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormationPresentiel;
+import fr.mediaskol.projet.dal.salle.SessionSalleRepository;
 import fr.mediaskol.projet.dal.sessionFormation.FinSessionFormationRepository;
 import fr.mediaskol.projet.dal.sessionFormation.SessionFOPRepository;
 import fr.mediaskol.projet.dal.sessionFormation.SessionFormationRepository;
 import fr.mediaskol.projet.dal.sessionLieuDate.SessionLieuDateRepository;
+import fr.mediaskol.projet.dto.salle.SessionSalleRespDTO;
 import fr.mediaskol.projet.dto.sessionFormation.SessionFOPInputDTO;
+import fr.mediaskol.projet.dto.sessionFormation.SessionFOPResponseDTO;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 
@@ -19,6 +24,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @AllArgsConstructor
@@ -32,6 +38,7 @@ public class SessionFOPServiceImpl implements SessionFOPService {
     private final FinSessionFormationRepository finSessionFormationRepository;
     private final SessionLieuDateRepository sessionLieuDateRepository;
     private final SessionFormationRepository sessionFormationRepository;
+    private final SessionSalleRepository sessionSalleRepository;
 
 
     /***
@@ -107,7 +114,7 @@ public class SessionFOPServiceImpl implements SessionFOPService {
             throw new RuntimeException("La session de formation n'est pas renseignée.");
         }
 
-        if(sessionFop.getNoYoda() != null){
+        if (sessionFop.getNoYoda() != null) {
             validerUniciteNoYoda(sessionFop);
         }
         validerLibelle(sessionFop.getLibelleSessionFormation());
@@ -181,7 +188,7 @@ public class SessionFOPServiceImpl implements SessionFOPService {
 
         // Associer la fin de session de formation
         if (dto.getFinSessionFormation() != null) {
-            FinSessionFormation finSessionFormation= finSessionFormationRepository.findById(dto.getFinSessionFormation().getIdFinSessionFormation())
+            FinSessionFormation finSessionFormation = finSessionFormationRepository.findById(dto.getFinSessionFormation().getIdFinSessionFormation())
                     .orElseThrow(() -> new EntityNotFoundException("La fin de la session de formation présentiel introuvable (id = " + dto.getFinSessionFormation().getIdFinSessionFormation() + ")"));
             sessionFop.setFinSessionFormation(finSessionFormation);
         } else {
@@ -202,6 +209,35 @@ public class SessionFOPServiceImpl implements SessionFOPService {
         // Sauvegarde finale
         return sessionFOPRepository.save(sessionFop);
     }
+
+    /**
+     * Fonctionnalité qui récupère les sessions salle liées à une session formation en présentiel.
+     * Les convertit en DTO
+     *
+     * @param idSessionFormation
+     */
+    @Override
+    public List<SessionSalleRespDTO> getSessionsSalleBySessionId(Long idSessionFormation) {
+        List<SessionSalle> sessionsSalle = sessionSalleRepository.findBySessionFormationPresentielIdSessionFormation(idSessionFormation);
+
+        return sessionsSalle.stream()
+                .map(SessionSalleRespDTO::new)
+                .collect(Collectors.toList());
+    }
+
+
+    public SessionFOPResponseDTO getSessionFOPResponseDTO(Long idSessionFormation) throws ChangeSetPersister.NotFoundException {
+        SessionFormationPresentiel session = sessionFOPRepository.findById(idSessionFormation)
+                .orElseThrow(ChangeSetPersister.NotFoundException::new);
+
+        SessionFOPResponseDTO dto = new SessionFOPResponseDTO(session);
+
+        List<SessionSalleRespDTO> salles = getSessionsSalleBySessionId(idSessionFormation);
+        dto.setSessionsSalle(salles);
+
+        return dto;
+    }
+
 
     /**
      * Fonctionnalité qui permet de supprimer une session de formation en présentiel
@@ -228,7 +264,8 @@ public class SessionFOPServiceImpl implements SessionFOPService {
         }
     }
 
-    // Méthodes de contrôle de contraintes
+
+// Méthodes de contrôle de contraintes
 
 
     /**

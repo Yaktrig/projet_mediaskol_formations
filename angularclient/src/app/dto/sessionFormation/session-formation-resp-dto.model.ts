@@ -6,7 +6,7 @@ import {FinSessionFormationRespDTO} from './fin-session-formation-resp-dto.model
 /**
  * Classe mère des sessions de formation (présentiel et distanciel)
  */
-export interface SessionFormation {
+export interface SessionFormationRespDTO {
 
   idSessionFormation: number | null;
   noYoda: string | null;

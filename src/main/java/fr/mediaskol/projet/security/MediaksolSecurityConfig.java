@@ -41,7 +41,9 @@ public class MediaksolSecurityConfig {
                             .requestMatchers("/mediaskolFormation/auth/**").permitAll()
 
                             // permettre aux rôles EMPLOYE et ADMIN de manipuler les URLs en GET
-                            .requestMatchers(HttpMethod.GET, "/mediaskolFormation/sessionsFormations/**").hasAnyRole("SALARIE", "ADMIN")
+                            //.requestMatchers(HttpMethod.GET, "/mediaskolFormation/sessionsFormations/**").hasAnyRole("SALARIE", "ADMIN")
+                            .requestMatchers(HttpMethod.GET, "/mediaskolFormation/sessionsFormationsPresentiels/**").hasAnyRole("SALARIE", "ADMIN")
+                            .requestMatchers(HttpMethod.GET, "/mediaskolFormation/sessionsFormationsDistanciels/**").hasAnyRole("SALARIE", "ADMIN")
                             //.requestMatchers(HttpMethod.GET, "/mediaskolFormation/sessionsFormations/**").hasAnyRole("EMPLOYE", "ADMIN")
                             // Restreindre la manipulation des méthodes POST, PUT, PATCH, DELETE au rôle ADMIN
                             .requestMatchers(HttpMethod.POST, "/mediaskolFormation/sessionsFormations").hasAnyRole("SALARIE", "ADMIN")

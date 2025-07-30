@@ -2,6 +2,7 @@ package fr.mediaskol.projet.bll.sessionFormation;
 
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormationPresentiel;
+import fr.mediaskol.projet.dto.salle.SessionSalleRespDTO;
 import fr.mediaskol.projet.dto.sessionFormation.SessionFOPInputDTO;
 
 import java.util.List;
@@ -49,4 +50,10 @@ public interface SessionFOPService {
      * @return
      */
     SessionFormationPresentiel modifierSessionFop(SessionFOPInputDTO sessionFopInputDTO);
+
+    /**
+     * Fonctionnalité qui récupère les sessions salle liées à une session formation en présentiel.
+     * Les convertit en DTO
+     */
+    List<SessionSalleRespDTO> getSessionsSalleBySessionId(Long idSessionFormationPresentiel);
 }

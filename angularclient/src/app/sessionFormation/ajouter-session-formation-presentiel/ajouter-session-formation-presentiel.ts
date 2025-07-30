@@ -1,17 +1,17 @@
 import {Component, OnInit} from '@angular/core';
-import {Header} from "../header/header";
-import {Footer} from '../footer/footer';
+import {Header} from "../../header/header";
+import {Footer} from '../../footer/footer';
 import {Router, RouterLink} from '@angular/router';
 import {
   AjouterSessionFormationPresentielService
-} from '../services/sessionFormation/ajouter-session-formation-presentiel.service';
-import {MessageService} from '../services/message/message.service';
-import {SessionFormationRespDTO} from '../dto/sessionFormation/session-formation-presentiel-resp-dto.model';
-import {FormationResponseDTO} from '../dto/formation/formation-resp-dto.model';
-import {FormationService} from '../services/formation/formation.service';
+} from '../../services/sessionFormation/ajouter-session-formation-presentiel.service';
+import {MessageService} from '../../services/message/message.service';
+import {SessionFopRespDTO} from '../../dto/sessionFormation/session-formation-presentiel-resp-dto.model';
+import {FormationResponseDTO} from '../../dto/formation/formation-resp-dto.model';
+import {FormationService} from '../../services/formation/formation.service';
 import {FormsModule} from '@angular/forms';
-import {SalarieService} from '../services/salarie/salarie.service';
-import {SalarieRespDto} from '../dto/salarie/salarie-resp-dto.model';
+import {SalarieService} from '../../services/salarie/salarie.service';
+import {SalarieRespDto} from '../../dto/salarie/salarie-resp-dto.model';
 
 
 @Component({
@@ -77,8 +77,8 @@ export class AjouterSessionFormationPresentiel implements OnInit {
     })
   }
 
-  ajouterSession(sessionDto: SessionFormationRespDTO) {
-    this.ajouterSessionFOP.ajoutSessionFOP(sessionDto).subscribe({
+  ajouterSession(sessionFopDto: SessionFopRespDTO) {
+    this.ajouterSessionFOP.ajoutSessionFOP(sessionFopDto).subscribe({
       next: (resp) => {
         this.messageService.showSuccess(resp.message || 'Session ajoutée avec succès.');
         this.router.navigate(["listeSessionFormationPresentiel"]);

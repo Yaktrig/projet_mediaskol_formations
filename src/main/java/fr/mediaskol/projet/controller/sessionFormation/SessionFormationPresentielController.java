@@ -4,6 +4,7 @@ import fr.mediaskol.projet.bll.sessionFormation.SessionFOPService;
 import fr.mediaskol.projet.bo.ApiResponse;
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormationPresentiel;
+import fr.mediaskol.projet.dto.salle.SessionSalleRespDTO;
 import fr.mediaskol.projet.dto.sessionFormation.SessionFOPResponseDTO;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -49,7 +50,12 @@ public class SessionFormationPresentielController {
         // Sinon, on retourne Statut 200 : Ok + dans le body les sessionFormation
         // Conversion liste SessionFormation -> liste SessionFormationDTO
         List<SessionFOPResponseDTO> sessionFOPResponseDTOS = sessionsFop.stream()
-                .map(SessionFOPResponseDTO::new)
+                .map(session -> {
+                    SessionFOPResponseDTO dto = new SessionFOPResponseDTO(session);
+                    List<SessionSalleRespDTO> sallesDtos = sessionFOPService.getSessionsSalleBySessionId(session.getIdSessionFormation());
+                    dto.setSessionsSalle(sallesDtos);
+                    return dto;
+                })
                 .toList();
 
         return ResponseEntity.ok(sessionFOPResponseDTOS);
@@ -66,7 +72,13 @@ public class SessionFormationPresentielController {
             final SessionFormationPresentiel sessionFop = sessionFOPService.chargerSessionFopParId(id);
 
             SessionFOPResponseDTO sessionFOPRespDTO = new SessionFOPResponseDTO(sessionFop);
+
+            // Ajout : on va chercher les salles associées et on les met dans le DTO
+            List<SessionSalleRespDTO> sallesDtos = sessionFOPService.getSessionsSalleBySessionId(id); // ou injecte le bon service
+            sessionFOPRespDTO.setSessionsSalle(sallesDtos);
+
             return ResponseEntity.ok(sessionFOPRespDTO);
+
         } catch (NumberFormatException e) {
             // Statut 406 : No Acceptable
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Votre identifiant n'est pas valide");

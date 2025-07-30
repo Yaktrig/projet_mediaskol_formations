@@ -113,6 +113,8 @@ public class SessionFormation {
     private Integer nbHeureSession;
 
 
+
+
     /**
      * Statut métier de la session de formation.
      * <p>

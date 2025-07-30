@@ -3,7 +3,7 @@
   <h1 class="">Liste des sessions de formation - Présentiel</h1>
 
 
-<!--  <div class="justify-start">-->
+  <!--  <div class="justify-start">-->
   <!--    <input-->
   <!--      type="text"-->
   <!--      [(ngModel)]="searchTerm"-->
@@ -68,7 +68,7 @@ md:min-w-[450px] md:max-w-[940px] flex flex-col md:flex-row md:items-center md:m
         Ajouter facture
       </button>
       <button routerLink="/ajouterSessionFormationPresentiel"
-        class="w-full bg-[var(--color-bg-button)] text-[var(--color-text-button)] py-2 rounded
+              class="w-full bg-[var(--color-bg-button)] text-[var(--color-text-button)] py-2 rounded
         hover:bg-[var(--color-bg-button-hover)] hover:text-[var(--color-text-button-hover)] text-center pl-6 rounded-md">
         Ajouter une session de formation
       </button>
@@ -126,29 +126,31 @@ md:min-w-[450px] md:max-w-[940px] flex flex-col md:flex-row md:items-center md:m
               {{ session.libelleSessionFormation }}
             </td>
             <td class="text-center">{{ session.statutYoda }}</td>
-          <td class="text-center" [style.background-color]="session.salarie?.couleurSalarie">
-            {{ session.salarie?.nom | firstLetterUpper}}{{session.salarie?.prenom | firstLetterUpper}}
-          </td><!-- Salarié(e) qui traite le dossier -->
+            <td class="text-center" [style.background-color]="session.salarie?.couleurSalarie">
+              {{ session.salarie?.nom | firstLetterUpper }}{{ session.salarie?.prenom | firstLetterUpper }}
+            </td><!-- Salarié(e) qui traite le dossier -->
             <td>{{ session.finSessionFormation?.statutFinSessionFormation }}</td>
             <td>{{ session.finSessionFormation?.dateLimiteYodaFinSessionFormation }}</td>
             <td>{{ session.formation?.themeFormation }}</td>
             <td>{{ session.formation?.libelleFormation }}</td>
             <td class="text-center"
-              [style.background-color]="session.departement?.couleurDepartement">{{ session.departement?.numDepartement }}
+                [style.background-color]="session.departement?.couleurDepartement">{{ session.departement?.numDepartement }}
             </td>
             <td>{{ session.lieuSessionFormation }}</td><!-- lieu de la salle ou ville principale -->
             <td class="text-center">{{ session.nbHeureSession }}</td>
             <!-- Mettre une condition en fonction du nombre de jours - pour le présentiel -->
             <td>{{ session.dateDebutSession | date:'dd-MM-yyyy' }}</td>
-            <td>---</td>
-            <td>---</td>
-            <td>---</td>
-            <td>---</td> <!-- Champs libre -->
-            <td>---</td>
+            <td>---</td> <!-- J2 -->
+            <td>---</td> <!-- J3 -->
+            <td>---</td> <!-- JN -->
+            <td>{{ session.commanditaire }}</td> <!-- Commanditaire - champ modifiable -->
+            <td>{{ session.confirmationRPE }}</td> <!-- RPE - champ modifiable -->
             <td>---</td> <!-- Liste de formateurs avec statut dans la même colonne ? -->
-            <td>---</td> <!-- Accès liste de salle -  où se trouve la formation -->
             <td>---</td>
-            <td>---</td>
+            @for (sessionSalle of session.sessionsSalle; track sessionSalle.idSessionSalle) {
+              <td>{{ sessionSalle.coutSessionSalle }}</td> <!-- Coût salle - champ modifiable -->
+            }
+            <td>---</td> <!-- Coût formateur - champ modifiable -->
           </tr>
         } @empty {
           <tr>

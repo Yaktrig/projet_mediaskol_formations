@@ -1,9 +1,9 @@
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
-import {ListeSessionFormationPresentiel} from './liste-session-formation-presentiel/liste-session-formation-presentiel';
+import {ListeSessionFormationPresentiel} from './sessionFormation/liste-session-formation-presentiel/liste-session-formation-presentiel';
 import {
   AjouterSessionFormationPresentiel
-} from './ajouter-session-formation-presentiel/ajouter-session-formation-presentiel';
+} from './sessionFormation/ajouter-session-formation-presentiel/ajouter-session-formation-presentiel';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {JwtInterceptor} from './jwt/jwt-interceptor';
 import {UserGuard} from './guards/user-guard';

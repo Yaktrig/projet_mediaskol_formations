@@ -18,19 +18,17 @@ import java.time.LocalDate;
 @SuperBuilder // Héritage joined
 public class SessionFOADResponseDTO extends SessionFormationResponseDTO {
 
-//    /**
-//     * Déclaration des attributs
-//     */
-//    private Long idSessionFormation;
-//    private String noYoda;
-//    private String libelleSessionFormation;
-//    private String statutYoda;
-//    private LocalDate dateDebutSession;
-//    private Integer nbHeureSession;
-//    private StatutSessionFormation statutSessionFormation = StatutSessionFormation.SESSION_FORMATION_NON_COMMENCEE;
-//    private FormationResponseDTO formation;
-//    private FinSessionFormationRespDTO finSessionFormation;
-//    private SalarieResponseDTO salarie;
+
+    private Long idSessionFormationDistanciel;
+    private String noYoda;
+    private String libelleSessionFormation;
+    private String statutYoda;
+    private LocalDate dateDebutSession;
+    private Integer nbHeureSession;
+    private StatutSessionFormation statutSessionFormation = StatutSessionFormation.SESSION_FORMATION_NON_COMMENCEE;
+    private FormationResponseDTO formation;
+    private FinSessionFormationRespDTO finSessionFormation;
+    private SalarieResponseDTO salarie;
 
     private String contratSessionFormationDistanciel;
     private Integer nbBlocSessionFormationDistanciel;
@@ -45,33 +43,33 @@ public class SessionFOADResponseDTO extends SessionFormationResponseDTO {
      */
     public SessionFOADResponseDTO(SessionFormationDistanciel sessionFOAD){
 
-//        this.idSessionFormation =  sessionFOAD.getIdSessionFormation();
-//        this.noYoda = sessionFOAD.getNoYoda();
-//        this.libelleSessionFormation = sessionFOAD.getLibelleSessionFormation();
-//        this.statutYoda = sessionFOAD.getStatutYoda();
-//        this.dateDebutSession = sessionFOAD.getDateDebutSession();
-//        this.nbHeureSession = sessionFOAD.getNbHeureSession();
-//        this.statutSessionFormation = sessionFOAD.getStatutSessionFormation();
-//
-//        if (sessionFOAD.getFormation() != null) {
-//            this.formation = new FormationResponseDTO(sessionFOAD.getFormation());
-//        } else {
-//            this.formation = null;
-//        }
+        this.idSessionFormationDistanciel=  sessionFOAD.getIdSessionFormation();
+        this.noYoda = sessionFOAD.getNoYoda();
+        this.libelleSessionFormation = sessionFOAD.getLibelleSessionFormation();
+        this.statutYoda = sessionFOAD.getStatutYoda();
+        this.dateDebutSession = sessionFOAD.getDateDebutSession();
+        this.nbHeureSession = sessionFOAD.getNbHeureSession();
+        this.statutSessionFormation = sessionFOAD.getStatutSessionFormation();
 
-//
-//        if (sessionFOAD.getFinSessionFormation() != null) {
-//            this.finSessionFormation = new FinSessionFormationRespDTO(sessionFOAD.getFinSessionFormation());
-//        } else {
-//            this.finSessionFormation = null;
-//        }
-//
-//
-//        if (sessionFOAD.getSalarie() != null) {
-//            this.salarie = new SalarieResponseDTO(sessionFOAD.getSalarie());
-//        } else {
-//            this.salarie = null;
-//        }
+        if (sessionFOAD.getFormation() != null) {
+            this.formation = new FormationResponseDTO(sessionFOAD.getFormation());
+        } else {
+            this.formation = null;
+        }
+
+
+        if (sessionFOAD.getFinSessionFormation() != null) {
+            this.finSessionFormation = new FinSessionFormationRespDTO(sessionFOAD.getFinSessionFormation());
+        } else {
+            this.finSessionFormation = null;
+        }
+
+
+        if (sessionFOAD.getSalarie() != null) {
+            this.salarie = new SalarieResponseDTO(sessionFOAD.getSalarie());
+        } else {
+            this.salarie = null;
+        }
 
         this.contratSessionFormationDistanciel = sessionFOAD.getContratSessionFormationDistanciel();
         this.nbBlocSessionFormationDistanciel = sessionFOAD.getNbBlocSessionFormationDistanciel();

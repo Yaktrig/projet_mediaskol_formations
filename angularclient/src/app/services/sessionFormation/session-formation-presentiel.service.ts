@@ -7,13 +7,13 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Observable, Subject, tap} from 'rxjs';
-import {SessionFormationRespDTO} from '../../dto/sessionFormation/session-formation-presentiel-resp-dto.model';
+import {SessionFopRespDTO} from '../../dto/sessionFormation/session-formation-presentiel-resp-dto.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SessionFormationPresentielService {
-  private apiUrl = 'http://localhost:8080/mediaskolFormation/sessionsFormations';
+  private apiUrl = 'http://localhost:8080/mediaskolFormation/sessionsFormationsPresentiels';
 
 
   constructor(private http: HttpClient) {
@@ -21,27 +21,27 @@ export class SessionFormationPresentielService {
 
 
   /**
-   * Méthode qui appelle l'api pour retourner la liste des sessions de formation
+   * Méthode qui appelle l'api pour retourner la liste des sessions de formation en présentiel
    */
-  getSessions(): Observable<SessionFormationRespDTO[]> {
-    return this.http.get<SessionFormationRespDTO[]>(this.apiUrl);
+  getSessions(): Observable<SessionFopRespDTO[]> {
+    return this.http.get<SessionFopRespDTO[]>(this.apiUrl);
   }
 
 
   /**
-   * Méthode qui appelle l'api pour rechercher une session de formation selon certains champs définis
+   * Méthode qui appelle l'api pour rechercher une session de formation en présentiel selon certains champs définis
    * @param termeRecherche
    */
-  searchSessions(termeRecherche: string): Observable<SessionFormationRespDTO[]> {
+  searchSessions(termeRecherche: string): Observable<SessionFopRespDTO[]> {
     const url = `${this.apiUrl}/recherche?termeRecherche=${encodeURIComponent(termeRecherche)}`;
-    return this.http.get<SessionFormationRespDTO[]>(url);
+    return this.http.get<SessionFopRespDTO[]>(url);
   }
 
   /**
    * Méthode qui appelle l'api pour créer une nouvelle session de formation en présentiel
    */
-  ajoutSessionFOP(sessionFormation: SessionFormationRespDTO): Observable<any> {
-    return this.http.post<SessionFormationRespDTO>(this.apiUrl, sessionFormation);
+  ajoutSessionFOP(sessionFormation: SessionFopRespDTO): Observable<any> {
+    return this.http.post<SessionFopRespDTO>(this.apiUrl, sessionFormation);
   }
 
 }

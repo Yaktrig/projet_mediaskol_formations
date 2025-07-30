@@ -47,4 +47,6 @@ public interface SalleService {
      * @param idSalle
      */
     void supprimerSalle(long idSalle);
+
+
 }
