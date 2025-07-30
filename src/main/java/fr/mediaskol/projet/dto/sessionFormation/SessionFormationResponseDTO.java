@@ -2,8 +2,10 @@ package fr.mediaskol.projet.dto.sessionFormation;
 
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
 import fr.mediaskol.projet.bo.sessionFormation.StatutSessionFormation;
+import fr.mediaskol.projet.bo.sessionLieuDate.SessionLieuDate;
 import fr.mediaskol.projet.dto.formation.FormationResponseDTO;
 import fr.mediaskol.projet.dto.salarie.SalarieResponseDTO;
+import fr.mediaskol.projet.dto.sessionLieuDate.SessionLieuDateRespDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,6 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -32,6 +35,7 @@ public class SessionFormationResponseDTO {
     private SalarieResponseDTO salarie;
 
 
+
     public SessionFormationResponseDTO(SessionFormation sessionFormation){
 
         this.idSessionFormation =  sessionFormation.getIdSessionFormation();
@@ -41,6 +45,7 @@ public class SessionFormationResponseDTO {
         this.dateDebutSession = sessionFormation.getDateDebutSession();
         this.nbHeureSession = sessionFormation.getNbHeureSession();
         this.statutSessionFormation = sessionFormation.getStatutSessionFormation();
+
 
         if (sessionFormation.getFormation() != null) {
             this.formation = new FormationResponseDTO(sessionFormation.getFormation());
@@ -60,5 +65,7 @@ public class SessionFormationResponseDTO {
         } else {
             this.salarie = null;
         }
+
+
     }
 }

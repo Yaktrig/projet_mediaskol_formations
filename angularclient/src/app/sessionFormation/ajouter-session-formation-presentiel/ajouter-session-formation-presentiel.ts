@@ -12,6 +12,7 @@ import {FormationService} from '../../services/formation/formation.service';
 import {FormsModule} from '@angular/forms';
 import {SalarieService} from '../../services/salarie/salarie.service';
 import {SalarieRespDto} from '../../dto/salarie/salarie-resp-dto.model';
+import {NgSelectComponent} from '@ng-select/ng-select';
 
 
 @Component({
@@ -20,7 +21,8 @@ import {SalarieRespDto} from '../../dto/salarie/salarie-resp-dto.model';
     Header,
     Footer,
     RouterLink,
-    FormsModule
+    FormsModule,
+    NgSelectComponent
   ],
   templateUrl: './ajouter-session-formation-presentiel.html',
   styleUrls: ['./ajouter-session-formation-presentiel.css']
@@ -29,7 +31,7 @@ export class AjouterSessionFormationPresentiel implements OnInit {
 
   formations: FormationResponseDTO[] = [];
   idFormationChoisie: number | null = null;
-  themeFormationSelectionnee: string | null | undefined;
+  libelleFormationSelectionnee: string | null | undefined;
   salaries: SalarieRespDto[] = [];
   idSalarieChoisi: number | null = null;
 
@@ -50,12 +52,12 @@ export class AjouterSessionFormationPresentiel implements OnInit {
     // Récupération de la liste des salariés
     this.formationService.getFormations().subscribe({
       next: (data) => {
-        this.formations = data;
+        this.formations = data.filter(f => f.typeFormation?.libelle=== 'Présentiel');
         // Optionnel : initialiser sélection première formation (ex)
         if (this.formations.length) {
           this.idFormationChoisie = this.formations[0].idFormation;
-          // Récupérer le thème en fonction du libellé choisi
-          this.updateThemeFormation();
+          // Récupérer le libellé en fonction du thème choisi
+          this.updateLibelleFormation();
         }
       },
       error: () => {
@@ -91,12 +93,12 @@ export class AjouterSessionFormationPresentiel implements OnInit {
   }
 
   // Méthode appelée à chaque changement dans la sélection
-  updateThemeFormation() {
+  updateLibelleFormation() {
     if (this.idFormationChoisie != null) {
       const formationTrouvee = this.formations.find(f => f.idFormation === this.idFormationChoisie);
-      this.themeFormationSelectionnee = formationTrouvee ? formationTrouvee.themeFormation : '';
+      this.libelleFormationSelectionnee = formationTrouvee ? formationTrouvee.libelleFormation : '';
     } else {
-      this.themeFormationSelectionnee = '';
+      this.libelleFormationSelectionnee = '';
     }
   }
 

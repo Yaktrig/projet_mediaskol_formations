@@ -1,12 +1,13 @@
-import {Component, signal} from '@angular/core';
+import {Component} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
-import {FirstLetterUpperPipe} from './pipe/first-letter-upper.pipe';
+import {NgSelectModule} from '@ng-select/ng-select';
+
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, NgSelectModule],
   templateUrl: './app.html',
   styleUrls: ['./app.css'],
 

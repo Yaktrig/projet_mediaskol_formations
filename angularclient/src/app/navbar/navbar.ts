@@ -38,7 +38,7 @@ export class Navbar {
   logout() {
     this.userService.logout();
     this.isLoggedIn = false;
-    this.router.navigate(['']);
+    this.router.navigate(['/']);
     this.messageService.showSuccess("Vous avez été déconnecté avec succès.")
   }
 

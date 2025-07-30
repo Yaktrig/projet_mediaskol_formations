@@ -4,6 +4,7 @@ import fr.mediaskol.projet.bo.formateur.SessionFormateur;
 import fr.mediaskol.projet.bo.salle.SessionSalle;
 import fr.mediaskol.projet.bo.sessionFormation.FinSessionFormation;
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormationPresentiel;
+import fr.mediaskol.projet.bo.sessionLieuDate.SessionLieuDate;
 import fr.mediaskol.projet.dal.formateur.SessionFormateurRepository;
 import fr.mediaskol.projet.dal.salle.SessionSalleRepository;
 import fr.mediaskol.projet.dal.sessionFormation.FinSessionFormationRepository;
@@ -14,6 +15,7 @@ import fr.mediaskol.projet.dto.formateur.SessionFormateurRespDTO;
 import fr.mediaskol.projet.dto.salle.SessionSalleRespDTO;
 import fr.mediaskol.projet.dto.sessionFormation.SessionFOPInputDTO;
 import fr.mediaskol.projet.dto.sessionFormation.SessionFOPResponseDTO;
+import fr.mediaskol.projet.dto.sessionLieuDate.SessionLieuDateRespDTO;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -243,6 +245,22 @@ public class SessionFOPServiceImpl implements SessionFOPService {
        return sessionFormateurs.stream()
                .map(SessionFormateurRespDTO::new)
                .collect(Collectors.toList());
+    }
+
+    /**
+     * Fonctionnalité qui récupère les sessions lieu date liées à une session formation en présentiel.
+     * Les convertit en DTO
+     *
+     * @param idSessionFormation
+     */
+    @Override
+    public List<SessionLieuDateRespDTO> getSessionsLieuDateBySessionId(Long idSessionFormation) {
+
+        List<SessionLieuDate> sessionLieuDates = sessionLieuDateRepository.findBySessionFormationIdSessionFormation(idSessionFormation);
+
+        return sessionLieuDates.stream()
+                .map(SessionLieuDateRespDTO::new)
+                .collect(Collectors.toList());
     }
 
 

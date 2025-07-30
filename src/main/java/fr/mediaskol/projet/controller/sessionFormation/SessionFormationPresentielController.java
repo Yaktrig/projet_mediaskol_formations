@@ -7,6 +7,7 @@ import fr.mediaskol.projet.bo.sessionFormation.SessionFormationPresentiel;
 import fr.mediaskol.projet.dto.formateur.SessionFormateurRespDTO;
 import fr.mediaskol.projet.dto.salle.SessionSalleRespDTO;
 import fr.mediaskol.projet.dto.sessionFormation.SessionFOPResponseDTO;
+import fr.mediaskol.projet.dto.sessionLieuDate.SessionLieuDateRespDTO;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -53,10 +54,16 @@ public class SessionFormationPresentielController {
         List<SessionFOPResponseDTO> sessionFOPResponseDTOS = sessionsFop.stream()
                 .map(session -> {
                     SessionFOPResponseDTO dto = new SessionFOPResponseDTO(session);
+
                     List<SessionSalleRespDTO> sallesDtos = sessionFOPService.getSessionsSalleBySessionId(session.getIdSessionFormation());
                     dto.setSessionsSalle(sallesDtos);
+
                     List<SessionFormateurRespDTO> formateursDtos = sessionFOPService.getSessionsFormateurBySessionId(session.getIdSessionFormation());
                     dto.setSessionsFormateur(formateursDtos);
+
+                    List<SessionLieuDateRespDTO> lieuDateDtos = sessionFOPService.getSessionsLieuDateBySessionId(session.getIdSessionFormation());
+                    dto.setSessionsLieuDate(lieuDateDtos);
+
                     return dto;
                 })
                 .toList();
@@ -82,6 +89,10 @@ public class SessionFormationPresentielController {
 
             List<SessionFormateurRespDTO> formateursDtos = sessionFOPService.getSessionsFormateurBySessionId(id);
             sessionFOPRespDTO.setSessionsFormateur(formateursDtos);
+
+
+            List<SessionLieuDateRespDTO> lieuDateDtos = sessionFOPService.getSessionsLieuDateBySessionId(id);
+            sessionFOPRespDTO.setSessionsLieuDate(lieuDateDtos);
 
             return ResponseEntity.ok(sessionFOPRespDTO);
 

@@ -9,6 +9,7 @@ import fr.mediaskol.projet.dto.formateur.SessionFormateurRespDTO;
 import fr.mediaskol.projet.dto.formation.FormationResponseDTO;
 import fr.mediaskol.projet.dto.salarie.SalarieResponseDTO;
 import fr.mediaskol.projet.dto.salle.SessionSalleRespDTO;
+import fr.mediaskol.projet.dto.sessionLieuDate.SessionLieuDateRespDTO;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -41,6 +42,7 @@ public class SessionFOPResponseDTO extends SessionFormationResponseDTO {
     private DepartementDTO departement;
     private List<SessionSalleRespDTO> sessionsSalle;
     private List<SessionFormateurRespDTO> sessionsFormateur;
+    private List<SessionLieuDateRespDTO> sessionsLieuDate;
 
     /**
      * Constructeur
@@ -87,6 +89,7 @@ public class SessionFOPResponseDTO extends SessionFormationResponseDTO {
         this.confirmationRPE = sessionFOP.getConfirmationRPE();
         this.sessionsSalle = new ArrayList<>();
         this.sessionsFormateur = new ArrayList<>();
+        this.sessionsLieuDate =  new ArrayList<>();
     }
 
 }

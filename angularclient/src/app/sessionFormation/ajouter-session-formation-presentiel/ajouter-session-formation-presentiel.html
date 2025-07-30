@@ -13,7 +13,7 @@
         <div class="space-y-4">
 
           <!-- rang 1 -->
-          <div className="">
+          <div>
             <label for="noYoda" class="block text-sm/6">N°YODA</label>
             <div class="mt-2">
               <input id="noYoda" type="text" name="noYoda"
@@ -23,7 +23,7 @@
           </div>
 
           <!-- rang 2 -->
-          <div className="">
+          <div>
             <label for="intituleSessionF" class="block text-sm/6 font-medium ">Intituté de la session de
               formation</label>
             <div class="mt-2">
@@ -34,7 +34,7 @@
             </div>
           </div>
           <!-- rang 3 -->
-          <div className="">
+          <div>
             <label for="ttDossier" class="block text-sm/6 font-medium ">Dossier traité par</label>
             <div class="mt-2">
               <select [(ngModel)]="idSalarieChoisi" id="idSalarieChoisi" name="idSalarieChoisi"
@@ -47,7 +47,7 @@
             </div>
           </div>
           <!-- rang 4 -->
-          <div className="">
+          <div>
             <label for="BI" class="block text-sm/6 font-medium ">Bulletin d'inscription</label>
             <div class="mt-2">
               <select id="BI" name="BI"
@@ -59,7 +59,7 @@
             </div>
           </div>
           <!-- rang 5 -->
-          <div className="">
+          <div>
             <label for="dateLimiteYoda" class="block text-sm/6 font-medium ">Date limite Yoda</label>
             <div class="mt-2">
               <input id="dateLimiteYoda" type="text" name="dateLimiteYoda"
@@ -69,31 +69,39 @@
             </div>
           </div>
           <!-- rang 6 -->
-          <div className="">
+          <div>
             <label for="themeSessionF" class="block text-sm/6 font-medium ">Thème de la formation</label>
             <div class="mt-2">
-              <input id="themeSessionF" name="themeSessionF" [value]="themeFormationSelectionnee"
-                     class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
-                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
-                     title="Thème de la formation"
-                     readonly/>
+              <ng-select
+                [(ngModel)]="idFormationChoisie"
+                [items]="formations"
+                bindLabel="themeFormation"
+                bindValue="idFormation"
+                placeholder="Chercher un thème"
+                [searchable]="true"
+                (change)="updateLibelleFormation()"
+                class="min-w-64 rounded-md py-1.5 pr-8 pl-3 bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
+                title="Thème de la formation">
+<!--                @for (formation of formations; track formation.idFormation) {-->
+<!--                  <option [value]="formation.idFormation">-->
+<!--                    {{ formation.themeFormation }}-->
+<!--                  </option>-->
+<!--                }-->
+              </ng-select>
             </div>
 
           </div>
           <!-- rang 7 -->
-          <div className="">
+          <div>
             <label for="intituleFormation" class="block text-sm/6">Intitulé de la formation</label>
             <div class="mt-2">
-              <select [(ngModel)]="idFormationChoisie" id="idFormationChoisie" type="text" name="idFormationChoisie"
-                      class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
+              <input id="libelleSessionF"
+                     name="libelleSessionF"
+                     [value]="libelleFormationSelectionnee"
+                     class="min-w-80 rounded-md  py-1.5 pr-8 pl-3
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
-                      title="Intitulé de la formation">
-                @for (formation of formations; track formation.idFormation) {
-                  <option value="{{formation.idFormation}}">
-                    {{ formation.libelleFormation }}
-                  </option>
-                }
-              </select>
+                     title="Libellé de la formation"
+                     readonly/>
             </div>
           </div>
         </div>
@@ -102,7 +110,7 @@
         <!-- Colonne 2 - 7 rangs -->
         <div class="space-y-4">
           <!-- rang 1 - Thème récupéré parmi la liste des formations en présentiel-->
-          <div className="">
+          <div>
             <label for="noDepartement" class="block text-sm/6 font-medium ">Département</label>
             <div class="mt-2">
               <select id="noDepartement" name="noDepartement"
@@ -117,7 +125,7 @@
             </div>
           </div>
           <!-- rang 2 -->
-          <div className="">
+          <div>
             <label for="lieuFormation" class="block text-sm/6">Lieu de la formation</label>
             <div class="mt-2">
               <input id="lieuFormation" type="text" name="lieuFormation"
@@ -127,7 +135,7 @@
             </div>
           </div>
           <!-- rang 3 -->
-          <div className="">
+          <div>
             <label for="dureeFormation" class="block text-sm/6">Durée total en heure</label>
             <div class="mt-2">
               <input id="dureeFormation" type="number" name="dureeFormation" min="0" max="100" step="1"
@@ -137,7 +145,7 @@
             </div>
           </div>
           <!-- rang 6 -->
-          <div className="">
+          <div>
             <label for="commanditaire" class="block text-sm/6">Commanditaire</label>
             <div class="mt-2">
               <input id="commanditaire" type="text" name="commanditaire"
@@ -147,7 +155,7 @@
             </div>
           </div>
           <!-- rang 4 -->
-          <div className="">
+          <div>
             <label for="RPE" class="block text-sm/6">Confirmation au RPE</label>
             <div class="mt-2">
               <input id="RPE" type="text" name="RPE"
@@ -158,7 +166,7 @@
           </div>
 
           <!-- rang 5 -->
-          <div className="">
+          <div>
             <label for="nbJournee" class="block text-sm/6 ">Nombre de journées</label>
             <div class="mt-2">
               <input id="nbJournee" type="number" name="nbJournee" step="1" min="0" max="5"
@@ -166,8 +174,8 @@
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"/>
             </div>
           </div>
-          <div className=""></div>
-          <div className=""></div>
+          <div></div>
+          <div></div>
         </div>
         <!-- Fin colonne 2-->
 
@@ -175,7 +183,7 @@
         <!-- 3ème colonne - avec au minimum 2 rangs jusqu'à 7 rangs -->
         <div class="space-y-4">
           <!-- rang 1 -->
-          <div className="">
+          <div class="">
             <label for="journee1" class="text-sm/6 font-bold text-[var(--color-bg-button)]">Journée 1</label>
             <div class="flex items-center gap-2 w-full">
               <label for="dateJournee1" class="text-sm/6 min-w-16">Date</label>
@@ -201,15 +209,15 @@
             </div>
           </div>
           <!-- rang 3 -->
-          <div className="">3</div>
+          <div class="">3</div>
           <!-- rang 4 -->
-          <div className="">4</div>
+          <div class="">4</div>
           <!-- rang 5 -->
-          <div className="">5</div>
+          <div class="">5</div>
           <!-- rang 6 -->
-          <div className="">6</div>
+          <div class="">6</div>
           <!-- rang 7 -->
-          <div className="">7</div>
+          <div class="">7</div>
         </div>
         <!-- Fin colonne 3 -->
       </div>

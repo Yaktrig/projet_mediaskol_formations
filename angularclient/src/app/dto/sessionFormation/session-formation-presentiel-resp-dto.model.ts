@@ -3,6 +3,7 @@ import {SessionFormationRespDTO} from './session-formation-resp-dto.model';
 import {SessionSalleRespDTO} from '../salle/session-salle-resp-dto.model';
 import {SessionFormateurRespDTO} from '../formateur/session-formateur-resp-dto.model';
 import {StatutSessionFormation} from './statut-session-formation.enum';
+import {SessionLieuDateRespDto} from '../sessionLieuDate/session-lieu-date-resp-dto.model';
 
 
 export interface SessionFopRespDTO extends SessionFormationRespDTO {
@@ -14,5 +15,6 @@ export interface SessionFopRespDTO extends SessionFormationRespDTO {
   sessionsSalle : SessionSalleRespDTO[];
   sessionsFormateur : SessionFormateurRespDTO[];
   statutSessionFormation: StatutSessionFormation;
+  sessionsLieuDate : SessionLieuDateRespDto[];
 
 }

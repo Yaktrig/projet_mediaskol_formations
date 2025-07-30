@@ -97,8 +97,7 @@ md:min-w-[450px] md:max-w-[940px] flex flex-col md:flex-row md:items-center md:m
         <!-- Mettre une condition en fonction du nombre de jours - pour le présentiel -->
         <th>J1</th>
         <th>J2</th>
-        <th>J3</th>
-        <th>...</th>
+        <th colspan="3">J3</th>
         <th>Commanditaire</th> <!-- Champs libre -->
         <th>RPE</th>
         <th>Formateur</th> <!-- Liste de formateurs avec statut dans la même colonne ? -->
@@ -130,6 +129,7 @@ md:min-w-[450px] md:max-w-[940px] flex flex-col md:flex-row md:items-center md:m
             <td class="text-center">{{ session.statutYoda }}</td>
             <td class="text-center" [style.background-color]="session.salarie?.couleurSalarie">
               {{ session.salarie?.nom | firstLetterUpper }}{{ session.salarie?.prenom | firstLetterUpper }}
+
             </td><!-- Salarié(e) qui traite le dossier -->
             <td>{{ session.finSessionFormation?.statutFinSessionFormation }}</td>
             <td>{{ session.finSessionFormation?.dateLimiteYodaFinSessionFormation }}</td>
@@ -141,18 +141,25 @@ md:min-w-[450px] md:max-w-[940px] flex flex-col md:flex-row md:items-center md:m
             <td>{{ session.lieuSessionFormation }}</td><!-- lieu de la salle ou ville principale -->
             <td class="text-center">{{ session.nbHeureSession }}</td>
             <!-- Mettre une condition en fonction du nombre de jours - pour le présentiel -->
-            <td>{{ session.dateDebutSession | date:'dd-MM-yyyy' }}</td>
-            <td>---</td> <!-- J2 -->
-            <td>---</td> <!-- J3 -->
-            <td>---</td> <!-- JN -->
+            @for (sessionLieuDate of session.sessionsLieuDate; track sessionLieuDate.idSessionLieuDate) {
+              <td>
+                <!--                <div class="flex flex-wrap gap-4">-->
+                {{ sessionLieuDate.dateSession | date:'dd-MM-yyyy' }}
+                <!--                </div>-->
+              </td>
+            }
+          <td></td>
+          <td></td>
             <td>{{ session.commanditaire }}</td> <!-- Commanditaire - champ modifiable -->
             <td>{{ session.confirmationRPE }}</td> <!-- RPE - champ modifiable -->
             <td>
               @for (sessionFormateur of session.sessionsFormateur; track sessionFormateur.idSessionFormateur) {
-                <div
+                <div class="flex items-center"
                   [style.background-color]="statutSessionFormateurDetails[sessionFormateur.statutSessionFormateur].color">
                   {{ sessionFormateur.formateur.prenom }} {{ sessionFormateur.formateur.nom }}
                   - {{ sessionFormateur.formateur.statutFormateur }}
+                  <mat-icon class="m-1 text-gray-700">edit</mat-icon>
+                  <mat-icon class="m-1 text-gray-700">cancel</mat-icon>
                 </div>
               }</td>
             <td>  @for (sessionFormateur of session.sessionsFormateur; track sessionFormateur.idSessionFormateur) {
@@ -166,10 +173,12 @@ md:min-w-[450px] md:max-w-[940px] flex flex-col md:flex-row md:items-center md:m
               </div>
             }</td>
             <td> @for (sessionSalle of session.sessionsSalle; track sessionSalle.idSessionSalle) {
-              <div
+              <div class="flex items-center"
                 [style.background-color]="statutSessionSalleDetails[sessionSalle.statutSessionSalle].color"
               >
-                {{ sessionSalle.salle?.nomSalle }} <!-- Coût salle - champ modifiable -->
+                {{ sessionSalle.salle?.nomSalle }} <!-- nom salle - champ modifiable -->
+                <mat-icon class="m-1 text-gray-700">edit</mat-icon>
+                <mat-icon class="m-1 text-gray-700">cancel</mat-icon>
               </div>
             } </td>
             <td>@for (sessionSalle of session.sessionsSalle; track sessionSalle.idSessionSalle) {

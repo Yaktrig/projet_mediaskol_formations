@@ -11,6 +11,7 @@ import {RouterLink} from '@angular/router';
 import {FirstLetterUpperPipe} from '../../pipe/first-letter-upper.pipe';
 import {StatutSessionFormateurDetails} from '../../dto/formateur/statut-session-formateur.enum';
 import {StatutSessionSalleDetails} from '../../dto/salle/statut-session-salle.enum';
+import {MatIconModule} from '@angular/material/icon';
 
 
 
@@ -23,7 +24,7 @@ import {StatutSessionSalleDetails} from '../../dto/salle/statut-session-salle.en
     DatePipe,
     RouterLink,
     FirstLetterUpperPipe,
-
+    MatIconModule
   ],
   templateUrl: './liste-session-formation-presentiel.html',
   styleUrls: ['./liste-session-formation-presentiel.css']
