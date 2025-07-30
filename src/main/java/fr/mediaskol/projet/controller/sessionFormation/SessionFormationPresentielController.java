@@ -4,6 +4,7 @@ import fr.mediaskol.projet.bll.sessionFormation.SessionFOPService;
 import fr.mediaskol.projet.bo.ApiResponse;
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormationPresentiel;
+import fr.mediaskol.projet.dto.formateur.SessionFormateurRespDTO;
 import fr.mediaskol.projet.dto.salle.SessionSalleRespDTO;
 import fr.mediaskol.projet.dto.sessionFormation.SessionFOPResponseDTO;
 import jakarta.validation.Valid;
@@ -54,6 +55,8 @@ public class SessionFormationPresentielController {
                     SessionFOPResponseDTO dto = new SessionFOPResponseDTO(session);
                     List<SessionSalleRespDTO> sallesDtos = sessionFOPService.getSessionsSalleBySessionId(session.getIdSessionFormation());
                     dto.setSessionsSalle(sallesDtos);
+                    List<SessionFormateurRespDTO> formateursDtos = sessionFOPService.getSessionsFormateurBySessionId(session.getIdSessionFormation());
+                    dto.setSessionsFormateur(formateursDtos);
                     return dto;
                 })
                 .toList();
@@ -76,6 +79,9 @@ public class SessionFormationPresentielController {
             // Ajout : on va chercher les salles associées et on les met dans le DTO
             List<SessionSalleRespDTO> sallesDtos = sessionFOPService.getSessionsSalleBySessionId(id); // ou injecte le bon service
             sessionFOPRespDTO.setSessionsSalle(sallesDtos);
+
+            List<SessionFormateurRespDTO> formateursDtos = sessionFOPService.getSessionsFormateurBySessionId(id);
+            sessionFOPRespDTO.setSessionsFormateur(formateursDtos);
 
             return ResponseEntity.ok(sessionFOPRespDTO);
 

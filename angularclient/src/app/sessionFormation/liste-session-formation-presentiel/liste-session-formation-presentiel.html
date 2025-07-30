@@ -102,9 +102,11 @@ md:min-w-[450px] md:max-w-[940px] flex flex-col md:flex-row md:items-center md:m
         <th>Commanditaire</th> <!-- Champs libre -->
         <th>RPE</th>
         <th>Formateur</th> <!-- Liste de formateurs avec statut dans la même colonne ? -->
-        <th>Lieu de formation</th> <!-- Accès liste de salle -  où se trouve la formation -->
-        <th>Coût salle</th>
+        <th>Commentaire Formateur</th>
         <th>Coût formateur</th>
+        <th>Lieu de formation</th> <!-- Accès liste de salle -  où se trouve la formation -->
+        <th>Commentaire salle</th>
+        <th>Coût salle</th>
       </tr>
       </thead>
       <tbody class="divide-y divide-gray-300">
@@ -145,12 +147,42 @@ md:min-w-[450px] md:max-w-[940px] flex flex-col md:flex-row md:items-center md:m
             <td>---</td> <!-- JN -->
             <td>{{ session.commanditaire }}</td> <!-- Commanditaire - champ modifiable -->
             <td>{{ session.confirmationRPE }}</td> <!-- RPE - champ modifiable -->
-            <td>---</td> <!-- Liste de formateurs avec statut dans la même colonne ? -->
-            <td>---</td>
-            @for (sessionSalle of session.sessionsSalle; track sessionSalle.idSessionSalle) {
-              <td>{{ sessionSalle.coutSessionSalle }}</td> <!-- Coût salle - champ modifiable -->
-            }
-            <td>---</td> <!-- Coût formateur - champ modifiable -->
+            <td>
+              @for (sessionFormateur of session.sessionsFormateur; track sessionFormateur.idSessionFormateur) {
+                <div
+                  [style.background-color]="statutSessionFormateurDetails[sessionFormateur.statutSessionFormateur].color">
+                  {{ sessionFormateur.formateur.prenom }} {{ sessionFormateur.formateur.nom }}
+                  - {{ sessionFormateur.formateur.statutFormateur }}
+                </div>
+              }</td>
+            <td>  @for (sessionFormateur of session.sessionsFormateur; track sessionFormateur.idSessionFormateur) {
+              <div>
+                {{ sessionFormateur.commentaireSessionFormateur }} <!-- commentaire formateur - champ modifiable -->
+              </div>
+            }</td>
+            <td>  @for (sessionFormateur of session.sessionsFormateur; track sessionFormateur.idSessionFormateur) {
+              <div>
+                {{ sessionFormateur.coutSessionFormateur }} <!-- Coût formateur - champ modifiable -->
+              </div>
+            }</td>
+            <td> @for (sessionSalle of session.sessionsSalle; track sessionSalle.idSessionSalle) {
+              <div
+                [style.background-color]="statutSessionSalleDetails[sessionSalle.statutSessionSalle].color"
+              >
+                {{ sessionSalle.salle?.nomSalle }} <!-- Coût salle - champ modifiable -->
+              </div>
+            } </td>
+            <td>@for (sessionSalle of session.sessionsSalle; track sessionSalle.idSessionSalle) {
+              <div>
+                {{ sessionSalle.commentaireSessionSalle }} <!-- Commentaire salle - champ modifiable -->
+              </div>
+            }</td>
+            <td>@for (sessionSalle of session.sessionsSalle; track sessionSalle.idSessionSalle) {
+              <div>
+                {{ sessionSalle.coutSessionSalle }} <!-- Coût salle - champ modifiable -->
+              </div>
+            }</td>
+
           </tr>
         } @empty {
           <tr>

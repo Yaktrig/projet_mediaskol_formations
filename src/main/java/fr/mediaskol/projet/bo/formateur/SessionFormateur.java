@@ -55,6 +55,15 @@ public class SessionFormateur {
 
 
     /**
+     * Coût du formateur durant la session.
+     * <p>
+     * Ce champ n'est pas obligatoire.
+     * </p>
+     */
+    @Column(name = "COUT_SESSION_FORMATEUR")
+    private Float coutSessionFormateur;
+
+    /**
      * Statut métier de la session formateur.
      * <p>
      * Ce champ indique l'état d'avancement de la session formateur

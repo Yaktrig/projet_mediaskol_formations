@@ -2,6 +2,7 @@ package fr.mediaskol.projet.bll.sessionFormation;
 
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormationPresentiel;
+import fr.mediaskol.projet.dto.formateur.SessionFormateurRespDTO;
 import fr.mediaskol.projet.dto.salle.SessionSalleRespDTO;
 import fr.mediaskol.projet.dto.sessionFormation.SessionFOPInputDTO;
 
@@ -56,4 +57,10 @@ public interface SessionFOPService {
      * Les convertit en DTO
      */
     List<SessionSalleRespDTO> getSessionsSalleBySessionId(Long idSessionFormationPresentiel);
+
+    /**
+     * Fonctionnalité qui récupère les sessions formateurs liées à une session formation en présentiel.
+     * Les convertit en DTO
+     */
+    List<SessionFormateurRespDTO> getSessionsFormateurBySessionId(Long idSessionFormationPresentiel);
 }

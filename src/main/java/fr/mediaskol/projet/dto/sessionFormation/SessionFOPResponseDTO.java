@@ -5,6 +5,7 @@ import fr.mediaskol.projet.bo.sessionFormation.SessionFormationPresentiel;
 
 import fr.mediaskol.projet.bo.sessionFormation.StatutSessionFormation;
 import fr.mediaskol.projet.dto.adresse.DepartementDTO;
+import fr.mediaskol.projet.dto.formateur.SessionFormateurRespDTO;
 import fr.mediaskol.projet.dto.formation.FormationResponseDTO;
 import fr.mediaskol.projet.dto.salarie.SalarieResponseDTO;
 import fr.mediaskol.projet.dto.salle.SessionSalleRespDTO;
@@ -39,6 +40,7 @@ public class SessionFOPResponseDTO extends SessionFormationResponseDTO {
     private String confirmationRPE;
     private DepartementDTO departement;
     private List<SessionSalleRespDTO> sessionsSalle;
+    private List<SessionFormateurRespDTO> sessionsFormateur;
 
     /**
      * Constructeur
@@ -84,6 +86,7 @@ public class SessionFOPResponseDTO extends SessionFormationResponseDTO {
         this.commanditaire = sessionFOP.getCommanditaire();
         this.confirmationRPE = sessionFOP.getConfirmationRPE();
         this.sessionsSalle = new ArrayList<>();
+        this.sessionsFormateur = new ArrayList<>();
     }
 
 }

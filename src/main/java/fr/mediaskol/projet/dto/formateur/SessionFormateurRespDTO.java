@@ -24,6 +24,7 @@ public class SessionFormateurRespDTO {
      */
     private Long idSessionFormateur;
     private String commentaireSessionFormateur;
+    private Float coutSessionFormateur;
     private StatutSessionFormateur statutSessionFormateur;
     private FormateurResponseDTO formateur;
     private SessionFormationResponseDTO sessionFormation;
@@ -34,6 +35,8 @@ public class SessionFormateurRespDTO {
     public SessionFormateurRespDTO(SessionFormateur sessionFormateur){
         this.idSessionFormateur = sessionFormateur.getIdSessionFormateur();
         this.commentaireSessionFormateur = sessionFormateur.getCommentaireSessionFormateur();
+        this.coutSessionFormateur = sessionFormateur.getCoutSessionFormateur();
+        this.statutSessionFormateur = sessionFormateur.getStatutSessionFormateur();
         this.formateur = new  FormateurResponseDTO(sessionFormateur.getFormateur());
 
         SessionFormation formation = sessionFormateur.getSessionFormation();

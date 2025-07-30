@@ -7,6 +7,7 @@ export interface SessionFormateurRespDTO {
   idSessionFormateur: number | null;
   commentaireSessionFormateur: string | null;
   statutSessionFormateur: StatutSessionFormateur;
+  coutSessionFormateur: number | null;
   formateur: FormateurResponseDTO;
   sessionFormation: SessionFormationRespDTO;
 }

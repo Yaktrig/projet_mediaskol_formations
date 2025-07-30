@@ -26,7 +26,7 @@ public class SessionFormationResponseDTO {
     private String statutYoda;
     private LocalDate dateDebutSession;
     private Integer nbHeureSession;
-    private StatutSessionFormation statutSessionFormation = StatutSessionFormation.SESSION_FORMATION_NON_COMMENCEE;
+    private StatutSessionFormation statutSessionFormation;
     private FormationResponseDTO formation;
     private FinSessionFormationRespDTO finSessionFormation;
     private SalarieResponseDTO salarie;

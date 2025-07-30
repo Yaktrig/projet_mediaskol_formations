@@ -22,22 +22,22 @@ import lombok.Getter;
 public enum StatutSessionFormateur {
 
     // Statut indiquant que le formateur n'a pas encore confirmé sa présence
-    SESSION_FORMATEUR_ATTENTE_PRESENCE("En attente de confirmation de présence", "#FF7F00"),
+    SESSION_FORMATEUR_ATTENTE_PRESENCE("En attente de confirmation de présence", "#FFBC9A"),
 
     // Statut indiquant que le formateur a confirmé sa présence par mail
-    SESSION_FORMATEUR_PRESENCE_CONFIRMEE("Présence du formateur confirmée", "13FF06"),
+    SESSION_FORMATEUR_PRESENCE_CONFIRMEE("Présence du formateur confirmée", "#B7E4C7"),
 
     // Statut indiquant que le formateur a annulé sa présence
-    SESSION_FORMATEUR_PRESENCE_ANNULEE("Annulation par le formateur", "#FF2F05"),
+    SESSION_FORMATEUR_PRESENCE_ANNULEE("Annulation par le formateur", "#F4A6A6"),
 
     // Statut indiquant que le formateur est en attente de paiement - Quand la session de formation est terminée
-    SESSION_FORMATEUR_EN_ATTENTE_PAIEMENT("Formateur en attente de paiement", "#blanc"),
+    SESSION_FORMATEUR_EN_ATTENTE_PAIEMENT("Formateur en attente de paiement", "#FFFFFF"),
 
     // Statut indiquant que le formateur est en attente de paiement - Quand la session de formation est terminée
-    SESSION_FORMATEUR_SALARIE("Formateur salarié", "#rose clair"),
+    SESSION_FORMATEUR_SALARIE("Formateur salarié", "#FADADD"),
 
     // Statut indiquant que la facture envoyée par le formateur auto-entrepreneur a été réglée - Quand la session de formation est terminée
-    SESSION_FORMATEUR_AE_FACTURE_REGLEE("Formateur auto-entrepreneur qui a envoyé sa facture et qui a été réglée.", "#gris");
+    SESSION_FORMATEUR_AE_FACTURE_REGLEE("Formateur auto-entrepreneur qui a envoyé sa facture et qui a été réglée.", "#D3D3D3");
 
 
     // Libelle du statut de la session formateur

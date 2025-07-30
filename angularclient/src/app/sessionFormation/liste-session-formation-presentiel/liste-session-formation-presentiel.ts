@@ -9,7 +9,9 @@ import {StatutFinSessionFormationDetails} from '../../dto/sessionFormation/statu
 import {DatePipe} from '@angular/common';
 import {RouterLink} from '@angular/router';
 import {FirstLetterUpperPipe} from '../../pipe/first-letter-upper.pipe';
-import {SessionSalleRespDTO} from '../../dto/salle/session-salle-resp-dto.model';
+import {StatutSessionFormateurDetails} from '../../dto/formateur/statut-session-formateur.enum';
+import {StatutSessionSalleDetails} from '../../dto/salle/statut-session-salle.enum';
+
 
 
 @Component({
@@ -34,6 +36,8 @@ export class ListeSessionFormationPresentiel {
   // Expose la map pour y accéder dans le template
   statutSessionFormationDetails = StatutSessionFormationDetails;
   statutFinSessionFormationDetails =  StatutFinSessionFormationDetails;
+  statutSessionFormateurDetails = StatutSessionFormateurDetails;
+  statutSessionSalleDetails = StatutSessionSalleDetails;
 
   constructor(private sessionFopService: SessionFormationPresentielService,) {
   }

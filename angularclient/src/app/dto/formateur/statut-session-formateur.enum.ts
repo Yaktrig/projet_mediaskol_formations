@@ -24,15 +24,15 @@ export const StatutSessionFormateurDetails: {
 } = {
   [StatutSessionFormateur.SESSION_FORMATEUR_ATTENTE_PRESENCE]: {
     label: 'En attente de confirmation de présence',
-    color: '#FF7F00',
+    color: '#FFBC9A',
   },
   [StatutSessionFormateur.SESSION_FORMATEUR_PRESENCE_CONFIRMEE]: {
     label: 'Présence du formateur confirmée',
-    color: '#13FF06',
+    color: '#B7E4C7',
   },
   [StatutSessionFormateur.SESSION_FORMATEUR_PRESENCE_ANNULEE]: {
     label: 'Annulation par le formateur',
-    color: '#FF2F05',
+    color: '#F4A6A6',
   },
   [StatutSessionFormateur.SESSION_FORMATEUR_EN_ATTENTE_PAIEMENT]: {
     label: '"Formateur en attente de paiement',
@@ -40,10 +40,10 @@ export const StatutSessionFormateurDetails: {
   },
   [StatutSessionFormateur.SESSION_FORMATEUR_SALARIE]: {
     label: 'Formateur salarié',
-    color: 'pink-20',
+    color: '#FADADD',
   },
   [StatutSessionFormateur.SESSION_FORMATEUR_AE_FACTURE_REGLEE]: {
     label: 'Formateur auto-entrepreneur qui a envoyé sa facture et qui a été réglée.',
-    color: 'grey-100',
+    color: '#D3D3D3',
   },
 };

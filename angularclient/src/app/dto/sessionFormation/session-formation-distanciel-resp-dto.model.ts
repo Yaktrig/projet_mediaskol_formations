@@ -1,4 +1,5 @@
 import {SessionFormationRespDTO} from './session-formation-resp-dto.model';
+import {StatutSessionFormation} from './statut-session-formation.enum';
 
 export interface SessionFoadResponseDTO extends SessionFormationRespDTO{
 
@@ -8,4 +9,5 @@ export interface SessionFoadResponseDTO extends SessionFormationRespDTO{
   dateFinSessionFormationDistanciel: string | null;
   dateRelanceSessionFormationDistanciel: string | null;
   commentaireSessionFormationDistanciel: string | null;
+  statutSessionFormation: StatutSessionFormation;
 }

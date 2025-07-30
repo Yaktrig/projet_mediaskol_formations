@@ -10,7 +10,7 @@ export interface FormateurResponseDTO {
   prenom: string | null;
   email: string | null;
   numPortable: string | null;
-  statutFormateur: string | null;
+  statutFormateur: string;
   zoneIntervention: string | null;
   commentaireFormateur: string | null;
   adresse: AdresseResponseDTO | null;

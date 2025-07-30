@@ -19,6 +19,8 @@ public class SessionFormateurInputDTO {
     @Size(max = 2000, message = "{sessionFormateur.commentaireFormateur.size}")
     private String commentaireSessionFormateur;
 
+    private Float coutSessionFormateur;
+
     private StatutSessionFormateur statutSessionFormateur;
 
     private FormateurResponseDTO formateur;

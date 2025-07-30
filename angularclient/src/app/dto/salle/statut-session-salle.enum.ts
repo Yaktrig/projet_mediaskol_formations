@@ -14,14 +14,14 @@ export const StatutSessionSalleDetails: {
 } = {
   [StatutSessionSalle.SESSION_SALLE_VALIDEE]: {
     label: 'Salle durant la session validée',
-    color: 'green',
+    color: '#B7E4C7',
   },
   [StatutSessionSalle.SESSION_SALLE_VALIDE_CLE_OU_DIGICODE]: {
     label: 'Salle durant la session validé avec clé ou digicode',
-    color: 'pink',
+    color: '#F6C1C1',
   },
   [StatutSessionSalle.SESSION_SALLE_ATTENTE_DEVIS]: {
     label: 'Salle en attente de devis',
-    color: 'yellow',
+    color: '#fffc5c',
   },
 };

@@ -1,13 +1,16 @@
 package fr.mediaskol.projet.bll.sessionFormation;
 
+import fr.mediaskol.projet.bo.formateur.SessionFormateur;
 import fr.mediaskol.projet.bo.salle.SessionSalle;
 import fr.mediaskol.projet.bo.sessionFormation.FinSessionFormation;
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormationPresentiel;
+import fr.mediaskol.projet.dal.formateur.SessionFormateurRepository;
 import fr.mediaskol.projet.dal.salle.SessionSalleRepository;
 import fr.mediaskol.projet.dal.sessionFormation.FinSessionFormationRepository;
 import fr.mediaskol.projet.dal.sessionFormation.SessionFOPRepository;
 import fr.mediaskol.projet.dal.sessionFormation.SessionFormationRepository;
 import fr.mediaskol.projet.dal.sessionLieuDate.SessionLieuDateRepository;
+import fr.mediaskol.projet.dto.formateur.SessionFormateurRespDTO;
 import fr.mediaskol.projet.dto.salle.SessionSalleRespDTO;
 import fr.mediaskol.projet.dto.sessionFormation.SessionFOPInputDTO;
 import fr.mediaskol.projet.dto.sessionFormation.SessionFOPResponseDTO;
@@ -39,6 +42,7 @@ public class SessionFOPServiceImpl implements SessionFOPService {
     private final SessionLieuDateRepository sessionLieuDateRepository;
     private final SessionFormationRepository sessionFormationRepository;
     private final SessionSalleRepository sessionSalleRepository;
+    private final SessionFormateurRepository sessionFormateurRepository;
 
 
     /***
@@ -223,6 +227,22 @@ public class SessionFOPServiceImpl implements SessionFOPService {
         return sessionsSalle.stream()
                 .map(SessionSalleRespDTO::new)
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * Fonctionnalité qui récupère les sessions formateurs liées à une session formation en présentiel.
+     * Les convertit en DTO
+     *
+     * @param idSessionFormation
+     */
+    @Override
+    public List<SessionFormateurRespDTO> getSessionsFormateurBySessionId(Long idSessionFormation) {
+
+       List<SessionFormateur> sessionFormateurs = sessionFormateurRepository.findBySessionFormationIdSessionFormation(idSessionFormation);
+
+       return sessionFormateurs.stream()
+               .map(SessionFormateurRespDTO::new)
+               .collect(Collectors.toList());
     }
 
 
