@@ -25,7 +25,16 @@ spring:
   web:
     locale: fr
 
+# Spécifie le chemin de OpenAPI documentation
+springdoc:
+  api-docs:
+    path: /mediaskol/api-docs
+  swagger-ui:
+    path: /mediaskol/swagger-ui.html
+
 #jwt
 app:
   jwt:
     secret: 436a726878792a6a2333725030382050303877505e30585b6351413978
+
+

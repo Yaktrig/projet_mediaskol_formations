@@ -12,7 +12,6 @@ import {FormationService} from '../../services/formation/formation.service';
 import {FormsModule} from '@angular/forms';
 import {SalarieService} from '../../services/salarie/salarie.service';
 import {SalarieRespDto} from '../../dto/salarie/salarie-resp-dto.model';
-import {NgSelectComponent} from '@ng-select/ng-select';
 
 
 @Component({
@@ -21,8 +20,7 @@ import {NgSelectComponent} from '@ng-select/ng-select';
     Header,
     Footer,
     RouterLink,
-    FormsModule,
-    NgSelectComponent
+    FormsModule
   ],
   templateUrl: './ajouter-session-formation-presentiel.html',
   styleUrls: ['./ajouter-session-formation-presentiel.css']
@@ -31,7 +29,7 @@ export class AjouterSessionFormationPresentiel implements OnInit {
 
   formations: FormationResponseDTO[] = [];
   idFormationChoisie: number | null = null;
-  libelleFormationSelectionnee: string | null | undefined;
+  libelleFormationSelectionnee: string | null = '';
   salaries: SalarieRespDto[] = [];
   idSalarieChoisi: number | null = null;
 
@@ -94,8 +92,10 @@ export class AjouterSessionFormationPresentiel implements OnInit {
 
   // Méthode appelée à chaque changement dans la sélection
   updateLibelleFormation() {
+    console.log('Changement détecté, idFormationChoisie:', this.idFormationChoisie);
     if (this.idFormationChoisie != null) {
-      const formationTrouvee = this.formations.find(f => f.idFormation === this.idFormationChoisie);
+      const idChoisi = Number(this.idFormationChoisie);
+      const formationTrouvee = this.formations.find(f => f.idFormation === idChoisi);
       this.libelleFormationSelectionnee = formationTrouvee ? formationTrouvee.libelleFormation : '';
     } else {
       this.libelleFormationSelectionnee = '';

@@ -8,6 +8,9 @@ import fr.mediaskol.projet.dto.formateur.SessionFormateurRespDTO;
 import fr.mediaskol.projet.dto.salle.SessionSalleRespDTO;
 import fr.mediaskol.projet.dto.sessionFormation.SessionFOPResponseDTO;
 import fr.mediaskol.projet.dto.sessionLieuDate.SessionLieuDateRespDTO;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -27,6 +30,7 @@ import java.util.List;
  */
 
 @AllArgsConstructor
+@Tag(name="Sessions de formation en présentiel", description = "Opérations sur les sessions de formation en présentiel.")
 @RestController
 @RequestMapping("/mediaskolFormation/sessionsFormationsPresentiels")
 public class SessionFormationPresentielController {
@@ -36,9 +40,20 @@ public class SessionFormationPresentielController {
      */
     private SessionFOPService sessionFOPService;
 
+
+
     /**
      * Retourne la liste des sessions de formation en Json dans l'url "mediaskolFormation/sessionsFormations en méthode GET
      */
+    @Operation(
+            summary = "Lister toutes les sessions de formation en présentiel",
+            description = "Retourne une liste de toutes les sessions de formation en présentiel avec la ou les salles de formations," +
+                    "le ou les formateurs, et le ou les lieu/date associés."
+    )
+    @ApiResponses(value={
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Succès - Liste des sessions retournée"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "204", description = "Aucune session trouvée, pas de contenu")
+    })
     @GetMapping
     public ResponseEntity<?> afficherTousLesSessionsFormationsPresentiel() {
 

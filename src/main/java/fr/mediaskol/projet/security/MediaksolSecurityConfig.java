@@ -10,6 +10,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -37,11 +38,18 @@ public class MediaksolSecurityConfig {
         http.authorizeHttpRequests(auth -> {
                     auth
                             // permettre l'accès à l'URL racine à tout le monde
-                            .requestMatchers("/mediaskolFormation/**").permitAll()
+                            //.requestMatchers("/").permitAll()
+
+                            // permettre l'accès à l'url de la documentatin des API (avec swagger)
+                            .requestMatchers("/mediaskol/swagger-ui.html",
+                                    "/mediaskol/swagger-ui/**",
+                                    "/mediaskol/api-docs/**").permitAll()
+
+
+                           // .requestMatchers("/mediaskolFormation/**").hasAnyRole("SALARIE", "ADMIN")
                             .requestMatchers("/mediaskolFormation/auth/**").permitAll()
 
                             // permettre aux rôles EMPLOYE et ADMIN de manipuler les URLs en GET
-                            //.requestMatchers(HttpMethod.GET, "/mediaskolFormation/sessionsFormations/**").hasAnyRole("SALARIE", "ADMIN")
                             .requestMatchers(HttpMethod.GET, "/mediaskolFormation/sessionsFormationsPresentiels/**").hasAnyRole("SALARIE", "ADMIN")
                             .requestMatchers(HttpMethod.GET, "/mediaskolFormation/sessionsFormationsDistanciels/**").hasAnyRole("SALARIE", "ADMIN")
                             //.requestMatchers(HttpMethod.GET, "/mediaskolFormation/sessionsFormations/**").hasAnyRole("EMPLOYE", "ADMIN")
@@ -57,9 +65,7 @@ public class MediaksolSecurityConfig {
 
         // Désactiver Cross Site Request Forgery
         // Non préconisé pour les API REST en stateless. Sauf pour POST, PUT, PATCH et DELETE
-        http.csrf(csrf -> {
-            csrf.disable();
-        });
+        http.csrf(AbstractHttpConfigurer::disable);
 
         // Connexion de l'utilisateur
         http.authenticationProvider(authenticationProvider);

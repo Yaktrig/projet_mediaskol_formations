@@ -72,22 +72,14 @@
           <div>
             <label for="themeSessionF" class="block text-sm/6 font-medium ">Thème de la formation</label>
             <div class="mt-2">
-              <ng-select
-                [(ngModel)]="idFormationChoisie"
-                [items]="formations"
-                bindLabel="themeFormation"
-                bindValue="idFormation"
-                placeholder="Chercher un thème"
-                [searchable]="true"
-                (change)="updateLibelleFormation()"
-                class="min-w-64 rounded-md py-1.5 pr-8 pl-3 bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
-                title="Thème de la formation">
-<!--                @for (formation of formations; track formation.idFormation) {-->
-<!--                  <option [value]="formation.idFormation">-->
-<!--                    {{ formation.themeFormation }}-->
-<!--                  </option>-->
-<!--                }-->
-              </ng-select>
+              <select id="themeSessionF"
+                      [(ngModel)]="idFormationChoisie"
+                      (change)="updateLibelleFormation()"
+                      class="min-w-80 rounded-md py-1.5 pr-8 pl-3 bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border">
+                @for(formation of formations; track formation.idFormation){
+                  <option [value]="formation.idFormation"> {{ formation.themeFormation }} </option>
+                }
+              </select>
             </div>
 
           </div>
