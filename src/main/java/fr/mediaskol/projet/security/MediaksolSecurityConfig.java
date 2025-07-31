@@ -47,12 +47,15 @@ public class MediaksolSecurityConfig {
                                     "/mediaskol/api-docs/**").permitAll()
 
                             .requestMatchers("/mediaskolFormation/auth/**").permitAll()
-                           // .requestMatchers("/mediaskolFormation/**").permitAll()
+                            // .requestMatchers("/mediaskolFormation/**").permitAll()
                             .requestMatchers("/mediaskolFormation/**").hasAnyRole("SALARIE", "ADMIN")
 
                             // permettre aux rôles EMPLOYE et ADMIN de manipuler les URLs en GET
                             .requestMatchers("/mediaskolFormation/sessionsFormationsPresentiels/**").hasAnyRole("SALARIE", "ADMIN")
-                            .requestMatchers(HttpMethod.GET, "/mediaskolFormation/sessionsFormationsDistanciels/**").hasAnyRole("SALARIE", "ADMIN")
+                            .requestMatchers("/mediaskolFormation/sessionsFormationsDistanciels/**").hasAnyRole("SALARIE", "ADMIN")
+                            .requestMatchers("/mediaskolFormation/formations/**").hasAnyRole("SALARIE", "ADMIN")
+                            .requestMatchers("/mediaskolFormation/salaries/**").hasAnyRole("ADMIN", "SALARIE")
+                            .requestMatchers("/mediaskolFormation/departements/**").hasAnyRole("ADMIN", "SALARIE")
                             //.requestMatchers(HttpMethod.GET, "/mediaskolFormation/sessionsFormations/**").hasAnyRole("EMPLOYE", "ADMIN")
                             // Restreindre la manipulation des méthodes POST, PUT, PATCH, DELETE au rôle ADMIN
 //                            .requestMatchers(HttpMethod.POST, "/mediaskolFormation/sessionsFormations").hasAnyRole("SALARIE", "ADMIN")

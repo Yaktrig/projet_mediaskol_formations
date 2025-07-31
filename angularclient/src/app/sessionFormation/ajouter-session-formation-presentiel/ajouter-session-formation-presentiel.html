@@ -4,7 +4,7 @@
 
   <div class="space-y-12">
     <!-- Formulaire -->
-    <div
+    <form [formGroup]="sessionPresentielForm" (ngSubmit)="onSubmit()"
       class="bg-[var(--color-bg-form)] border-[1.5px]  shadow-md rounded-lg px-4 py-6 m-4 max-w-7xl mx-auto">
 
       <div class="mt-5 grid grid-cols-3 gap-4">
@@ -16,7 +16,7 @@
           <div>
             <label for="noYoda" class="block text-sm/6">N°YODA</label>
             <div class="mt-2">
-              <input id="noYoda" type="text" name="noYoda"
+              <input id="noYoda" type="text" formControlName="noYoda"
                      class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border" title="Numéro AF Yoda"/>
             </div>
@@ -27,7 +27,7 @@
             <label for="intituleSessionF" class="block text-sm/6 font-medium ">Intituté de la session de
               formation</label>
             <div class="mt-2">
-              <input id="intituleSessionF" type="text" name="intituleSessionF"
+              <input id="intituleSessionF" type="text" formControlName="intituleSessionF"
                      class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
                      title="Intitulé de la session de formation"/>
@@ -37,11 +37,11 @@
           <div>
             <label for="ttDossier" class="block text-sm/6 font-medium ">Dossier traité par</label>
             <div class="mt-2">
-              <select [(ngModel)]="idSalarieChoisi" id="idSalarieChoisi" name="idSalarieChoisi"
+              <select formControlName="idSalarieChoisi" id="idSalarieChoisi"
                       class="min-w-64 rounded-md  py-1.5 pr-8 pl-3 bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
                       title="Dossier traité par">
                 @for (salarie of salaries; track salarie.idSalarie) {
-                  <option value="{{salarie.idSalarie}}">{{ salarie.prenom }} {{ salarie.nom }}</option>
+                  <option [value]="salarie.idSalarie">{{ salarie.prenom }} {{ salarie.nom }}</option>
                 }
               </select>
             </div>
@@ -50,7 +50,7 @@
           <div>
             <label for="BI" class="block text-sm/6 font-medium ">Bulletin d'inscription</label>
             <div class="mt-2">
-              <select id="BI" name="BI"
+              <select id="BI" formControlName="BI"
                       class="min-w-64 rounded-md  py-1.5 pr-8 pl-3 bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
                       title="Bulletin d'inscription">
                 <option value="1">OUI</option>
@@ -62,7 +62,7 @@
           <div>
             <label for="dateLimiteYoda" class="block text-sm/6 font-medium ">Date limite Yoda</label>
             <div class="mt-2">
-              <input id="dateLimiteYoda" type="text" name="dateLimiteYoda"
+              <input id="dateLimiteYoda" type="text" formControlName="dateLimiteYoda"
                      class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
                      title="Date limite Yoda"/>
@@ -73,11 +73,13 @@
             <label for="themeSessionF" class="block text-sm/6 font-medium ">Thème de la formation</label>
             <div class="mt-2">
               <select id="themeSessionF"
-                      [(ngModel)]="idFormationChoisie"
-                      (change)="updateLibelleFormation()"
+                      formControlName="idFormationChoisie"
                       class="min-w-80 rounded-md py-1.5 pr-8 pl-3 bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border">
                 @for(formation of formations; track formation.idFormation){
                   <option [value]="formation.idFormation"> {{ formation.themeFormation }} </option>
+                }
+                @if(formations.length === 0){
+                  <option disabled>Aucune formation disponible</option>
                 }
               </select>
             </div>
@@ -88,7 +90,7 @@
             <label for="intituleFormation" class="block text-sm/6">Intitulé de la formation</label>
             <div class="mt-2">
               <input id="libelleSessionF"
-                     name="libelleSessionF"
+                     formControlName="libelleSessionF"
                      [value]="libelleFormationSelectionnee"
                      class="min-w-80 rounded-md  py-1.5 pr-8 pl-3
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
@@ -105,14 +107,13 @@
           <div>
             <label for="noDepartement" class="block text-sm/6 font-medium ">Département</label>
             <div class="mt-2">
-              <select id="noDepartement" name="noDepartement"
+              <select formControlName="idDepartementChoisi" id="idDepartement"
                       class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
                       title="Numéro des départements bretons.">
-                <option value="21">22</option>
-                <option value="28">29</option>
-                <option value="36">35</option>
-                <option value="57">56</option>
+                @for (departement of departements; track departement.idDepartement) {
+                  <option [value]="departement.idDepartement">{{ departement.numDepartement }}</option>
+                }
               </select>
             </div>
           </div>
@@ -120,7 +121,7 @@
           <div>
             <label for="lieuFormation" class="block text-sm/6">Lieu de la formation</label>
             <div class="mt-2">
-              <input id="lieuFormation" type="text" name="lieuFormation"
+              <input id="lieuFormation" type="text" formControlName="lieuFormation"
                      class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
                      title="Lieu de la formation"/>
@@ -128,9 +129,9 @@
           </div>
           <!-- rang 3 -->
           <div>
-            <label for="dureeFormation" class="block text-sm/6">Durée total en heure</label>
+            <label for="dureeFormation" class="block text-sm/6">Durée totale en heure</label>
             <div class="mt-2">
-              <input id="dureeFormation" type="number" name="dureeFormation" min="0" max="100" step="1"
+              <input id="dureeFormation" type="number" formControlName="dureeFormation" min="0" max="100" step="1"
                      class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
                      title="Durée total en heure de la formation"/>
@@ -140,7 +141,7 @@
           <div>
             <label for="commanditaire" class="block text-sm/6">Commanditaire</label>
             <div class="mt-2">
-              <input id="commanditaire" type="text" name="commanditaire"
+              <input id="commanditaire" type="text" formControlName="commanditaire"
                      class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
                      title="Commanditaire de la formation"/>
@@ -150,7 +151,7 @@
           <div>
             <label for="RPE" class="block text-sm/6">Confirmation au RPE</label>
             <div class="mt-2">
-              <input id="RPE" type="text" name="RPE"
+              <input id="RPE" type="text" formControlName="RPE"
                      class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
                      title="Confirmation au RPE"/>
@@ -161,7 +162,7 @@
           <div>
             <label for="nbJournee" class="block text-sm/6 ">Nombre de journées</label>
             <div class="mt-2">
-              <input id="nbJournee" type="number" name="nbJournee" step="1" min="0" max="5"
+              <input id="nbJournee" type="number" formControlName="nbJournee" step="1" min="0" max="5"
                      class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"/>
             </div>
@@ -179,13 +180,13 @@
             <label for="journee1" class="text-sm/6 font-bold text-[var(--color-bg-button)]">Journée 1</label>
             <div class="flex items-center gap-2 w-full">
               <label for="dateJournee1" class="text-sm/6 min-w-16">Date</label>
-              <input id="dateJournee1" type="date" name="dateJournee1"
+              <input id="dateJournee1" type="date" formControlName="dateJournee1"
                      class="min-w-56 rounded-md  py-1.5 pr-8 pl-3
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"/>
             </div>
             <div class="flex items-center gap-2 w-full">
               <label for="formateurJourneeN" class="text-sm/6 min-w-16">Formateur</label>
-              <select id="formateurJourneeN" name="formateurJourneeN"
+              <select id="formateurJourneeN" formControlName="formateurJourneeN"
                       class="min-w-56 rounded-md  py-1.5 pr-8 pl-3
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border">
                 <!-- boucler sur les thèmes en présentiel -->
@@ -193,7 +194,7 @@
             </div>
             <div class="flex items-center gap-2 w-full">
               <label for="SalleJourneeN" class="text-sm/6 min-w-16">Salle</label>
-              <select id="SalleJourneeN" name="SalleJourneeN"
+              <select id="SalleJourneeN" formControlName="salleJourneeN"
                       class="min-w-56 rounded-md  py-1.5 pr-8 pl-3
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border">
                 <!-- boucler sur les thèmes en présentiel -->
@@ -215,18 +216,21 @@
       </div>
 
       <div class="text-center mt-8">
-        <button routerLink="/listeSessionFormationPresentiel"
+        <button
+          routerLink="/listeSessionFormationPresentiel"
+
                 class="min-w-64 bg-[var(--color-bg-button)] text-[var(--color-text-button)] py-2 rounded
         hover:bg-[var(--color-bg-button-hover)] hover:text-[var(--color-text-button-hover)] text-center pl-6 rounded-md mr-8">
           Retour
         </button>
-        <button routerLink="/enregistrerSessionFormationPresentiel"
+        <button
+                (click)="onSubmit()"
                 class="min-w-64 bg-[var(--color-bg-button)] text-[var(--color-text-button)] py-2 rounded
         hover:bg-[var(--color-bg-button-hover)] hover:text-[var(--color-text-button-hover)] text-center pl-6 rounded-md ml-8">
           Enregistrer
         </button>
       </div>
-    </div>
+    </form>
     <!-- Fin du formulaire -->
   </div>
 
