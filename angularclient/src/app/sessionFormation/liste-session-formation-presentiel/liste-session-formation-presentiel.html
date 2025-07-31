@@ -42,7 +42,7 @@ md:min-w-[450px] md:max-w-[940px] flex flex-col md:flex-row md:items-center md:m
         </div>
         <div class="flex flex-row items-center gap-2">
           <label for="moins6">Sessions inférieures à 6 apprenants</label>
-          <input type="checkbox" id="moins6"/>
+          <input type="checkbox" [(ngModel)]="isChecked" (change)="handleChange()" id="moins6"/>
         </div>
       </div>
       <!-- Bouton rechercher -->

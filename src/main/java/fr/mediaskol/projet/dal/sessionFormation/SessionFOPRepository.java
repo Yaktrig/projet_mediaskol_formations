@@ -41,5 +41,16 @@ public interface SessionFOPRepository extends JpaRepository<SessionFormationPres
     List<SessionFormationPresentiel> findByDateDebutSession(LocalDate dateDebutSession);
 
 
+    /**
+     * Requête qui récupère les sessions de formation en présentiel qui détiennent moins de 6 apprenants
+     */
+    @Query("SELECT sa.sessionFormation FROM SessionApprenant sa GROUP BY sa.sessionFormation HAVING COUNT(sa) < 6")
+    List<SessionFormationPresentiel> findSessionFormationsAvecMoinsDe6Apprenants();
+
+
+
+
+
+
 
 }

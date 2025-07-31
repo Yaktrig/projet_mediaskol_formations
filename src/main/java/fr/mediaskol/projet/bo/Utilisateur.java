@@ -67,10 +67,11 @@ public class Utilisateur implements UserDetails {
      */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(authority));
+        return List.of(new SimpleGrantedAuthority("ROLE_" + authority));
     }
 
-    /**
+
+     /**
      * Correspond à l'élément d'authentification
      *
      * @return

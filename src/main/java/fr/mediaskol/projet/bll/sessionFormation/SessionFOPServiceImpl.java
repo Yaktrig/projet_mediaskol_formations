@@ -240,11 +240,11 @@ public class SessionFOPServiceImpl implements SessionFOPService {
     @Override
     public List<SessionFormateurRespDTO> getSessionsFormateurBySessionId(Long idSessionFormation) {
 
-       List<SessionFormateur> sessionFormateurs = sessionFormateurRepository.findBySessionFormationIdSessionFormation(idSessionFormation);
+        List<SessionFormateur> sessionFormateurs = sessionFormateurRepository.findBySessionFormationIdSessionFormation(idSessionFormation);
 
-       return sessionFormateurs.stream()
-               .map(SessionFormateurRespDTO::new)
-               .collect(Collectors.toList());
+        return sessionFormateurs.stream()
+                .map(SessionFormateurRespDTO::new)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -261,6 +261,16 @@ public class SessionFOPServiceImpl implements SessionFOPService {
         return sessionLieuDates.stream()
                 .map(SessionLieuDateRespDTO::new)
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * Fonctionnalité qui récupère les sessions de formation qui ont moins de 6 apprenants d'inscrits
+     */
+    @Override
+    public List<SessionFormationPresentiel> getSessionFormationsAvecMoinsDe6Apprenants() {
+
+        return sessionFOPRepository.findSessionFormationsAvecMoinsDe6Apprenants();
+
     }
 
 

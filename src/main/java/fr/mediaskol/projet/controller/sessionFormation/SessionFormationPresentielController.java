@@ -2,7 +2,6 @@ package fr.mediaskol.projet.controller.sessionFormation;
 
 import fr.mediaskol.projet.bll.sessionFormation.SessionFOPService;
 import fr.mediaskol.projet.bo.ApiResponse;
-import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormationPresentiel;
 import fr.mediaskol.projet.dto.formateur.SessionFormateurRespDTO;
 import fr.mediaskol.projet.dto.salle.SessionSalleRespDTO;
@@ -55,7 +54,7 @@ public class SessionFormationPresentielController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "204", description = "Aucune session trouvée, pas de contenu")
     })
     @GetMapping
-    public ResponseEntity<?> afficherTousLesSessionsFormationsPresentiel() {
+    public ResponseEntity<?> afficherToutesLesSessionsFormationsPresentiel() {
 
         final List<SessionFormationPresentiel> sessionsFop = sessionFOPService.chargerToutesSessionsFop();
 
@@ -67,6 +66,40 @@ public class SessionFormationPresentielController {
         // Sinon, on retourne Statut 200 : Ok + dans le body les sessionFormation
         // Conversion liste SessionFormation -> liste SessionFormationDTO
         List<SessionFOPResponseDTO> sessionFOPResponseDTOS = sessionsFop.stream()
+                .map(session -> {
+                    SessionFOPResponseDTO dto = new SessionFOPResponseDTO(session);
+
+                    List<SessionSalleRespDTO> sallesDtos = sessionFOPService.getSessionsSalleBySessionId(session.getIdSessionFormation());
+                    dto.setSessionsSalle(sallesDtos);
+
+                    List<SessionFormateurRespDTO> formateursDtos = sessionFOPService.getSessionsFormateurBySessionId(session.getIdSessionFormation());
+                    dto.setSessionsFormateur(formateursDtos);
+
+                    List<SessionLieuDateRespDTO> lieuDateDtos = sessionFOPService.getSessionsLieuDateBySessionId(session.getIdSessionFormation());
+                    dto.setSessionsLieuDate(lieuDateDtos);
+
+                    return dto;
+                })
+                .toList();
+
+        return ResponseEntity.ok(sessionFOPResponseDTOS);
+    }
+
+    /**
+     * Afficher les sessions de formation en présentiel qui contient moins de 6 sessions apprenants
+     */
+    @GetMapping("/{moinsSixSessionsApprenants}")
+    public ResponseEntity<?> afficherLesSessionsMoinsSixSessionsApprenants(){
+
+        final List<SessionFormationPresentiel> sessionsFopInfSix = sessionFOPService.getSessionFormationsAvecMoinsDe6Apprenants();
+
+        if(sessionsFopInfSix == null || sessionsFopInfSix.isEmpty()) {
+            // Statut 204 : No content - Pas de body car rien à afficher
+            return ResponseEntity.noContent().build();
+        }
+
+        // Sinon on retourne Statut 200 : Ok + dans le body les SessionsFormation qui ont moins de 6 sessionsApprenants
+        List<SessionFOPResponseDTO> sessionFOPResponseDTOS = sessionsFopInfSix.stream()
                 .map(session -> {
                     SessionFOPResponseDTO dto = new SessionFOPResponseDTO(session);
 

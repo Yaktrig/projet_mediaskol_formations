@@ -33,6 +33,8 @@ export class ListeSessionFormationPresentiel {
 
   searchTerm = '';
   sessions: SessionFopRespDTO[] = [];
+  // Optionnel : meilleure performance pour *ngFor des sessions
+  isChecked: any;
 
   // Expose la map pour y accéder dans le template
   statutSessionFormationDetails = StatutSessionFormationDetails;
@@ -48,9 +50,10 @@ export class ListeSessionFormationPresentiel {
   }
 
   loadSessions() {
-    this.sessionFopService.getSessions().subscribe({
+    this.sessionFopService.getSessionsPresentiel().subscribe({
       next: (data: SessionFopRespDTO[]) => this.sessions = data,
-      error: err => this.sessions = []
+      error: (err) => console.error('Erreur récupération sessions', err)
+
     });
   }
   onSearch(): void {
@@ -64,9 +67,21 @@ export class ListeSessionFormationPresentiel {
     }
   }
 
-  // Optionnel : meilleure performance pour *ngFor des sessions
-  trackBySessionId(index: number, session: SessionFopRespDTO): number {
-    return <number>session.idSessionFormation;
+  /**
+   * Méthode qui vérifie si la checkbox est cochée et appelle la méthode qui renvoie la liste des sessions
+   * de formation qui ont moins de SIX sessions d'apprenants.
+   * Sinon, on appelle la méthode qui charge la totalité des sessions de formations
+   */
+  handleChange() {
+    if(this.isChecked){
+      console.log("case cochée");
+      this.sessionFopService.getSessionsWithLessSixSa().subscribe({
+        next: (data: SessionFopRespDTO[]) => this.sessions = data,
+        error: err => this.sessions = []
+      })
+    } else {
+      console.log("case décochée");
+      this.loadSessions();
+    }
   }
-
 }

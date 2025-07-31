@@ -1,11 +1,10 @@
 package fr.mediaskol.projet.bll.sessionFormation;
 
-import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormationPresentiel;
-import fr.mediaskol.projet.bo.sessionLieuDate.SessionLieuDate;
 import fr.mediaskol.projet.dto.formateur.SessionFormateurRespDTO;
 import fr.mediaskol.projet.dto.salle.SessionSalleRespDTO;
 import fr.mediaskol.projet.dto.sessionFormation.SessionFOPInputDTO;
+import fr.mediaskol.projet.dto.sessionFormation.SessionFOPResponseDTO;
 import fr.mediaskol.projet.dto.sessionLieuDate.SessionLieuDateRespDTO;
 
 import java.util.List;
@@ -71,4 +70,11 @@ public interface SessionFOPService {
      * Les convertit en DTO
      */
     List<SessionLieuDateRespDTO> getSessionsLieuDateBySessionId(Long idSessionFormation);
+
+    /**
+     * Fonctionnalité qui récupère les sessions de formation qui ont moins de 6 sessions d'apprenants d'inscrits
+     */
+    List<SessionFormationPresentiel> getSessionFormationsAvecMoinsDe6Apprenants();
+
+
 }

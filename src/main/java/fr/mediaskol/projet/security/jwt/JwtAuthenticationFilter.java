@@ -1,19 +1,22 @@
 package fr.mediaskol.projet.security.jwt;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 // Doit être active dès qu'il y a une requête
@@ -59,18 +62,37 @@ public class JwtAuthenticationFilter  extends OncePerRequestFilter {
         // Validation des données par rapport à la DB
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-            // Check en DB
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
+            // Récupération des claims (dont les rôles)
+            Claims claims = jwtService.extractAllClaims(jwt);
+            @SuppressWarnings("unchecked")
+            List<String> roles = (List<String>) claims.get("roles", List.class);
 
-            if (jwtService.isTokenValid(jwt, userDetails)) {
-                // si valide - servlet ok
-                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userEmail,
-                        null, userDetails.getAuthorities());
-                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(authToken);
-            }
+            List<SimpleGrantedAuthority> authorities = roles.stream()
+                    .map(SimpleGrantedAuthority::new)
+                    .collect(Collectors.toList());
+
+            // On crée le token avec le username, aucun mot de passe (null), mais avec les rôles extraits
+            UsernamePasswordAuthenticationToken authToken =
+                    new UsernamePasswordAuthenticationToken(userEmail, null, authorities);
+
+
+            SecurityContextHolder.getContext().setAuthentication(authToken);
+
+            // Check en DB
+           // UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
+
+
+//            if (jwtService.isTokenValid(jwt, userDetails)) {
+//                // si valide - servlet ok
+//                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userEmail,
+//                        null, userDetails.getAuthorities());
+//                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+//                SecurityContextHolder.getContext().setAuthentication(authToken);
+//            }
         }
         filterChain.doFilter(request, response);
-
     }
+
+
+
 }

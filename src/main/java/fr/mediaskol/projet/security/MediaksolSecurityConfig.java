@@ -15,6 +15,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+
 @Configuration
 @EnableWebSecurity
 public class MediaksolSecurityConfig {
@@ -45,19 +46,19 @@ public class MediaksolSecurityConfig {
                                     "/mediaskol/swagger-ui/**",
                                     "/mediaskol/api-docs/**").permitAll()
 
-
-                           // .requestMatchers("/mediaskolFormation/**").hasAnyRole("SALARIE", "ADMIN")
                             .requestMatchers("/mediaskolFormation/auth/**").permitAll()
+                           // .requestMatchers("/mediaskolFormation/**").permitAll()
+                            .requestMatchers("/mediaskolFormation/**").hasAnyRole("SALARIE", "ADMIN")
 
                             // permettre aux rôles EMPLOYE et ADMIN de manipuler les URLs en GET
-                            .requestMatchers(HttpMethod.GET, "/mediaskolFormation/sessionsFormationsPresentiels/**").hasAnyRole("SALARIE", "ADMIN")
+                            .requestMatchers("/mediaskolFormation/sessionsFormationsPresentiels/**").hasAnyRole("SALARIE", "ADMIN")
                             .requestMatchers(HttpMethod.GET, "/mediaskolFormation/sessionsFormationsDistanciels/**").hasAnyRole("SALARIE", "ADMIN")
                             //.requestMatchers(HttpMethod.GET, "/mediaskolFormation/sessionsFormations/**").hasAnyRole("EMPLOYE", "ADMIN")
                             // Restreindre la manipulation des méthodes POST, PUT, PATCH, DELETE au rôle ADMIN
-                            .requestMatchers(HttpMethod.POST, "/mediaskolFormation/sessionsFormations").hasAnyRole("SALARIE", "ADMIN")
-                            .requestMatchers(HttpMethod.PUT, "/mediaskolFormation/sessionsFormations").hasRole("ADMIN")
-                            .requestMatchers(HttpMethod.PATCH, "/mediaskolFormation/sessionsFormations").hasRole("ADMIN")
-                            .requestMatchers(HttpMethod.DELETE, "/mediaskolFormation/sessionsFormations").hasRole("ADMIN")
+//                            .requestMatchers(HttpMethod.POST, "/mediaskolFormation/sessionsFormations").hasAnyRole("SALARIE", "ADMIN")
+//                            .requestMatchers(HttpMethod.PUT, "/mediaskolFormation/sessionsFormations").hasRole("ADMIN")
+//                            .requestMatchers(HttpMethod.PATCH, "/mediaskolFormation/sessionsFormations").hasRole("ADMIN")
+//                            .requestMatchers(HttpMethod.DELETE, "/mediaskolFormation/sessionsFormations").hasRole("ADMIN")
                             // Toutes les autres url et méthodes HTTP ne sont pas permises
                             .anyRequest().denyAll();
                 }

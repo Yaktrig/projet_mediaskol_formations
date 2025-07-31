@@ -1,6 +1,5 @@
-import {Component} from '@angular/core';
-import {RouterOutlet} from '@angular/router';
-
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,10 +7,8 @@ import {RouterOutlet} from '@angular/router';
   imports: [RouterOutlet],
   templateUrl: './app.html',
   styleUrls: ['./app.css'],
-
 })
 export class App {
-
   title = 'Organisme de formation - Mediaskol';
-
 }
+

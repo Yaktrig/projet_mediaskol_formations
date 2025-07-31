@@ -22,6 +22,7 @@ export class UserService {
         tap(response => {
           localStorage.setItem(this.tokenKey, response.token);
           localStorage.setItem(this.usernameKey, pseudo);
+          console.log(localStorage.getItem('jwt-token'));
           if (rememberMe) {
             localStorage.setItem(this.passwordKey, password);
           } else {

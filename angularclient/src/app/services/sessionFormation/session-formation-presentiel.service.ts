@@ -13,7 +13,7 @@ import {SessionFopRespDTO} from '../../dto/sessionFormation/session-formation-pr
   providedIn: 'root'
 })
 export class SessionFormationPresentielService {
-  private apiUrl = 'http://localhost:8080/mediaskolFormation/sessionsFormationsPresentiels';
+  private apiUrl = 'http://localhost:8080/mediaskolFormation';
 
 
   constructor(private http: HttpClient) {
@@ -23,10 +23,19 @@ export class SessionFormationPresentielService {
   /**
    * Méthode qui appelle l'api pour retourner la liste des sessions de formation en présentiel
    */
-  getSessions(): Observable<SessionFopRespDTO[]> {
-    return this.http.get<SessionFopRespDTO[]>(this.apiUrl);
+  getSessionsPresentiel(): Observable<SessionFopRespDTO[]> {
+    const url = `${this.apiUrl}/sessionsFormationsPresentiels`; // ou /list selon
+    return this.http.get<SessionFopRespDTO[]>(url);
   }
 
+  /**
+   * Méthode qui appel l'api pour retourner la liste des sessions de formation en présentiel qui contiennent
+   * moins de 6 sessions apprenants
+   */
+  getSessionsWithLessSixSa() :  Observable<SessionFopRespDTO[]> {
+    const url = `${this.apiUrl}/moinsSixSessionsApprenants`;
+    return this.http.get<SessionFopRespDTO[]>(url);
+  }
 
   /**
    * Méthode qui appelle l'api pour rechercher une session de formation en présentiel selon certains champs définis
