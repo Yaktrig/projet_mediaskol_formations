@@ -5,7 +5,8 @@
   <div class="space-y-12">
     <!-- Formulaire -->
     <form [formGroup]="sessionPresentielForm" (ngSubmit)="onSubmit()"
-      class="bg-[var(--color-bg-form)] border-[1.5px]  shadow-md rounded-lg px-4 py-6 m-4 max-w-7xl mx-auto">
+          class="bg-[var(--color-bg-form)] border-[1.5px]  shadow-md rounded-lg px-4 py-6 m-4 max-w-7xl mx-auto">
+
 
       <div class="mt-5 grid grid-cols-3 gap-4">
 
@@ -14,25 +15,30 @@
 
           <!-- rang 1 -->
           <div>
-            <label for="noYoda" class="block text-sm/6">N°YODA</label>
-            <div class="mt-2">
-              <input id="noYoda" type="text" formControlName="noYoda"
-                     class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
-                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border" title="Numéro AF Yoda"/>
-            </div>
+            <label for="noYoda" class="block text-sm/6 font-medium ">N°YODA</label>
+            <input id="noYoda" type="text" formControlName="noYoda"
+                   class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
+                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
+                   title="Numéro AF Yoda"/>
+            @if (sessionPresentielForm.controls['noYoda'].hasError('maxlength') && sessionPresentielForm.controls['noYoda'].touched) {
+              <p class="text-red-600 text-sm mt-1">Le numéro de Yoda ne doit pas dépasser 30 caractères.</p>
+            }
           </div>
+
 
           <!-- rang 2 -->
           <div>
-            <label for="intituleSessionF" class="block text-sm/6 font-medium ">Intituté de la session de
-              formation</label>
-            <div class="mt-2">
-              <input id="intituleSessionF" type="text" formControlName="intituleSessionF"
-                     class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
+            <label>Intituté de la session de formation </label>
+            <input id="intituleSessionF" type="text" formControlName="intituleSessionF"
+                   class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
-                     title="Intitulé de la session de formation"/>
-            </div>
+                   title="Intitulé de la session de formation"/>
+            @if ((sessionPresentielForm.controls['intituleSessionF'].hasError('required') || sessionPresentielForm.controls['intituleSessionF'].hasError('maxlength'))
+            && sessionPresentielForm.controls['intituleSessionF'].touched) {
+              <p class="text-red-600 text-sm mt-1">  Le libellé de la session de formation est obligatoire.</p>
+            }
           </div>
+
           <!-- rang 3 -->
           <div>
             <label for="ttDossier" class="block text-sm/6 font-medium ">Dossier traité par</label>
@@ -53,8 +59,8 @@
               <select id="BI" formControlName="BI"
                       class="min-w-64 rounded-md  py-1.5 pr-8 pl-3 bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
                       title="Bulletin d'inscription">
-                <option value="1">OUI</option>
-                <option value="0">NON</option>
+                <option [value]="0">NON</option>
+                <option [value]="1">OUI</option>
               </select>
             </div>
           </div>
@@ -75,10 +81,10 @@
               <select id="themeSessionF"
                       formControlName="idFormationChoisie"
                       class="min-w-80 rounded-md py-1.5 pr-8 pl-3 bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border">
-                @for(formation of formations; track formation.idFormation){
-                  <option [value]="formation.idFormation"> {{ formation.themeFormation }} </option>
+                @for (formation of formations; track formation.idFormation) {
+                  <option [value]="formation.idFormation"> {{ formation.themeFormation }}</option>
                 }
-                @if(formations.length === 0){
+                @if (formations.length === 0) {
                   <option disabled>Aucune formation disponible</option>
                 }
               </select>
@@ -216,20 +222,20 @@
       </div>
 
       <div class="text-center mt-8">
-        <button
-          routerLink="/listeSessionFormationPresentiel"
+        <button type="button"
+                routerLink="/listeSessionFormationPresentiel"
 
                 class="min-w-64 bg-[var(--color-bg-button)] text-[var(--color-text-button)] py-2 rounded
         hover:bg-[var(--color-bg-button-hover)] hover:text-[var(--color-text-button-hover)] text-center pl-6 rounded-md mr-8">
           Retour
         </button>
-        <button
-                (click)="onSubmit()"
+        <button type="submit"
                 class="min-w-64 bg-[var(--color-bg-button)] text-[var(--color-text-button)] py-2 rounded
         hover:bg-[var(--color-bg-button-hover)] hover:text-[var(--color-text-button-hover)] text-center pl-6 rounded-md ml-8">
           Enregistrer
         </button>
       </div>
+
     </form>
     <!-- Fin du formulaire -->
   </div>

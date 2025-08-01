@@ -52,6 +52,10 @@ label {
   @apply text-[var(--color-title-purple)] m-2;
 }
 
+mat-label {
+  @apply text-[var(--color-title-purple)] m-2;
+}
+
 button {
   @apply bg-[var(--color-bg-button)]  p-2 border rounded-md text-[var(--color-text-button)];
 }

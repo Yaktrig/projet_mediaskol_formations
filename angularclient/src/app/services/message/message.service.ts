@@ -11,7 +11,7 @@ export class MessageService {
 
   showSuccess(message: string) {
     this.snackBar.open(message, 'OK', {
-      duration: 3000,
+      duration: 5000,
       verticalPosition: 'top',
       horizontalPosition:'left',
       panelClass: ['snackbar-custom-success']
