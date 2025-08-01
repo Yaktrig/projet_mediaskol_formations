@@ -28,81 +28,93 @@
 
           <!-- rang 2 -->
           <div>
-            <label>Intituté de la session de formation </label>
+            <label for="intituleSessionF" class="block text-sm/6 font-medium ">Intituté de la session de
+              formation </label>
             <input id="intituleSessionF" type="text" formControlName="intituleSessionF"
                    class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
                    title="Intitulé de la session de formation"/>
-            @if ((sessionPresentielForm.controls['intituleSessionF'].hasError('required') || sessionPresentielForm.controls['intituleSessionF'].hasError('maxlength'))
-            && sessionPresentielForm.controls['intituleSessionF'].touched) {
-              <p class="text-red-600 text-sm mt-1">  Le libellé de la session de formation est obligatoire.</p>
+            @if (sessionPresentielForm.controls['intituleSessionF'].hasError('required') && sessionPresentielForm.controls['intituleSessionF'].touched) {
+              <p class="text-red-600 text-sm mt-1"> Le libellé de la session de formation est obligatoire.</p>
+            }
+            @if (sessionPresentielForm.controls['intituleSessionF'].hasError('maxlength') && sessionPresentielForm.controls['intituleSessionF'].touched) {
+              <p class="text-red-600 text-sm mt-1"> Le libellé de la session de formation ne doit pas dépasser 50
+                caractères.</p>
             }
           </div>
 
           <!-- rang 3 -->
           <div>
-            <label for="ttDossier" class="block text-sm/6 font-medium ">Dossier traité par</label>
-            <div class="mt-2">
-              <select formControlName="idSalarieChoisi" id="idSalarieChoisi"
-                      class="min-w-64 rounded-md  py-1.5 pr-8 pl-3 bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
-                      title="Dossier traité par">
-                @for (salarie of salaries; track salarie.idSalarie) {
-                  <option [value]="salarie.idSalarie">{{ salarie.prenom }} {{ salarie.nom }}</option>
-                }
-              </select>
-            </div>
+            <label for="idSalarieChoisi" class="block text-sm/6 font-medium ">Dossier traité par</label>
+
+            <select formControlName="idSalarieChoisi" id="idSalarieChoisi"
+                    class="min-w-64 rounded-md  py-1.5 pr-8 pl-3 bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
+                    title="Dossier traité par">
+              @for (salarie of salaries; track salarie.idSalarie) {
+                <option [value]="salarie.idSalarie">{{ salarie.prenom }} {{ salarie.nom }}</option>
+              }
+            </select>
+            @if (sessionPresentielForm.controls['idSalarieChoisi'].hasError('required') && sessionPresentielForm.controls['idSalarieChoisi'].touched) {
+              <p class="text-red-600 text-sm mt-1">Le salarié qui traite de le dossier est obligatoire.</p>
+            }
           </div>
           <!-- rang 4 -->
           <div>
             <label for="BI" class="block text-sm/6 font-medium ">Bulletin d'inscription</label>
-            <div class="mt-2">
-              <select id="BI" formControlName="BI"
-                      class="min-w-64 rounded-md  py-1.5 pr-8 pl-3 bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
-                      title="Bulletin d'inscription">
-                <option [value]="0">NON</option>
-                <option [value]="1">OUI</option>
-              </select>
-            </div>
+            <select id="BI" formControlName="BI"
+                    class="min-w-64 rounded-md  py-1.5 pr-8 pl-3 bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
+                    title="Bulletin d'inscription">
+              <option [value]="0">NON</option>
+              <option [value]="1">OUI</option>
+            </select>
+            @if (sessionPresentielForm.controls['BI'].hasError('required') && sessionPresentielForm.controls['BI'].touched) {
+              <p class="text-red-600 text-sm mt-1">L'information sur le bulletin d'information est requise.</p>
+            }
           </div>
           <!-- rang 5 -->
           <div>
             <label for="dateLimiteYoda" class="block text-sm/6 font-medium ">Date limite Yoda</label>
-            <div class="mt-2">
-              <input id="dateLimiteYoda" type="text" formControlName="dateLimiteYoda"
-                     class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
+            <input id="dateLimiteYoda" type="text" formControlName="dateLimiteYoda"
+                   class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
-                     title="Date limite Yoda"/>
-            </div>
+                   title="Date limite Yoda"/>
+            @if (sessionPresentielForm.controls['dateLimiteYoda'].hasError('pattern') && sessionPresentielForm.controls['dateLimiteYoda'].touched) {
+              <p class="text-red-600 text-sm mt-1">La date limite Yoda doit être au format date.</p>
+            }
           </div>
           <!-- rang 6 -->
           <div>
             <label for="themeSessionF" class="block text-sm/6 font-medium ">Thème de la formation</label>
-            <div class="mt-2">
-              <select id="themeSessionF"
-                      formControlName="idFormationChoisie"
-                      class="min-w-80 rounded-md py-1.5 pr-8 pl-3 bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border">
-                @for (formation of formations; track formation.idFormation) {
-                  <option [value]="formation.idFormation"> {{ formation.themeFormation }}</option>
-                }
-                @if (formations.length === 0) {
-                  <option disabled>Aucune formation disponible</option>
-                }
-              </select>
-            </div>
+
+            <select id="themeSessionF"
+                    formControlName="idFormationChoisie"
+                    class="min-w-64 rounded-md py-1.5 pr-8 pl-3 min-h-9 bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border">
+              @for (formation of formations; track formation.idFormation) {
+                <option [value]="formation.idFormation"> {{ formation.themeFormation }}</option>
+              }
+              @if (formations.length === 0) {
+                <option disabled>Aucune formation disponible</option>
+              }
+            </select>
+            @if (sessionPresentielForm.controls['idFormationChoisie'].hasError('required') && sessionPresentielForm.controls['idFormationChoisie'].touched) {
+              <p class="text-red-600 text-sm mt-1">La formation doit être sélectionnée.</p>
+            }
 
           </div>
           <!-- rang 7 -->
           <div>
             <label for="intituleFormation" class="block text-sm/6">Intitulé de la formation</label>
-            <div class="mt-2">
-              <input id="libelleSessionF"
-                     formControlName="libelleSessionF"
-                     [value]="libelleFormationSelectionnee"
-                     class="min-w-80 rounded-md  py-1.5 pr-8 pl-3
+
+            <input id="libelleSessionF"
+                   formControlName="libelleSessionF"
+                   [value]="libelleFormationSelectionnee"
+                   class="min-w-80 rounded-md  py-1.5 pr-8 pl-3
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
-                     title="Libellé de la formation"
-                     readonly/>
-            </div>
+                   title="Libellé de la formation"
+                   readonly/>
+            @if (sessionPresentielForm.controls['libelleSessionF'].hasError('required') && sessionPresentielForm.controls['libelleSessionF'].touched) {
+              <p class="text-red-600 text-sm mt-1">La formation doit être sélectionnée.</p>
+            }
           </div>
         </div>
         <!-- Fin colonne 1-->
@@ -112,69 +124,87 @@
           <!-- rang 1 - Thème récupéré parmi la liste des formations en présentiel-->
           <div>
             <label for="noDepartement" class="block text-sm/6 font-medium ">Département</label>
-            <div class="mt-2">
-              <select formControlName="idDepartementChoisi" id="idDepartement"
-                      class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
+            <select formControlName="idDepartementChoisi" id="idDepartement"
+                    class="min-w-64 rounded-md  py-1.5 pr-8 pl-3 min-h-9
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
-                      title="Numéro des départements bretons.">
-                @for (departement of departements; track departement.idDepartement) {
-                  <option [value]="departement.idDepartement">{{ departement.numDepartement }}</option>
-                }
-              </select>
-            </div>
+                    title="Numéro des départements bretons.">
+              @for (departement of departements; track departement.idDepartement) {
+                <option [value]="departement.idDepartement">{{ departement.numDepartement }}</option>
+              }
+            </select>
+            @if (sessionPresentielForm.controls['idDepartementChoisi'].hasError('required') && sessionPresentielForm.controls['idDepartementChoisi'].touched) {
+              <p class="text-red-600 text-sm mt-1">Le numéro du département doit être sélectionné.</p>
+            }
           </div>
           <!-- rang 2 -->
           <div>
             <label for="lieuFormation" class="block text-sm/6">Lieu de la formation</label>
-            <div class="mt-2">
-              <input id="lieuFormation" type="text" formControlName="lieuFormation"
-                     class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
+            <input id="lieuFormation" type="text" formControlName="lieuFormation"
+                   class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
-                     title="Lieu de la formation"/>
-            </div>
+                   title="Lieu de la formation"/>
+            @if (sessionPresentielForm.controls['lieuFormation'].hasError('maxlength') && sessionPresentielForm.controls['lieuFormation'].touched) {
+              <p class="text-red-600 text-sm mt-1">Le lieu de formation ne doit pas dépasser 100 caractères.</p>
+            }
           </div>
           <!-- rang 3 -->
           <div>
-            <label for="dureeFormation" class="block text-sm/6">Durée totale en heure</label>
-            <div class="mt-2">
-              <input id="dureeFormation" type="number" formControlName="dureeFormation" min="0" max="100" step="1"
-                     class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
+            <label for="dateDebutSession" class="block text-sm/6">Date de début</label>
+            <input id="dateDebutSession" type="date" formControlName="dateDebutSession"
+                   class="min-w-64 rounded-md  py-1.5 pr-8 pl-3 max-h-8
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
-                     title="Durée total en heure de la formation"/>
-            </div>
-          </div>
-          <!-- rang 6 -->
-          <div>
-            <label for="commanditaire" class="block text-sm/6">Commanditaire</label>
-            <div class="mt-2">
-              <input id="commanditaire" type="text" formControlName="commanditaire"
-                     class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
-                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
-                     title="Commanditaire de la formation"/>
-            </div>
-          </div>
-          <!-- rang 4 -->
-          <div>
-            <label for="RPE" class="block text-sm/6">Confirmation au RPE</label>
-            <div class="mt-2">
-              <input id="RPE" type="text" formControlName="RPE"
-                     class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
-                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
-                     title="Confirmation au RPE"/>
-            </div>
+                   title="Date de début de la session de formation."/>
+            @if (sessionPresentielForm.controls['dateDebutSession'].hasError('required') && sessionPresentielForm.controls['dateDebutSession'].touched) {
+              <p class="text-red-600 text-sm mt-1">La date de début de session est obligatoire.</p>
+            }
           </div>
 
+          <!-- rang 4 -->
+          <div>
+            <label for="dureeFormation" class="block text-sm/6">Durée totale en heure</label>
+            <input id="dureeFormation" type="number" formControlName="dureeFormation" min="1" max="100" step="1"
+                   class="min-w-64 rounded-md  py-1.5 pr-8 pl-3 max-h-9
+                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
+                   title="Durée total en heure de la formation"/>
+            @if (sessionPresentielForm.controls['dureeFormation'].hasError('min') && sessionPresentielForm.controls['dureeFormation'].touched) {
+              <p class="text-red-600 text-sm mt-1">Le nombre d'heure doit être supérieur à 1.</p>
+            }
+            @if (sessionPresentielForm.controls['dureeFormation'].hasError('max') && sessionPresentielForm.controls['dureeFormation'].touched) {
+              <p class="text-red-600 text-sm mt-1">Le nombre d'heure ne doit pas dépasser 100.</p>
+            }
+          </div>
           <!-- rang 5 -->
           <div>
-            <label for="nbJournee" class="block text-sm/6 ">Nombre de journées</label>
-            <div class="mt-2">
-              <input id="nbJournee" type="number" formControlName="nbJournee" step="1" min="0" max="5"
-                     class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
-                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"/>
-            </div>
+            <label for="commanditaire" class="block text-sm/6">Commanditaire</label>
+            <input id="commanditaire" type="text" formControlName="commanditaire"
+                   class="min-w-64 rounded-md  py-1.5 pr-8 pl-3 max-h-9
+                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
+                   title="Commanditaire de la formation"/>
+            @if (sessionPresentielForm.controls['dureeFormation'].hasError('max') && sessionPresentielForm.controls['dureeFormation'].touched) {
+              <p class="text-red-600 text-sm mt-1">Le nombre d'heure ne doit pas dépasser 100.</p>
+            }
           </div>
-          <div></div>
-          <div></div>
+
+          <!-- rang 6-->
+          <div>
+            <label for="RPE" class="block text-sm/6">Confirmation au RPE</label>
+            <input id="RPE" type="text" formControlName="RPE"
+                   class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
+                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
+                   title="Confirmation au RPE"/>
+            @if (sessionPresentielForm.controls['RPE'].hasError('maxlength') && sessionPresentielForm.controls['RPE'].touched) {
+              <p class="text-red-600 text-sm mt-1">Le nombre de caractères ne doit pas dépasser 255.</p>
+            }
+          </div>
+
+          <!-- rang 7 -->
+          <div>
+            <label for="nbJournee" class="block text-sm/6 ">Nombre de journées</label>
+            <input id="nbJournee" type="number" formControlName="nbJournee" step="1" min="0" max="5"
+                   class="min-w-64 rounded-md  py-1.5 pr-8 pl-3 max-h-10
+                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"/>
+
+          </div>
         </div>
         <!-- Fin colonne 2-->
 
@@ -182,41 +212,39 @@
         <!-- 3ème colonne - avec au minimum 2 rangs jusqu'à 7 rangs -->
         <div class="space-y-4">
           <!-- rang 1 -->
-          <div class="">
-            <label for="journee1" class="text-sm/6 font-bold text-[var(--color-bg-button)]">Journée 1</label>
-            <div class="flex items-center gap-2 w-full">
-              <label for="dateJournee1" class="text-sm/6 min-w-16">Date</label>
-              <input id="dateJournee1" type="date" formControlName="dateJournee1"
-                     class="min-w-56 rounded-md  py-1.5 pr-8 pl-3
+          <div formArrayName="journees">
+
+            @for (journee of journees.controls; track journee; let i = $index) {
+              <div [formGroupName]="i" class="mb-6">
+                <label for="journee"
+                       class="text-sm/6 font-bold text-[var(--color-bg-button)]">Journée {{ i + 1 }}
+                </label>
+
+                <div class="flex items-center gap-2 w-full">
+                  <label for="dateJournee{{i}}" class="text-sm/6 min-w-16">Date</label>
+                  <input id="dateJournee{{i}}" type="date" formControlName="date"
+                         class="min-w-56 rounded-md  py-1.5 pr-8 pl-3
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"/>
-            </div>
-            <div class="flex items-center gap-2 w-full">
-              <label for="formateurJourneeN" class="text-sm/6 min-w-16">Formateur</label>
-              <select id="formateurJourneeN" formControlName="formateurJourneeN"
-                      class="min-w-56 rounded-md  py-1.5 pr-8 pl-3
+                </div>
+                <div class="flex items-center gap-2 w-full">
+                  <label for="formateurJournee{{i}}" class="text-sm/6 min-w-16">Formateur</label>
+                  <select id="formateurJournee{{i}}" formControlName="formateur"
+                          class="min-w-56 rounded-md  py-1.5 pr-8 pl-3
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border">
-                <!-- boucler sur les thèmes en présentiel -->
-              </select>
-            </div>
-            <div class="flex items-center gap-2 w-full">
-              <label for="SalleJourneeN" class="text-sm/6 min-w-16">Salle</label>
-              <select id="SalleJourneeN" formControlName="salleJourneeN"
-                      class="min-w-56 rounded-md  py-1.5 pr-8 pl-3
+                    <!-- boucler sur les thèmes en présentiel -->
+                  </select>
+                </div>
+                <div class="flex items-center gap-2 w-full">
+                  <label for="SalleJournee{{i}}" class="text-sm/6 min-w-16">Salle</label>
+                  <select id="SalleJournee{{i}}" formControlName="salle"
+                          class="min-w-56 rounded-md  py-1.5 pr-8 pl-3
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border">
-                <!-- boucler sur les thèmes en présentiel -->
-              </select>
-            </div>
+                    <!-- boucler sur les thèmes en présentiel -->
+                  </select>
+                </div>
+              </div>
+            }
           </div>
-          <!-- rang 3 -->
-          <div class="">3</div>
-          <!-- rang 4 -->
-          <div class="">4</div>
-          <!-- rang 5 -->
-          <div class="">5</div>
-          <!-- rang 6 -->
-          <div class="">6</div>
-          <!-- rang 7 -->
-          <div class="">7</div>
         </div>
         <!-- Fin colonne 3 -->
       </div>

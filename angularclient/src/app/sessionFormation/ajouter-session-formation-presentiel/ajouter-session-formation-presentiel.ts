@@ -10,6 +10,7 @@ import {SessionFopRespDTO} from '../../dto/sessionFormation/session-formation-pr
 import {FormationResponseDTO} from '../../dto/formation/formation-resp-dto.model';
 import {FormationService} from '../../services/formation/formation.service';
 import {
+  FormArray,
   FormBuilder,
   FormGroup,
   FormsModule,
@@ -89,16 +90,22 @@ export class AjouterSessionFormationPresentiel implements OnInit {
       noYoda: ['', Validators.maxLength(30)],
       intituleSessionF: ['', [Validators.required, Validators.maxLength(50)]],
       BI: [0, Validators.required],
-      dateLimiteYoda: [''],
+      dateLimiteYoda: ['', Validators.pattern(/^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/)],
       libelleSessionF: [''],
       lieuFormation: ['', Validators.maxLength(100)],
-      dureeFormation: [''],
-      commanditaire: [''],
-      RPE: [''],
+      dateDebutSession: ['', Validators.required],
+      dureeFormation: ['', [Validators.min(1), Validators.max(100)]],
+      commanditaire: ['', Validators.maxLength(125)],
+      RPE: ['', Validators.maxLength(255)],
       nbJournee: [''],
-      dateJournee1: [''],
-      formateurJourneeN: [''],
-      salleJourneeN: ['']
+      journees: this.fb.array([this.createJournee()])
+      // dateJournee1: ['', Validators.pattern(/^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/)],
+      // formateurJourneeN: [''],
+      // salleJourneeN: ['']
+    });
+
+    this.sessionPresentielForm.get('nbJournee')?.valueChanges.subscribe(val => {
+      this.adjustJournees(val);
     });
 
   }
@@ -184,6 +191,31 @@ export class AjouterSessionFormationPresentiel implements OnInit {
    * un template avec : une date, une liste de formateurs disponibles à cette date, une liste de salle disponiblent à
    * cette date.
    */
+  createJournee(): FormGroup {
+    return this.fb.group({
+      date: [''],
+      formateur: [''],
+      salle: ['']
+    });
+  }
+
+  adjustJournees(nb: number){
+
+    const journees = this.sessionPresentielForm.get('journees') as FormArray;
+    while(journees.length < nb) {
+      journees.push(this.createJournee());
+    }
+    while(journees.length > nb) {
+      journees.removeAt(journees.length -1);
+    }
+  }
+
+  get journees(): FormArray {
+    return this.sessionPresentielForm.get('journees') as FormArray;
+  }
+
+
+
 
 
   /**
