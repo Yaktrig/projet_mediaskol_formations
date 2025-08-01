@@ -6,21 +6,23 @@ import {
 } from './sessionFormation/ajouter-session-formation-presentiel/ajouter-session-formation-presentiel';
 import {UserGuard} from './guards/user-guard';
 import {LoginComponent} from './login/login';
+import {LoginRedirectGuard} from './guards/login-redirect.guard';
 
 export const routes: Routes = [
   {
     path: '',
-    component: LoginComponent
+    component: LoginComponent,
+    canActivate: [LoginRedirectGuard]
   },
   {
     path: 'listeSessionFormationPresentiel',
     component: ListeSessionFormationPresentiel,
-    canActivate: [UserGuard]
+   canActivate: [UserGuard]
   },
   {
     path: 'ajouterSessionFormationPresentiel',
     component: AjouterSessionFormationPresentiel,
-    canActivate: [UserGuard]
+   canActivate: [UserGuard]
   },
 
   //{ path: 'apprenants', component: ListeApprenants},

@@ -5,6 +5,7 @@ import {FormsModule} from '@angular/forms';
 import {firstValueFrom} from 'rxjs';
 import {Header} from '../header/header';
 import {Footer} from '../footer/footer';
+import {MessageService} from '../services/message/message.service';
 
 @Component({
   selector: 'app-login',
@@ -24,19 +25,9 @@ export class LoginComponent {
   error: string = '';
   public rememberMe = false;
 
-  constructor(private auth: UserService, private router: Router) {
+  constructor(private auth: UserService, private router: Router, private messageService: MessageService) {
   }
 
-
-  ngOnInit() {
-    this.autoLogin();
-  }
-
-  async autoLogin() {
-    if (await this.auth.autologin()) {
-      await this.router.navigate(["listeSessionFormationPresentiel"]);
-    }
-  }
 
   async loginUser() {
     this.error = "";
@@ -51,9 +42,11 @@ export class LoginComponent {
     try {
       await firstValueFrom(this.auth.login(this.pseudo, this.password, this.rememberMe));
       await this.router.navigate(["listeSessionFormationPresentiel"]);
+      this.messageService.showSuccess("Connexion réussie !");
     } catch (err: any) {
       console.error(err);
       this.error = "Erreur lors de la connexion : " + (err.message || err);
+      this.messageService.showError("Erreur lors de la connexion " + (err.message || err));
     }
   }
 

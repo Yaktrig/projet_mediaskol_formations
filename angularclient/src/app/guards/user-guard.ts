@@ -14,11 +14,11 @@ export class UserGuard implements CanActivate {
   }
 
   canActivate(): boolean {
-    if (this.auth.isLoggedIn()) {
-      return true;
+    if (!this.auth.isLoggedIn()) {
+      this.router.navigate(['']);
+      return false;
     }
-
-    this.router.navigate(['/login']); // redirige vers une page de login si non authentifié
-    return false;
+    // this.router.navigate(['/login']); // redirige vers une page de login si non authentifié
+    return true;
   }
 }
