@@ -89,7 +89,6 @@ export class AjouterSessionFormationPresentiel implements OnInit {
       libelleFormationSelectionnee: ['', Validators.required],
       noYoda: ['', Validators.maxLength(30)],
       intituleSessionF: ['', [Validators.required, Validators.maxLength(50)]],
-      BI: [0, Validators.required],
       dateLimiteYoda: ['', Validators.pattern(/^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/)],
       libelleSessionF: [''],
       lieuFormation: ['', Validators.maxLength(100)],
@@ -98,10 +97,7 @@ export class AjouterSessionFormationPresentiel implements OnInit {
       commanditaire: ['', Validators.maxLength(125)],
       RPE: ['', Validators.maxLength(255)],
       nbJournee: [''],
-      journees: this.fb.array([this.createJournee()])
-      // dateJournee1: ['', Validators.pattern(/^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/)],
-      // formateurJourneeN: [''],
-      // salleJourneeN: ['']
+      journees: this.fb.array([])
     });
 
     this.sessionPresentielForm.get('nbJournee')?.valueChanges.subscribe(val => {
@@ -192,16 +188,24 @@ export class AjouterSessionFormationPresentiel implements OnInit {
    * cette date.
    */
   createJournee(): FormGroup {
-    return this.fb.group({
-      date: [''],
-      formateur: [''],
-      salle: ['']
-    });
+      return this.fb.group({
+        date: ['', Validators.required],
+        formateur: [''],
+        salle: ['']
+      });
   }
 
   adjustJournees(nb: number){
 
     const journees = this.sessionPresentielForm.get('journees') as FormArray;
+
+    if(!nb || nb <=0){
+      while(journees.length > 0){
+        journees.removeAt(0);
+      }
+      return;
+    }
+
     while(journees.length < nb) {
       journees.push(this.createJournee());
     }
