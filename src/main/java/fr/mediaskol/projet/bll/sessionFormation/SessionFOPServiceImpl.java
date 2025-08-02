@@ -1,11 +1,17 @@
 package fr.mediaskol.projet.bll.sessionFormation;
 
+import fr.mediaskol.projet.bo.departement.Departement;
 import fr.mediaskol.projet.bo.formateur.SessionFormateur;
+import fr.mediaskol.projet.bo.formation.Formation;
+import fr.mediaskol.projet.bo.salarie.Salarie;
 import fr.mediaskol.projet.bo.salle.SessionSalle;
 import fr.mediaskol.projet.bo.sessionFormation.FinSessionFormation;
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormationPresentiel;
 import fr.mediaskol.projet.bo.sessionLieuDate.SessionLieuDate;
+import fr.mediaskol.projet.dal.departement.DepartementRepository;
 import fr.mediaskol.projet.dal.formateur.SessionFormateurRepository;
+import fr.mediaskol.projet.dal.formation.FormationRepository;
+import fr.mediaskol.projet.dal.salarie.SalarieRepository;
 import fr.mediaskol.projet.dal.salle.SessionSalleRepository;
 import fr.mediaskol.projet.dal.sessionFormation.FinSessionFormationRepository;
 import fr.mediaskol.projet.dal.sessionFormation.SessionFOPRepository;
@@ -45,6 +51,9 @@ public class SessionFOPServiceImpl implements SessionFOPService {
     private final SessionFormationRepository sessionFormationRepository;
     private final SessionSalleRepository sessionSalleRepository;
     private final SessionFormateurRepository sessionFormateurRepository;
+    private final FormationRepository formationRepository;
+    private final DepartementRepository departementRepository;
+    private final SalarieRepository salarieRepository;
 
 
     /***
@@ -130,14 +139,32 @@ public class SessionFOPServiceImpl implements SessionFOPService {
         validerEnumNonNulle(sessionFop.getStatutSessionFormation());
         validerFormationNonNulle(sessionFop);
 
-        // Associer la formation
-        sessionFop.setFormation(sessionFop.getFormation());
+        // Récupérer la formation complète depuis la base si l’ID est présent
+        if (sessionFop.getFormation() != null && sessionFop.getFormation().getIdFormation() != null) {
+            Formation formation = formationRepository.findById(sessionFop.getFormation().getIdFormation())
+                    .orElseThrow(() -> new RuntimeException("Formation non trouvée avec id : " + sessionFop.getFormation().getIdFormation()));
+            sessionFop.setFormation(formation);
+        } else {
+            throw new RuntimeException("Formation obligatoire");
+        }
 
-        // Associer le département
-        sessionFop.setDepartement(sessionFop.getDepartement());
+        // Récupérer le département complet
+        if (sessionFop.getDepartement() != null && sessionFop.getDepartement().getIdDepartement() != null) {
+            Departement departement = departementRepository.findById(sessionFop.getDepartement().getIdDepartement())
+                    .orElseThrow(() -> new RuntimeException("Département non trouvé avec id : " + sessionFop.getDepartement().getIdDepartement()));
+            sessionFop.setDepartement(departement);
+        } else {
+            sessionFop.setDepartement(null);  // si c’est facultatif
+        }
 
-        // Associer le salarié qui traite la session de formation
-        sessionFop.setSalarie(sessionFop.getSalarie());
+        // Récupérer le salarié complet
+        if (sessionFop.getSalarie() != null && sessionFop.getSalarie().getIdPersonne() != null) {
+            Salarie salarie = salarieRepository.findById(sessionFop.getSalarie().getIdPersonne())
+                    .orElseThrow(() -> new RuntimeException("Salarié non trouvé avec id : " + sessionFop.getSalarie().getIdPersonne()));
+            sessionFop.setSalarie(salarie);
+        } else {
+            throw new RuntimeException("Salarié obligatoire");
+        }
 
 
         // valider si la fin de session existe

@@ -92,7 +92,7 @@ export class AjouterSessionFormationPresentiel implements OnInit {
       dateLimiteYoda: [''],
       lieuFormation: ['', Validators.maxLength(100)],
       dateDebutSession: ['', Validators.required],
-      dureeFormation: [0, [Validators.min(1), Validators.max(100)]],
+      nbHeureSession: [0, [Validators.min(1), Validators.max(100)]],
       commanditaire: ['', Validators.maxLength(125)],
       RPE: ['', Validators.maxLength(255)],
       nbJournee: [0],
@@ -219,8 +219,6 @@ export class AjouterSessionFormationPresentiel implements OnInit {
 
 
 
-
-
   /**
    * Méthode qui ajoute la session de formation lorsque l'utilisateur clique sur Enregistrer
    */
@@ -236,12 +234,45 @@ export class AjouterSessionFormationPresentiel implements OnInit {
       return;
     }
 
+    const formValue = this.sessionPresentielForm.value;
 
-    const sessionData = this.sessionPresentielForm.value;
-    // Appelle ton service pour envoyer sessionData
-    this.ajouterSession(sessionData);
-    console.log("Données du formulaire prêtes à être envoyées :", sessionData);
+    const sessionRequest = {
+     // idSessionFormation: formValue.idSessionFormation || null,
+      noYoda: formValue.noYoda || null,
+      libelleSessionFormation: formValue.intituleSessionF || null,
+      dateLimiteYoda: formValue.dateLimiteYoda || null,
+      lieuFormation: formValue.lieuFormation || null,
+      dateDebutSession: formValue.dateDebutSession || null,
+      nbHeureSession: formValue.nbHeureSession || null,
+      commanditaire: formValue.commanditaire || null,
+      RPE: formValue.RPE || null,
+      nbJournee: formValue.nbJournee || null,
 
+      // Lier la formation par son id
+      formation : {
+        idFormation: formValue.idFormationChoisie
+      },
+      // Lier le salarié par son id
+      salarie :{
+        idSalarie: formValue.idSalarieChoisi
+      },
+      // Lier le département par son id
+      departement: {
+        idDepartement: formValue.idDepartementChoisi
+      }
+
+    }
+    // Envoie de la requête via ton service
+    this.ajouterSessionFOP.ajoutSessionFOP(sessionRequest).subscribe({
+      next: () => {
+        this.messageService.showSuccess('Session ajoutée avec succès.');
+        this.router.navigate(["listeSessionFormationPresentiel"]);
+      },
+      error: (err) => {
+        const errMsg = err.error?.message || 'Erreur lors de l\'ajout de la session.';
+        this.messageService.showError(errMsg);
+      }
+    });
   }
 
   /**

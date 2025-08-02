@@ -11,7 +11,7 @@ export interface SessionFopRespDTO extends SessionFormationRespDTO {
   lieuSessionFormation: string | null;
   commanditaire: string | null;
   confirmationRPE: string | null;
-  departement: DepartementDTO | null;
+  departement: { idDepartement: number } | null;
   sessionsSalle : SessionSalleRespDTO[];
   sessionsFormateur : SessionFormateurRespDTO[];
   statutSessionFormation: StatutSessionFormation;

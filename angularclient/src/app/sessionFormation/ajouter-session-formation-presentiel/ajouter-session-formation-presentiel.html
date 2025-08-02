@@ -144,15 +144,15 @@
 
           <!-- rang 4 -->
           <div>
-            <label for="dureeFormation" class="block text-sm/6">Durée totale en heure *</label>
-            <input id="dureeFormation" type="number" formControlName="dureeFormation" min="1" max="100" step="1"
+            <label for="nbHeureSession" class="block text-sm/6">Durée totale en heure *</label>
+            <input id="nbHeureSession" type="number" formControlName="nbHeureSession" min="1" max="100" step="1"
                    class="min-w-64 rounded-md  py-1.5 pr-2 pl-3 max-h-9
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
                    title="Durée total en heure de la formation"/>
-            @if (sessionPresentielForm.controls['dureeFormation'].hasError('min') && sessionPresentielForm.controls['dureeFormation'].touched) {
+            @if (sessionPresentielForm.controls['nbHeureSession'].hasError('min') && sessionPresentielForm.controls['nbHeureSession'].touched) {
               <p class="text-red-600 text-sm mt-1">Le nombre d'heure doit être supérieur à 1.</p>
             }
-            @if (sessionPresentielForm.controls['dureeFormation'].hasError('max') && sessionPresentielForm.controls['dureeFormation'].touched) {
+            @if (sessionPresentielForm.controls['nbHeureSession'].hasError('max') && sessionPresentielForm.controls['nbHeureSession'].touched) {
               <p class="text-red-600 text-sm mt-1">Le nombre d'heure ne doit pas dépasser 100.</p>
             }
           </div>

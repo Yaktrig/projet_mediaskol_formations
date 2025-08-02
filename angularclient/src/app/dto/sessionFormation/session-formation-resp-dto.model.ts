@@ -15,8 +15,8 @@ export interface SessionFormationRespDTO {
   dateDebutSession: Date | null;
   nbHeureSession: number | null;
   statutSessionFormation: StatutSessionFormation;
-  salarie: SalarieRespDto | null;
-  formation: FormationResponseDTO | null;
-  finSessionFormation: FinSessionFormationRespDTO | null;
+  salarie: { idSalarie:number };
+  formation: { idFormation : number };
+  finSessionFormation: { idFinSessionFormation : number } ;
 
 }

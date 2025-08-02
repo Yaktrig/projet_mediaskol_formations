@@ -46,7 +46,6 @@ public class SessionFOPInputDTO {
 
     private SalarieResponseDTO salarie;
 
-
     private FormationResponseDTO formation;
 
     private DepartementDTO departement;
