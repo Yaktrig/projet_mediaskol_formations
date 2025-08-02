@@ -5,8 +5,8 @@
  */
 
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {Observable, Subject, tap} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 import {SessionFopRespDTO} from '../../dto/sessionFormation/session-formation-presentiel-resp-dto.model';
 
 @Injectable({
@@ -46,11 +46,5 @@ export class SessionFormationPresentielService {
     return this.http.get<SessionFopRespDTO[]>(url);
   }
 
-  /**
-   * Méthode qui appelle l'api pour créer une nouvelle session de formation en présentiel
-   */
-  ajoutSessionFOP(sessionFormation: SessionFopRespDTO): Observable<any> {
-    return this.http.post<SessionFopRespDTO>(this.apiUrl, sessionFormation);
-  }
 
 }

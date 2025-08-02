@@ -1,23 +1,18 @@
-
-/**
- * Service qui permet d'interroger l'endpoint principal (GET toutes les sessions)
- */
-// session-formation-presentiel.service.ts
-
-/**
- * Service qui permet d'interroger l'endpoint principal (GET toutes les sessions)
- */
-
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {Observable, Subject, tap} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 import {SessionFopRespDTO} from '../../dto/sessionFormation/session-formation-presentiel-resp-dto.model';
+
+
+/**
+ * Service qui permet de créer une session de formation en présentiel via l'API
+ */
 
 @Injectable({
   providedIn: 'root'
 })
 export class AjouterSessionFormationPresentielService {
-  private apiUrl = 'http://localhost:8080/mediaskolFormation/sessionsFormationsPresentiels';
+  private apiUrl = 'http://localhost:8080/mediaskolFormation';
 
 
   constructor(private http: HttpClient) {
@@ -25,9 +20,14 @@ export class AjouterSessionFormationPresentielService {
 
   /**
    * Méthode qui appelle l'api pour créer une nouvelle session de formation en présentiel
-   */
-  ajoutSessionFOP(sessionFormation: SessionFopRespDTO): Observable<{message?:string}> {
-    return this.http.post<{ message?:string }>(this.apiUrl, sessionFormation);
+   * @param session Les données de la session à créer
+   * @returns Un observable contenant la session créée
+   * */
+  ajoutSessionFOP(session: any): Observable<SessionFopRespDTO> {
+
+    const url = `${this.apiUrl}/sessionsFormationsPresentiels`;
+    return this.http.post<SessionFopRespDTO>(url, session);
+
   }
 
 }

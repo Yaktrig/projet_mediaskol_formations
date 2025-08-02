@@ -20,7 +20,7 @@
                    class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
                    title="Numéro AF Yoda"/>
-            @if (sessionPresentielForm.controls['noYoda'].hasError('maxlength') && sessionPresentielForm.controls['noYoda'].touched) {
+            @if (sessionPresentielForm.controls['noYoda'].hasError('maxLength') && sessionPresentielForm.controls['noYoda'].touched) {
               <p class="text-red-600 text-sm mt-1">Le numéro de Yoda ne doit pas dépasser 30 caractères.</p>
             }
           </div>
@@ -65,9 +65,9 @@
                    class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
                    title="Date limite Yoda"/>
-            @if (sessionPresentielForm.controls['dateLimiteYoda'].hasError('pattern') && sessionPresentielForm.controls['dateLimiteYoda'].touched) {
-              <p class="text-red-600 text-sm mt-1">La date limite Yoda doit être au format date.</p>
-            }
+<!--            @if (sessionPresentielForm.controls['dateLimiteYoda'].hasError('pattern') && sessionPresentielForm.controls['dateLimiteYoda'].touched) {-->
+<!--              <p class="text-red-600 text-sm mt-1">La date limite Yoda doit être au format date.</p>-->
+<!--            }-->
           </div>
           <!-- rang 5 -->
           <div>
@@ -92,16 +92,12 @@
           <div>
             <label for="intituleFormation" class="block text-sm/6">Intitulé de la formation *</label>
 
-            <input id="libelleSessionF"
-                   formControlName="libelleSessionF"
+            <input id="intituleFormation"
                    [value]="libelleFormationSelectionnee"
                    class="min-w-80 rounded-md  py-1.5 pr-8 pl-3
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
-                   title="Libellé de la formation"
+                   title="Intitulé de la formation"
                    readonly/>
-            @if (sessionPresentielForm.controls['libelleSessionF'].hasError('required') && sessionPresentielForm.controls['libelleSessionF'].touched) {
-              <p class="text-red-600 text-sm mt-1">La formation doit être sélectionnée.</p>
-            }
           </div>
         </div>
         <!-- Fin colonne 1-->
@@ -111,7 +107,7 @@
           <!-- rang 1 - Thème récupéré parmi la liste des formations en présentiel-->
           <div>
             <label for="noDepartement" class="block text-sm/6 font-medium ">Département *</label>
-            <select formControlName="idDepartementChoisi" id="idDepartement"
+            <select formControlName="idDepartementChoisi" id="noDepartement"
                     class="min-w-64 rounded-md  py-1.5 pr-8 pl-3 min-h-9
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
                     title="Numéro des départements bretons.">
@@ -148,7 +144,7 @@
 
           <!-- rang 4 -->
           <div>
-            <label for="dureeFormation" class="block text-sm/6">Durée totale en heure</label>
+            <label for="dureeFormation" class="block text-sm/6">Durée totale en heure *</label>
             <input id="dureeFormation" type="number" formControlName="dureeFormation" min="1" max="100" step="1"
                    class="min-w-64 rounded-md  py-1.5 pr-2 pl-3 max-h-9
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
@@ -167,8 +163,8 @@
                    class="min-w-64 rounded-md  py-1.5 pr-8 pl-3 max-h-9
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
                    title="Commanditaire de la formation"/>
-            @if (sessionPresentielForm.controls['dureeFormation'].hasError('max') && sessionPresentielForm.controls['dureeFormation'].touched) {
-              <p class="text-red-600 text-sm mt-1">Le nombre d'heure ne doit pas dépasser 100.</p>
+            @if (sessionPresentielForm.controls['commanditaire'].hasError('max') && sessionPresentielForm.controls['commanditaire'].touched) {
+              <p class="text-red-600 text-sm mt-1">Le champ commanditaire ne doit pas dépasser 125 caractères.</p>
             }
           </div>
 

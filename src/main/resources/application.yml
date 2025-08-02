@@ -19,11 +19,18 @@ spring:
     baseline-on-migrate: false
     locations: classpath:db/migration
 
-#i18n
+  #i18n
   messages:
     encoding: UTF-8
   web:
     locale: fr
+
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          public-key-location: classpath:keys/public.key
 
 # Spécifie le chemin de OpenAPI documentation
 springdoc:
@@ -33,11 +40,13 @@ springdoc:
     path: /mediaskol/swagger-ui.html
 
 #jwt
-app:
-  jwt:
-    secret: 436a726878792a6a2333725030382050303877505e30585b6351413978
+#app:
+#  jwt:
+#    secret: 436a726878792a6a2333725030382050303877505e30585b6351413978
 
 logging:
   level:
-    org.springframework.security: DEBUG
+    org.springframework.security: TRACE
+    org.springframework.web: DEBUG
+
 

@@ -1,19 +1,16 @@
-import { HttpInterceptorFn } from '@angular/common/http';
-import { inject } from '@angular/core';
-import { UserService } from '../services/user/user.service';  // adapte le chemin ici
+import {Injectable} from '@angular/core';
+import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import {Observable} from 'rxjs';
 
-export const jwtInterceptorFn: HttpInterceptorFn = (req, next) => {
-  const userService = inject(UserService); // injection à la volée
-  const token = userService.getToken();
-
-  console.log('[JwtInterceptorFn] Interception requête :', req.url, 'Token présent :', !!token);
-
-  if (token) {
-    const cloned = req.clone({
-      headers: req.headers.set('Authorization', `Bearer ${token}`)
-    });
-    return next(cloned);
+@Injectable()
+export class JwtInterceptor implements HttpInterceptor {
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    const token = localStorage.getItem('token');
+    if (token) {
+      req = req.clone({
+        setHeaders: { Authorization: `Bearer ${token}` }
+      });
+    }
+    return next.handle(req);
   }
-
-  return next(req);
-};
+}

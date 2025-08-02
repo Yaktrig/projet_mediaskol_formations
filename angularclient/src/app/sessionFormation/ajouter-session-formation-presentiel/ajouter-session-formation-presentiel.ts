@@ -86,17 +86,16 @@ export class AjouterSessionFormationPresentiel implements OnInit {
       idFormationChoisie: [null, Validators.required],
       idDepartementChoisi: [null, Validators.required],
       idSalarieChoisi: [null, Validators.required],
-      libelleFormationSelectionnee: ['', Validators.required],
+      libelleFormationSelectionnee: [''],
       noYoda: ['', Validators.maxLength(30)],
       intituleSessionF: ['', [Validators.required, Validators.maxLength(50)]],
-      dateLimiteYoda: ['', Validators.pattern(/^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/)],
-      libelleSessionF: [''],
+      dateLimiteYoda: [''],
       lieuFormation: ['', Validators.maxLength(100)],
       dateDebutSession: ['', Validators.required],
-      dureeFormation: ['', [Validators.min(1), Validators.max(100)]],
+      dureeFormation: [0, [Validators.min(1), Validators.max(100)]],
       commanditaire: ['', Validators.maxLength(125)],
       RPE: ['', Validators.maxLength(255)],
-      nbJournee: [''],
+      nbJournee: [0],
       journees: this.fb.array([])
     });
 
@@ -189,7 +188,7 @@ export class AjouterSessionFormationPresentiel implements OnInit {
    */
   createJournee(): FormGroup {
       return this.fb.group({
-        date: ['', Validators.required],
+        date: [''],
         formateur: [''],
         salle: ['']
       });
@@ -231,9 +230,8 @@ export class AjouterSessionFormationPresentiel implements OnInit {
 
     this.sessionPresentielForm.markAllAsTouched();
 
-    this.messageService.showError("Votre formulaire contient une ou des erreurs, veuillez les corriger s'il vous plaît.")
-
     if (this.sessionPresentielForm.invalid) {
+      this.messageService.showError("Votre formulaire contient une ou des erreurs, veuillez les corriger s'il vous plaît.")
       console.log("il y a des erreurs");
       return;
     }
@@ -255,7 +253,7 @@ export class AjouterSessionFormationPresentiel implements OnInit {
     const valeurs = this.sessionPresentielForm.value;
     this.ajouterSessionFOP.ajoutSessionFOP(sessionFopDto).subscribe({
       next: (resp) => {
-        this.messageService.showSuccess(resp.message || 'Session ajoutée avec succès.');
+        this.messageService.showSuccess('Session ajoutée avec succès.');
         this.router.navigate(["listeSessionFormationPresentiel"]);
       },
       error: (err) => {

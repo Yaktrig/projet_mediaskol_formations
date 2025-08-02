@@ -1,4 +1,4 @@
-package fr.mediaskol.projet.security.jwt;
+package fr.mediaskol.projet.dto.security;
 
 
 import lombok.AllArgsConstructor;
