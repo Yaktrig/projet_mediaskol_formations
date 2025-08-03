@@ -15,8 +15,7 @@ export class AjouterSessionFormationPresentielService {
   private apiUrl = 'http://localhost:8080/mediaskolFormation';
 
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   /**
    * Méthode qui appelle l'api pour créer une nouvelle session de formation en présentiel

@@ -1,35 +1,35 @@
-package fr.mediaskol.projet.bll.sessionLieuDate;
+package fr.mediaskol.projet.bll.sessionDate;
 
-import fr.mediaskol.projet.bo.sessionLieuDate.SessionLieuDate;
-import fr.mediaskol.projet.dto.sessionLieuDate.SessionLieuDateInputDTO;
+import fr.mediaskol.projet.bo.sessionDate.SessionDate;
+import fr.mediaskol.projet.dto.sessionDate.SessionDateInputDTO;
 
 import java.util.List;
 
-public interface SessionLieuDateService {
+public interface SessionDateService {
 
     /***
      * Fonctionnalité qui permet de charger toutes les lieux et dates des sessions
      */
-    List<SessionLieuDate> chargerToutesSessionsLieuDate();
+    List<SessionDate> chargerToutesSessionsLieuDate();
 
     /**
      * Fonctionnalité qui permet de charger le lieu et la date d'une session par son id
      */
-    SessionLieuDate chargerSessionLieuDateParId(long idSessionLieuDate);
+    SessionDate chargerSessionLieuDateParId(long idSessionLieuDate);
 
 
     /**
      * Fonctionnalité qui permet d'ajouter à une session un lieu et une date
-     * @param sessionLieuDate
+     * @param sessionDate
      */
-    SessionLieuDate ajouterSessionLieuDate(SessionLieuDate sessionLieuDate);
+    SessionDate ajouterSessionLieuDate(SessionDate sessionDate);
 
     /**
      * Fonctionnalité qui permet de modifier le lieu et/ou la date d'une session
-     * @param sessionLieuDateInputDTO
+     * @param sessionDateInputDTO
      * @return
      */
-    SessionLieuDate modifierSessionLieuDate(SessionLieuDateInputDTO sessionLieuDateInputDTO);
+    SessionDate modifierSessionLieuDate(SessionDateInputDTO sessionDateInputDTO);
 
     /**
      * Fonctionnalité qui permet de supprimer un lieu et/ou une date d'une session

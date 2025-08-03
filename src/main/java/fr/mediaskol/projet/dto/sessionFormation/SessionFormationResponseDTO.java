@@ -2,18 +2,13 @@ package fr.mediaskol.projet.dto.sessionFormation;
 
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
 import fr.mediaskol.projet.bo.sessionFormation.StatutSessionFormation;
-import fr.mediaskol.projet.bo.sessionLieuDate.SessionLieuDate;
 import fr.mediaskol.projet.dto.formation.FormationResponseDTO;
 import fr.mediaskol.projet.dto.salarie.SalarieResponseDTO;
-import fr.mediaskol.projet.dto.sessionLieuDate.SessionLieuDateRespDTO;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor

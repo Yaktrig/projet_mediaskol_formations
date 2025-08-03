@@ -1,7 +1,7 @@
-package fr.mediaskol.projet.dto.sessionLieuDate;
+package fr.mediaskol.projet.dto.sessionDate;
 
 
-import fr.mediaskol.projet.bo.sessionLieuDate.StatutSessionLieuDate;
+import fr.mediaskol.projet.bo.sessionDate.StatutSessionDate;
 import fr.mediaskol.projet.dto.formateur.SessionFormateurRespDTO;
 import fr.mediaskol.projet.dto.salle.SessionSalleRespDTO;
 import fr.mediaskol.projet.dto.sessionFormation.SessionFOPResponseDTO;
@@ -19,23 +19,21 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Data
 @Builder
-public class SessionLieuDateInputDTO {
+public class SessionDateInputDTO {
 
     /**
      * Déclaration des attributs
      */
-    private Long idSessionLieuDate;
+    private Long idSessionDate;
 
     private LocalDate dateSession;
 
-    @Size(max = 100, message = "{sessionLieuDate.lieuSession.size}")
-    private String lieuSession;
 
     private Integer duree;
 
     private LocalDateTime heureVisio;
 
-    private StatutSessionLieuDate statutSessionLieuDate;
+    private StatutSessionDate statutSessionDate;
 
     private SessionFormateurRespDTO sessionFormateurId;
 

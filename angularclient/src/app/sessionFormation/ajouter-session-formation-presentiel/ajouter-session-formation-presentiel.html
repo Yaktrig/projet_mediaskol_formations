@@ -121,13 +121,16 @@
           </div>
           <!-- rang 2 -->
           <div>
-            <label for="lieuSessionFormation" class="block text-sm/6">Lieu de la formation</label>
+            <label for="lieuSessionFormation" class="block text-sm/6">Lieu de la formation *</label>
             <input id="lieuSessionFormation" type="text" formControlName="lieuSessionFormation"
                    class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
                    title="Lieu de la formation"/>
             @if (sessionPresentielForm.controls['lieuSessionFormation'].hasError('maxlength') && sessionPresentielForm.controls['lieuSessionFormation'].touched) {
               <p class="text-red-600 text-sm mt-1">Le lieu de formation ne doit pas dépasser 100 caractères.</p>
+            }
+            @if (sessionPresentielForm.controls['lieuSessionFormation'].hasError('required') && sessionPresentielForm.controls['lieuSessionFormation'].touched) {
+              <p class="text-red-600 text-sm mt-1">Le lieu de formation est obligatoire.</p>
             }
           </div>
           <!-- rang 3 -->
@@ -194,17 +197,17 @@
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"/>
           </div>
           <!-- rang 2 ++ -->
-          @if (journees.length > 0) {
-            <div formArrayName="journees">
-              @for (journee of journees.controls; track journee; let i = $index) {
+          @if (sessionsDate.length > 0) {
+            <div formArrayName="sessionsDate">
+              @for (sessionDate of sessionsDate.controls; track sessionDate; let i = $index) {
                 <div [formGroupName]="i" class="mb-6">
-                  <label for="journee"
+                  <label for="sessionDate{{i}}"
                          class="text-sm/6 font-bold text-[var(--color-bg-button)]">Journée {{ i + 1 }}
                   </label>
 
                   <div class="flex items-center gap-2 w-full">
-                    <label for="dateJournee{{i}}" class="text-sm/6 min-w-16">Date *</label>
-                    <input id="dateJournee{{i}}" type="date" formControlName="date"
+                    <label for="sessionDateField{{i}}" class="text-sm/6 min-w-16">Date *</label>
+                    <input id="sessionDateField{{i}}" type="date" formControlName="dateSession"
                            class="min-w-56 rounded-md  py-1.5 pr-8 pl-3
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"/>
 <!--                    @if (sessionPresentielForm.controls['date'].hasError('required') && sessionPresentielForm.controls['date'].touched) {-->
@@ -212,16 +215,16 @@
 <!--                    }-->
                   </div>
                   <div class="flex items-center gap-2 w-full">
-                    <label for="formateurJournee{{i}}" class="text-sm/6 min-w-16">Formateur</label>
-                    <select id="formateurJournee{{i}}" formControlName="formateur"
+                    <label for="formateurSessionDate{{i}}" class="text-sm/6 min-w-16">Formateur</label>
+                    <select id="formateurSessionDate{{i}}" formControlName="formateur"
                             class="min-w-56 rounded-md  py-1.5 pr-8 pl-3
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border">
                       <!-- boucler sur les thèmes en présentiel -->
                     </select>
                   </div>
                   <div class="flex items-center gap-2 w-full">
-                    <label for="SalleJournee{{i}}" class="text-sm/6 min-w-16">Salle</label>
-                    <select id="SalleJournee{{i}}" formControlName="salle"
+                    <label for="SalleSessionDate{{i}}" class="text-sm/6 min-w-16">Salle</label>
+                    <select id="SalleSessionDate{{i}}" formControlName="salle"
                             class="min-w-56 rounded-md  py-1.5 pr-8 pl-3
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border">
                       <!-- boucler sur les thèmes en présentiel -->

@@ -1,6 +1,5 @@
 package fr.mediaskol.projet.dal.sessionFormation;
 
-import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormationPresentiel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -24,12 +23,15 @@ public interface SessionFOPRepository extends JpaRepository<SessionFormationPres
     /**
      * Requête qui permet de faire un filtrage libre sur les sessions de formation
      * parmi le numéro Yoda, le numéro du département, le libellé, la date de début de session, le statut de la session
+     *    "LOWER(CONCAT(SUBSTRING(s.prenom,1,1), SUBSTRING(s.nom,1,1))) LIKE LOWER(CONCAT(:termeRecherche, '%'))")
      */
     @Query("SELECT sf FROM SessionFormationPresentiel sf  " +
             "LEFT JOIN sf.departement dep " +
+            "LEFT JOIN sf.salarie s " +
             "WHERE LOWER(sf.noYoda) LIKE LOWER(CONCAT('%', :termeRecherche, '%')) OR " +
             "LOWER(sf.libelleSessionFormation) LIKE LOWER(CONCAT('%', :termeRecherche, '%')) OR " +
-            "LOWER(dep.numDepartement) LIKE LOWER(CONCAT('%', :termeRecherche, '%'))")
+            "LOWER(dep.numDepartement) LIKE LOWER(CONCAT('%', :termeRecherche, '%')) OR " +
+            "LOWER(s.prenom) LIKE LOWER(CONCAT(:termeRecherche, '%'))")
     List<SessionFormationPresentiel> findSessionFormationsBySearchText(@Param("termeRecherche") String termeRecherche);
 
     /**

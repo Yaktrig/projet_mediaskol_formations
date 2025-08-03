@@ -1,14 +1,14 @@
 package fr.mediaskol.projet.association;
 
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
-import fr.mediaskol.projet.bo.sessionLieuDate.SessionLieuDate;
-import fr.mediaskol.projet.bo.sessionLieuDate.StatutSessionLieuDate;
+import fr.mediaskol.projet.bo.sessionDate.SessionDate;
+import fr.mediaskol.projet.bo.sessionDate.StatutSessionDate;
 import fr.mediaskol.projet.bo.formation.Formation;
 import fr.mediaskol.projet.bo.formation.TypeFormation;
 import fr.mediaskol.projet.dal.formation.FormationRepository;
 import fr.mediaskol.projet.dal.formation.TypeFormationRepository;
 import fr.mediaskol.projet.dal.sessionFormation.SessionFormationRepository;
-import fr.mediaskol.projet.dal.sessionLieuDate.SessionLieuDateRepository;
+import fr.mediaskol.projet.dal.sessionDate.SessionDateRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,13 +34,13 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 // Configure un contexte Spring Boot limité à la couche JPA
 @Slf4j
 @DataJpaTest
-public class SessionLieuDateRelationTest {
+public class SessionDateRelationTest {
 
     @Autowired
     private TestEntityManager entityManager;
 
     @Autowired
-    private SessionLieuDateRepository sessionLieuDateRepository;
+    private SessionDateRepository sessionDateRepository;
 
     @Autowired
     private SessionFormationRepository sessionFormationRepository;
@@ -102,29 +102,29 @@ public class SessionLieuDateRelationTest {
     public void test_save_session_lieu_date() {
 
         // Création d'une session lieu date avec le builder Lombock
-        final SessionLieuDate sessionLieuDate070126 = SessionLieuDate
+        final SessionDate sessionDate070126 = SessionDate
                 .builder()
                 .dateSession(LocalDate.parse("2026-01-07"))
-                .statutSessionLieuDate(StatutSessionLieuDate.SESSION_LIEU_DATE_SALLE_GRATUITE)
+                .statutSessionDate(StatutSessionDate.SESSION_LIEU_DATE_SALLE_GRATUITE)
                 .lieuSession("Plovan")
                 .duree(7)
                 .build();
 
         // Associations ManyToOne
-        sessionLieuDate070126.setSessionFormation(sessionMISST);
+        sessionDate070126.setSessionFormation(sessionMISST);
 
         // Sauvegarde de la session lieu date en base test via le repository
-        final SessionLieuDate sessionLieuDate070126DB = sessionLieuDateRepository.save(sessionLieuDate070126);
+        final SessionDate sessionDate070126DB = sessionDateRepository.save(sessionDate070126);
 
         // Vérifie que l'objet retourné n'est pas null
-        assertThat(sessionLieuDate070126DB.getIdSessionLieuDate()).isGreaterThan(0);
+        assertThat(sessionDate070126DB.getIdSessionLieuDate()).isGreaterThan(0);
 
         // Vérification si la session formation associée existe
-        assertThat(sessionLieuDate070126DB.getIdSessionLieuDate()).isNotNull();
-        assertThat(sessionLieuDate070126DB.getSessionFormation()).isEqualTo(sessionMISST);
+        assertThat(sessionDate070126DB.getIdSessionLieuDate()).isNotNull();
+        assertThat(sessionDate070126DB.getSessionFormation()).isEqualTo(sessionMISST);
 
         // Log pour visualiser l'objet persité
-        log.info(sessionLieuDate070126DB.toString());
+        log.info(sessionDate070126DB.toString());
 
 
     }
@@ -135,17 +135,17 @@ public class SessionLieuDateRelationTest {
     public void test_find_all() {
 
         // Liste des sessions lieu date
-        List<SessionLieuDate> listeSessionLieuDate = jeuDeDonnees();
+        List<SessionDate> listeSessionDate = jeuDeDonnees();
 
         // Sauvegarder le jeu de données dans la base test
-        listeSessionLieuDate.forEach(sessionLD -> {
-            sessionLieuDateRepository.save(sessionLD);
+        listeSessionDate.forEach(sessionLD -> {
+            sessionDateRepository.save(sessionLD);
             assertThat(sessionLD.getIdSessionLieuDate()).isGreaterThan(0);
         });
 
         // Vérification de l'identifiant des sessions lieu date
-        final List<SessionLieuDate> listeSessionLieuDateDB = sessionLieuDateRepository.findAll();
-        listeSessionLieuDateDB.forEach(sessionLD -> {
+        final List<SessionDate> listeSessionDateDB = sessionDateRepository.findAll();
+        listeSessionDateDB.forEach(sessionLD -> {
             assertThat(sessionLD.getIdSessionLieuDate()).isGreaterThan(0);
 
             // vérification de la session de formation
@@ -162,33 +162,33 @@ public class SessionLieuDateRelationTest {
     public void test_delete_session_salle() {
 
         // Création d'une session lieu date avec le builder Lombock
-        final SessionLieuDate sessionLieuDate070126 = SessionLieuDate
+        final SessionDate sessionDate070126 = SessionDate
                 .builder()
                 .dateSession(LocalDate.parse("2026-01-07"))
-                .statutSessionLieuDate(StatutSessionLieuDate.SESSION_LIEU_DATE_SALLE_GRATUITE)
+                .statutSessionDate(StatutSessionDate.SESSION_LIEU_DATE_SALLE_GRATUITE)
                 .lieuSession("Plovan")
                 .duree(7)
                 .build();
 
         // Associations ManyToOne
-        sessionLieuDate070126.setSessionFormation(sessionMISST);
+        sessionDate070126.setSessionFormation(sessionMISST);
 
         // Sauvegarde de la session lieu date en base test via le repository
-        final SessionLieuDate sessionLieuDateDB = sessionLieuDateRepository.save(sessionLieuDate070126);
+        final SessionDate sessionDateDB = sessionDateRepository.save(sessionDate070126);
 
 
         // Vérification s'il y a au moins un identifiant dans SessionLieuDate, s'il n'est pas nul,
         // et si la session de formation est égale à sessionMISST
-        assertThat(sessionLieuDateDB.getIdSessionLieuDate()).isGreaterThan(0);
-        assertThat(sessionLieuDateDB.getSessionFormation()).isNotNull();
-        assertThat(sessionLieuDateDB.getSessionFormation()).isEqualTo(sessionMISST);
+        assertThat(sessionDateDB.getIdSessionLieuDate()).isGreaterThan(0);
+        assertThat(sessionDateDB.getSessionFormation()).isNotNull();
+        assertThat(sessionDateDB.getSessionFormation()).isEqualTo(sessionMISST);
 
         // Suppression de la session lieu date
-        sessionLieuDateRepository.delete(sessionLieuDateDB);
+        sessionDateRepository.delete(sessionDateDB);
 
         // Vérifie que l'entité SessionLieuDate n'est plus présente en base (doit être null)
-        SessionLieuDate sessionLieuDateDB2 = entityManager.find(SessionLieuDate.class, sessionLieuDateDB.getIdSessionLieuDate());
-        assertNull(sessionLieuDateDB2);
+        SessionDate sessionDateDB2 = entityManager.find(SessionDate.class, sessionDateDB.getIdSessionLieuDate());
+        assertNull(sessionDateDB2);
 
 
         // Vérifie que la sessionFormation associée existe toujours en base (pas de suppression en cascade)
@@ -199,29 +199,29 @@ public class SessionLieuDateRelationTest {
 
     }
 
-    private List<SessionLieuDate> jeuDeDonnees() {
+    private List<SessionDate> jeuDeDonnees() {
 
-        List<SessionLieuDate> sessionLieuDates = new ArrayList<>();
+        List<SessionDate> sessionDates = new ArrayList<>();
 
-        sessionLieuDates.add(SessionLieuDate
+        sessionDates.add(SessionDate
                 .builder()
                 .dateSession(LocalDate.parse("2026-01-07"))
-                .statutSessionLieuDate(StatutSessionLieuDate.SESSION_LIEU_DATE_SALLE_GRATUITE)
+                .statutSessionDate(StatutSessionDate.SESSION_LIEU_DATE_SALLE_GRATUITE)
                 .lieuSession("Plovan")
                 .duree(7)
                 .sessionFormation(sessionMISST)
                 .build());
 
-        sessionLieuDates.add(SessionLieuDate
+        sessionDates.add(SessionDate
                 .builder()
                 .dateSession(LocalDate.parse("2026-01-14"))
-                .statutSessionLieuDate(StatutSessionLieuDate.SESSION_LIEU_DATE_SALLE_GRATUITE)
+                .statutSessionDate(StatutSessionDate.SESSION_LIEU_DATE_SALLE_GRATUITE)
                 .lieuSession("Plovan")
                 .duree(7)
                 .sessionFormation(sessionMISST)
                 .build());
 
-        return sessionLieuDates;
+        return sessionDates;
     }
 
 }

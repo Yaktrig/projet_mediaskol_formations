@@ -1,4 +1,4 @@
-package fr.mediaskol.projet.bo.sessionLieuDate;
+package fr.mediaskol.projet.bo.sessionDate;
 
 import lombok.Getter;
 
@@ -17,7 +17,7 @@ import lombok.Getter;
  * todo Les couleurs sont à définir ultérieurement.
  */
 @Getter
-public enum StatutSessionLieuDate {
+public enum StatutSessionDate {
 
     // Statut indiquant que la salle où à eu lieu la formation est gratuite
     SESSION_LIEU_DATE_SALLE_GRATUITE("Salle de formation gratuite", "#orange"),
@@ -41,7 +41,7 @@ public enum StatutSessionLieuDate {
      * @param libelleSessionLieuDate Libellé du statut
      * @param couleurSessionLieuDate Couleur du statut
      */
-    StatutSessionLieuDate(String libelleSessionLieuDate, String couleurSessionLieuDate) {
+    StatutSessionDate(String libelleSessionLieuDate, String couleurSessionLieuDate) {
         this.libelleSessionLieuDate = libelleSessionLieuDate;
         this.couleurSessionLieuDate = couleurSessionLieuDate;
     }

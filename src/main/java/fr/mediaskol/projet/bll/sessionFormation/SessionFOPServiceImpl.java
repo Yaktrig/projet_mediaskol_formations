@@ -7,7 +7,7 @@ import fr.mediaskol.projet.bo.salarie.Salarie;
 import fr.mediaskol.projet.bo.salle.SessionSalle;
 import fr.mediaskol.projet.bo.sessionFormation.FinSessionFormation;
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormationPresentiel;
-import fr.mediaskol.projet.bo.sessionLieuDate.SessionLieuDate;
+import fr.mediaskol.projet.bo.sessionDate.SessionDate;
 import fr.mediaskol.projet.dal.departement.DepartementRepository;
 import fr.mediaskol.projet.dal.formateur.SessionFormateurRepository;
 import fr.mediaskol.projet.dal.formation.FormationRepository;
@@ -16,12 +16,12 @@ import fr.mediaskol.projet.dal.salle.SessionSalleRepository;
 import fr.mediaskol.projet.dal.sessionFormation.FinSessionFormationRepository;
 import fr.mediaskol.projet.dal.sessionFormation.SessionFOPRepository;
 import fr.mediaskol.projet.dal.sessionFormation.SessionFormationRepository;
-import fr.mediaskol.projet.dal.sessionLieuDate.SessionLieuDateRepository;
+import fr.mediaskol.projet.dal.sessionDate.SessionDateRepository;
 import fr.mediaskol.projet.dto.formateur.SessionFormateurRespDTO;
 import fr.mediaskol.projet.dto.salle.SessionSalleRespDTO;
 import fr.mediaskol.projet.dto.sessionFormation.SessionFOPInputDTO;
 import fr.mediaskol.projet.dto.sessionFormation.SessionFOPResponseDTO;
-import fr.mediaskol.projet.dto.sessionLieuDate.SessionLieuDateRespDTO;
+import fr.mediaskol.projet.dto.sessionDate.SessionDateRespDTO;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -47,7 +47,7 @@ public class SessionFOPServiceImpl implements SessionFOPService {
      */
     private final SessionFOPRepository sessionFOPRepository;
     private final FinSessionFormationRepository finSessionFormationRepository;
-    private final SessionLieuDateRepository sessionLieuDateRepository;
+    private final SessionDateRepository sessionDateRepository;
     private final SessionFormationRepository sessionFormationRepository;
     private final SessionSalleRepository sessionSalleRepository;
     private final SessionFormateurRepository sessionFormateurRepository;
@@ -282,12 +282,12 @@ public class SessionFOPServiceImpl implements SessionFOPService {
      * @param idSessionFormation
      */
     @Override
-    public List<SessionLieuDateRespDTO> getSessionsLieuDateBySessionId(Long idSessionFormation) {
+    public List<SessionDateRespDTO> getSessionsLieuDateBySessionId(Long idSessionFormation) {
 
-        List<SessionLieuDate> sessionLieuDates = sessionLieuDateRepository.findBySessionFormationIdSessionFormation(idSessionFormation);
+        List<SessionDate> sessionDates = sessionDateRepository.findBySessionFormationIdSessionFormation(idSessionFormation);
 
-        return sessionLieuDates.stream()
-                .map(SessionLieuDateRespDTO::new)
+        return sessionDates.stream()
+                .map(SessionDateRespDTO::new)
                 .collect(Collectors.toList());
     }
 

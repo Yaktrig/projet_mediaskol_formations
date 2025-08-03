@@ -6,13 +6,12 @@ import fr.mediaskol.projet.bo.sessionFormation.SessionFormationPresentiel;
 import fr.mediaskol.projet.dto.formateur.SessionFormateurRespDTO;
 import fr.mediaskol.projet.dto.salle.SessionSalleRespDTO;
 import fr.mediaskol.projet.dto.sessionFormation.SessionFOPResponseDTO;
-import fr.mediaskol.projet.dto.sessionLieuDate.SessionLieuDateRespDTO;
+import fr.mediaskol.projet.dto.sessionDate.SessionDateRespDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -76,7 +75,7 @@ public class SessionFormationPresentielController {
                     List<SessionFormateurRespDTO> formateursDtos = sessionFOPService.getSessionsFormateurBySessionId(session.getIdSessionFormation());
                     dto.setSessionsFormateur(formateursDtos);
 
-                    List<SessionLieuDateRespDTO> lieuDateDtos = sessionFOPService.getSessionsLieuDateBySessionId(session.getIdSessionFormation());
+                    List<SessionDateRespDTO> lieuDateDtos = sessionFOPService.getSessionsLieuDateBySessionId(session.getIdSessionFormation());
                     dto.setSessionsLieuDate(lieuDateDtos);
 
                     return dto;
@@ -110,7 +109,7 @@ public class SessionFormationPresentielController {
                     List<SessionFormateurRespDTO> formateursDtos = sessionFOPService.getSessionsFormateurBySessionId(session.getIdSessionFormation());
                     dto.setSessionsFormateur(formateursDtos);
 
-                    List<SessionLieuDateRespDTO> lieuDateDtos = sessionFOPService.getSessionsLieuDateBySessionId(session.getIdSessionFormation());
+                    List<SessionDateRespDTO> lieuDateDtos = sessionFOPService.getSessionsLieuDateBySessionId(session.getIdSessionFormation());
                     dto.setSessionsLieuDate(lieuDateDtos);
 
                     return dto;
@@ -140,7 +139,7 @@ public class SessionFormationPresentielController {
             sessionFOPRespDTO.setSessionsFormateur(formateursDtos);
 
 
-            List<SessionLieuDateRespDTO> lieuDateDtos = sessionFOPService.getSessionsLieuDateBySessionId(id);
+            List<SessionDateRespDTO> lieuDateDtos = sessionFOPService.getSessionsLieuDateBySessionId(id);
             sessionFOPRespDTO.setSessionsLieuDate(lieuDateDtos);
 
             return ResponseEntity.ok(sessionFOPRespDTO);

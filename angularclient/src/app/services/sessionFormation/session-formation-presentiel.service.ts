@@ -33,7 +33,7 @@ export class SessionFormationPresentielService {
    * moins de 6 sessions apprenants
    */
   getSessionsWithLessSixSa() :  Observable<SessionFopRespDTO[]> {
-    const url = `${this.apiUrl}/moinsSixSessionsApprenants`;
+    const url = `${this.apiUrl}/sessionsFormationsPresentiels/moinsSixSessionsApprenants`;
     return this.http.get<SessionFopRespDTO[]>(url);
   }
 
@@ -42,7 +42,7 @@ export class SessionFormationPresentielService {
    * @param termeRecherche
    */
   searchSessions(termeRecherche: string): Observable<SessionFopRespDTO[]> {
-    const url = `${this.apiUrl}/recherche?termeRecherche=${encodeURIComponent(termeRecherche)}`;
+    const url = `${this.apiUrl}/sessionsFormationsPresentiels/recherche?termeRecherche=${encodeURIComponent(termeRecherche)}`;
     return this.http.get<SessionFopRespDTO[]>(url);
   }
 

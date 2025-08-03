@@ -24,6 +24,7 @@ import {MatInputModule} from '@angular/material/input';
 import {SalarieRespDTO} from '../../dto/salarie/salarie-resp-dto.model';
 import {SessionFopReqDTO} from '../../dto/sessionFormation/session-formation-presentiel-req-dto.model';
 import {StatutSessionFormation} from '../../dto/sessionFormation/statut-session-formation.enum';
+import {StatutSessionDate} from '../../dto/sessionDate/statut-session-date.enum';
 
 
 @Component({
@@ -45,12 +46,18 @@ import {StatutSessionFormation} from '../../dto/sessionFormation/statut-session-
 export class AjouterSessionFormationPresentiel implements OnInit {
 
 
+  // Formulaire principal gestion session de formation
   sessionPresentielForm!: FormGroup;
+
+  // Listes chargées depuis services pour sélections
   formations: FormationResponseDTO[] = [];
   departements: DepartementDTO[] = [];
   salaries: SalarieRespDTO[] = [];
 
+  // Libellé de la formation sélectionnée
   libelleFormationSelectionnee: string | null = '';
+
+  // Valeurs sélectionnées dans les listes
   idFormationChoisie: number | null = null;
   idDepartementChoisi: number | null = null;
   idSalarieChoisi: number | null = null;
@@ -68,10 +75,9 @@ export class AjouterSessionFormationPresentiel implements OnInit {
   }
 
   /**
-   * Initialisation du formulaire
-   * Chargement des formations
-   * Chargement des salariés
-   * Chargement des numéros de départements en Bretagne
+   * Initialisation globale du composant :
+   * - Initialisation du formulaire réactif
+   * - Chargement des données de référence (formations, salariés, départements)
    */
   ngOnInit() {
 
@@ -81,8 +87,13 @@ export class AjouterSessionFormationPresentiel implements OnInit {
     this.initDepartements();
   }
 
+  /**
+   * Initialisation du FormGroup réactif avec ses contrôles :
+   * - Champ simples (textes, dates, nombres)
+   * - FormArray dynamique 'sessionsDate' pour gérer les sessions date multiples
+   * - Synchronisation dynamique de sessionsDate selon nbJournee
+   */
   initForm() {
-
     this.sessionPresentielForm = this.fb.group({
       idFormationChoisie: [null, Validators.required],
       idDepartementChoisi: [null, Validators.required],
@@ -91,24 +102,85 @@ export class AjouterSessionFormationPresentiel implements OnInit {
       noYoda: ['', Validators.maxLength(30)],
       intituleSessionF: ['', [Validators.required, Validators.maxLength(50)]],
       dateLimiteYoda: [''],
-      lieuSessionFormation: ['', Validators.maxLength(100)],
+      lieuSessionFormation: ['', [Validators.maxLength(100),Validators.required]],
       dateDebutSession: ['', Validators.required],
       nbHeureSession: [0, [Validators.min(1), Validators.max(100)]],
       commanditaire: ['', Validators.maxLength(125)],
       confirmationRPE: ['', Validators.maxLength(255)],
       nbJournee: [0],
-      journees: this.fb.array([])
+      sessionsDate: this.fb.array([]),
     });
 
+    // Abonnement à la valeur nbJournee pour ajuster dynamiquement le nombre de sessionsDate
     this.sessionPresentielForm.get('nbJournee')?.valueChanges.subscribe(val => {
-      this.adjustJournees(val);
+      this.adjustSessionsDate(val);
     });
-
   }
 
   /**
-   * Récupération de la liste des formations en présentiel
-   * Le thème peut être choisi et le libellé de la formation s'affiche dynamiquement
+   * Getter pratique pour accéder au FormArray 'sessionsDate'
+   */
+  get sessionsDate(): FormArray {
+    return this.sessionPresentielForm.get('sessionsDate') as FormArray;
+  }
+
+
+  /**
+   * Crée un nouveau FormGroup pour un élément 'SessionDate' :
+   * - Initialise les champs requis avec validations
+   * - Valeur fixe 'duree' = 7 pour présentiel
+   * - 'sessionFormation.idFormation' est initialisé à la formation choisie fixe
+   */
+  createSessionsDate(): FormGroup {
+    return this.fb.group({
+      idSessionDate: [null],
+      dateSession: ['', Validators.required],
+      duree: [7],
+      heureVisio: [''],
+      statutSessionDate: [StatutSessionDate.SESSION_DATE_SALLE_GRATUITE || null],
+      formateur: this.fb.group({
+        idPersonne: [null],
+      }),
+      sessionFormation: this.fb.group({
+        idFormation: [this.sessionPresentielForm?.get('idFormationChoisie')?.value || null],
+      }),
+      salle: this.fb.group({
+        idSessionSalle: [null],
+      })
+    })
+  }
+
+
+  /**
+   * Ajuste dynamiquement la taille du tableau sessionsDate
+   * - Ajoute ou supprime des groupes pour correspondre à nb
+   * @param nb Nombre de sessionsDate souhaitées
+   */
+  adjustSessionsDate(nb: number) {
+
+    const sessionsDate = this.sessionsDate;
+
+    if (!nb || nb <= 0) {
+      while (sessionsDate.length > 0) {
+        sessionsDate.removeAt(0);
+      }
+      return;
+    }
+
+    while (sessionsDate.length < nb) {
+      sessionsDate.push(this.createSessionsDate());
+    }
+
+    while (sessionsDate.length > nb) {
+      sessionsDate.removeAt(sessionsDate.length - 1);
+    }
+  }
+
+
+  /**
+   * Charge la liste des formations, filtre celles en présentiel,
+   * initialise la sélection avec la première formation trouvée,
+   * et met à jour le libellé de la formation affiché.
    */
   initFormations() {
 
@@ -129,9 +201,7 @@ export class AjouterSessionFormationPresentiel implements OnInit {
       }
     });
 
-    /**
-     *  Abonnement sur la valeur idFormationChoisie pour mettre à jour le libellé automatiquement
-     */
+    // Mise à jour du libellé à chaque changement de formation sélectionnée
     this.sessionPresentielForm.get('idFormationChoisie')?.valueChanges.subscribe(val => {
       const formationTrouvee = this.formations.find(f => f.idFormation === Number(val));
       this.libelleFormationSelectionnee = formationTrouvee ? formationTrouvee.libelleFormation : '';
@@ -140,7 +210,7 @@ export class AjouterSessionFormationPresentiel implements OnInit {
 
 
   /**
-   *   Récupération de la liste des salariés
+   * Charge la liste des salariés et initialise la sélection avec le premier salarié disponible
    */
   initSalaries() {
 
@@ -160,7 +230,7 @@ export class AjouterSessionFormationPresentiel implements OnInit {
   }
 
   /**
-   * Récupération de la liste des départements de Bretagne
+   * Charge la liste des départements de Bretagne et initialise la sélection au premier département
    */
   initDepartements() {
 
@@ -170,7 +240,6 @@ export class AjouterSessionFormationPresentiel implements OnInit {
         if (this.departements.length) {
           this.sessionPresentielForm.patchValue({
             idDepartementChoisi: this.departements[0].idDepartement
-
           });
           console.log('Départements chargés:', this.departements);
         }
@@ -183,45 +252,11 @@ export class AjouterSessionFormationPresentiel implements OnInit {
 
 
   /**
-   * Boucle sur les journées de session de formation. Affiche dynamiquement en fonction du nombre de jours choisis,
-   * un template avec : une date, une liste de formateurs disponibles à cette date, une liste de salle disponiblent à
-   * cette date.
-   */
-  createJournee(): FormGroup {
-      return this.fb.group({
-        date: [''],
-        formateur: [''],
-        salle: ['']
-      });
-  }
-
-  adjustJournees(nb: number){
-
-    const journees = this.sessionPresentielForm.get('journees') as FormArray;
-
-    if(!nb || nb <=0){
-      while(journees.length > 0){
-        journees.removeAt(0);
-      }
-      return;
-    }
-
-    while(journees.length < nb) {
-      journees.push(this.createJournee());
-    }
-    while(journees.length > nb) {
-      journees.removeAt(journees.length -1);
-    }
-  }
-
-  get journees(): FormArray {
-    return this.sessionPresentielForm.get('journees') as FormArray;
-  }
-
-
-
-  /**
-   * Méthode qui ajoute la session de formation lorsque l'utilisateur clique sur Enregistrer
+   * Méthode appelée lors de la sauvegarde du formulaire :
+   * - Valide la saisie
+   * - Construit un DTO cohérent pour la création (SessionFopReqDTO)
+   * - Envoie la requête via service
+   * - Gère le succès et les erreurs utilisateur
    */
   onSubmit(): void {
 
@@ -237,20 +272,17 @@ export class AjouterSessionFormationPresentiel implements OnInit {
 
     const formValue = this.sessionPresentielForm.value;
 
-    const sessionRequest : SessionFopReqDTO = {
+    const sessionRequest: SessionFopReqDTO = {
 
       idSessionFormation: null,
       noYoda: formValue.noYoda || null,
       libelleSessionFormation: formValue.intituleSessionF || null,
       statutYoda: "DO",
-
       dateDebutSession: formValue.dateDebutSession || null,
       nbHeureSession: formValue.nbHeureSession || null,
-
       lieuSessionFormation: formValue.lieuSessionFormation || null,
       commanditaire: formValue.commanditaire || null,
       confirmationRPE: formValue.confirmationRPE || null,
-
       statutSessionFormation: StatutSessionFormation.SESSION_FORMATION_NON_COMMENCEE,
 
       // Lier la formation par son id
@@ -265,19 +297,15 @@ export class AjouterSessionFormationPresentiel implements OnInit {
       departement: {
         idDepartement: formValue.idDepartementChoisi
       },
-
-
+      // Lier la fin de session de formation par son id s'il existe todo mettre null pour la création
       finSessionFormation: {
         idFinSessionFormation: formValue.idFinSessionFormation || null
       },
 
-
-
       sessionsSalle: formValue.salle || null,
       sessionsFormateur: formValue.formateur || null,
-      sessionsLieuDate: formValue.date || null
-
-
+      // Envoi uniquement si non vide
+      sessionsDate: formValue.sessionsDate && formValue.sessionsDate.length > 0 ? formValue.sessionsDate : null,
     }
 
     console.log('sessionRequest:', sessionRequest);
@@ -294,25 +322,4 @@ export class AjouterSessionFormationPresentiel implements OnInit {
       }
     });
   }
-
-  /**
-   * Méthode qui appelle l'api pour ajouter la session de formation en présentiel
-   * @param sessionFopReqDto
-   */
-  // ajouterSession(sessionFopReqDto: SessionFopReqDTO) {
-  //
-  //   const valeurs = this.sessionPresentielForm.value;
-  //   this.ajouterSessionFOP.ajoutSessionFOP(sessionFopReqDto).subscribe({
-  //     next: (resp) => {
-  //       this.messageService.showSuccess('Session ajoutée avec succès.');
-  //       this.router.navigate(["listeSessionFormationPresentiel"]);
-  //     },
-  //     error: (err) => {
-  //       const errMsg = err.error?.message || 'Erreur lors de l\'ajout de la session.';
-  //       this.messageService.showError(errMsg);
-  //     }
-  //   });
-  // }
-
-
 }

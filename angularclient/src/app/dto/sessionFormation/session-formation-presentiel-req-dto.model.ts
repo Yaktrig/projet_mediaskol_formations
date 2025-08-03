@@ -11,5 +11,5 @@ export interface SessionFopReqDTO extends SessionFormationReqDTO {
   sessionsSalle: { idSessionSalle: number } | null;
   sessionsFormateur: { idSessionFormation: number } | null;
   statutSessionFormation: StatutSessionFormation;
-  sessionsLieuDate: { idSessionLieuDate: number } | null;
+  sessionsDate: { idSessionDate: number } | null;
 }

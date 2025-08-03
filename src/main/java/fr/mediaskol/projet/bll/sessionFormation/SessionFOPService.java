@@ -4,8 +4,7 @@ import fr.mediaskol.projet.bo.sessionFormation.SessionFormationPresentiel;
 import fr.mediaskol.projet.dto.formateur.SessionFormateurRespDTO;
 import fr.mediaskol.projet.dto.salle.SessionSalleRespDTO;
 import fr.mediaskol.projet.dto.sessionFormation.SessionFOPInputDTO;
-import fr.mediaskol.projet.dto.sessionFormation.SessionFOPResponseDTO;
-import fr.mediaskol.projet.dto.sessionLieuDate.SessionLieuDateRespDTO;
+import fr.mediaskol.projet.dto.sessionDate.SessionDateRespDTO;
 
 import java.util.List;
 
@@ -69,7 +68,7 @@ public interface SessionFOPService {
      * Fonctionnalité qui récupère les sessions lieu date liées à une session formation en présentiel.
      * Les convertit en DTO
      */
-    List<SessionLieuDateRespDTO> getSessionsLieuDateBySessionId(Long idSessionFormation);
+    List<SessionDateRespDTO> getSessionsLieuDateBySessionId(Long idSessionFormation);
 
     /**
      * Fonctionnalité qui récupère les sessions de formation qui ont moins de 6 sessions d'apprenants d'inscrits

@@ -1,11 +1,8 @@
-package fr.mediaskol.projet.bll.sessionLieuDate;
+package fr.mediaskol.projet.bll.sessionDate;
 
-import fr.mediaskol.projet.bo.salle.SessionSalle;
-import fr.mediaskol.projet.bo.sessionLieuDate.SessionLieuDate;
-import fr.mediaskol.projet.dal.salle.SessionSalleRepository;
-import fr.mediaskol.projet.dal.sessionLieuDate.SessionLieuDateRepository;
-import fr.mediaskol.projet.dto.salle.SessionSalleInputDTO;
-import fr.mediaskol.projet.dto.sessionLieuDate.SessionLieuDateInputDTO;
+import fr.mediaskol.projet.bo.sessionDate.SessionDate;
+import fr.mediaskol.projet.dal.sessionDate.SessionDateRepository;
+import fr.mediaskol.projet.dto.sessionDate.SessionDateInputDTO;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -18,20 +15,20 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @Service
-public class SessionLieuDateServiceImpl implements SessionLieuDateService {
+public class SessionDateServiceImpl implements SessionDateService {
 
     /**
      * Injection des repository en couplage faible.
      */
-    private final SessionLieuDateRepository sessionLieuDateRepository;
+    private final SessionDateRepository sessionDateRepository;
 
     /***
      * Fonctionnalité qui permet de charger tous les lieux et dates de sessions
      */
     @Override
-    public List<SessionLieuDate> chargerToutesSessionsLieuDate() {
+    public List<SessionDate> chargerToutesSessionsLieuDate() {
 
-        return sessionLieuDateRepository.findAll();
+        return sessionDateRepository.findAll();
     }
 
     /**
@@ -40,7 +37,7 @@ public class SessionLieuDateServiceImpl implements SessionLieuDateService {
      * @param idSessionLieuDate
      */
     @Override
-    public SessionLieuDate chargerSessionLieuDateParId(long idSessionLieuDate) {
+    public SessionDate chargerSessionLieuDateParId(long idSessionLieuDate) {
 
         // Validation de l'identifiant
         if (idSessionLieuDate <= 0) {
@@ -48,7 +45,7 @@ public class SessionLieuDateServiceImpl implements SessionLieuDateService {
         }
 
         // On retourne la date et le lieu d'une session
-        final Optional<SessionLieuDate> opt = sessionLieuDateRepository.findById(idSessionLieuDate);
+        final Optional<SessionDate> opt = sessionDateRepository.findById(idSessionLieuDate);
         if (opt.isPresent()) {
             return opt.get();
         }
@@ -60,26 +57,23 @@ public class SessionLieuDateServiceImpl implements SessionLieuDateService {
     /**
      * Fonctionnalité qui permet d'ajouter un lieu et une date à une session de formation
      *
-     * @param sessionLieuDate
+     * @param sessionDate
      */
     @Override
     @Transactional
-    public SessionLieuDate ajouterSessionLieuDate(SessionLieuDate sessionLieuDate) {
+    public SessionDate ajouterSessionLieuDate(SessionDate sessionDate) {
 
-        if (sessionLieuDate == null) {
+        if (sessionDate == null) {
             throw new RuntimeException("La date et le lieu ne sont de la session ne sont pas renseignés.");
         }
 
-        validerDateNonNulle(sessionLieuDate);
-        if (sessionLieuDate.getLieuSession() != null) {
-            validerLieu(sessionLieuDate);
-        }
-        validerSessionFormation(sessionLieuDate.getSessionFormation().getIdSessionFormation());
+
+        validerSessionFormation(sessionDate.getSessionFormation().getIdSessionFormation());
 
         try {
-            return sessionLieuDateRepository.save(sessionLieuDate);
+            return sessionDateRepository.save(sessionDate);
         } catch (RuntimeException e) {
-            throw new RuntimeException("Impossible de sauvegarder - " + sessionLieuDate.toString());
+            throw new RuntimeException("Impossible de sauvegarder - " + sessionDate.toString());
         }
     }
 
@@ -91,42 +85,37 @@ public class SessionLieuDateServiceImpl implements SessionLieuDateService {
      */
     @Override
     @Transactional
-    public SessionLieuDate modifierSessionLieuDate(SessionLieuDateInputDTO dto) {
+    public SessionDate modifierSessionLieuDate(SessionDateInputDTO dto) {
 
         // 1. Vérifier qu'un lieu et une date existent
-        SessionLieuDate sessionLieuDate = sessionLieuDateRepository.findById(dto.getIdSessionLieuDate())
+        SessionDate sessionDate = sessionDateRepository.findById(dto.getIdSessionDate())
                 .orElseThrow(() -> new EntityNotFoundException("SessionLieuDate de la salle introuvable"));
 
 
         // 2. Vérification des champs
-        validerDateNonNulle(sessionLieuDate);
-        if (sessionLieuDate.getLieuSession() != null) {
-            validerLieu(sessionLieuDate);
-        }
-        validerSessionFormation(sessionLieuDate.getSessionFormation().getIdSessionFormation());
+        validerSessionFormation(sessionDate.getSessionFormation().getIdSessionFormation());
 
 
         // 3. Appliquer les modifications aux champs autorisés
-        sessionLieuDate.setDateSession(dto.getDateSession());
-        sessionLieuDate.setLieuSession(dto.getLieuSession());
-        sessionLieuDate.setDuree(dto.getDuree());
-        sessionLieuDate.setHeureVisio(dto.getHeureVisio());
-        sessionLieuDate.setStatutSessionLieuDate(dto.getStatutSessionLieuDate());
+        sessionDate.setDateSession(dto.getDateSession());
+        sessionDate.setDuree(dto.getDuree());
+        sessionDate.setHeureVisio(dto.getHeureVisio());
+        sessionDate.setStatutSessionDate(dto.getStatutSessionDate());
 
         if(dto.getSessionFormateurId() != null){
-            sessionLieuDate.setSessionFormateur(sessionLieuDate.getSessionFormateur());
+            sessionDate.setSessionFormateur(sessionDate.getSessionFormateur());
         }
 
         if(dto.getSessionFormationId() !=null){
-            sessionLieuDate.setSessionFormation(sessionLieuDate.getSessionFormation());
+            sessionDate.setSessionFormation(sessionDate.getSessionFormation());
         }
 
         if(dto.getSessionSalleId() !=null){
-            sessionLieuDate.setSessionSalle(sessionLieuDate.getSessionSalle());
+            sessionDate.setSessionSalle(sessionDate.getSessionSalle());
         }
 
         // 4. Sauvegarde finale
-        return sessionLieuDateRepository.save(sessionLieuDate);
+        return sessionDateRepository.save(sessionDate);
     }
 
     /**
@@ -141,13 +130,13 @@ public class SessionLieuDateServiceImpl implements SessionLieuDateService {
             throw new IllegalArgumentException("L'identifiant du lieu et de la date de la session n'existent pas.");
         }
 
-        if (!sessionLieuDateRepository.existsById(idSessionLieuDate)) {
+        if (!sessionDateRepository.existsById(idSessionLieuDate)) {
             throw new EntityNotFoundException("Le lieu et la date de la session de formation avec l'ID idSessionLieuDate" +
                     " n'existent pas.");
         }
 
         try {
-            sessionLieuDateRepository.deleteById(idSessionLieuDate);
+            sessionDateRepository.deleteById(idSessionLieuDate);
         } catch (DataIntegrityViolationException e) {
             throw new RuntimeException("Impossible de supprimer le lieu et la date : il est liée à des sessions.");
         } catch (Exception e) {
@@ -163,9 +152,9 @@ public class SessionLieuDateServiceImpl implements SessionLieuDateService {
     /**
      * Validation si les chaines de caractères ne sont pas nulles ou vides, sinon on déclenche une exception.
      */
-    private void validerDateNonNulle(SessionLieuDate sessionLieuDate) {
+    private void validerDateNonNulle(SessionDate sessionDate) {
 
-        LocalDate dateSession = sessionLieuDate.getDateSession();
+        LocalDate dateSession = sessionDate.getDateSession();
 
         if (dateSession == null) {
             throw new RuntimeException("La date est obligatoire.");
@@ -174,18 +163,6 @@ public class SessionLieuDateServiceImpl implements SessionLieuDateService {
 
         if (dateSession.isBefore(LocalDate.now())) {
             throw new RuntimeException("La date ne doit pas se situer dans le passé.");
-        }
-    }
-
-    /**
-     * Valider commentaire, longueur max 2000
-     */
-    public void validerLieu(SessionLieuDate sessionLieuDate) {
-
-        String lieuSession = sessionLieuDate.getLieuSession();
-
-        if (lieuSession.length() > 100) {
-            throw new RuntimeException("Le nom du lieu ne doit pas dépasser 100 caractères.");
         }
     }
 

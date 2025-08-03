@@ -128,7 +128,7 @@ md:min-w-[450px] md:max-w-[940px] flex flex-col md:flex-row md:items-center md:m
             </td>
             <td class="text-center">{{ session.statutYoda }}</td>
             <td class="text-center" [style.background-color]="session.salarie?.couleurSalarie">
-              {{ session.salarie?.nom | firstLetterUpper }}{{ session.salarie?.prenom | firstLetterUpper }}
+              {{ session.salarie?.prenom | firstLetterUpper }}{{ session.salarie?.nom | firstLetterUpper }}
 
             </td><!-- Salarié(e) qui traite le dossier -->
             <td>{{ session.finSessionFormation?.statutFinSessionFormation }}</td>
@@ -141,10 +141,10 @@ md:min-w-[450px] md:max-w-[940px] flex flex-col md:flex-row md:items-center md:m
             <td>{{ session.lieuSessionFormation }}</td><!-- lieu de la salle ou ville principale -->
             <td class="text-center">{{ session.nbHeureSession }}</td>
             <!-- Mettre une condition en fonction du nombre de jours - pour le présentiel -->
-            @for (sessionLieuDate of session.sessionsLieuDate; track sessionLieuDate.idSessionLieuDate) {
+            @for (sessionDate of session.sessionsDate; track sessionDate.idSessionDate) {
               <td>
                 <!--                <div class="flex flex-wrap gap-4">-->
-                {{ sessionLieuDate.dateSession | date:'dd-MM-yyyy' }}
+                {{ sessionDate.dateSession | date:'dd-MM-yyyy' }}
                 <!--                </div>-->
               </td>
             }

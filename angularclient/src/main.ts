@@ -5,7 +5,8 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 
 import { routes } from './app/app.routes';
 import {App} from './app/app';
-import {jwtInterceptorFn} from './app/jwt/jwt-interceptors-old-fn';
+import {jwtInterceptorFn} from './app/jwt/jwt-interceptor-fn';
+
 
 bootstrapApplication(App, {
   providers: [

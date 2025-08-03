@@ -1,6 +1,5 @@
 package fr.mediaskol.projet.dto.sessionFormation;
 
-import fr.mediaskol.projet.bo.salle.SessionSalle;
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormationPresentiel;
 
 import fr.mediaskol.projet.bo.sessionFormation.StatutSessionFormation;
@@ -9,7 +8,7 @@ import fr.mediaskol.projet.dto.formateur.SessionFormateurRespDTO;
 import fr.mediaskol.projet.dto.formation.FormationResponseDTO;
 import fr.mediaskol.projet.dto.salarie.SalarieResponseDTO;
 import fr.mediaskol.projet.dto.salle.SessionSalleRespDTO;
-import fr.mediaskol.projet.dto.sessionLieuDate.SessionLieuDateRespDTO;
+import fr.mediaskol.projet.dto.sessionDate.SessionDateRespDTO;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -42,7 +41,7 @@ public class SessionFOPResponseDTO extends SessionFormationResponseDTO {
     private DepartementDTO departement;
     private List<SessionSalleRespDTO> sessionsSalle;
     private List<SessionFormateurRespDTO> sessionsFormateur;
-    private List<SessionLieuDateRespDTO> sessionsLieuDate;
+    private List<SessionDateRespDTO> sessionsLieuDate;
 
     /**
      * Constructeur

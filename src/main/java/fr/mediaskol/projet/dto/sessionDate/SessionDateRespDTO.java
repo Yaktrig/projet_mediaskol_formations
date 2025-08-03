@@ -1,11 +1,11 @@
-package fr.mediaskol.projet.dto.sessionLieuDate;
+package fr.mediaskol.projet.dto.sessionDate;
 
 
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormationDistanciel;
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormationPresentiel;
-import fr.mediaskol.projet.bo.sessionLieuDate.SessionLieuDate;
-import fr.mediaskol.projet.bo.sessionLieuDate.StatutSessionLieuDate;
+import fr.mediaskol.projet.bo.sessionDate.SessionDate;
+import fr.mediaskol.projet.bo.sessionDate.StatutSessionDate;
 import fr.mediaskol.projet.dto.formateur.SessionFormateurRespDTO;
 import fr.mediaskol.projet.dto.salle.SessionSalleRespDTO;
 import fr.mediaskol.projet.dto.sessionFormation.SessionFOADResponseDTO;
@@ -23,41 +23,39 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Data
 @Builder
-public class SessionLieuDateRespDTO {
+public class SessionDateRespDTO {
 
     /**
      * Déclaration des attributs
      */
-    private Long idSessionLieuDate;
+    private Long idSessionDate;
     private LocalDate dateSession;
-    private String lieuSession;
     private Integer duree;
     private LocalDateTime heureVisio;
-    private StatutSessionLieuDate statutSessionLieuDate;
+    private StatutSessionDate statutSessionDate;
     private SessionFormateurRespDTO sessionFormateur;
     private SessionFormationResponseDTO sessionFormation;
     private SessionSalleRespDTO sessionSalle;
 
     /**
      * Constructeur
-     * @param sessionLieuDate
+     * @param sessionDate
      */
-    public SessionLieuDateRespDTO(SessionLieuDate sessionLieuDate){
-        this.idSessionLieuDate = sessionLieuDate.getIdSessionLieuDate();
-        this.dateSession = sessionLieuDate.getDateSession();
-        this.lieuSession = sessionLieuDate.getLieuSession();
-        this.duree = sessionLieuDate.getDuree();
-        this.heureVisio = sessionLieuDate.getHeureVisio();
-        this.statutSessionLieuDate = sessionLieuDate.getStatutSessionLieuDate();
+    public SessionDateRespDTO(SessionDate sessionDate){
+        this.idSessionDate = sessionDate.getIdSessionDate();
+        this.dateSession = sessionDate.getDateSession();
+        this.duree = sessionDate.getDuree();
+        this.heureVisio = sessionDate.getHeureVisio();
+        this.statutSessionDate = sessionDate.getStatutSessionDate();
 
-        if(sessionLieuDate.getSessionFormateur() != null){
-            this.sessionFormateur = new  SessionFormateurRespDTO(sessionLieuDate.getSessionFormateur());
+        if(sessionDate.getSessionFormateur() != null){
+            this.sessionFormateur = new  SessionFormateurRespDTO(sessionDate.getSessionFormateur());
         } else {
             this.sessionFormateur = null;
         }
 
 
-        SessionFormation formation = sessionLieuDate.getSessionFormation();
+        SessionFormation formation = sessionDate.getSessionFormation();
 
         if (formation instanceof SessionFormationPresentiel) {
             this.sessionFormation = new SessionFOPResponseDTO((SessionFormationPresentiel) formation);
@@ -68,8 +66,8 @@ public class SessionLieuDateRespDTO {
         }
 
 
-        if(sessionLieuDate.getSessionSalle() != null){
-            this.sessionSalle = new  SessionSalleRespDTO(sessionLieuDate.getSessionSalle());
+        if(sessionDate.getSessionSalle() != null){
+            this.sessionSalle = new  SessionSalleRespDTO(sessionDate.getSessionSalle());
         } else {
             this.sessionSalle = null;
         }

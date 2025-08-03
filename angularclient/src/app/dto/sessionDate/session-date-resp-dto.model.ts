@@ -1,17 +1,16 @@
-import {StatutSessionLieuDate} from './statut-session-lieu-date.enum';
+import {StatutSessionDate} from './statut-session-date.enum';
 import {SessionFormateurRespDTO} from '../formateur/session-formateur-resp-dto.model';
 import {SessionFormationRespDTO} from '../sessionFormation/session-formation-resp-dto.model';
 import {SessionSalleRespDTO} from '../salle/session-salle-resp-dto.model';
 
 
-export interface SessionLieuDateRespDto {
+export interface SessionDateRespDto {
 
-  idSessionLieuDate: number | null;
+  idSessionDate: number | null;
   dateSession: string | null;
-  lieuSession: string | null;
   duree: number | null;
   heureVisio: string | null;
-  statutSessionLieuDate: StatutSessionLieuDate;
+  statutSessionDate: StatutSessionDate;
   sessionFormateur: SessionFormateurRespDTO;
   sessionFormation: SessionFormationRespDTO;
   sessionSalle: SessionSalleRespDTO;
