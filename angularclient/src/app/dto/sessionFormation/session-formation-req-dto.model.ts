@@ -1,12 +1,9 @@
 import {StatutSessionFormation} from './statut-session-formation.enum';
-import {SalarieRespDTO} from '../salarie/salarie-resp-dto.model';
-import {FormationResponseDTO} from '../formation/formation-resp-dto.model';
-import {FinSessionFormationRespDTO} from './fin-session-formation-resp-dto.model';
 
 /**
  * Classe mère des sessions de formation (présentiel et distanciel)
  */
-export interface SessionFormationRespDTO {
+export interface SessionFormationReqDTO {
 
   idSessionFormation: number | null;
   noYoda: string | null;
@@ -15,8 +12,8 @@ export interface SessionFormationRespDTO {
   dateDebutSession: Date | null;
   nbHeureSession: number | null;
   statutSessionFormation: StatutSessionFormation;
-  salarie: SalarieRespDTO | null;
-  formation: FormationResponseDTO | null;
-  finSessionFormation: FinSessionFormationRespDTO | null;
+  salarie: { idPersonne : number } | null;
+  formation: { idFormation : number } | null;
+  finSessionFormation: { idFinSessionFormation : number } | null;
 
 }

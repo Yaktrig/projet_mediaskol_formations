@@ -121,12 +121,12 @@
           </div>
           <!-- rang 2 -->
           <div>
-            <label for="lieuFormation" class="block text-sm/6">Lieu de la formation</label>
-            <input id="lieuFormation" type="text" formControlName="lieuFormation"
+            <label for="lieuSessionFormation" class="block text-sm/6">Lieu de la formation</label>
+            <input id="lieuSessionFormation" type="text" formControlName="lieuSessionFormation"
                    class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
                    title="Lieu de la formation"/>
-            @if (sessionPresentielForm.controls['lieuFormation'].hasError('maxlength') && sessionPresentielForm.controls['lieuFormation'].touched) {
+            @if (sessionPresentielForm.controls['lieuSessionFormation'].hasError('maxlength') && sessionPresentielForm.controls['lieuSessionFormation'].touched) {
               <p class="text-red-600 text-sm mt-1">Le lieu de formation ne doit pas dépasser 100 caractères.</p>
             }
           </div>
@@ -170,12 +170,12 @@
 
           <!-- rang 6-->
           <div>
-            <label for="RPE" class="block text-sm/6">Confirmation au RPE</label>
-            <input id="RPE" type="text" formControlName="RPE"
+            <label for="confirmationRPE" class="block text-sm/6">Confirmation au confirmationRPE</label>
+            <input id="confirmationRPE" type="text" formControlName="confirmationRPE"
                    class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
                    title="Confirmation au RPE"/>
-            @if (sessionPresentielForm.controls['RPE'].hasError('maxlength') && sessionPresentielForm.controls['RPE'].touched) {
+            @if (sessionPresentielForm.controls['confirmationRPE'].hasError('maxlength') && sessionPresentielForm.controls['confirmationRPE'].touched) {
               <p class="text-red-600 text-sm mt-1">Le nombre de caractères ne doit pas dépasser 255.</p>
             }
           </div>

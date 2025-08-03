@@ -172,7 +172,7 @@ public class SessionFormation {
      * </p>
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="TRAITEMENT_ID")
+    @JoinColumn(name="SALARIE_ID")
     @NotNull(message="{sessionFormation.salarie.notnull}")
     private Salarie salarie;
 

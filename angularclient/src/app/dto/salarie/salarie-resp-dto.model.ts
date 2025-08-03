@@ -1,7 +1,5 @@
 
-
-
-export interface SalarieRespDto{
+export interface SalarieRespDTO{
 
   idSalarie: number| null;
   nom:  string | null;

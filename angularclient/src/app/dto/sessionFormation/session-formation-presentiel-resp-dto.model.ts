@@ -11,10 +11,10 @@ export interface SessionFopRespDTO extends SessionFormationRespDTO {
   lieuSessionFormation: string | null;
   commanditaire: string | null;
   confirmationRPE: string | null;
-  departement: { idDepartement: number } | null;
+  departement: DepartementDTO | null;
   sessionsSalle : SessionSalleRespDTO[];
   sessionsFormateur : SessionFormateurRespDTO[];
-  statutSessionFormation: StatutSessionFormation;
+  statutSessionFormation: StatutSessionFormation ;
   sessionsLieuDate : SessionLieuDateRespDto[];
 
 }

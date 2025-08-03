@@ -168,8 +168,9 @@ public class SessionFOPServiceImpl implements SessionFOPService {
 
 
         // valider si la fin de session existe
-        if (sessionFop.getFinSessionFormation() != null) {
-            FinSessionFormation finSessionFopDB = finSessionFormationRepository.save(sessionFop.getFinSessionFormation());
+        if (sessionFop.getFinSessionFormation() != null && sessionFop.getFinSessionFormation().getIdFinSessionFormation() != null) {
+            FinSessionFormation finSessionFopDB = finSessionFormationRepository.findById(sessionFop.getFinSessionFormation().getIdFinSessionFormation())
+                    .orElseThrow(() -> new RuntimeException("Fin de session non trouvé avec id : " + sessionFop.getFinSessionFormation().getIdFinSessionFormation()));
             sessionFop.setFinSessionFormation(finSessionFopDB);
         }
 

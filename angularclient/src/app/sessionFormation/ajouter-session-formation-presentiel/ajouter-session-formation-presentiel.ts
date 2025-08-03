@@ -6,7 +6,6 @@ import {
   AjouterSessionFormationPresentielService
 } from '../../services/sessionFormation/ajouter-session-formation-presentiel.service';
 import {MessageService} from '../../services/message/message.service';
-import {SessionFopRespDTO} from '../../dto/sessionFormation/session-formation-presentiel-resp-dto.model';
 import {FormationResponseDTO} from '../../dto/formation/formation-resp-dto.model';
 import {FormationService} from '../../services/formation/formation.service';
 import {
@@ -18,11 +17,13 @@ import {
   Validators
 } from '@angular/forms';
 import {SalarieService} from '../../services/salarie/salarie.service';
-import {SalarieRespDto} from '../../dto/salarie/salarie-resp-dto.model';
 import {DepartementService} from '../../services/departement/departement.service';
 import {DepartementDTO} from '../../dto/adresse/departement-resp-dto.model';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import {SalarieRespDTO} from '../../dto/salarie/salarie-resp-dto.model';
+import {SessionFopReqDTO} from '../../dto/sessionFormation/session-formation-presentiel-req-dto.model';
+import {StatutSessionFormation} from '../../dto/sessionFormation/statut-session-formation.enum';
 
 
 @Component({
@@ -47,7 +48,7 @@ export class AjouterSessionFormationPresentiel implements OnInit {
   sessionPresentielForm!: FormGroup;
   formations: FormationResponseDTO[] = [];
   departements: DepartementDTO[] = [];
-  salaries: SalarieRespDto[] = [];
+  salaries: SalarieRespDTO[] = [];
 
   libelleFormationSelectionnee: string | null = '';
   idFormationChoisie: number | null = null;
@@ -90,11 +91,11 @@ export class AjouterSessionFormationPresentiel implements OnInit {
       noYoda: ['', Validators.maxLength(30)],
       intituleSessionF: ['', [Validators.required, Validators.maxLength(50)]],
       dateLimiteYoda: [''],
-      lieuFormation: ['', Validators.maxLength(100)],
+      lieuSessionFormation: ['', Validators.maxLength(100)],
       dateDebutSession: ['', Validators.required],
       nbHeureSession: [0, [Validators.min(1), Validators.max(100)]],
       commanditaire: ['', Validators.maxLength(125)],
-      RPE: ['', Validators.maxLength(255)],
+      confirmationRPE: ['', Validators.maxLength(255)],
       nbJournee: [0],
       journees: this.fb.array([])
     });
@@ -236,32 +237,51 @@ export class AjouterSessionFormationPresentiel implements OnInit {
 
     const formValue = this.sessionPresentielForm.value;
 
-    const sessionRequest = {
-     // idSessionFormation: formValue.idSessionFormation || null,
+    const sessionRequest : SessionFopReqDTO = {
+
+      idSessionFormation: null,
       noYoda: formValue.noYoda || null,
       libelleSessionFormation: formValue.intituleSessionF || null,
-      dateLimiteYoda: formValue.dateLimiteYoda || null,
-      lieuFormation: formValue.lieuFormation || null,
+      statutYoda: "DO",
+
       dateDebutSession: formValue.dateDebutSession || null,
       nbHeureSession: formValue.nbHeureSession || null,
+
+      lieuSessionFormation: formValue.lieuSessionFormation || null,
       commanditaire: formValue.commanditaire || null,
-      RPE: formValue.RPE || null,
-      nbJournee: formValue.nbJournee || null,
+      confirmationRPE: formValue.confirmationRPE || null,
+
+      statutSessionFormation: StatutSessionFormation.SESSION_FORMATION_NON_COMMENCEE,
 
       // Lier la formation par son id
-      formation : {
+      formation: {
         idFormation: formValue.idFormationChoisie
       },
       // Lier le salarié par son id
-      salarie :{
-        idSalarie: formValue.idSalarieChoisi
+      salarie: {
+        idPersonne: Number(formValue.idSalarieChoisi)
       },
       // Lier le département par son id
       departement: {
         idDepartement: formValue.idDepartementChoisi
-      }
+      },
+
+
+      finSessionFormation: {
+        idFinSessionFormation: formValue.idFinSessionFormation || null
+      },
+
+
+
+      sessionsSalle: formValue.salle || null,
+      sessionsFormateur: formValue.formateur || null,
+      sessionsLieuDate: formValue.date || null
+
 
     }
+
+    console.log('sessionRequest:', sessionRequest);
+
     // Envoie de la requête via ton service
     this.ajouterSessionFOP.ajoutSessionFOP(sessionRequest).subscribe({
       next: () => {
@@ -277,22 +297,22 @@ export class AjouterSessionFormationPresentiel implements OnInit {
 
   /**
    * Méthode qui appelle l'api pour ajouter la session de formation en présentiel
-   * @param sessionFopDto
+   * @param sessionFopReqDto
    */
-  ajouterSession(sessionFopDto: SessionFopRespDTO) {
-
-    const valeurs = this.sessionPresentielForm.value;
-    this.ajouterSessionFOP.ajoutSessionFOP(sessionFopDto).subscribe({
-      next: (resp) => {
-        this.messageService.showSuccess('Session ajoutée avec succès.');
-        this.router.navigate(["listeSessionFormationPresentiel"]);
-      },
-      error: (err) => {
-        const errMsg = err.error?.message || 'Erreur lors de l\'ajout de la session.';
-        this.messageService.showError(errMsg);
-      }
-    });
-  }
+  // ajouterSession(sessionFopReqDto: SessionFopReqDTO) {
+  //
+  //   const valeurs = this.sessionPresentielForm.value;
+  //   this.ajouterSessionFOP.ajoutSessionFOP(sessionFopReqDto).subscribe({
+  //     next: (resp) => {
+  //       this.messageService.showSuccess('Session ajoutée avec succès.');
+  //       this.router.navigate(["listeSessionFormationPresentiel"]);
+  //     },
+  //     error: (err) => {
+  //       const errMsg = err.error?.message || 'Erreur lors de l\'ajout de la session.';
+  //       this.messageService.showError(errMsg);
+  //     }
+  //   });
+  // }
 
 
 }

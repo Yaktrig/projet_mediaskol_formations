@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {SessionFopRespDTO} from '../../dto/sessionFormation/session-formation-presentiel-resp-dto.model';
+import {SessionFopReqDTO} from '../../dto/sessionFormation/session-formation-presentiel-req-dto.model';
 
 
 /**
@@ -23,10 +23,10 @@ export class AjouterSessionFormationPresentielService {
    * @param session Les données de la session à créer
    * @returns Un observable contenant la session créée
    * */
-  ajoutSessionFOP(session: any): Observable<SessionFopRespDTO> {
+  ajoutSessionFOP(sessionReq : SessionFopReqDTO): Observable<any> {
 
     const url = `${this.apiUrl}/sessionsFormationsPresentiels`;
-    return this.http.post<SessionFopRespDTO>(url, session);
+    return this.http.post(url, sessionReq);
 
   }
 

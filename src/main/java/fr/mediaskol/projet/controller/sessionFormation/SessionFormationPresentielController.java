@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -88,7 +89,7 @@ public class SessionFormationPresentielController {
     /**
      * Afficher les sessions de formation en présentiel qui contient moins de 6 sessions apprenants
      */
-    @GetMapping("/{moinsSixSessionsApprenants}")
+    @GetMapping("/moinsSixSessionsApprenants")
     public ResponseEntity<?> afficherLesSessionsMoinsSixSessionsApprenants(){
 
         final List<SessionFormationPresentiel> sessionsFopInfSix = sessionFOPService.getSessionFormationsAvecMoinsDe6Apprenants();
