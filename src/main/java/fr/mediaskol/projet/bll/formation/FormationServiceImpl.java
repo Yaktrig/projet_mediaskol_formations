@@ -6,6 +6,7 @@ import fr.mediaskol.projet.bo.salle.Salle;
 import fr.mediaskol.projet.dal.formation.FormationRepository;
 import fr.mediaskol.projet.dal.formation.TypeFormationRepository;
 import fr.mediaskol.projet.dto.formation.FormationInputDTO;
+import fr.mediaskol.projet.dto.formation.FormationUpdateDTO;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -99,30 +100,31 @@ public class FormationServiceImpl implements FormationService {
      */
     @Override
     @Transactional
-    public Formation modifierFormation(FormationInputDTO dto) {
+    public Formation modifierFormation(FormationUpdateDTO dto) {
 
         // 1. Vérifier que la formation à modifier existe
         Formation formationExistante = formationRepository.findById(dto.getIdFormation())
                 .orElseThrow(() -> new EntityNotFoundException("Formation introuvable"));
 
         // 2. Vérifier que le type de formation existe
-        if(dto.getTypeFormation() != null){
-            formationExistante.setTypeFormation(dto.getTypeFormation());
-        }else {
-            formationExistante.setTypeFormation(null);
-        }
-//        TypeFormation typeFormation = typeFormationRepository.findById(dto.getTypeFormationId())
-//                .orElseThrow(() -> new EntityNotFoundException("TypeFormation introuvable"));
+//        if(dto.getTypeFormation() != null){
+//            formationExistante.setTypeFormation(dto.getTypeFormation().getIdTypeFormation());
+//        }else {
+//            formationExistante.setTypeFormation(null);
+//        }
+        TypeFormation typeFormation = typeFormationRepository.findById(dto.getIdTypeFormation())
+                .orElseThrow(() -> new EntityNotFoundException("TypeFormation introuvable"));
+        formationExistante.setTypeFormation(typeFormation);
 
         // 3. Appliquer les modifications aux champs autorisés
         formationExistante.setThemeFormation(dto.getThemeFormation());
         formationExistante.setLibelleFormation(dto.getLibelleFormation());
-        //formationExistante.setTypeFormation(typeFormation);
+
 
         // 4. Valider si nécessaire
         validerTheme(dto.getThemeFormation());
-      //  validerTypeFormation(dto.getTypeFormationId());
-        validerUniciteThemeTypeForm(dto.getThemeFormation(), dto.getTypeFormation().getIdTypeFormation(), dto.getIdFormation());
+        validerTypeFormation(dto.getIdTypeFormation());
+        validerUniciteThemeTypeForm(dto.getThemeFormation(), dto.getIdTypeFormation(), dto.getIdFormation());
         validerTheme(dto.getThemeFormation());
 
         // 5. Sauvegarde finale

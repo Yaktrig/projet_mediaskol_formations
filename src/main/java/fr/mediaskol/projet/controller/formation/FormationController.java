@@ -3,10 +3,10 @@ package fr.mediaskol.projet.controller.formation;
 import fr.mediaskol.projet.bll.formation.FormationService;
 import fr.mediaskol.projet.bo.formation.Formation;
 import fr.mediaskol.projet.bo.formation.TypeFormation;
-import fr.mediaskol.projet.bo.salle.Salle;
 import fr.mediaskol.projet.dal.formation.TypeFormationRepository;
 import fr.mediaskol.projet.dto.formation.FormationInputDTO;
 import fr.mediaskol.projet.dto.formation.FormationResponseDTO;
+import fr.mediaskol.projet.dto.formation.FormationUpdateDTO;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -145,15 +145,15 @@ public class FormationController {
      */
     @PutMapping
     @Valid
-    public ResponseEntity<?> modifierFormation(@Valid @RequestBody FormationInputDTO formationInputDTO) {
+    public ResponseEntity<?> modifierFormation(@Valid @RequestBody FormationUpdateDTO formationUpdateDTO) {
 
         // La formation ne doit pas être nulle - l'identifiant ne pas être nul ou inférieur ou égal à 0.
-        if (formationInputDTO == null ||formationInputDTO.getIdFormation() <= 0) {
+        if (formationUpdateDTO == null ||formationUpdateDTO.getIdFormation() == null || formationUpdateDTO.getIdFormation() <=0) {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("L'identifiant de la formation et la formation sont obligatoires.");
         }
 
         try {
-          Formation formationModifiee = formationService.modifierFormation(formationInputDTO);
+          Formation formationModifiee = formationService.modifierFormation(formationUpdateDTO);
           return ResponseEntity.ok(new FormationResponseDTO(formationModifiee));
 
         } catch (RuntimeException e) {

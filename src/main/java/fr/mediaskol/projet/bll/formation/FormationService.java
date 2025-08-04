@@ -3,6 +3,7 @@ package fr.mediaskol.projet.bll.formation;
 import fr.mediaskol.projet.bo.formation.Formation;
 import fr.mediaskol.projet.bo.salle.Salle;
 import fr.mediaskol.projet.dto.formation.FormationInputDTO;
+import fr.mediaskol.projet.dto.formation.FormationUpdateDTO;
 
 import java.util.List;
 
@@ -34,8 +35,8 @@ public interface FormationService {
 
     /**
      * Fonctionnalité qui permet de modifier une formation
-     * @param formationInputDTO
+     * @param formationUpdateDTO
      * @return
      */
-    Formation modifierFormation(FormationInputDTO formationInputDTO);
+    Formation modifierFormation(FormationUpdateDTO formationUpdateDTO);
 }

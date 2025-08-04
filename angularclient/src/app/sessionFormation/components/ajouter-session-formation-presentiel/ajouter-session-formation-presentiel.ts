@@ -186,7 +186,7 @@ export class AjouterSessionFormationPresentiel implements OnInit {
 
     this.formationService.getFormations().subscribe({
       next: (data) => {
-        this.formations = data.filter(f => f.typeFormation?.libelle === 'Présentiel');
+        this.formations = data.filter(f => f.typeFormation?.libelleTypeFormation === 'Présentiel');
         // Optionnel : initialiser sélection première formation (ex)
         if (this.formations.length > 0) {
           this.sessionPresentielForm.patchValue({
