@@ -28,8 +28,8 @@ export class FormationService {
 
   /**
    * Méthode qui appelle l'api pour modifier une formation
-   * @param formationReq Les données de la formation à modifier
    * @returns Un observable contenant la formation modifiée
+   * @param formationUpdate
    * */
   updateFormation(formationUpdate : FormationUpdateDTO): Observable<any> {
 

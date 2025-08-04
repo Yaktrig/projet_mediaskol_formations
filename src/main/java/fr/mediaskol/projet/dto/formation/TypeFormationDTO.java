@@ -13,15 +13,15 @@ import lombok.NoArgsConstructor;
 @Builder
 public class TypeFormationDTO {
 
-    private Long id;
-    private String libelle;
+    private Long idTypeFormation;
+    private String libelleTypeFormation;
 
 
 
 
     public TypeFormationDTO(TypeFormation tf) {
-        this.id = tf.getIdTypeFormation() ;
-        this.libelle = tf.getLibelleTypeFormation();
+        this.idTypeFormation = tf.getIdTypeFormation() ;
+        this.libelleTypeFormation = tf.getLibelleTypeFormation();
     }
 
 
