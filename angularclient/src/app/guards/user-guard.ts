@@ -3,7 +3,7 @@ import {
   Router
 } from '@angular/router';
 import {Injectable} from '@angular/core';
-import {UserService} from '../services/user/user.service';
+import {UserService} from '../user/services/user.service';
 
 @Injectable({
   providedIn: 'root'

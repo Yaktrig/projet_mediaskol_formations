@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {Router, RouterLink, RouterLinkActive} from '@angular/router';
-import {UserService} from '../services/user/user.service';
-import {MessageService} from '../services/message/message.service';
+import {UserService} from '../user/services/user.service';
+import {MessageService} from '../message/services/message.service';
 
 
 @Component({
