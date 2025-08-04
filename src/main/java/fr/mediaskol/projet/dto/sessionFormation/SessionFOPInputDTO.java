@@ -19,7 +19,7 @@ import java.time.LocalDate;
 @Builder
 public class SessionFOPInputDTO {
 
-    private long idSessionFormationPresentiel;
+    private Long idSessionFormationPresentiel;
 
     @Size(max = 30, message = "{formation.numAfYoda.size}")
     private String noYoda;

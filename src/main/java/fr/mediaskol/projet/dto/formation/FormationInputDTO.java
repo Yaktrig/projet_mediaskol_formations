@@ -1,5 +1,6 @@
 package fr.mediaskol.projet.dto.formation;
 
+import fr.mediaskol.projet.bo.formation.TypeFormation;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -25,7 +26,9 @@ public class FormationInputDTO {
     @Size(min = 3, max = 300)
     private String libelleFormation;
 
-    private Long typeFormationId;
+    //private Long typeFormationId;
+
+    private TypeFormation typeFormation;
 
 
 

@@ -98,12 +98,16 @@ public class FormationController {
 //
 //    }
 
+
+
+
     /**
      * Méthode qui permet de créer une nouvelle formation dans la base de données
      */
     @PostMapping
     @Valid
     public ResponseEntity<?> ajouterFormation(@Valid @RequestBody FormationInputDTO formationInputDTO) {
+
 
         // La formation ne doit pas être nulle
         if (formationInputDTO == null) {
@@ -112,9 +116,9 @@ public class FormationController {
 
         try {
             // Recherche du type de formation en base à partir de l'id fourni dans le DTO
-            TypeFormation typeFormation = typeFormationRepository.findById(formationInputDTO.getTypeFormationId())
+            TypeFormation typeFormation = typeFormationRepository.findById(formationInputDTO.getTypeFormation().getIdTypeFormation())
                     .orElseThrow(() -> new RuntimeException(
-                            "Type de formation inexistant pour l'id : " + formationInputDTO.getTypeFormationId()));
+                            "Type de formation inexistant pour l'id : " + formationInputDTO.getTypeFormation().getIdTypeFormation()));
 
             // Construction de l'entité Formation à partir du DTO et de l'entité associée
             Formation formation = Formation.builder()
