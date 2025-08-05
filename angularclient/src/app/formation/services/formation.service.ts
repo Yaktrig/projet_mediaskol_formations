@@ -35,4 +35,13 @@ export class FormationService {
 
     return this.http.put(this.apiUrl, formationUpdate);
   }
+
+  /**
+   * Méthode qui appelle l'api pour supprimer une formation
+   * @param idFormation
+   */
+  deleteFormation(idFormation: number | null | undefined): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${idFormation}`);
+  }
+
 }

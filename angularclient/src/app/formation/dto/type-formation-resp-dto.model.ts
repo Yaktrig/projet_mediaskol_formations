@@ -1,6 +1,6 @@
 
 export interface TypeFormationDTO {
 
-  idTypeFormation: number| null;
+  idTypeFormation: number | null;
   libelleTypeFormation: string | null;
 }

@@ -7,8 +7,8 @@ import {
 import {UserGuard} from './guards/user-guard';
 import {LoginComponent} from './login/components/login';
 import {LoginRedirectGuard} from './guards/login-redirect.guard';
-import {ListeFormation} from './formation/components/liste-formation/liste-formation';
-import {AjouterFormation} from './formation/components/ajouter-formation/ajouter-formation';
+import {FormationListe} from './formation/components/formation-liste/formation-liste';
+import {FormationAjouter} from './formation/components/formation-ajouter/formation-ajouter';
 
 export const routes: Routes = [
   {
@@ -28,12 +28,12 @@ export const routes: Routes = [
   },
 
    { path: 'listeFormations',
-     component: ListeFormation,
+     component: FormationListe,
    canActivate: [UserGuard]
    },
 
   { path: 'ajouterFormation',
-    component: AjouterFormation,
+    component: FormationAjouter,
     canActivate: [UserGuard]
   },
 
