@@ -129,6 +129,9 @@ md:min-w-[450px] md:max-w-[940px] flex flex-col md:flex-row md:items-center md:m
             </td>
             <td>{{ session.lieuSessionFormation }}</td><!-- lieu de la salle ou ville principale -->
             <td class="text-center">{{ session.nbHeureSession }}</td>
+          <td>---</td><!-- récupérer le nombre d'inscrit avec une requête -->
+          <td>---</td>
+          <td>---</td>
             <!-- Mettre une condition en fonction du nombre de jours - pour le présentiel -->
             @for (sessionDate of session.sessionsDate; track sessionDate.idSessionDate) {
               <td>

@@ -4,10 +4,11 @@ import { Observable } from 'rxjs';
 import { FormationResponseDTO } from '../dto/formation-resp-dto.model';
 import {FormationReqDTO} from '../dto/formation-req-dto.model';
 import {FormationUpdateDTO} from '../dto/formation-update-dto.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class FormationService {
-  private apiUrl = 'http://localhost:8080/mediaskolFormation/formations';
+  private apiUrl = `${environment.apiUrl}/mediaskolFormation/formations`;
 
   constructor(private http: HttpClient) {}
 

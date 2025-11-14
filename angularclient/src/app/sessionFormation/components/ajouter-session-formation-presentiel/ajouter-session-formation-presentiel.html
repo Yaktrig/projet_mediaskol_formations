@@ -7,12 +7,9 @@
     <form [formGroup]="sessionPresentielForm" (ngSubmit)="onSubmit()"
           class="bg-[var(--color-bg-form)] border-[1.5px]  shadow-md rounded-lg px-4 py-6 m-4 max-w-7xl mx-auto">
 
-
       <div class="mt-5 grid grid-cols-3 gap-4">
-
-        <!-- Colonne 1 - 7 rangs -->
+        <!-- Colonne 1 -->
         <div class="space-y-4">
-
           <!-- rang 1 -->
           <div>
             <label for="noYoda" class="block text-sm/6 font-medium ">N°YODA</label>
@@ -20,11 +17,11 @@
                    class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
                    title="Numéro AF Yoda"/>
-            @if (sessionPresentielForm.controls['noYoda'].hasError('maxLength') && sessionPresentielForm.controls['noYoda'].touched) {
+            @if (sessionPresentielForm.controls['noYoda'].hasError('maxLength') &&
+            sessionPresentielForm.controls['noYoda'].touched) {
               <p class="text-red-600 text-sm mt-1">Le numéro de Yoda ne doit pas dépasser 30 caractères.</p>
             }
           </div>
-
 
           <!-- rang 2 -->
           <div>
@@ -65,9 +62,9 @@
                    class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
                    title="Date limite Yoda"/>
-<!--            @if (sessionPresentielForm.controls['dateLimiteYoda'].hasError('pattern') && sessionPresentielForm.controls['dateLimiteYoda'].touched) {-->
-<!--              <p class="text-red-600 text-sm mt-1">La date limite Yoda doit être au format date.</p>-->
-<!--            }-->
+            <!--            @if (sessionPresentielForm.controls['dateLimiteYoda'].hasError('pattern') && sessionPresentielForm.controls['dateLimiteYoda'].touched) {-->
+            <!--              <p class="text-red-600 text-sm mt-1">La date limite Yoda doit être au format date.</p>-->
+            <!--            }-->
           </div>
           <!-- rang 5 -->
           <div>
@@ -210,9 +207,9 @@
                     <input id="sessionDateField{{i}}" type="date" formControlName="dateSession"
                            class="min-w-56 rounded-md  py-1.5 pr-8 pl-3
                     bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"/>
-<!--                    @if (sessionPresentielForm.controls['date'].hasError('required') && sessionPresentielForm.controls['date'].touched) {-->
-<!--                      <p class="text-red-600 text-sm mt-1">La date est obligatoire.</p>-->
-<!--                    }-->
+                    <!--                    @if (sessionPresentielForm.controls['date'].hasError('required') && sessionPresentielForm.controls['date'].touched) {-->
+                    <!--                      <p class="text-red-600 text-sm mt-1">La date est obligatoire.</p>-->
+                    <!--                    }-->
                   </div>
                   <div class="flex items-center gap-2 w-full">
                     <label for="formateurSessionDate{{i}}" class="text-sm/6 min-w-16">Formateur</label>

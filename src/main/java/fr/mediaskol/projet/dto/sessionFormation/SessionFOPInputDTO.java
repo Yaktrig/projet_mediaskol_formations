@@ -24,16 +24,16 @@ public class SessionFOPInputDTO {
     @Size(max = 30, message = "{formation.numAfYoda.size}")
     private String noYoda;
 
-    @Size(max = 50, message="{sessionFormation.libelle.size}")
+    @Size(max = 50, message = "{sessionFormation.libelle.size}")
     private String libelleSessionFormation;
 
-    @Size(min=1, max = 5, message = "{sessionFormation.statutYoda.size}")
+    @Size(min = 1, max = 5, message = "{sessionFormation.statutYoda.size}")
     @NotBlank(message = "{sessionFormation.statutYoda.notblank}")
     private String statutYoda;
 
-    private StatutSessionFormation statutSessionFormation ;
+    private StatutSessionFormation statutSessionFormation;
 
-    @Size(max=100, message="{sessionFormation.lieu.size}")
+    @Size(max = 100, message = "{sessionFormation.lieu.size}")
     private String lieuSessionFormation;
 
     private String commanditaire;
@@ -51,7 +51,5 @@ public class SessionFOPInputDTO {
     private DepartementDTO departement;
 
     private FinSessionFormationRespDTO finSessionFormation;
-
-
 
 }

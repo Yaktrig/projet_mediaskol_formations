@@ -14,6 +14,6 @@ export interface SessionFormationReqDTO {
   statutSessionFormation: StatutSessionFormation;
   salarie: { idPersonne : number } | null;
   formation: { idFormation : number } | null;
-  finSessionFormation: { idFinSessionFormation : number } | null;
+  //finSessionFormation: { idFinSessionFormation : number } | null;
 
 }

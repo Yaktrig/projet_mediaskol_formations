@@ -1,0 +1,80 @@
+<app-header></app-header>
+<main class="pb-16">
+  <h1 class="">Création d'une formation</h1>
+
+  <div class="space-y-12 flex flex-col items-center">
+    <!-- Formulaire -->
+    <form [formGroup]="formationForm" (ngSubmit)="onSubmit()"
+          class="bg-[var(--color-bg-form)] border-[1.5px]  shadow-md rounded-lg px-4 py-6 m-4 max-w-7xl mx-auto">
+
+
+        <!-- Colonne 1 - 7 rangs -->
+        <div class="space-y-4">
+
+          <!-- Rang 1 : Thème -->
+          <div class="flex flex-col items-center">
+            <label for="themeFormation" class="block text-sm/6 font-medium ">Thème de la formation *</label>
+            <input id="themeFormation" type="text" formControlName="themeFormation"
+                   class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
+                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
+                   title="Thème de la formation"/>
+            @if (formationForm.controls['themeFormation'].hasError('maxLength') && formationForm.controls['themeFormation'].touched) {
+              <p class="text-red-600 text-sm mt-1">Le thème de la formation ne doit pas dépasser 20 caractères.</p>
+            }
+            @if (formationForm.controls['themeFormation'].hasError('required') && formationForm.controls['themeFormation'].touched) {
+              <p class="text-red-600 text-sm mt-1">Le thème de la formation est obligatoire.</p>
+            }
+          </div>
+
+          <!-- Rang 2 : Libellé -->
+          <div class="flex flex-col items-center">
+            <label for="libelleFormation" class="block text-sm/6 font-medium ">Libellé de la formation *</label>
+            <input id="libelleFormation" type="text" formControlName="libelleFormation"
+                   class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
+                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
+                   title="Libellé de la formation"/>
+            @if (formationForm.controls['libelleFormation'].hasError('maxLength') && formationForm.controls['libelleFormation'].touched) {
+              <p class="text-red-600 text-sm mt-1">Le libellé de la formation ne doit pas dépasser 300 caractères.</p>
+            }
+            @if (formationForm.controls['libelleFormation'].hasError('required') && formationForm.controls['libelleFormation'].touched) {
+              <p class="text-red-600 text-sm mt-1">Le libellé de la formation est obligatoire.</p>
+            }
+          </div>
+
+          <!-- Rang 3 : Type de la formation avec deux cases à cocher -->
+          <div class="flex flex-col items-center">
+            <label class="block text-sm font-medium text-center mb-1">Type de formation *</label>
+            <div class="flex flex-row items-center gap-4">
+              <input type="checkbox" id="presentiel" formControlName="isPresentiel"/>
+              <label for="presentiel" class="text-base">Présentiel</label>
+              <input type="checkbox" id="distanciel" formControlName="isDistanciel"/>
+              <label for="distanciel" class="text-base">Distanciel</label>
+            </div>
+            @if (typeFormationInvalide) {
+              <p class="text-red-600 text-sm mt-1 text-center">Choisir au moins un type.</p>
+            }
+          </div>
+        </div>
+
+      <div class="text-center mt-8 mb-4">
+        <button type="button"
+                routerLink="/listeFormations"
+
+                class="min-w-48 bg-[var(--color-bg-button)] text-[var(--color-text-button)] py-2 rounded
+        hover:bg-[var(--color-bg-button-hover)] hover:text-[var(--color-text-button-hover)] text-center rounded-md mr-8">
+          Retour
+        </button>
+        <button type="submit"
+                class="min-w-48 bg-[var(--color-bg-button)] text-[var(--color-text-button)] py-2 rounded
+        hover:bg-[var(--color-bg-button-hover)] hover:text-[var(--color-text-button-hover)] text-center rounded-md ml-8">
+          Enregistrer
+        </button>
+      </div>
+      <span class="text-left text-[var(--color-title-purple)] text-sm/6">* Champs obligatoires</span>
+    </form>
+    <!-- Fin du formulaire -->
+
+  </div>
+
+</main>
+<app-footer></app-footer>

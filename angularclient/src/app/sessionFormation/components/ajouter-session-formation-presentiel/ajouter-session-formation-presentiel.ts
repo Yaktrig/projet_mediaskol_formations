@@ -26,7 +26,6 @@ import {SessionFopReqDTO} from '../../dto/session-formation-presentiel-req-dto.m
 import {StatutSessionFormation} from '../../dto/statut-session-formation.enum';
 import {StatutSessionDate} from '../../../sessionDate/dto/statut-session-date.enum';
 
-
 @Component({
   selector: 'app-ajouter-session-formation-presentiel',
   standalone: true,
@@ -38,7 +37,6 @@ import {StatutSessionDate} from '../../../sessionDate/dto/statut-session-date.en
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule
-
   ],
   templateUrl: './ajouter-session-formation-presentiel.html',
   styleUrls: ['./ajouter-session-formation-presentiel.css']
@@ -61,7 +59,6 @@ export class AjouterSessionFormationPresentiel implements OnInit {
   idFormationChoisie: number | null = null;
   idDepartementChoisi: number | null = null;
   idSalarieChoisi: number | null = null;
-
 
   constructor(
     private ajouterSessionFOP: AjouterSessionFormationPresentielService,
@@ -102,7 +99,7 @@ export class AjouterSessionFormationPresentiel implements OnInit {
       noYoda: ['', Validators.maxLength(30)],
       intituleSessionF: ['', [Validators.required, Validators.maxLength(50)]],
       dateLimiteYoda: [''],
-      lieuSessionFormation: ['', [Validators.maxLength(100),Validators.required]],
+      lieuSessionFormation: ['', [Validators.maxLength(100), Validators.required]],
       dateDebutSession: ['', Validators.required],
       nbHeureSession: [0, [Validators.min(1), Validators.max(100)]],
       commanditaire: ['', Validators.maxLength(125)],
@@ -253,27 +250,26 @@ export class AjouterSessionFormationPresentiel implements OnInit {
 
   /**
    * Méthode appelée lors de la sauvegarde du formulaire :
-   * - Valide la saisie
-   * - Construit un DTO cohérent pour la création (SessionFopReqDTO)
-   * - Envoie la requête via service
-   * - Gère le succès et les erreurs utilisateur
+   * <ul>
+   *   <li>Valide la saisie</li>
+   *   <li>Construit un DTO pour la création (SessionFopReqDTO)</li>
+   *   <li>Envoie la requête via service</li>
+   *   <li>Gère le succès et les erreurs utilisateur</li>
+   * </ul>
    */
   onSubmit(): void {
-
-    console.log("sousmission du formulaire");
 
     this.sessionPresentielForm.markAllAsTouched();
 
     if (this.sessionPresentielForm.invalid) {
-      this.messageService.showError("Votre formulaire contient une ou des erreurs, veuillez les corriger s'il vous plaît.")
-      console.log("il y a des erreurs");
+      this.messageService.showError("Votre formulaire contient une ou des erreurs, veuillez les corriger " +
+        "s'il vous plaît.")
       return;
     }
 
     const formValue = this.sessionPresentielForm.value;
 
     const sessionRequest: SessionFopReqDTO = {
-
       idSessionFormation: null,
       noYoda: formValue.noYoda || null,
       libelleSessionFormation: formValue.intituleSessionF || null,
@@ -285,32 +281,24 @@ export class AjouterSessionFormationPresentiel implements OnInit {
       confirmationRPE: formValue.confirmationRPE || null,
       statutSessionFormation: StatutSessionFormation.SESSION_FORMATION_NON_COMMENCEE,
 
-      // Lier la formation par son id
       formation: {
         idFormation: formValue.idFormationChoisie
       },
-      // Lier le salarié par son id
+
       salarie: {
         idPersonne: Number(formValue.idSalarieChoisi)
       },
-      // Lier le département par son id
+
       departement: {
         idDepartement: formValue.idDepartementChoisi
-      },
-      // Lier la fin de session de formation par son id s'il existe todo mettre null pour la création
-      finSessionFormation: {
-        idFinSessionFormation: formValue.idFinSessionFormation || null
       },
 
       sessionsSalle: formValue.salle || null,
       sessionsFormateur: formValue.formateur || null,
-      // Envoi uniquement si non vide
       sessionsDate: formValue.sessionsDate && formValue.sessionsDate.length > 0 ? formValue.sessionsDate : null,
     }
 
-    console.log('sessionRequest:', sessionRequest);
-
-    // Envoi de la requête via ton service
+    // Envoi de la requête
     this.ajouterSessionFOP.ajoutSessionFOP(sessionRequest).subscribe({
       next: () => {
         this.messageService.showSuccess('Session ajoutée avec succès.');

@@ -13,59 +13,59 @@ import java.util.List;
 
 /**
  * Contrôleur qui permet :
- * d'afficher les lieux et dates des sessions de formation
- * d'ajouter un lieu et une date d'une session de formation
- * de rechercher un lieu et une date d'une session de formation par son id
- * de rechercher un ou plusieurs lieux et dates des sessions de formation
- * de supprimer un lieu et une date d'une session de formation
+ * d'afficher les dates des sessions de formation
+ * d'ajouter une date d'une session de formation
+ * de rechercher une date d'une session de formation par son id
+ * de rechercher une ou plusieurs dates des sessions de formation
+ * de supprimer une date d'une session de formation
  * Utilisation de lombok pour injecter le service à la place d'un constructeur
  */
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/mediaskolFormation/sessionsLieuDates")
+@RequestMapping("/mediaskolFormation/sessionsDates")
 public class SessionDateController {
 
     /**
-     * Injection de dépendances pour aller chercher le service qui correspond aux lieux et dates des sessions de formation
+     * Injection de dépendances pour aller chercher le service qui correspond aux dates des sessions de formation
      */
     private SessionDateService sessionDateService;
 
 
     /**
-     * Retourne la liste des sessionDate des sessions de formation en Json dans l'url "mediaskolFormation/sessionsLieuDates en méthode GET
+     * Retourne la liste des sessionDate des sessions de formation en Json dans l'url "mediaskolFormation/sessionsDates en méthode GET
      */
     @GetMapping
-    public ResponseEntity<?> afficherTousLesSessionsLieuDates() {
+    public ResponseEntity<?> afficherTousLesSessionsDates() {
 
-        final List<SessionDate> sessionsLieuDates = sessionDateService.chargerToutesSessionsLieuDate();
+        final List<SessionDate> sessionsDates = sessionDateService.chargerToutesSessionsDate();
 
-        if (sessionsLieuDates == null || sessionsLieuDates.isEmpty()) {
+        if (sessionsDates == null || sessionsDates.isEmpty()) {
             // Statut 204 : No content - Pas de body car rien à afficher
             return ResponseEntity.noContent().build();
         }
 
         // Sinon, on retourne Statut 200 : Ok + dans le body les sessionDate
-        // Conversion liste SessionLieuDate -> liste SessionLieuDateDTO
-        List<SessionDateRespDTO> sessionLieuDateRespDTOS = sessionsLieuDates.stream()
+        // Conversion liste SessionDate -> liste SessionDateDTO
+        List<SessionDateRespDTO> sessionDateRespDTOS = sessionsDates.stream()
                 .map(SessionDateRespDTO::new)
                 .toList();
 
-        return ResponseEntity.ok(sessionLieuDateRespDTOS);
+        return ResponseEntity.ok(sessionDateRespDTOS);
     }
 
     /**
      * Retourne une sessionDate d'une session de formation par rapport à son identifiant
      */
     @GetMapping("/{id}")
-    public ResponseEntity<?> rechercherSessionLieuDateParId(@PathVariable("id") String idInPath) {
+    public ResponseEntity<?> rechercherSessionDateParId(@PathVariable("id") String idInPath) {
 
         try {
             long id = Long.parseLong(idInPath);
-            final SessionDate sessionDate = sessionDateService.chargerSessionLieuDateParId(id);
+            final SessionDate sessionDate = sessionDateService.chargerSessionDateParId(id);
 
-            SessionDateRespDTO sessionLieuDateDto = new SessionDateRespDTO(sessionDate);
-            return ResponseEntity.ok(sessionLieuDateDto);
+            SessionDateRespDTO sessionDateDto = new SessionDateRespDTO(sessionDate);
+            return ResponseEntity.ok(sessionDateDto);
 
         } catch (NumberFormatException e) {
             // Statut 406 : No Acceptable
@@ -78,7 +78,7 @@ public class SessionDateController {
     }
 
     /**
-     * Retourne une ou des sessionDate(s) des sessions de formation en Json dans l'url "mediaskolFormation/sessionsLieuDate/recherche
+     * Retourne une ou des sessionDate(s) des sessions de formation en Json dans l'url "mediaskolFormation/sessionsDate/recherche
      * selon le critère saisi dans le champ
      */
 //    @GetMapping("/recherche")
@@ -101,7 +101,7 @@ public class SessionDateController {
      */
     @PostMapping
     @Valid
-    public ResponseEntity<?> ajouterSessionLieuDate(@Valid @RequestBody SessionDate sessionDate) {
+    public ResponseEntity<?> ajouterSessionDate(@Valid @RequestBody SessionDate sessionDate) {
 
         // La sessionDate ne doit pas être nulle.
         if (sessionDate == null) {
@@ -109,13 +109,13 @@ public class SessionDateController {
                     "est obligatoire");
         }
 
-        // La ssessionLieuDate ne doit pas avoir d'identifiant de saisi
+        // La ssessionDate ne doit pas avoir d'identifiant de saisi
         if (sessionDate.getIdSessionDate() != null) {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Impossible de sauvegarder une sessionDate " +
                     "pour la session de formation");
         }
         try {
-            sessionDateService.ajouterSessionLieuDate(sessionDate);
+            sessionDateService.ajouterSessionDate(sessionDate);
             return ResponseEntity.ok(sessionDate);
         } catch (RuntimeException e) {
             // Erreur BLL ou DAL
@@ -124,11 +124,11 @@ public class SessionDateController {
     }
 
     /**
-     * Modifier une date et/ou un lieu d'une session de formation
+     * Modifier une date d'une session de formation
      */
     @PutMapping
     @Valid
-    public ResponseEntity<?> modifierSessionLieuDate(@Valid @RequestBody SessionDate sessionDate) {
+    public ResponseEntity<?> modifierSessionDate(@Valid @RequestBody SessionDate sessionDate) {
 
         // La sessionDate d'une session de formation ne doit pas être nul - l'identifiant ne pas être nul ou inférieur ou égal à 0
         if (sessionDate == null || sessionDate.getIdSessionDate() == null ||
@@ -138,7 +138,7 @@ public class SessionDateController {
         }
 
         try {
-            sessionDateService.ajouterSessionLieuDate(sessionDate);
+            sessionDateService.ajouterSessionDate(sessionDate);
             return ResponseEntity.ok(sessionDate);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(e.getMessage());
@@ -146,16 +146,16 @@ public class SessionDateController {
     }
 
     /**
-     * Supprimer une date et/ou un lieu d'une session de formation
+     * Supprimer une date d'une session de formation
      */
     @DeleteMapping("/{id}")
     @Valid
-    public ResponseEntity<?> supprimerSessionLieuDate(@PathVariable("id") String idInPath) {
+    public ResponseEntity<?> supprimerSessionDate(@PathVariable("id") String idInPath) {
 
         try {
-            final int idSessionLieuDate = Integer.parseInt(idInPath);
-            sessionDateService.supprimerSessionLieuDate(idSessionLieuDate);
-            return ResponseEntity.ok("La sessionDate " + idSessionLieuDate + " est supprimée de la base de données.");
+            final int idSessionDate = Integer.parseInt(idInPath);
+            sessionDateService.supprimerSessionDate(idSessionDate);
+            return ResponseEntity.ok("La sessionDate " + idSessionDate + " est supprimée de la base de données.");
         } catch (NumberFormatException e) {
             // Statut 406 : No acceptable
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Votre identifiant n'est pas un entier.");

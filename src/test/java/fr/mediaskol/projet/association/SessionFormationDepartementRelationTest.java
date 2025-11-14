@@ -5,8 +5,10 @@ import fr.mediaskol.projet.bo.departement.Departement;
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
 import fr.mediaskol.projet.bo.formation.Formation;
 import fr.mediaskol.projet.bo.formation.TypeFormation;
+import fr.mediaskol.projet.bo.sessionFormation.SessionFormationPresentiel;
 import fr.mediaskol.projet.dal.departement.DepartementRepository;
 import fr.mediaskol.projet.dal.formation.FormationRepository;
+import fr.mediaskol.projet.dal.sessionFormation.SessionFOPRepository;
 import fr.mediaskol.projet.dal.sessionFormation.SessionFormationRepository;
 import fr.mediaskol.projet.dal.formation.TypeFormationRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +32,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
  * On n'oblige pas à associer une formation à la session.
  */
 
-// Configure un contexte Spring Boot limité à la couche JPA
 @Slf4j
 @DataJpaTest
 public class SessionFormationDepartementRelationTest {
@@ -45,7 +46,7 @@ public class SessionFormationDepartementRelationTest {
     DepartementRepository departementRepository;
 
     @Autowired
-    SessionFormationRepository sessionFormationRepository;
+    SessionFOPRepository sessionFopRepository;
 
     // Repository pour effectuer des opérations CRUD sur l'entité Formation
     @Autowired
@@ -129,12 +130,15 @@ public class SessionFormationDepartementRelationTest {
 
     }
 
-    // Sauvegarde d'une session de formation et de son département
+    /**
+     * Sauvegarde d'une session de formation en présentiel et de son département
+     */
+
     @Test
     public void test_save_session_formation() {
 
         // Création d'une nouvelle session de formation avec le builder Lombok
-        final SessionFormation sessionMICE = SessionFormation
+        final SessionFormationPresentiel sessionMICE = SessionFormationPresentiel
                 .builder()
                 .noYoda("123456")
                 .libelleSessionFormation("MICE24052025")
@@ -147,17 +151,16 @@ public class SessionFormationDepartementRelationTest {
         sessionMICE.setDepartement(illeetvilaine);
 
         // Sauvegarde de la session en base via le repository
-        final SessionFormation sessionMICEDB = sessionFormationRepository.save(sessionMICE);
+        final SessionFormationPresentiel sessionFopMICEDB = sessionFopRepository.save(sessionMICE);
 
         // Log pour visualiser l'objet persisté
-        log.info(sessionMICEDB.toString());
+        log.info(sessionFopMICEDB.toString());
 
         // Vérification de la cascade de l'association
         // Vérifie que l'objet retourné n'est pas null
-        assertThat(sessionMICEDB.getIdSessionFormation()).isGreaterThan(0);
-        assertThat(sessionMICEDB.getDepartement()).isNotNull();
-        assertThat(sessionMICEDB.getDepartement()).isEqualTo(illeetvilaine);
-
+        assertThat(sessionFopMICEDB.getIdSessionFormation()).isGreaterThan(0);
+        assertThat(sessionFopMICEDB.getDepartement()).isNotNull();
+        assertThat(sessionFopMICEDB.getDepartement()).isEqualTo(illeetvilaine);
     }
 
     //
@@ -165,17 +168,17 @@ public class SessionFormationDepartementRelationTest {
     public void test_find_all() {
 
         // Récupération des données de la méthode jeuDeDonnees()
-        List<SessionFormation> sessionFormations = jeuDeDonnees();
+        List<SessionFormationPresentiel> sessionFop = jeuDeDonnees();
 
         // Sauvegarde du jeu de données dans la base
-        sessionFormations.forEach(session -> {
-            sessionFormationRepository.save(session);
+        sessionFop.forEach(session -> {
+            sessionFopRepository.save(session);
             assertThat(session.getIdSessionFormation()).isGreaterThan(0);
         });
 
         // Vérifie l'identifiant des sessions
-        final List<SessionFormation> sessionFormationDB = sessionFormationRepository.findAll();
-        sessionFormationDB.forEach(session -> {
+        final List<SessionFormationPresentiel> sessionFopDB = sessionFopRepository.findAll();
+        sessionFopDB.forEach(session -> {
             assertThat(session.getIdSessionFormation()).isGreaterThan(0);
 
             // Vérification du département
@@ -187,7 +190,7 @@ public class SessionFormationDepartementRelationTest {
     public void test_delete_session_formation() {
 
         // Création d'une nouvelle session avec le builder Lombok
-        final SessionFormation sessionMICE = SessionFormation
+        final SessionFormationPresentiel sessionMICE = SessionFormationPresentiel
                 .builder()
                 .noYoda("123456")
                 .libelleSessionFormation("MICE24052025")
@@ -200,7 +203,7 @@ public class SessionFormationDepartementRelationTest {
         sessionMICE.setDepartement(illeetvilaine);
 
         // Persistance de la session dans la base de test
-        final SessionFormation sessionMICEDB = sessionFormationRepository.save(sessionMICE);
+        final SessionFormationPresentiel sessionMICEDB = sessionFopRepository.save(sessionMICE);
 
 
         // Vérification s'il y a au moins un identifiant dans SessionFormation, s'il n'est pas null,
@@ -210,7 +213,7 @@ public class SessionFormationDepartementRelationTest {
         assertThat(sessionMICEDB.getDepartement()).isEqualTo(illeetvilaine);
 
         // Suppression de la session de formation MICE
-        sessionFormationRepository.delete(sessionMICEDB);
+        sessionFopRepository.delete(sessionMICEDB);
 
         // Vérifie que l'entité SessionFormation n'est plus présente en base (doit être null)
         SessionFormation sessionMICEDB2 = entityManager.find(SessionFormation.class, sessionMICEDB.getIdSessionFormation());
@@ -228,11 +231,12 @@ public class SessionFormationDepartementRelationTest {
 
 
     // Création d'un jeu de données de sessions de formations
-    private List<SessionFormation> jeuDeDonnees() {
+    private List<SessionFormationPresentiel> jeuDeDonnees() {
 
-        List<SessionFormation> sessionsFormation = new ArrayList<>();
+        List<SessionFormationPresentiel> sessionsFop = new ArrayList<>();
 
-        sessionsFormation.add(SessionFormation.builder()
+        sessionsFop.add(SessionFormationPresentiel
+                .builder()
                 .departement(illeetvilaine)
                 .noYoda("123456")
                 .libelleSessionFormation("MICE24052025")
@@ -241,7 +245,8 @@ public class SessionFormationDepartementRelationTest {
                 .formation(formationMISST)
                 .build());
 
-        sessionsFormation.add(SessionFormation.builder()
+        sessionsFop.add(SessionFormationPresentiel
+                .builder()
                 .departement(morbihan)
                 .noYoda("234567")
                 .libelleSessionFormation("MICE20092025")
@@ -250,7 +255,8 @@ public class SessionFormationDepartementRelationTest {
                 .formation(formationMISST)
                 .build());
 
-        sessionsFormation.add(SessionFormation.builder()
+        sessionsFop.add(SessionFormationPresentiel
+                .builder()
                 .departement(cotesdarmor)
                 .noYoda("345678")
                 .libelleSessionFormation("MISST24052025")
@@ -259,7 +265,7 @@ public class SessionFormationDepartementRelationTest {
                 .formation(formationMISST)
                 .build());
 
-        return sessionsFormation;
+        return sessionsFop;
     }
 
 }

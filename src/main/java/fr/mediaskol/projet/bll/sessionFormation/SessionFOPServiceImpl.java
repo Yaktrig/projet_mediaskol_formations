@@ -139,7 +139,7 @@ public class SessionFOPServiceImpl implements SessionFOPService {
         validerEnumNonNulle(sessionFop.getStatutSessionFormation());
         validerFormationNonNulle(sessionFop);
 
-        // Récupérer la formation complète depuis la base si l’ID est présent
+        // Récupération de la formation complète depuis la base si l’ID est présent
         if (sessionFop.getFormation() != null && sessionFop.getFormation().getIdFormation() != null) {
             Formation formation = formationRepository.findById(sessionFop.getFormation().getIdFormation())
                     .orElseThrow(() -> new RuntimeException("Formation non trouvée avec id : " + sessionFop.getFormation().getIdFormation()));
@@ -148,16 +148,16 @@ public class SessionFOPServiceImpl implements SessionFOPService {
             throw new RuntimeException("Formation obligatoire");
         }
 
-        // Récupérer le département complet
+        // Récupération du département complet
         if (sessionFop.getDepartement() != null && sessionFop.getDepartement().getIdDepartement() != null) {
             Departement departement = departementRepository.findById(sessionFop.getDepartement().getIdDepartement())
                     .orElseThrow(() -> new RuntimeException("Département non trouvé avec id : " + sessionFop.getDepartement().getIdDepartement()));
             sessionFop.setDepartement(departement);
         } else {
-            sessionFop.setDepartement(null);  // si c’est facultatif
+            sessionFop.setDepartement(null);
         }
 
-        // Récupérer le salarié complet
+        // Récupération du salarié complet
         if (sessionFop.getSalarie() != null && sessionFop.getSalarie().getIdPersonne() != null) {
             Salarie salarie = salarieRepository.findById(sessionFop.getSalarie().getIdPersonne())
                     .orElseThrow(() -> new RuntimeException("Salarié non trouvé avec id : " + sessionFop.getSalarie().getIdPersonne()));
@@ -165,15 +165,6 @@ public class SessionFOPServiceImpl implements SessionFOPService {
         } else {
             throw new RuntimeException("Salarié obligatoire");
         }
-
-
-        // valider si la fin de session existe
-        if (sessionFop.getFinSessionFormation() != null && sessionFop.getFinSessionFormation().getIdFinSessionFormation() != null) {
-            FinSessionFormation finSessionFopDB = finSessionFormationRepository.findById(sessionFop.getFinSessionFormation().getIdFinSessionFormation())
-                    .orElseThrow(() -> new RuntimeException("Fin de session non trouvé avec id : " + sessionFop.getFinSessionFormation().getIdFinSessionFormation()));
-            sessionFop.setFinSessionFormation(finSessionFopDB);
-        }
-
 
         try {
             return sessionFormationRepository.save(sessionFop);
@@ -411,7 +402,7 @@ public class SessionFOPServiceImpl implements SessionFOPService {
 
             if (existant.isPresent()) {
                 // Si on est en création (idSessionFop null) OU
-                // Si le numéro appartient à une autre session de formation => erreur
+                // Si le numéro appartient à une autre session de formation → erreur
                 if (sessionFop.getIdSessionFormation() == null ||
                         !existant.get().getIdSessionFormation().equals(sessionFop.getIdSessionFormation())) {
                     throw new RuntimeException("Le numéro Yoda existe déjà.");

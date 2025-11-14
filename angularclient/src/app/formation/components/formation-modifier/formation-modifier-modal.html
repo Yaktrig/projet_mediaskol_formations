@@ -1,0 +1,47 @@
+<!-- Modal d'édition -->
+@if (isOpen) {
+  <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md mx-auto">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-lg font-bold">Modifier la formation</h2>
+        <button (click)="onCancel()" class="text-white hover:text-gray-600">&times;</button>
+      </div>
+
+      <form class="flex flex-col items-center" (ngSubmit)="onSave()">
+        <div>
+          <label class="block mb-2 font-semibold">Thème</label>
+          <input [(ngModel)]="formationToEdit!.themeFormation" name="themeFormation" class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
+                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
+                 title="Thème de la formation à modifier"/>
+        </div>
+
+        <div>
+          <label class="block mb-2 font-semibold">Libellé</label>
+          <input [(ngModel)]="formationToEdit!.libelleFormation" name="libelleFormation" class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
+                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
+                 title="Libellé de la formation à modifier"
+          />
+        </div>
+
+        <div>
+          <label class="block mb-2 font-semibold">Type de formation</label>
+          <p class="min-w-64 rounded-md  py-1.5 pr-8 pl-3  bg-pink-50 text-base text-[var(--color-text-input)]
+        sm:text-sm/6 border cursor-not-allowed"
+             title="type de formation"> {{ formationToEdit?.typeFormation?.libelleTypeFormation }}</p>
+        </div>
+
+
+        <div class="flex justify-center mt-8 gap-4">
+          <button type="button" (click)="onCancel()" class="min-w-32 bg-[var(--color-bg-button)] text-[var(--color-text-button)] py-2 rounded
+        hover:bg-[var(--color-bg-button-hover)] hover:text-[var(--color-text-button-hover)] text-center rounded-md">
+            Annuler
+          </button>
+          <button type="button" (click)="onSave()" class="min-w-32 bg-[var(--color-bg-button)] text-[var(--color-text-button)] py-2 rounded
+        hover:bg-[var(--color-bg-button-hover)] hover:text-[var(--color-text-button-hover)] text-center rounded-md">
+            Enregistrer
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+}

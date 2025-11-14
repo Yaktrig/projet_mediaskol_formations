@@ -1,0 +1,96 @@
+<app-header></app-header>
+<main class="pb-16">
+  <h1 class="">Liste des formations</h1>
+
+  <!-- Zone 1 - formulaire et boutons -->
+
+  <div class="flex flex-col gap-6 justify-center items-center mt-8 mb-8 md:flex-row md:items-start md:gap-16">
+    <!-- Bloc formulaire -->
+    <div
+      class="bg-[var(--color-bg-form)] border-[1.5px]  shadow-md rounded-lg px-4 py-6 w-full max-w-[95vw]
+md:min-w-[450px] md:max-w-[940px] flex flex-col md:flex-row md:items-center md:mr-12">
+      <!-- Colonne gauche du formulaire (inputs) -->
+      <div class="flex flex-col gap-3 grow md:pr-6">
+        <h2 class="text-left">Filtrer les formations</h2>
+        <div class="flex flex-col sm:flex-row gap-3">
+          <input type="text"
+
+                 placeholder="Rechercher"
+                 class="border px-2 py-1 rounded text-gray-700 w-full sm:w-64 mb-2 text-[var(--color-text-input)]"/>
+          <select class="border px-2 py-1 rounded w-full sm:w-56 text-gray-700 mb-2">
+            <option>Choisir le filtre</option>
+            <option></option>
+          </select>
+        </div>
+      </div>
+      <!-- Bouton rechercher -->
+      <div class="flex justify-center md:justify-end md:items-center mt-4 md:mt-0">
+        <button
+          class="w-full bg-[var(--color-bg-button)] text-[var(--color-text-button)] py-2 rounded
+          hover:bg-[var(--color-bg-button-hover)] hover:text-[var(--color-text-button-hover)] text-center px-6 rounded-md">
+          Rechercher
+        </button>
+      </div>
+    </div>
+
+    <!-- Zone boutons à droite ou dessous -->
+    <div class="flex flex-col gap-4 w-full md:w-72 self-center">
+      <button routerLink="/ajouterFormation"
+              class="w-full bg-[var(--color-bg-button)] text-[var(--color-text-button)] py-2 rounded
+        hover:bg-[var(--color-bg-button-hover)] hover:text-[var(--color-text-button-hover)] text-center pl-6 rounded-md">
+        Créer une formation
+      </button>
+    </div>
+  </div>
+
+
+  <!-- Zone 2 - Affichage des sessions de formation en présentiel sous forme de tableau -->
+  <div class=" p-4 w-full max-h-[32rem] overflow-x-auto overflow-y-auto mb-8 flex justify-center">
+    <table class="table-auto min-w-max border border-gray-300 border-separate">
+      <thead class="bg-gray-100 divide-x divide-gray-300">
+      <tr>
+        <th>Thème formation</th>
+        <th>Libelle formation</th>
+        <th>Type de formation</th> <!-- Présentiel ou distanciel -->
+        <th>Actions</th> <!-- Modifier ou supprimer -->
+      </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-300">
+        @for (formation of formations; track formation.idFormation) {
+          <tr class="divide-x divide-gray-300 odd:bg-gray-50">
+            <td>{{ formation.themeFormation }}</td>
+            <td>{{ formation.libelleFormation }}</td>
+            <td class="text-center">{{ formation.typeFormation?.libelleTypeFormation }}</td>
+            <td>
+              <mat-icon class="m-1 text-gray-700 cursor-pointer" (click)="openEditModal(formation)">edit</mat-icon>
+              &nbsp;
+              <mat-icon class="m-1 text-red-700 cursor-pointer" (click)="openDeleteModal(formation)">delete</mat-icon>
+            </td>
+            }
+      </tbody>
+    </table>
+  </div>
+
+
+
+
+  <!-- Utilisation des composants modales -->
+    <app-formation-modifier
+      [isOpen]="showEditModal"
+      [formation]="selectedFormation"
+      (save)="onEditSave($event)"
+      (cancel)="onEditCancel()">
+    </app-formation-modifier>
+
+  <app-formation-supprimer
+    [isOpen]="showDeleteModal"
+    [formation]="selectedFormation"
+    (confirm)="onDeleteConfirm($event)"
+    (cancel)="onDeleteCancel()">
+  </app-formation-supprimer>
+
+
+</main>
+
+
+<app-footer></app-footer>

@@ -34,8 +34,6 @@ import java.util.List;
 @Entity
 @Table(name = "FORMATION")
 public class Formation {
-
-
     /**
      * Identifiant unique de la formation.
      * <p>
@@ -47,17 +45,15 @@ public class Formation {
     @Column(name = "FORMATION_ID")
     private Long idFormation;
 
-
     /**
      * Thème de la formation.
      * <p>
      * Ce champ est obligatoire à la création de la formation, il est limité à 20 caractères.
      * </p>
      */
-    @Column(name = "THEME_FORMATION", nullable = false, length = 20, unique = true)
+    @Column(name = "THEME_FORMATION", nullable = false, length = 20)
     @NotNull(message = "{formation.themeFormation.notnull}")
     private String themeFormation;
-
 
     /**
      * Libellé de la formation.
@@ -68,7 +64,6 @@ public class Formation {
     @Column(name = "LIBELLE_FORMATION", nullable = false, length = 300)
     @NotNull(message = "{formation.libelleFormation.notnull}")
     private String libelleFormation;
-
 
     /**
      * Type de formation qui est rattaché à la formation.
@@ -86,8 +81,4 @@ public class Formation {
     @JoinColumn(name = "TYPE_FORMATION_ID", nullable = false)
     @NotNull(message = "{formation.typeFormation.notnull}")
     private TypeFormation typeFormation;
-
-
-
-
 }

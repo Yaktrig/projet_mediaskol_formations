@@ -2,18 +2,15 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {SessionFopReqDTO} from '../dto/session-formation-presentiel-req-dto.model';
-
-
+import { environment } from '../../../environments/environment';
 /**
  * Service qui permet de créer une session de formation en présentiel via l'API
  */
-
 @Injectable({
   providedIn: 'root'
 })
 export class AjouterSessionFormationPresentielService {
-  private apiUrl = 'http://localhost:8080/mediaskolFormation';
-
+  private apiUrl = `${environment.apiUrl}/mediaskolFormation`;
 
   constructor(private http: HttpClient) {}
 
@@ -26,7 +23,5 @@ export class AjouterSessionFormationPresentielService {
 
     const url = `${this.apiUrl}/sessionsFormationsPresentiels`;
     return this.http.post(url, sessionReq);
-
   }
-
 }

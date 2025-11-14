@@ -1,0 +1,14 @@
+<p>apprenant works!</p>
+
+<div>
+  <label for="BI" class="block text-sm/6 font-medium ">Bulletin d'inscription</label>
+  <select id="BI" formControlName="BI"
+          class="min-w-64 rounded-md  py-1.5 pr-8 pl-3 bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
+          title="Bulletin d'inscription">
+    <option [value]="0">NON</option>
+    <option [value]="1">OUI</option>
+  </select>
+<!--  @if (sessionPresentielForm.controls['BI'].hasError('required') && sessionPresentielForm.controls['BI'].touched) {-->
+<!--    <p class="text-red-600 text-sm mt-1">L'information sur le bulletin d'information est requise.</p>-->
+<!--  }-->
+</div>

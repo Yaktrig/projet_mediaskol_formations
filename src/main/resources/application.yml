@@ -9,6 +9,11 @@ spring:
     password: root
 
   #Options to DB
+  # Mode de gestion du schéma par Hibernate
+  # update : applique automatiquement ALTER TABLE pour faire correspondre le schéma aux entités
+  # validate : vérifie seulement la cohérence sans rien changer
+  # create : recrée la base à chaque démarrage (perte de données)
+  # none : désactive toute génération automatique
   jpa:
     show-sql: true
     hibernate:

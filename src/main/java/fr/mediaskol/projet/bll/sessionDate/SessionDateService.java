@@ -8,31 +8,31 @@ import java.util.List;
 public interface SessionDateService {
 
     /***
-     * Fonctionnalité qui permet de charger toutes les lieux et dates des sessions
+     * Fonctionnalité qui permet de charger toutes les dates des sessions
      */
-    List<SessionDate> chargerToutesSessionsLieuDate();
+    List<SessionDate> chargerToutesSessionsDate();
 
     /**
-     * Fonctionnalité qui permet de charger le lieu et la date d'une session par son id
+     * Fonctionnalité qui permet de charger la date d'une session par son id
      */
-    SessionDate chargerSessionLieuDateParId(long idSessionLieuDate);
+    SessionDate chargerSessionDateParId(long idSessionDate);
 
 
     /**
-     * Fonctionnalité qui permet d'ajouter à une session un lieu et une date
+     * Fonctionnalité qui permet d'ajouter à une session une date
      * @param sessionDate
      */
-    SessionDate ajouterSessionLieuDate(SessionDate sessionDate);
+    SessionDate ajouterSessionDate(SessionDate sessionDate);
 
     /**
-     * Fonctionnalité qui permet de modifier le lieu et/ou la date d'une session
+     * Fonctionnalité qui permet de modifier la date d'une session
      * @param sessionDateInputDTO
      * @return
      */
-    SessionDate modifierSessionLieuDate(SessionDateInputDTO sessionDateInputDTO);
+    SessionDate modifierSessionDate(SessionDateInputDTO sessionDateInputDTO);
 
     /**
-     * Fonctionnalité qui permet de supprimer un lieu et/ou une date d'une session
+     * Fonctionnalité qui permet de supprimer une date d'une session
      */
-    void supprimerSessionLieuDate(long idSessionLieuDate);
+    void supprimerSessionDate(long idSessionDate);
 }

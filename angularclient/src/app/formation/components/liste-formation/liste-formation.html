@@ -1,0 +1,125 @@
+<app-header></app-header>
+<main class="pb-16">
+  <h1 class="">Liste des formations</h1>
+
+  <!-- Zone 1 - formulaire et boutons -->
+
+  <div class="flex flex-col gap-6 justify-center items-center mt-8 mb-8 md:flex-row md:items-start md:gap-16">
+    <!-- Bloc formulaire -->
+    <div
+      class="bg-[var(--color-bg-form)] border-[1.5px]  shadow-md rounded-lg px-4 py-6 w-full max-w-[95vw]
+md:min-w-[450px] md:max-w-[940px] flex flex-col md:flex-row md:items-center md:mr-12">
+      <!-- Colonne gauche du formulaire (inputs) -->
+      <div class="flex flex-col gap-3 grow md:pr-6">
+        <h2 class="text-left">Filtrer les formations</h2>
+        <div class="flex flex-col sm:flex-row gap-3">
+          <input type="text"
+
+                 placeholder="Rechercher"
+                 class="border px-2 py-1 rounded text-gray-700 w-full sm:w-64 mb-2 text-[var(--color-text-input)]"/>
+          <select class="border px-2 py-1 rounded w-full sm:w-56 text-gray-700 mb-2">
+            <option>Choisir le filtre</option>
+            <option></option>
+          </select>
+        </div>
+      </div>
+      <!-- Bouton rechercher -->
+      <div class="flex justify-center md:justify-end md:items-center mt-4 md:mt-0">
+        <button
+          class="w-full bg-[var(--color-bg-button)] text-[var(--color-text-button)] py-2 rounded
+          hover:bg-[var(--color-bg-button-hover)] hover:text-[var(--color-text-button-hover)] text-center px-6 rounded-md">
+          Rechercher
+        </button>
+      </div>
+    </div>
+
+    <!-- Zone boutons à droite ou dessous -->
+    <div class="flex flex-col gap-4 w-full md:w-72 self-center">
+      <button routerLink="/ajouterFormation"
+              class="w-full bg-[var(--color-bg-button)] text-[var(--color-text-button)] py-2 rounded
+        hover:bg-[var(--color-bg-button-hover)] hover:text-[var(--color-text-button-hover)] text-center pl-6 rounded-md">
+        Créer une formation
+      </button>
+    </div>
+  </div>
+
+
+  <!-- Zone 2 - Affichage des sessions de formation en présentiel sous forme de tableau -->
+  <div class=" p-4 w-full max-h-[32rem] overflow-x-auto overflow-y-auto mb-8 flex justify-center">
+    <table class="table-auto min-w-max border border-gray-300 border-separate">
+      <thead class="bg-gray-100 divide-x divide-gray-300">
+      <tr>
+        <th>Thème formation</th>
+        <th>Libelle formation</th>
+        <th>Type de formation</th> <!-- Présentiel ou distanciel -->
+        <th>Actions</th> <!-- Modifier ou supprimer -->
+      </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-300">
+        @for (formation of formations; track formation.idFormation) {
+          <tr class="divide-x divide-gray-300 odd:bg-gray-50">
+            <td>{{ formation.themeFormation }}</td>
+            <td>{{ formation.libelleFormation }}</td>
+            <td class="text-center">{{ formation.typeFormation?.libelleTypeFormation }}</td>
+            <td>
+              <mat-icon class="m-1 text-gray-700 cursor-pointer" (click)="openModal(formation)">edit</mat-icon>
+              &nbsp;
+              <mat-icon class="m-1 text-red-700 cursor-pointer">cancel</mat-icon>
+            </td>
+            }
+      </tbody>
+    </table>
+  </div>
+</main>
+
+
+<!-- Modal d'édition -->
+@if (openEditModal) {
+  <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md mx-auto">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-lg font-bold">Modifier la formation</h2>
+        <button (click)="closeModal()" class="text-white hover:text-gray-600">&times;</button>
+      </div>
+
+      <form class="flex flex-col items-center">
+        <div>
+          <label class="block mb-2 font-semibold">Thème</label>
+          <input [(ngModel)]="formationToEdit.themeFormation" name="theme" class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
+                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
+                 title="Thème de la formation à modifier"/>
+        </div>
+
+        <div>
+          <label class="block mb-2 font-semibold">Libellé</label>
+          <input [(ngModel)]="formationToEdit.libelleFormation" name="libelle" class="min-w-64 rounded-md  py-1.5 pr-8 pl-3
+                    bg-pink-50 text-base text-[var(--color-text-input)] sm:text-sm/6 border"
+                 title="Libellé de la formation à modifier"
+          />
+        </div>
+
+        <div>
+          <!-- Exemple simple pour le type (à adapter si plus complexe) -->
+          <label class="block mb-2 font-semibold">Type de formation</label>
+          <p class="min-w-64 rounded-md  py-1.5 pr-8 pl-3  bg-pink-50 text-base text-[var(--color-text-input)]
+        sm:text-sm/6 border cursor-not-allowed" title="type de formation"> {{formationToEdit.typeFormation.libelleTypeFormation }}</p>
+        </div>
+
+
+        <div class="flex justify-center mt-8 gap-4">
+          <button type="button" (click)="closeModal()" class="min-w-32 bg-[var(--color-bg-button)] text-[var(--color-text-button)] py-2 rounded
+        hover:bg-[var(--color-bg-button-hover)] hover:text-[var(--color-text-button-hover)] text-center rounded-md">
+            Annuler
+          </button>
+          <button type="button" (click)="saveFormation()" class="min-w-32 bg-[var(--color-bg-button)] text-[var(--color-text-button)] py-2 rounded
+        hover:bg-[var(--color-bg-button-hover)] hover:text-[var(--color-text-button-hover)] text-center rounded-md">
+            Enregistrer
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+}
+
+
+<app-footer></app-footer>

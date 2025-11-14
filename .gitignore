@@ -35,3 +35,22 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Claude Code ###
+.claude/
+
+### Security - NEVER commit keys ###
+src/main/resources/keys/
+*.key
+*.pem
+
+### Node.js ###
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+### Angular ###
+angularclient/dist/
+angularclient/.angular/
+angularclient/node_modules/
