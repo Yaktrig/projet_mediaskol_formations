@@ -1,7 +1,7 @@
 package fr.mediaskol.projet.dal.sessionFormation;
 
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
-import fr.mediaskol.projet.bo.sessionFormation.SessionFormationDistanciel;
+import fr.mediaskol.projet.bo.sessionFormationDistanciel.SessionFormationDistanciel;
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormationPresentiel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,15 +12,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SessionFOADRepository extends JpaRepository<SessionFormationDistanciel, Long> {
-
-    /**
-     * Méthode qui permet de retrouver le numéro Yoda d'une session de formation en distanciel
-     *
-     * @param noYoda
-     * @return
-     */
-    Optional<SessionFormationDistanciel> findByNoYoda(String noYoda);
-
 
     /**
      * todo modifier la requête pour adapter au FOAD

@@ -1,0 +1,11 @@
+### RAPPORT DE TESTS ENDPOINTS ###
+
+## 1. Authentification
+{"token":"eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl0sImlhdCI6MTc2MjcwMzA0NiwiZXhwIjoxNzYyNzA2NjQ2fQ.SKGw3iZ7uEelXd8lrLqq5xmvfOhYsqIwting5yP3WGWOi3BdiP6sxzmq01Bt6-S8fhosY2l0VTnqDPbyzCnZqtk585yk0xy7AAh9CZFIUOuFONNOdb2U51aYvP-uhtI4eUuelI4fau5XF9rck9OnLh7UfZvSnEEMtVUgLgSjwr6W3U4JNxrn0tTFiWdXJeSzAGgo31_9yDduN4lPVw0o__40QsKsvvjBRHZnDt0_eAqyuEhdGYYCNYmHwCAL8MUoU2QYKsKmk7xY-ZmC1zom6eDDI0RgMe_UAzFpDlFCOFcjavJNXHdv04CKRhmCyn-X569lBjL7Ub8Bw6EJCDyrAg"}
+Status: 200
+
+## 2. Formations
+Status: 403
+
+## 3. Apprenants
+Status: 403

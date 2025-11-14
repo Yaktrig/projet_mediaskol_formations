@@ -1,7 +1,7 @@
 package fr.mediaskol.projet.bll.sessionFormation;
 
 
-import fr.mediaskol.projet.bo.sessionFormation.SessionFormationDistanciel;
+import fr.mediaskol.projet.bo.sessionFormationDistanciel.SessionFormationDistanciel;
 import fr.mediaskol.projet.dal.sessionFormation.SessionFOADRepository;
 import fr.mediaskol.projet.dto.sessionFormation.SessionFOADInputDTO;
 import jakarta.persistence.EntityNotFoundException;
@@ -71,7 +71,7 @@ public class SessionFOADServiceImpl implements SessionFOADService {
         if (sessionFoad.getContratSessionFormationDistanciel() != null) {
             validerContrat(sessionFoad);
         }
-        validerDate(sessionFoad.getDateDebutSession());
+        validerDate(sessionFoad.getDateDebutSessionFormationDistanciel());
         validerDate(sessionFoad.getDateFinSessionFormationDistanciel());
 
         if (sessionFoad.getDateRelanceSessionFormationDistanciel() != null) {
@@ -85,7 +85,7 @@ public class SessionFOADServiceImpl implements SessionFOADService {
         try {
             return sessionFoadRepository.save(sessionFoad);
         } catch (RuntimeException e) {
-            throw new RuntimeException("Impossible de sauvegarder - " + sessionFoad.getIdSessionFormation());
+            throw new RuntimeException("Impossible de sauvegarder - " + sessionFoad.getIdSessionFormationDistanciel());
         }
     }
 
@@ -109,7 +109,7 @@ public class SessionFOADServiceImpl implements SessionFOADService {
         if (sessionFoad.getContratSessionFormationDistanciel() != null) {
             validerContrat(sessionFoad);
         }
-        validerDate(sessionFoad.getDateDebutSession());
+        validerDate(sessionFoad.getDateDebutSessionFormationDistanciel());
         validerDate(sessionFoad.getDateFinSessionFormationDistanciel());
 
         if (sessionFoad.getDateRelanceSessionFormationDistanciel() != null) {
@@ -123,7 +123,7 @@ public class SessionFOADServiceImpl implements SessionFOADService {
         // 3. Appliquer les modifications aux champs autorisés
         sessionFoad.setContratSessionFormationDistanciel(dto.getContratSessionFormationDistanciel());
         sessionFoad.setNbBlocSessionFormationDistanciel(dto.getNbBlocSessionFormationDistanciel());
-        sessionFoad.setDateDebutSession(dto.getDateDebutSession());
+        sessionFoad.setDateDebutSessionFormationDistanciel(dto.getDateDebutSession());
         sessionFoad.setDateFinSessionFormationDistanciel(dto.getDateFinSessionFormationDistanciel());
         sessionFoad.setDateRelanceSessionFormationDistanciel(dto.getDateRelanceSessionFormationDistanciel());
         sessionFoad.setCommentaireSessionFormationDistanciel(dto.getCommentaireSessionFormationDistanciel());

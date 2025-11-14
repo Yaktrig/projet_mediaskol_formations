@@ -172,7 +172,7 @@ public class SessionFormationServiceImpl implements SessionFormationService {
         sessionFormation.setFormation(sessionFormation.getFormation());
 
         // Associer le département
-        if (dto.getDepartement() != null) {
+        if (dto.getDepartementId() != null) {
             sessionFormation.setDepartement(sessionFormation.getDepartement());
         } else {
             sessionFormation.setDepartement(null); // ou garder l'existante

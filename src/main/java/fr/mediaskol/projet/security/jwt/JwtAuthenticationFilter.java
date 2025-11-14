@@ -68,7 +68,7 @@ public class JwtAuthenticationFilter  extends OncePerRequestFilter {
             List<String> roles = (List<String>) claims.get("roles", List.class);
 
             List<SimpleGrantedAuthority> authorities = roles.stream()
-                    .map(SimpleGrantedAuthority::new)
+                    .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
                     .collect(Collectors.toList());
 
             // On crée le token avec le username, aucun mot de passe (null), mais avec les rôles extraits

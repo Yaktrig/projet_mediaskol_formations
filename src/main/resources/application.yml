@@ -1,8 +1,10 @@
 #Connection to DB
 spring:
+  main:
+    allow-bean-definition-overriding: true
   sql:
     init:
-      mode: always
+      mode: never
   datasource:
     url: jdbc:mysql://localhost:3306/projet_mediaskol_formations
     username: root

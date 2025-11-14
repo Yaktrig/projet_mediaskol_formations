@@ -2,7 +2,7 @@ package fr.mediaskol.projet.dto.sessionLieuDate;
 
 
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
-import fr.mediaskol.projet.bo.sessionFormation.SessionFormationDistanciel;
+import fr.mediaskol.projet.bo.sessionFormationDistanciel.SessionFormationDistanciel;
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormationPresentiel;
 import fr.mediaskol.projet.bo.sessionLieuDate.SessionLieuDate;
 import fr.mediaskol.projet.bo.sessionLieuDate.StatutSessionLieuDate;
@@ -61,8 +61,6 @@ public class SessionLieuDateRespDTO {
 
         if (formation instanceof SessionFormationPresentiel) {
             this.sessionFormation = new SessionFOPResponseDTO((SessionFormationPresentiel) formation);
-        } else if (formation instanceof SessionFormationDistanciel) {
-            this.sessionFormation = new SessionFOADResponseDTO((SessionFormationDistanciel) formation);
         } else {
             this.sessionFormation = null;
         }

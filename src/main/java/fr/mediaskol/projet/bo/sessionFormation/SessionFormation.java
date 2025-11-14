@@ -3,6 +3,7 @@ package fr.mediaskol.projet.bo.sessionFormation;
 import fr.mediaskol.projet.bo.formation.Formation;
 import fr.mediaskol.projet.bo.salarie.Salarie;
 import fr.mediaskol.projet.bo.departement.Departement;
+import fr.mediaskol.projet.bo.sessionFormationDistanciel.SessionFormationDistanciel;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

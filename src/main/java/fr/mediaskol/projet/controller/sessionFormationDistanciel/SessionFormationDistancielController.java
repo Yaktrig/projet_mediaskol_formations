@@ -1,7 +1,7 @@
 package fr.mediaskol.projet.controller.sessionFormationDistanciel;
 
 import fr.mediaskol.projet.bll.sessionFormation.SessionFOADService;
-import fr.mediaskol.projet.bo.sessionFormation.SessionFormationDistanciel;
+import fr.mediaskol.projet.bo.sessionFormationDistanciel.SessionFormationDistanciel;
 import fr.mediaskol.projet.dto.sessionFormation.SessionFOADResponseDTO;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;

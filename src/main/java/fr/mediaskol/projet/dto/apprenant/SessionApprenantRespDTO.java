@@ -3,7 +3,7 @@ package fr.mediaskol.projet.dto.apprenant;
 import fr.mediaskol.projet.bo.apprenant.SessionApprenant;
 import fr.mediaskol.projet.bo.apprenant.StatutSessionApprenant;
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormation;
-import fr.mediaskol.projet.bo.sessionFormation.SessionFormationDistanciel;
+import fr.mediaskol.projet.bo.sessionFormationDistanciel.SessionFormationDistanciel;
 import fr.mediaskol.projet.bo.sessionFormation.SessionFormationPresentiel;
 import fr.mediaskol.projet.dto.sessionFormation.SessionFOADResponseDTO;
 import fr.mediaskol.projet.dto.sessionFormation.SessionFOPResponseDTO;
@@ -46,8 +46,6 @@ public class SessionApprenantRespDTO {
 
         if (formation instanceof SessionFormationPresentiel) {
             this.sessionFormation = new SessionFOPResponseDTO((SessionFormationPresentiel) formation);
-        } else if (formation instanceof SessionFormationDistanciel) {
-            this.sessionFormation = new SessionFOADResponseDTO((SessionFormationDistanciel) formation);
         } else {
             this.sessionFormation = null;
         }

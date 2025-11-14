@@ -1,7 +1,7 @@
 package fr.mediaskol.projet.dto.sessionFormation;
 
 import java.time.LocalDate;
-import fr.mediaskol.projet.entities.StatutSessionFormation;
+import fr.mediaskol.projet.bo.sessionFormation.StatutSessionFormation;
 
 public class SessionFormationInputDTO {
 

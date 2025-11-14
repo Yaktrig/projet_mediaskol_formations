@@ -1,7 +1,7 @@
 package fr.mediaskol.projet.dto.sessionFormation;
 
 
-import fr.mediaskol.projet.bo.sessionFormation.SessionFormationDistanciel;
+import fr.mediaskol.projet.bo.sessionFormationDistanciel.SessionFormationDistanciel;
 import fr.mediaskol.projet.bo.sessionFormation.StatutSessionFormation;
 import fr.mediaskol.projet.dto.formation.FormationResponseDTO;
 import fr.mediaskol.projet.dto.salarie.SalarieResponseDTO;
@@ -43,36 +43,10 @@ public class SessionFOADResponseDTO extends SessionFormationResponseDTO {
      */
     public SessionFOADResponseDTO(SessionFormationDistanciel sessionFOAD){
 
-        this.idSessionFormationDistanciel=  sessionFOAD.getIdSessionFormation();
-        this.noYoda = sessionFOAD.getNoYoda();
-        this.libelleSessionFormation = sessionFOAD.getLibelleSessionFormation();
-        this.statutYoda = sessionFOAD.getStatutYoda();
-        this.dateDebutSession = sessionFOAD.getDateDebutSession();
-        this.nbHeureSession = sessionFOAD.getNbHeureSession();
-        this.statutSessionFormation = sessionFOAD.getStatutSessionFormation();
-
-        if (sessionFOAD.getFormation() != null) {
-            this.formation = new FormationResponseDTO(sessionFOAD.getFormation());
-        } else {
-            this.formation = null;
-        }
-
-
-        if (sessionFOAD.getFinSessionFormation() != null) {
-            this.finSessionFormation = new FinSessionFormationRespDTO(sessionFOAD.getFinSessionFormation());
-        } else {
-            this.finSessionFormation = null;
-        }
-
-
-        if (sessionFOAD.getSalarie() != null) {
-            this.salarie = new SalarieResponseDTO(sessionFOAD.getSalarie());
-        } else {
-            this.salarie = null;
-        }
-
+        this.idSessionFormationDistanciel=  sessionFOAD.getIdSessionFormationDistanciel();
         this.contratSessionFormationDistanciel = sessionFOAD.getContratSessionFormationDistanciel();
         this.nbBlocSessionFormationDistanciel = sessionFOAD.getNbBlocSessionFormationDistanciel();
+        this.dateDebutSession = sessionFOAD.getDateDebutSessionFormationDistanciel();
         this.dateFinSessionFormationDistanciel = sessionFOAD.getDateFinSessionFormationDistanciel();
         this.dateRelanceSessionFormationDistanciel = sessionFOAD.getDateRelanceSessionFormationDistanciel();
         this.commentaireSessionFormationDistanciel = sessionFOAD.getCommentaireSessionFormationDistanciel();

@@ -1,15 +1,15 @@
 package fr.mediaskol.projet.security;
 
+import fr.mediaskol.projet.security.jwt.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
-import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * Configuration de la sécurité de l’application Mediaskol.
@@ -22,36 +22,36 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class MediaskolSecurityConfig {
 
-    /**
-     * Expose l’AuthenticationManager fourni par Spring Security.
-     *
-     * @param authConfig configuration d’authentification fournie par Spring
-     * @return AuthenticationManager prêt à l’emploi
-     * @throws Exception en cas d’erreur de configuration
-     */
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
-        return authConfig.getAuthenticationManager();
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final AuthenticationProvider authenticationProvider;
+
+    public MediaskolSecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter,
+                                   AuthenticationProvider authenticationProvider) {
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+        this.authenticationProvider = authenticationProvider;
     }
 
     /**
-     * Définit les règles d’autorisation pour les endpoints HTTP
-     * et configure la protection CSRF et l’authentification JWT.
+     * Définit les règles d'autorisation pour les endpoints HTTP
+     * et configure la protection CSRF et l'authentification JWT.
      *
      * @param http objet de configuration pour le filtre HTTP
      * @return SecurityFilterChain construit
-     * @throws Exception en cas d’erreur lors de la construction du filtre
+     * @throws Exception en cas d'erreur lors de la construction du filtre
      */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                // Définition des règles d’accès
+                // Désactivation du CSRF pour utiliser des tokens JWT stateless
+                .csrf(csrf -> csrf.disable())
+
+                // Définition des règles d'accès
                 .authorizeHttpRequests(auth -> auth
                         // Documentation Swagger accessible sans authentification
                         .requestMatchers("/mediaskol/swagger-ui.html",
                                 "/mediaskol/swagger-ui/**",
                                 "/mediaskol/api-docs/**").permitAll()
-                        // Endpoints d’authentification publics
+                        // Endpoints d'authentification publics
                         .requestMatchers("/mediaskolFormation/auth/**").permitAll()
                         // Accès REST restreint selon roles SALARIE et ADMIN
                         .requestMatchers("/mediaskolFormation/formations/**").hasAnyRole("SALARIE", "ADMIN")
@@ -67,35 +67,22 @@ public class MediaskolSecurityConfig {
                         .requestMatchers("/mediaskolFormation/formateurs/**").hasAnyRole("ADMIN", "SALARIE")
                         .requestMatchers("/mediaskolFormation/sessionsFormateurs/**").hasAnyRole("ADMIN", "SALARIE")
                         .requestMatchers("/mediaskolFormation/sessionsDates/**").hasAnyRole("ADMIN", "SALARIE")
-                        .requestMatchers("/mediaskolFormation/salaries/**").hasAnyRole("ADMIN")
+                        .requestMatchers("/mediaskolFormation/salaries/**").hasRole("ADMIN")
                         // Tous les autres endpoints nécessitent une authentification
                         .anyRequest().authenticated()
                 )
-                // Désactivation du  CSRF pour utiliser des tokens JWT stateless
-                .csrf(csrf -> csrf.disable())
-                // Configuration du resource server pour JWT
-                .oauth2ResourceServer(oauth2 -> oauth2
-                        .jwt(jwt -> jwt
-                                .jwtAuthenticationConverter(jwtAuthenticationConverter())
-                        )
-                );
+
+                // Configuration de la gestion de session : stateless pour JWT
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+
+                // Ajout du provider d'authentification
+                .authenticationProvider(authenticationProvider)
+
+                // Ajout du filtre JWT avant le filtre d'authentification standard
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
-    }
-
-    /**
-     * Configure la conversion des rôles stockés dans le JWT
-     * pour l’utilisation par Spring Security.
-     *
-     * @return JwtAuthenticationConverter personnalisé
-     */
-    @Bean
-    public JwtAuthenticationConverter jwtAuthenticationConverter() {
-        JwtGrantedAuthoritiesConverter converter = new JwtGrantedAuthoritiesConverter();
-        converter.setAuthorityPrefix("ROLE_");
-        converter.setAuthoritiesClaimName("roles");
-
-        JwtAuthenticationConverter jwtConverter = new JwtAuthenticationConverter();
-        jwtConverter.setJwtGrantedAuthoritiesConverter(converter);
-        return jwtConverter;
     }
 }
